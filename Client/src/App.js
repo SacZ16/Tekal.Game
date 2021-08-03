@@ -1,18 +1,21 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import GoogleButton from './components/Signin/GoogleButton';
 import FacebookButton from './components/Signin/FacebookButton';
-import LoginCommon from './components/Login/LoginCommon';
-
+import RegisterCommonForm from './components/Signin/RegisterCommonForm';
+import Login from './components/Login/LoginCommon'
 
 function App() {
   return (
     <Router>
-      <Route path='/login'>
-        <LoginCommon />
-      </Route>
-      <Route exact path='/'>
+      <Route path='/'>
         <GoogleButton />
         <FacebookButton />
+      </Route>
+      <Route path='/register'>
+      <RegisterCommonForm/>
+      </Route>
+      <Route path='/login'>
+      <Login/>
       </Route>
     </Router>
   );
