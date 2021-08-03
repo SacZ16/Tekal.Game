@@ -13,3 +13,4 @@ const RegisterCommonForm = () => {
         </div>
     )
 }
+
