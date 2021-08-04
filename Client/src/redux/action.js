@@ -1,24 +1,25 @@
-export const CHANGE_VIDEO = "CHANGE_VIDEO";
-export const SEEN_VIDEOS = "SEE_VIDEOS";
-export const TEMPLATE_VIDEOS = "TEMPLATE_VIDEOS";
+export const CHANGE_VIDEO       = "CHANGE_VIDEO";
+export const CHANGE_TEMPLATE    = "CHANGE_TEMPLATE";
+export const REC_VIDEO          = "REC_VIDEO";
 
-export function changeVideo(newVideo) {
+
+export function changeVideo(newVideo){
     return {
         type: CHANGE_VIDEO,
         payload: newVideo
     }
 }
 
-export function seenVideos(seenVideos) {
+export function changeTemplate(template){
     return {
-        type: SEEN_VIDEOS,
-        payload: seenVideos
+        type: CHANGE_TEMPLATE,
+        payload: template
     }
 }
 
-export function templateVideos(templateSelected) {
+export function recVideo(video){
     return {
-        type: TEMPLATE_VIDEOS,
-        payload: templateSelected
+        type: REC_VIDEO,
+        payload: video
     }
 }
