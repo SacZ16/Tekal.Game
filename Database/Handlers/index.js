@@ -10,12 +10,34 @@ const  docClient = new AWS.DynamoDB.DocumentClient();
 
 const createUserTable = () => {
     var params = {
-        TableName : "User",
+        TableName : "User1",
         KeySchema: [       
-            { AttributeName: "userId", KeyType: "HASH"},  //Partition key
+            { AttributeName: "PK", KeyType: "HASH"},  //Partition key
+            {
+                AttributeName: "SK", 
+                KeyType: "RANGE"
+            }
+            // {
+            //     AttributeName: "UserSession", 
+            //     KeyType: "RANGE"
+            // }
         ],
         AttributeDefinitions: [       
-            { AttributeName: "userId", AttributeType: "S" }
+            { 
+                AttributeName: "PK", 
+                AttributeType: "S" 
+            },
+            { 
+                AttributeName: "SK", 
+                AttributeType: "S" 
+            },
+            // { 
+            //     AttributeName: "UserSession", 
+            //     AttributeType: "S" 
+            // },
+
+
+
         ],
         ProvisionedThroughput: {       
             ReadCapacityUnits: 10, 
@@ -32,30 +54,36 @@ const createUserTable = () => {
     });
 }
 
-const putUserItems = (userId, name, lastname, email, password) => {
-    const table = "User";
+const putUserInfoItems = (userId, name, lastname, email, password, age) => {
+    const table = "User1";
     const items = {
         userId: userId,
         name: name,
         lastname: lastname,
         email: email,
         password: password,
+        age:age
     }
-
+    var qsy = `Info#${items.userId}`
     var params = {
         TableName:table,
         Key:{
-            "userId": items.userId,
+            "PK": items.userId,
+            "SK": "qsy"
         },
+        // KeyConditionExpression: "#bbb=Info#:aaa",
+        // ExpressionAttributeNames: {
+        //     "#bbb":"SK"
+        // },
+        // ExpressionAttributeValues:{
+        //     ":aaa": items.UserId
+        // },
         Item:{
             "name": items.name,
             "lastName": items.lastname,
             "email": items.email,
             "password": items.password,
-
-            // "sesiones":[{
-            //          sesion info
-            // }]
+            "age": items.age
         }
     };
 
@@ -133,6 +161,6 @@ const deleteTable = (tableName) => {
 
 module.exports = {
     createUserTable,
-    putUserItems,
+    putUserInfoItems,
     getTable,
 }
