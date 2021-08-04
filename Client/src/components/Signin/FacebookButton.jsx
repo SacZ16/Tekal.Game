@@ -6,7 +6,7 @@ const FacebookButton = () => {
     const responseFacebook = (response) => {
         console.log(response)
     }
-
+    
 
     return (
     <div>
