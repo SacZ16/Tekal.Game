@@ -14,8 +14,8 @@ const LoginCommon = () => {
             password: password,
         }
 
-        let response = await axios({
-            url: '',
+        await axios({
+            url: 'http://localhost:3001/login',
             method: 'POST',
             data: objPost
         })
@@ -28,7 +28,7 @@ const LoginCommon = () => {
             <form>
                 <input type='text' id='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
                 <input type='text' id='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-                <button onClick={(e) => SendDateToBACK(e)}>  </button>
+                <button onClick={(e) => SendDateToBACK(e)}> ola soy un boton </button>
             </form>
         </div>
     )
