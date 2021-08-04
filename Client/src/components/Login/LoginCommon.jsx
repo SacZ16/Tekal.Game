@@ -5,21 +5,21 @@ const LoginCommon = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const SendDateToBACK = async (e) => {
-        e.preventDefault()
-        console.log(email)
-        console.log(password)
+    const SendDataToBACK = async () => {
         const objPost = {
             email: email,
             password: password,
         }
-        await axios({
+        const status= await axios({
             url: 'http://localhost:3001/login',
             method: 'POST',
             data: objPost
         })
+        console.log(status.data)
         document.getElementById('email').value = ''
         document.getElementById('password').value = ''
+        if(status.data.status==400){return alert('usuario o contraseña mal')}
+        else if(status.data.status==200){return alert('te logueaste')}
     }
 
     return(
@@ -27,8 +27,8 @@ const LoginCommon = () => {
             <form>
                 <input type='text' id='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
                 <input type='text' id='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-                <button onClick={(e) => SendDateToBACK(e)}> ola soy un boton </button>
             </form>
+            <button onClick={() => SendDataToBACK()}> ola soy un boton </button>
         </div>
     )
 };

@@ -9,21 +9,20 @@ const RegisterCommonForm = () => {
     const [errorPassword, seterrorPassword] = useState('');
 
     const register = () => {
-        const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!emailReject.test(email) && email.length > 0){
-            setErrorEmail('Minimum 8 characters');
-            return;
-        }
-        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(password) && password.length > 0){
-            seterrorPassword(`Minimum 8 characters\nMaximum 15 characters\nAt least one capital letter\nAt least one minute letter\nAt least one digit\nNo blanks\n At least 1 special character`);
-            return;
-        }
-        const nummer= hash({name: 'ksjnfkjsndlfkjsadnfl', stapler: false, friends: [ Date.now(), '@@xxxddddlksdnfkljnas',  Date.now()] })
+        // const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        // if (!emailReject.test(email) && email.length > 0){
+        //     setErrorEmail('Minimum 8 characters');
+        //     return;
+        // }
+        // const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+        // if (!passwordReject.test(password) && password.length > 0){
+        //     seterrorPassword(`Minimum 8 characters\nMaximum 15 characters\nAt least one capital letter\nAt least one minute letter\nAt least one digit\nNo blanks\n At least 1 special character`);
+        //     return;
+        // }
         const user={
         email,
         password,
-        test:nummer
+        test:email
         }
         axios.post('http://localhost:3001/register',user)
     }
