@@ -7,14 +7,13 @@ function VideoPlayer({ currentVideo }) {
             {
                 (currentVideo !== '') &&
                 <div>
-                    {currentVideo}
-                    {/* <ReactPlayer
+                    <ReactPlayer
                         width="50%"
                         height="50%"
                         url={currentVideo.name}
                         playing
                         muted
-                    /> */}
+                    />
                 </div>
             }
         </>

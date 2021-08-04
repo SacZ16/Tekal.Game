@@ -1,9 +1,10 @@
-import { CHANGE_VIDEO, SEEN_VIDEOS } from './action';
+import { CHANGE_VIDEO, SEEN_VIDEOS, TEMPLATE_VIDEOS } from './action';
 import videos from '../assets/videos';
 
 const initialState = {
     newVideo: videos[0].name,
-    seenVideos: []
+    seenVideos: [],
+    template:[]
 }
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -17,6 +18,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
             return {
                 ...state,
                 seenVideos: [...state.seenVideos, payload]
+            };
+
+        case TEMPLATE_VIDEOS:
+            return {
+                ...state,
+                template: [...state.template, payload]
             };
 
 
