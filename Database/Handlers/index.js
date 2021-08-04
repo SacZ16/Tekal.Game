@@ -64,13 +64,14 @@ const putUserInfoItems = (userId, name, lastname, email, password, age) => {
         password: password,
         age:age
     }
-    var qsy = `Info#${items.userId}`
+    var infoUser = `Info#${items.userId}`;
+
     var params = {
         TableName:table,
-        Key:{
-            "PK": items.userId,
-            "SK": "qsy"
-        },
+        // Key:{
+        //     "PK": items.userId,
+        //     "SK": "qsy"
+        // },
         // KeyConditionExpression: "#bbb=Info#:aaa",
         // ExpressionAttributeNames: {
         //     "#bbb":"SK"
@@ -79,6 +80,8 @@ const putUserInfoItems = (userId, name, lastname, email, password, age) => {
         //     ":aaa": items.UserId
         // },
         Item:{
+            "PK": items.userId,
+            "SK": infoUser,
             "name": items.name,
             "lastName": items.lastname,
             "email": items.email,
@@ -97,12 +100,14 @@ const putUserInfoItems = (userId, name, lastname, email, password, age) => {
     });
 }
 
-const getTable = (tableName, keyName, keyValue) => {
+const getTable = (tableName, keyValuePK, keyValueSK) => {
 
     var params = {
         TableName: tableName,
         Key:{
-            keyName : keyValue,
+            "PK" : keyValuePK,
+            "SK" : keyValueSK
+
         }
     };
 
