@@ -1,10 +1,7 @@
-const AWS =require ('aws-sdk')
-const { KEY, SECRET } = process.env;
+const AWS =require ('aws-sdk');
 
 AWS.config.update({
     region:'sa-east-1',
-    accessKeyId: KEY,
-    secretAccessKey: SECRET,
     endpoint: "http://localhost:8000"
 })
 
