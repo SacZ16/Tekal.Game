@@ -56,7 +56,7 @@ const createUserTable = () => {
 
 const putUserInfoItems = (userId, name, lastname, email, password, age) => {
     const table = "User1";
-    const items = {
+    const params = {
         userId: userId,
         name: name,
         lastname: lastname,
