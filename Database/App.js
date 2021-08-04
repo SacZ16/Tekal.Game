@@ -5,4 +5,4 @@ const { createUserTable,putUserInfoItems,getTable } = require("./Handlers/index"
 // putUserInfoItems("123", "Fabio","Pellegrini", "amapetrice@gmail.com","contraseña","43")
     
 //tableName, keyValuePK, keyValueSK
-// getTable("User1", "123", "Info#123");
+// getTable("User1", "123", "Info#123"); 
