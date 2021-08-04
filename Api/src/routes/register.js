@@ -2,8 +2,8 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const { registerUser } = require('../services/register.service')
-const {newUser,getallUsers}= require ('../utils/dbFunctions')
+const { registerUser } = require('../services/register.service.js')
+const {newUser,getallUsers}= require ('../Controllers/dbFunctions.js')
 
 router.get('/', (req, res) => {
     getallUsers()

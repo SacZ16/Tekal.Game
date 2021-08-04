@@ -2,7 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const {getallUsers,getUser,newUser}= require ('../utils/dbFunctions')
+const {getallUsers,getUser,newUser}= require ('../Controllers/dbFunctions.js')
 
 
 

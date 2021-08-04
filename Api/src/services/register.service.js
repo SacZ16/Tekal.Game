@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const {newUser,getallUsers}= require ('../utils/dbFunctions')
+const {newUser,getallUsers}= require ('../Controllers/dbFunctions.js')
 
 const registerUser = async (datos) =>{
     try{

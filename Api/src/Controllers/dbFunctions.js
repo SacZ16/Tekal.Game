@@ -1,7 +1,7 @@
 const { Router, response } = require('express');
 const axios = require('axios').default;
 const AWS =require ('aws-sdk')
-const connectionDynamo = require ('../db')
+const connectionDynamo = require ('../db.js')
 
 const TABLE_NAME="test"
 
