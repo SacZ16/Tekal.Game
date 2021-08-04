@@ -57,12 +57,12 @@ const createUserTable = () => {
 const putUserInfoItems = (userId, name, lastname, email, password, age) => {
     const table = "User1";
     const items = {
-        userId: userId,
-        name: name,
-        lastname: lastname,
-        email: email,
-        password: password,
-        age:age
+        userId,
+        name,
+        lastname,
+        email,
+        password,
+        age
     }
     var infoUser = `Info#${items.userId}`;
 
@@ -90,7 +90,40 @@ const putUserInfoItems = (userId, name, lastname, email, password, age) => {
         }
     };
 
-    console.log("Adding a new item...");
+    console.log("Adding a new info...");
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+const putUserSessionsItems = (userId,presentations,answers) => {
+    var sessionId= new Date().toString().replace(/ /g, "").slice(6)
+    const table = "User1";
+    const items = {
+        userId,
+    //por ahora
+        presentations,
+        answers
+
+    }
+    var sessionUser = `Session#${items.userId}#${sessionId}`;
+
+    var params = {
+        TableName:table,
+        Item:{
+            "PK": items.userId,
+            "SK": sessionUser,
+            "createdAt": new Date().toString,
+            "presentations": presentations,
+            "answers": answers
+        }
+    };
+
+    console.log("Adding a new session...");
     docClient.put(params, function(err, data) {
         if (err) {
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
@@ -164,8 +197,39 @@ const deleteTable = (tableName) => {
     
 }
 
+const querySession = (userId) => {
+    // const items = {
+    //     userId
+    // }
+    var params = {
+        TableName : "User1",
+        // ProjectionExpression:"#yr, title, info.genres, info.actors[0]",
+        KeyConditionExpression: "#PK = :pk AND SK BETWEEN :session AND :userId",
+        ExpressionAttributeNames:{
+            "#PK": "PK"
+        },
+        ExpressionAttributeValues: {
+            ":pk": userId,
+            ":session": `Session#${userId}`,
+            ":userId": "Z"
+        }
+    };
+
+    docClient.query(params, function(err, data) {
+        if (err) {
+            console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            console.log("Query description JSON:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+
 module.exports = {
     createUserTable,
     putUserInfoItems,
     getTable,
+    putUserSessionsItems,
+    querySession
 }
