@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import hash from 'object-hash';
+import logoTekal from '../Styles/tekalLogo.png'
+import { Link } from 'react-router-dom';
+import '../Styles/register.css'
+import GoogleButton from './GoogleButton';
+import FacebookButton from './FacebookButton';
+
+
 
 const RegisterCommonForm = () => {
     const [email, setemail] = useState('');
@@ -19,11 +25,11 @@ const RegisterCommonForm = () => {
             seterrorPassword(`Minimum 8 characters\nMaximum 15 characters\nAt least one capital letter\nAt least one minute letter\nAt least one digit\nNo blanks\n At least 1 special character`);
             return;
         }
-        const nummer= hash({name: 'ksjnfkjsndlfkjsadnfl', stapler: false, friends: [ Date.now(), '@@xxxddddlksdnfkljnas',  Date.now()] })
+
         const user={
         email,
         password,
-        test:nummer
+        test:email
         }
         axios.post('http://localhost:3001/register',user)
     }
@@ -31,13 +37,26 @@ const RegisterCommonForm = () => {
 
 
     return(
-        <div>
-            <form>
-            <input name="email" value={email} placeholder="email" onChange={(e) => setemail(e.target.value)} /><p>{errorEmail}</p><br></br>
-            <input type='password' name="password" value={password} placeholder="password" onChange={(e) => setpassword(e.target.value)} /><>{errorPassword}</><br></br>
-            </form>
-            <button  onClick={register}> 😁 </button>
-        </div>
+        <>
+            <div className='containerLanding'>
+                <form className='form'>
+                    <img className='logoForm' src={logoTekal} alt="Logo de Tekal"/>
+                    <p className='welcome'>Welcome</p>
+                    <p className='loginText'>Log in to TekalGame to play.</p>
+                    <input className='inputForm' type='text'  placeholder='Email adress'/>
+                    <input className='inputForm' type='password'  placeholder='Password'/>
+                    <Link className='forgotPassword'to=''>Forgot password?</Link>
+                    <button className='continue'> Continue </button>
+                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                </form>
+                <GoogleButton/>
+                <FacebookButton/>
+                <div className='signUp'>
+                    <p className='signUpText'>Don´t have an account?</p>
+                    <Link className='signUpLink' to='/register'>Sign up</Link>
+                </div>
+            </div>
+        </>
     )
 }
 

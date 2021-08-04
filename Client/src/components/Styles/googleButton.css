@@ -1,0 +1,53 @@
+  
+.googleLogin {
+    background-color: white;
+    border-style: none;
+    width:227px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.googleLogin:hover p{
+    color: #4285F4;
+}
+
+.googleLogin:hover {
+    cursor: pointer;
+}
+
+.one{
+    color: #4285F4;
+}
+
+.two {
+    color:#EA4335
+}
+
+.three {
+    color: #FBBC05
+}
+
+.four {
+    color: #4285F4
+}
+
+.five {
+    color: #34A853
+}
+
+.six{
+    color:#EA4335
+}
+
+
+
+/* colores google {
+    azul : #4285F4;
+    rojo: #EA4335;
+    amarillo:#FBBC05;
+    verde:#34A853
+} */
