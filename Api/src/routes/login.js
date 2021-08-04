@@ -7,8 +7,6 @@ const {getallUsers,getUser,newUser}= require ('../Controllers/dbFunctions.js')
 
 
 router.get('/', async (req, res) => {
-    // getUser()
-    // newUser()
 res.json(await getallUsers())
 })
 

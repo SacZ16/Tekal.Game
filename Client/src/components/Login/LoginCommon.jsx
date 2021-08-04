@@ -9,11 +9,10 @@ const LoginCommon = () => {
         e.preventDefault()
         console.log(email)
         console.log(password)
-        let objPost = {
+        const objPost = {
             email: email,
             password: password,
         }
-
         await axios({
             url: 'http://localhost:3001/login',
             method: 'POST',
