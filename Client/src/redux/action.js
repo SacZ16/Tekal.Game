@@ -17,9 +17,13 @@ export function changeTemplate(template){
     }
 }
 
-export function recVideo(video){
+export function recVideo(video,filter){
     return {
         type: REC_VIDEO,
-        payload: video
+        payload: {
+            video,
+            filter
+        }
     }
 }
+
