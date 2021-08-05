@@ -124,6 +124,30 @@ const putUserInfoRegisterItems = async ({userId, name, lastname, age, country}) 
 }
 
 
+//trae toda la tabla info del usuario
+const queryAllInfoUser = async (userId) => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            KeyConditionExpression: "#PK = :PK AND #info = :info",
+            ExpressionAttributeNames:{
+                "#PK": "PK",
+                "#info": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":PK": userId,
+                ":info": `INFO#${userId}`,
+            }
+        };
+
+        const queryUserInfo = await docClient.query(params).promise()
+        console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        return queryUserInfo;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
 
 
 
