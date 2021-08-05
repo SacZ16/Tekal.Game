@@ -31,13 +31,13 @@ export function recVideo(video, filter) {
 
 let pos = 0
 export function seenVideos(videos) {
-    const videosToSeenQuote = [...videos]
-    const viewVideo = videosToSeenQuote.splice(pos, 1)
-    pos++
-    console.log(viewVideo)
+    const videosToSeenQuote = [...videos];
+    const viewVideo = videosToSeenQuote.splice(pos, 1);
+    const viewVideoObj = { ...viewVideo };
+    pos++;
     return {
         type: SEEN_VIDEO,
-        payload: viewVideo
+        payload: viewVideoObj[0]
     }
 }
 

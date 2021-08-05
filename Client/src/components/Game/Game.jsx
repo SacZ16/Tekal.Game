@@ -12,8 +12,7 @@ export const Game = () => {
 
   const videos = useSelector(state => state.videos);
   const template = useSelector(state => state.template);
-  const sVideos = useSelector(state => state.seenVideos)
-  console.log(sVideos)
+  const sVideos = useSelector(state => state.user)
 
   /* let videosToSeenQuote = useRef()
   videosToSeenQuote.current = [...videos]
@@ -45,16 +44,15 @@ export const Game = () => {
     dispatch(seenVideos(videos))
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     intervalo()
-  }, []) */
+  }, []) 
 
   return (
     < >
 
       <Link to='login'>Volver</Link>
       <button onClick={recVideos}>Click</button>
-      {/* {intervalo()} */}
       {tope >= videos.length - 1 ? <Redirect to='close' /> :
         <VideoPlayer />
       }

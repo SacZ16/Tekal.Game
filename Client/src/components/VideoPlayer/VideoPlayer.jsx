@@ -2,51 +2,63 @@ import React, { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
 import style from '../Game/Game.module.css';
+import './progressBar.css';
 
 const VideoPlayer = () => {
 
-  const { recVideo, template } = useSelector(state => state);
-  const user = useSelector(state => state.user)
+  const { recVideo, template,user } = useSelector(state => state);
+  
+  const seeVideos = useRef();
+  seeVideos.current = user.presentationsGames.seenVideos.length;
+  
   const infoVideo = useRef();
   infoVideo.current = recVideo;
+  
   const infoTemplate = useRef();
   infoTemplate.current = template;
 
-  const correctPoints = useRef(0)
-  const incorrectPoints = useRef(0)
+  const correctPoints = useRef(0);
+  const incorrectPoints = useRef(0);
 
-  const press = useRef(false)
+  const press = useRef(false);
 
   const [border, setBorder] = useState({
     correct: false,
     incorrect: false
   })
 
-  const handleKeyDown = (event) => {
-    console.log(border)
+  /*Barra de Progreso */
+  const ProgressBar = () => {
 
+    return(
+        <>
+            <progress class='progressBar' id="progress" max={template.length} value={seeVideos.current}></progress>
+        </>
+    )
+  }
+  /*Fin Barra de Progreso*/
+
+  const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
       const concat = infoVideo.current.infoVideo.type + "_repeat";
 
       if (concat === template[infoVideo.current.filter][1]) {
-        console.log("verdadero");
-        correctPoints.current++
+        correctPoints.current++;
         setBorder({
           ...border,
           correct: true,
           incorrect: false
         });
-        press.current = true
+        press.current = true;
       }
       else {
-        console.log("falso");
-        incorrectPoints.current++
+        incorrectPoints.current++;
         setBorder({
           ...border,
           correct: false,
           incorrect: true
         });
-        press.current = true
+        press.current = true;
       }
       setTimeout(() => {
         setBorder({
@@ -60,24 +72,19 @@ const VideoPlayer = () => {
   };
 
   useEffect(() => {
-    press.current = false
-  }, [recVideo])
-
-  useEffect(() => {
-    press.current = false
-  }, [recVideo])
+    press.current = false;
+  }, [recVideo]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [])
+  }, []);
 
   return (
     <>
-
-
+      <progress class='progressBar' id="progress" max={template.length} value={seeVideos.current}></progress>
       {
         <div className={
           (border.correct) ? style.videoGreen : '' ||

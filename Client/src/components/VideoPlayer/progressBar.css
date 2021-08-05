@@ -1,0 +1,12 @@
+.progressBar{
+    width: 80%;
+    height: 10px;
+    border-radius: 5px;
+    color: violet;
+ }
+ 
+ ::-webkit-progress-value {  
+     transition: width 1s;
+     width: 85%;
+     background-color: #80CCE8;
+ }

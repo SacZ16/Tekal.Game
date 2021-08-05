@@ -11,9 +11,31 @@ const initialState = {
     },
     template,
     videos,
-    seenVideos: [],
-    user: {},
-
+    user: {
+        id:'',
+        Names:'',
+        Surname: '',
+        email:'',
+        password:'',
+        Contries: '',
+        // Departament: '',
+        // City: '',
+        DateN: '',
+        presentationsGames:{
+            idGame:'',
+            numVideosTarget: 100,
+            numAciertos: 30,
+            PromedioAciertos: 30/100,
+            lives:3, 
+            seenVideos:[
+            ]
+        },
+        TotalGames:{                    //Query
+            NumVidoesViewTarget: 1000,  // Sumatoria de Videos Vistos
+            NumAciertos: 30,            // Sumatoria de Aciertos de Videos Vistos
+            PromedioAciertos: 30/100,   //  Promedio 
+        },
+    }
 }
 
 export default function reducer(state = initialState, { type, payload }) {
@@ -49,10 +71,20 @@ export default function reducer(state = initialState, { type, payload }) {
                     incorrect: payload.incorrect
                 }
             };
+
         case SEEN_VIDEO:
             return {
                 ...state,
-                seenVideos: [...state.seenVideos, payload]
+                user: {
+                    ...state.user,
+                    presentationsGames:{
+                        ...state.user.presentationsGames,
+                        seenVideos: [
+                                    ...state.user.presentationsGames.seenVideos, 
+                                    payload
+                                ]
+                    }
+                }
             };
 
         default: return state;
