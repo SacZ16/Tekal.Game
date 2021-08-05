@@ -58,7 +58,6 @@ const FormData = () => {
     let minDate = minYear + '-' + monthCurrent + '-' + dayCurrent;
     
     if(!pais.length){
-        console.log('aaaaaa')
         AskCountries()
     }
     
@@ -79,7 +78,8 @@ const FormData = () => {
             alert('4')
             return
         }
-        let obj = {}
+        let obj = {
+        }
         // axios.post(`${process.env.REACT_APP_API_URL}URL A PONER`, obj);
         window.location.href = ('login')
     }
