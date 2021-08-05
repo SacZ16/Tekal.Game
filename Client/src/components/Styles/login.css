@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
+
 .bgLanding {
     background-color: black;
     width: 100%;
@@ -28,16 +30,19 @@ body {
   margin-top: 9%;
   font-size: 33px;
   margin-left: 7%;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .text2 {
     display: flex;
     flex-direction: row;
     margin-top: -80px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .memory {
     color: #F22C9F;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .loremLogin{
@@ -46,6 +51,7 @@ body {
     font-size: 22px;
     margin-top: -10px;
     color: rgb(197, 197, 197);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .copyright {

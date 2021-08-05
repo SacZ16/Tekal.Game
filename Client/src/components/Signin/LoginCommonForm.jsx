@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import logoTekal from '../Styles/tekalLogo.png'
 import { Link } from 'react-router-dom';
-import '../Styles/register.css'
+import '../Styles/loginForm.css'
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 
@@ -12,9 +12,6 @@ const RegisterCommonForm = ({props}) => {
     const [password, setpassword] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, seterrorPassword] = useState('');
-
-    
-
 
     return(
         <>
@@ -26,10 +23,10 @@ const RegisterCommonForm = ({props}) => {
                     <input className='inputForm' type='text'  placeholder='Email adress' onChange={(e) => setemail(e.target.value)}/>
                     <input className='inputForm' type='password'  placeholder='Password' onChange={(e) => setpassword(e.target.value)}/>
                     {/* <button className='continue' onClick= {()=>props(email, password)}> Continue </button> */}
-                    <Link className='forgotPassword'to=''>Forgot password?</Link>
-                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
                 </form>
-                <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
+                    <Link className='forgotPassword'to=''>Forgot password?</Link>
+                    <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
+                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
                 <GoogleButton/>
                 <FacebookButton/>
                 <div className='signUp'>
