@@ -2,28 +2,17 @@ import React, {useState} from 'react';
 import FacebookLogin from 'react-facebook-login';
 import axios from 'axios';
 import '../Styles/facebookButton.css'
-
+import {SendDataGoogle} from '../controllers/dbFunctions'
 
 
 const FacebookButton = () => {
     const [profile, setProfile] = useState('')
-
-    
     const responseFacebook = (response) => {
         setProfile(response);
     }
-    
-    const postAndVerification = async (profile) => {
-        const data = {
-            email: profile.email,
-            test: profile.email
-        }
-        await axios.post('http://localhost:3001/register', data)
-    }
 
     if(profile.email){
-        console.log(profile)
-        postAndVerification(profile)
+        SendDataGoogle(profile.email)
     }
     
     
