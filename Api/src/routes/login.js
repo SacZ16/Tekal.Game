@@ -11,16 +11,21 @@ res.json(await getallUsers())
 })
 
 router.post('/', async (req, res) => {
-
-    const user = (await getUser(req.body))
-    const validPassword = await bcrypt.compare(req.body.password, user.Item.password);
-    if (!validPassword) return res.status(400).json({ error: 'contraseña no válida' })
+    const user =async ()=>{if(req.body.email.length>0){return await getUser(req.body)}
+else{return {}}}
+    const runUser= await user()
+    if (!runUser.Item){
+        return res.json({ error: 'Email no register', status:'400' })
+    }
+    else {const validPassword = await bcrypt.compare(req.body.password, runUser.Item.password);
+    if (!validPassword) return res.json({ error: 'error', status:'400' })
     else{
         res.json({
             error: null,
-            data: 'exito bienvenido'
+            status: '200',
+            userInfo:runUser.Item
         })
-    }
+    }}
 })
 
 module.exports = router;

@@ -3,34 +3,14 @@ import Particles from 'react-particles-js'
 import axios from 'axios';
 import '../Styles/login.css';
 import logoTekal from '../Styles/tekalLogo.png';
-import RegisterCommonForm from '../Signin/RegisterCommonForm';
-
+import RegisterCommonForm from '../Signin/LoginCommonForm';
+import Cookie from 'universal-cookie'
+import {SendDataToBACK} from '../controllers/dbFunctions'
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
-    let a = process.env
-
-    console.log(a)
-
-    const SendDataToBACK = async (e) => {
-        e.preventDefault()
-        console.log(email)
-        console.log(password)
-        const objPost = {
-            email: email,
-            password: password,
-        }
-        await axios({
-            url: 'http://localhost:3001/login',
-            method: 'POST',
-            data: objPost
-        })
-        document.getElementById('email').value = ''
-        document.getElementById('password').value = ''
-    }
-
+    const cookies= new Cookie();
+    console.log(cookies.get('userInfo'))
     return (
         <div>
             <div className='bgLanding'>
@@ -53,7 +33,7 @@ const LoginPage = () => {
             </p>
             </div>
             <p className='copyright'>© 2021 Tekal, Inc. All rights reserved</p>
-            <RegisterCommonForm/>
+            <RegisterCommonForm props={SendDataToBACK}/>
         </div>
     )
 };

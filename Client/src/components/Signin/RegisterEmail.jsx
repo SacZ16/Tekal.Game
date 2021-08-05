@@ -46,7 +46,11 @@ const RegisterWithEmail = () => {
             password: password,
             test:email,
         }
+<<<<<<< HEAD
         axios.post(`${process.env.REACT_APP_API_URL}/register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+=======
+        axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+>>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e
     }
 
     return(

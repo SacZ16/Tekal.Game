@@ -7,31 +7,18 @@ import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 
 
+<<<<<<< HEAD:Client/src/components/Signin/RegisterCommonForm.jsx
 
 const RegisterCommonForm = (props) => {
+=======
+const RegisterCommonForm = ({props}) => {
+>>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e:Client/src/components/Signin/LoginCommonForm.jsx
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, seterrorPassword] = useState('');
 
-    const register = (e) => {
-        e.preventDefault()
-        // const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        // if (!emailReject.test(email) && email.length > 0){
-        //     setErrorEmail('Minimum 8 characters');
-        //     return;
-        // }
-        // const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        // if (!passwordReject.test(password) && password.length > 0){
-        //     seterrorPassword(`Minimum 8 characters\nMaximum 15 characters\nAt least one capital letter\nAt least one minute letter\nAt least one digit\nNo blanks\n At least 1 special character`);
-        //     return;
-        // }
-
-        const user={
-        email: email,
-        password: password,
-        test:email
-        }
-        axios.post(`${process.env.API_URL}/register`,user)
-    }
+    
 
 
     return(
@@ -43,10 +30,16 @@ const RegisterCommonForm = (props) => {
                     <p className='loginText'>Log in to TekalGame to play.</p>
                     <input className='inputForm' type='text'  placeholder='Email adress' onChange={(e) => setemail(e.target.value)}/>
                     <input className='inputForm' type='password'  placeholder='Password' onChange={(e) => setpassword(e.target.value)}/>
+                    {/* <button className='continue' onClick= {()=>props(email, password)}> Continue </button> */}
                     <Link className='forgotPassword'to=''>Forgot password?</Link>
+<<<<<<< HEAD:Client/src/components/Signin/RegisterCommonForm.jsx
                     <button className='continue' onClick={(e) => register(e)}> Continue </button>
                     <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr className='hr' width='40%' color='lightgrey'></hr></p>
+=======
+                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+>>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e:Client/src/components/Signin/LoginCommonForm.jsx
                 </form>
+                <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
                 <GoogleButton/>
                 <FacebookButton/>
                 <div className='signUp'>

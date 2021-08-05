@@ -1,11 +1,12 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import '../Styles/googleButton.css';
-
+import {SendDataGoogle} from '../controllers/dbFunctions'
 const GoogleButton = () => {
-
+    
     const responseGoogle = (response) => {
-        console.log(response)
+        SendDataGoogle(response.profileObj.email)
+
     }
 
 

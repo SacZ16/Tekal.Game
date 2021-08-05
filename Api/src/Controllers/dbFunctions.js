@@ -15,7 +15,6 @@ async function getallUsers(){
 
 
 async function getUser(user){
-    console.log(user)
     const params = {
         TableName: TABLE_NAME,
         Key:{'test':user.email,
@@ -32,7 +31,6 @@ async function newUser(user){
         Item: user
     };
     const response = await connectionDynamo.put(params).promise();
-    console.log(response.$response.requestId)
     return response.$response.requestId
 }
 
