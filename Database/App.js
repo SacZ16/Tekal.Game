@@ -1,6 +1,6 @@
 const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionItems, 
     queryAllSessionsUser, queryAllInfoUser, userTablesQuery, getTable, 
-    deleteTable} = require("./Handlers/index")
+    deleteTable, deleteUser} = require("./Handlers/index")
 
 // createUserTable()
 
@@ -13,13 +13,13 @@ const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionIt
 // ivan arevalo 98
 
 //userid email apssword
-// putUserLogin("Funciona", "funciona@gmail")
+// putUserLogin("sopaVerdura", "funciona@gmail", "gfgf")
 
 //userId name lastname age
-// putUserInfoRegisterItems("Funciona", "ivan", "arevalo", "23");
+// putUserInfoRegisterItems("sopaVerdura", "ivan", "arevalo", "23");
     
 //tableName, keyValuePK, keyValueSK
-// getTable("USER", "Funciona", "INFO#Funciona") 
+getTable("USER", "sopaVerdura", "INFO#sopaVerdura") 
 
 // userTablesQuery("PK", "Vacunar")
 
@@ -33,7 +33,8 @@ const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionIt
 
 // deleteTable("USER")
 
-userTablesQuery("Funciona")
+// userTablesQuery("Funciona");
+// deleteUser("Fabio")
 // console.log(queryAllSessionsUser("Fabio"))
 // const e = q && Object.values(q)
 // console.log(e);

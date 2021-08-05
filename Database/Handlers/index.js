@@ -38,189 +38,213 @@ const createUserTable = () => {
 
 //Funcion que guarda los datos del primer loggin 
 //(email y password o email)
-const putUserLogin = (userId, email, password) => {
-    var infoUser = `INFO#${items.userId}`;
+const putUserLogin = async (userId, email, password) => {
+    try{
+        var infoUser = `INFO#${userId}`;
 
-    let params = {
-        TableName: TABLE_USER,
-        Item:{
-            "PK": userId,
-            "SK": infoUser,
-            "email":  email,
-            "password": password,
-        }
-    };
-    console.log("Adding a new user item...");
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        } else { 
-            console.log("Added user item:", JSON.stringify(data, null, 2));
-        }
-    });
+        let params = {
+            TableName: TABLE_USER,
+            Item:{
+                "PK": userId,
+                "SK": infoUser,
+                "email":  email,
+                "password": password,
+            }
+        };
+        
+        const userLogin = await docClient.put(params).promise();
+        console.log("Added user item");
+        return userLogin;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
 }
 
 //Funcion que guarda los datos del registro
 //name lastname age
-const putUserInfoRegisterItems = (userId, name, lastname, age) => {
+const putUserInfoRegisterItems = async (userId, name, lastname, age) => {
+    try {
+        var infoUser = `INFO#${userId}`;
 
-    var infoUser = `INFO#${userId}`;
-
-    let params = {
-        TableName:TABLE_USER,
-        Key:{
-            "PK": userId,
-            "SK": infoUser,
-        },
-        UpdateExpression: "set #name = :name, lastname = :lastname, age = :age",
-        ExpressionAttributeNames: {
-            "#name": "name"
-        },
-        ExpressionAttributeValues: {
-            ":name": name,
-            ":lastname": lastname,
-            ":age": age
-        },
+        let params = {
+            TableName:TABLE_USER,
+            Key:{
+                "PK": userId,
+                "SK": infoUser,
+            },
+            UpdateExpression: "set #name = :name, lastname = :lastname, age = :age",
+            ExpressionAttributeNames: {
+                "#name": "name"
+            },
+            ExpressionAttributeValues: {
+                ":name": name,
+                ":lastname": lastname,
+                ":age": age
+            },
+        
+        };
     
-    };
-    console.log("Adding a new user item...");
-    docClient.update(params, function(err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        } else { 
-            console.log("Added user item:", JSON.stringify(data, null, 2));
-        }
-    });
+        const registerInfo = docClient.update(params).promise();
+        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        return registerInfo;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
 }
 
 //crea las sesiones del usuario
-const putUserSessionItems = (userId, presentations, answers) => {
-    const sessionId = new Date().toString().replace(/ /g, "").slice(6,20);
+const putUserSessionItems = async (userId, presentations, answers) => {
+   try {
+        const sessionId = new Date().toString().replace(/ /g, "").slice(6,20);
+        const userSession = `SESSION#${userId}#${sessionId}`;
 
-    const userSession = `SESSION#${userId}#${sessionId}`;
-
-    let params = {
-        TableName:TABLE_USER,
-        Item:{
-            "PK": {"S": userId}, 
-            "SK": {"S": userSession}, 
-            "loggedIn": {"S": new Date().toString()},
-            "presentations": {"SS": presentations},
-            "answers": {"NS": answers}
-        }
-    };
-
-    console.log("Adding a new Session...");
-    dynamodb.putItem(params, function(err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Added Session:", JSON.stringify(data, null, 2));
-        }
-    });
+        let params = {
+            TableName:TABLE_USER,
+            Item:{
+                "PK": {"S": userId}, 
+                "SK": {"S": userSession}, 
+                "loggedIn": {"S": new Date().toString()},
+                "presentations": {"SS": presentations},
+                "answers": {"NS": answers}
+            }
+        };
+        const sessionAdded = await dynamodb.putItem(params).promise();
+        console.log("Added Session:", JSON.stringify(sessionAdded, null, 2));
+        return sessionAdded;
+    } 
+    catch (error) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
 }
 
 //funcion que devuelve los datos de las subtablas
 //de info#user o session#user
-const getTable = (tableName, keyValuePK, keyValueSK) => {
-    let params = {
-        TableName: tableName,
-        Key:{
-            "PK" :  keyValuePK,
-            "SK" :  keyValueSK
-        }
-    };
+const getTable = async (tableName, keyValuePK, keyValueSK) => {
+    try {
+        let params = {
+            TableName: tableName,
+            Key:{
+                "PK" :  keyValuePK,
+                "SK" :  keyValueSK
+            }
+        };
 
-    docClient.get(params, function(err, data) {
-        if (err) {
-            console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
-        }
-    });
+        const tableGot = await docClient.get(params).promise();
+        console.log("GetItem succeeded:", JSON.stringify(tableGot, null, 2));
+        return tableGot;
+    }
+    catch(error){
+        console.error("Unable to read item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+
 }
 
 //funcion que trae todas las sesiones de un usuario determinado
-const queryAllSessionsUser = (userId) => {
-    let params = {
-        TableName : "USER",
-        KeyConditionExpression: "#PK = :PK AND #session > :session",
-        ExpressionAttributeNames:{
-            "#PK": "PK",
-            "#session": "SK"
-        },
-        ExpressionAttributeValues: {
-            ":PK": userId,
-            ":session": `SESSION#${userId}`,
-        }
-    };
-
-    docClient.query(params, async function(err, data) {
-        if (err) {
-            console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Query succeeded.");
-            console.log("Query description JSON:", JSON.stringify(data, null, 2));
-        }
-    });
+const queryAllSessionsUser = async (userId) => {
+    try {
+        let params = {
+            TableName : "USER",
+            KeyConditionExpression: "#PK = :PK AND #session > :session",
+            ExpressionAttributeNames:{
+                "#PK": "PK",
+                "#session": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":PK": userId,
+                ":session": `SESSION#${userId}`,
+            }
+        };
+        
+        const queryAllSessions = await docClient.query(params).promise();
+        console.log("Query description JSON:", JSON.stringify(queryAllSessions, null, 2));
+        return queryAllSessions;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
 }
+
 //trae toda la tabla info del usuario
-const queryAllInfoUser = (userId) => {
-    let params = {
-        TableName : "USER",
-        KeyConditionExpression: "#PK = :PK AND #info = :info",
-        ExpressionAttributeNames:{
-            "#PK": "PK",
-            "#info": "SK"
-        },
-        ExpressionAttributeValues: {
-            ":PK": userId,
-            ":info": `INFO#${userId}`,
-        }
-    };
+const queryAllInfoUser = async (userId) => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            KeyConditionExpression: "#PK = :PK AND #info = :info",
+            ExpressionAttributeNames:{
+                "#PK": "PK",
+                "#info": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":PK": userId,
+                ":info": `INFO#${userId}`,
+            }
+        };
 
-    docClient.query(params, async function(err, data) {
-        if (err) {
-            console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Query succeeded.");
-            console.log("Query description JSON:", JSON.stringify(data, null, 2));
-        }
-    });
+        const queryUserInfo = await docClient.query(params).promise()
+        console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        return queryUserInfo;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
 }
 
-//no anda
-const userTablesQuery = (keyValue) => {
-    let params = {
-        TableName : "USER",
-        KeyConditionExpression: "PK = :PK",
-        ExpressionAttributeValues: {
-            ":PK": keyValue
-        }
-    };
+//busca todas las subtablas de un usuario
+const userTablesQuery = async (keyValue) => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            KeyConditionExpression: "PK = :PK",
+            ExpressionAttributeValues: {
+                ":PK": keyValue
+            }
+        };
     
-    dynamodb.query(params, function(err, data) {
-        if (err) {
-            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Query succeeded: " + JSON.stringify(data, null, 2));
-        }
-    });
+        const queryUser = await docClient.query(params).promise();
+        console.log("Query succeeded: " + JSON.stringify(queryUser, null, 2));
+        return queryUser;
+    }
+    catch(error){
+        console.error("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
     
 }
+
+//borra un usuario con todas sus subtablas
+const deleteUser = async (userId) => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            Key: {
+                userId
+            }
+        };
+    
+        const userDeleted = await docClient.delete(params).promise();
+        console.log("Deleted table. Table description JSON:", JSON.stringify(userDeleted, null, 2));
+        return userDeleted;
+    }
+    catch(error) {
+        console.error("Unable to delete table. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
 //elimina la tabla pasada por parametro 
-const deleteTable = (tableName) => {
-    let params = {
-        TableName : tableName
-    };
+const deleteTable = async (tableName) => {
+    try {
+        let params = {
+            TableName : tableName
+        };
     
-    dynamodb.deleteTable(params, function(err, data) {
-        if (err) {
-            console.error("Unable to delete table. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Deleted table. Table description JSON:", JSON.stringify(data, null, 2));
-        }
-    });
+        const tableDeleted = await dynamodb.deleteTable(params).promise();
+        console.log("Deleted table. Table description JSON:", JSON.stringify(tableDeleted, null, 2));
+        return tableDeleted;
+    }
+    catch(error){
+        console.error("Unable to delete table. Error JSON:", JSON.stringify(error, null, 2));
+    }
     
 }
 
@@ -233,5 +257,6 @@ module.exports = {
     queryAllInfoUser,
     userTablesQuery,
     getTable,
-    deleteTable
+    deleteTable,
+    deleteUser
 }
