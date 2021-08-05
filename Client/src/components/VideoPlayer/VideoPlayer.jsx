@@ -27,17 +27,6 @@ const VideoPlayer = () => {
     incorrect: false
   })
 
-  /*Barra de Progreso */
-  const ProgressBar = () => {
-
-    return(
-        <>
-            <progress class='progressBar' id="progress" max={template.length} value={seeVideos.current}></progress>
-        </>
-    )
-  }
-  /*Fin Barra de Progreso*/
-
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
       const concat = infoVideo.current.infoVideo.type + "_repeat";
@@ -84,7 +73,11 @@ const VideoPlayer = () => {
 
   return (
     <>
-      <progress class='progressBar' id="progress" max={template.length} value={seeVideos.current}></progress>
+      <progress 
+        className='progressBar' 
+        id="progress" max={template.length} 
+        value={seeVideos.current}>
+      </progress>
       {
         <div className={
           (border.correct) ? style.videoGreen : '' ||

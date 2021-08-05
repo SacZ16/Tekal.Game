@@ -22,8 +22,7 @@ export const Game = () => {
   var intervalo;
 
   function recVideos() {
-
-    viewVideos()
+    viewVideos();
     const filterVideo = videos.find(video => video.id === template[tope][0]);
     dispatch(recVideo(filterVideo, tope));
     tope++;
@@ -38,10 +37,7 @@ export const Game = () => {
   }
 
   function viewVideos() {
-    // console.log(videosToSeenQuote.current)
-
-    // const viewVideo = videosToSeenQuote.current.shift()
-    dispatch(seenVideos(videos))
+    dispatch(seenVideos(videos));
   }
 
   useEffect(() => {
