@@ -41,3 +41,4 @@ export const SendDataGoogle = async (email) => {
     newCookie(status.data)
     return status.data
 }
+

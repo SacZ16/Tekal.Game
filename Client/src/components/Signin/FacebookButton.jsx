@@ -11,11 +11,6 @@ const FacebookButton = () => {
     }
 
     if(profile.email){
-        console.log(profile)
-        postAndVerification(profile)
-    }
-
-    if(profile.email){
         SendDataGoogle(profile.email)
     }
     

@@ -3,6 +3,7 @@ const routes = require('./routes/index.js')
 const login = require('./routes/login')
 const register = require('./routes/register')
 const loginGooandFace = require('./routes/loginFaceandGoo')
+const countries = require('./routes/countries')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const cors = require('cors');
@@ -22,6 +23,7 @@ server.use(bodyparser.json({ limit: '50mb' }));
 server.use(morgan('dev'));
 
 server.use('/', routes);
+server.use('/country', countries);
 server.use('/login', login);
 server.use('/register', register);
 server.use('/logingoogle', loginGooandFace);

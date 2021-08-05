@@ -46,11 +46,7 @@ const RegisterWithEmail = () => {
             password: password,
             test:email,
         }
-<<<<<<< HEAD
-        axios.post(`${process.env.REACT_APP_API_URL}/register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
-=======
         axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
->>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e
     }
 
     return(
@@ -66,6 +62,7 @@ const RegisterWithEmail = () => {
                 <input name='password' onChange={(e) => setpassword(e.target.value)} type='password' required/>
                     <p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
+                    <p>At least one capital number</p>
                     <p>At least one capital letter</p>
                     <p>At least one minute letter</p>
                     <p>No blanks</p>

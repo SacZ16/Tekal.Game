@@ -7,12 +7,7 @@ import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 
 
-<<<<<<< HEAD:Client/src/components/Signin/RegisterCommonForm.jsx
-
-const RegisterCommonForm = (props) => {
-=======
 const RegisterCommonForm = ({props}) => {
->>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e:Client/src/components/Signin/LoginCommonForm.jsx
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -32,12 +27,7 @@ const RegisterCommonForm = ({props}) => {
                     <input className='inputForm' type='password'  placeholder='Password' onChange={(e) => setpassword(e.target.value)}/>
                     {/* <button className='continue' onClick= {()=>props(email, password)}> Continue </button> */}
                     <Link className='forgotPassword'to=''>Forgot password?</Link>
-<<<<<<< HEAD:Client/src/components/Signin/RegisterCommonForm.jsx
-                    <button className='continue' onClick={(e) => register(e)}> Continue </button>
-                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr className='hr' width='40%' color='lightgrey'></hr></p>
-=======
                     <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
->>>>>>> 224e3e1bd8a6fd17bbbb535887e0d6487127db4e:Client/src/components/Signin/LoginCommonForm.jsx
                 </form>
                 <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
                 <GoogleButton/>
