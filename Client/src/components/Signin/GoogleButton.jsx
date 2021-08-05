@@ -1,11 +1,12 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-
-
+import '../Styles/googleButton.css';
+import {SendDataGoogle} from '../controllers/dbFunctions'
 const GoogleButton = () => {
-
+    
     const responseGoogle = (response) => {
-        console.log(response)
+        SendDataGoogle(response.profileObj.email)
+
     }
 
 
@@ -14,10 +15,17 @@ const GoogleButton = () => {
         <div>
             <GoogleLogin
                 clientId={process.env.REACT_APP_ID_GOOGLE}
-                buttonText="Login"
-                // render = {renderProps => (
-                //     <button onClick={renderProps.onClick} disabled={renderProps.disabled}> por si quieren darle su propio estilo XD</button>
-                // )}
+                buttonText="Continue with Google"
+                render = {renderProps => (
+                    <button className='googleLogin' onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                    <p className='one'>Con</p>
+                    <p className='two'>tin</p>
+                    <p className='three'>ue w</p>
+                    <p className='four'>ith</p> 
+                    <p className='five'>&nbsp;Goo</p>
+                    <p className='six'>gle</p> 
+                    </button>
+                )}
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}

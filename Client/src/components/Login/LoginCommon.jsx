@@ -1,36 +1,41 @@
 import React, {useState} from 'react';
+import Particles from 'react-particles-js'
 import axios from 'axios';
+import '../Styles/login.css';
+import logoTekal from '../Styles/tekalLogo.png';
+import RegisterCommonForm from '../Signin/LoginCommonForm';
+import Cookie from 'universal-cookie'
+import {SendDataToBACK} from '../controllers/dbFunctions'
 
-const LoginCommon = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const LoginPage = () => {
 
-    const SendDataToBACK = async () => {
-        const objPost = {
-            email: email,
-            password: password,
-        }
-        const status= await axios({
-            url: 'http://localhost:3001/login',
-            method: 'POST',
-            data: objPost
-        })
-        console.log(status.data)
-        document.getElementById('email').value = ''
-        document.getElementById('password').value = ''
-        if(status.data.status==400){return alert('usuario o contraseña mal')}
-        else if(status.data.status==200){return alert('te logueaste')}
-    }
-
-    return(
+    const cookies= new Cookie();
+    console.log(cookies.get('userInfo'))
+    return (
         <div>
-            <form>
-                <input type='text' id='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
-                <input type='text' id='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-            </form>
-            <button onClick={() => SendDataToBACK()}> ola soy un boton </button>
+            <div className='bgLanding'>
+            <Particles
+                params={{'particles':{"number":{"value":96,"density":{"enable":true,"value_area":800}}},'line_linked':{'width':'2'},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"}}}}}
+            />
+            </div>
+            <img className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>
+            <div className='screenText'>
+                <h1 className='check'>Check how your</h1>
+                <div className='text2'>
+                    <h1 className='memory'>memory&nbsp;</h1>
+                    <h1 className='working'>is working</h1> 
+            </div>
+            <p className='loremLogin'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut 
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris.
+            </p>
+            </div>
+            <p className='copyright'>© 2021 Tekal, Inc. All rights reserved</p>
+            <RegisterCommonForm props={SendDataToBACK}/>
         </div>
     )
 };
 
-export default LoginCommon;
+export default LoginPage;

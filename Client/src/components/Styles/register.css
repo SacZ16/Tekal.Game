@@ -1,0 +1,128 @@
+
+
+.form {
+    display: flex;
+    flex-direction: column; 
+    z-index: 4; 
+}
+
+.containerLanding {
+    width: 400px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.904);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    right: 5%;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.logoForm{
+    width: 150px;
+    height: 30px;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+.welcome {
+    color:rgb(197, 197, 197);
+    font-size: 25px;
+    font-weight:normal;
+    margin-left: 45px;
+    margin-top: 20px;
+}
+
+.loginText{
+    color:rgb(197, 197, 197);
+    font-size: 16px;
+    font-weight:normal;
+    margin-left: 5px;
+    margin-top: -7px;
+}
+
+.inputForm {
+    width:120%;
+    padding: 14px 0 14px 0;
+    margin-left: -20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.788);
+    border-style: solid;
+    border-color: #1663A2;
+    border-width: 0.5px;
+    color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+::placeholder{
+    text-align: center;
+    line-height: 100px;
+    color: white;
+}
+
+.forgotPassword{
+    color: #74b5eb;
+    margin: 10px 0px 10px 0;
+    left: -10%;
+    position: relative;
+}
+
+.forgotPassword:hover{
+    color: #f22ca091 ;
+}
+
+.continue {
+    width:120%;
+    padding: 14px 0 14px 0;
+    margin-left: -20px;
+    background-color: transparent;
+    color: white;
+    background-color:#1663A2;
+    border-radius: 5px;
+    border-style: solid;
+    border-style: none;
+}
+
+.continue:hover{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.hr {
+    border:none;
+    background-color: rgb(197, 197, 197);
+    height: 0.5px;
+}
+
+.or {
+    display: flex;
+    flex-direction: row;
+    width:120%;
+    margin-left: -20px;
+    color:rgb(197, 197, 197);
+}
+
+.signUp{
+    display: flex;
+    flex-direction: row;
+}
+
+.signUpText{
+    color:rgb(197, 197, 197)
+}
+
+.signUpLink{
+    margin-top: 14.5px;
+    margin-left: 5px;
+    color: #74b5eb;
+}
+
+.signUpLink:hover{
+    color: #f22ca091;
+}
+/* {Colores P
+#7A7878 === gris oscuro 
+#F22C9F === fucsia tekal
+#06EFE7 === celeste tekal
+rgb(197, 197, 197)===gris claro*/
