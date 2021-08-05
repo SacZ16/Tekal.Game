@@ -1,19 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
 import style from '../Game/Game.module.css';
 
-const VideoPlayer =  () => {
+const VideoPlayer = () => {
 
-  const {recVideo,template} = useSelector(state => state);
-
+  const { recVideo, template } = useSelector(state => state);
+  const user = useSelector(state => state.user)
   const infoVideo = useRef();
-
   infoVideo.current = recVideo;
-
   const infoTemplate = useRef();
-
   infoTemplate.current = template;
+
+  const correctPoints = useRef(0)
+  const incorrectPoints = useRef(0)
+
+  const press = useRef(false)
 
   const [border, setBorder] = useState({
     correct: false,
@@ -21,80 +23,84 @@ const VideoPlayer =  () => {
   })
 
   const handleKeyDown = (event) => {
-    
-    // console.log('A key was pressed', event.keyCode);
-    if (event.keyCode === 32) {
-      // if (videoPosition.current >= videos.length - 1) console.log('finalizo')
-      // const target = sVideos.find(e => e.id === videos[videoPosition.current].id)
-      // console.log('taget', target)
-      
-          // console.log("recVideo",ref.current.infoVideo.type); 
-          const concat = infoVideo.current.infoVideo.type + "_repeat";
+    console.log(border)
 
-        if(concat === template[infoVideo.current.filter][1]){
-          console.log("verdadero");
-          setBorder({
-            correct: true,
-            incorrect:false
-          });
-        }   
-        else{
-          console.log("falso");
-          setBorder({
-            correct: false,
-            incorrect:true
-          });
-        }
-        setTimeout(() => {
-          setBorder({
-            correct: false,
-            incorrect:false
-          });
+    if (event.keyCode === 32 && !press.current) {
+      const concat = infoVideo.current.infoVideo.type + "_repeat";
+
+      if (concat === template[infoVideo.current.filter][1]) {
+        console.log("verdadero");
+        correctPoints.current++
+        setBorder({
+          ...border,
+          correct: true,
+          incorrect: false
+        });
+        press.current = true
+      }
+      else {
+        console.log("falso");
+        incorrectPoints.current++
+        setBorder({
+          ...border,
+          correct: false,
+          incorrect: true
+        });
+        press.current = true
+      }
+      setTimeout(() => {
+        setBorder({
+          ...border,
+          correct: false,
+          incorrect: false,
+          press: true
+        });
       }, 500)
-
-              // if(ref.current.infoVideo.type === "target_repeat")
-              //     console.log("verde");
-
-              if (true) {
-          
-              }else{
-             
-              }
-        }
+    }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    press.current = false
+  }, [recVideo])
+
+  useEffect(() => {
+    press.current = false
+  }, [recVideo])
+
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
-  
+    }
+  }, [])
+
   return (
-      <>
+    <>
+
+
       {
         <div className={
-          (border.correct) ? style.videoGreen:''||
-          (border.incorrect)? style.videoRed:''
-          }>
+          (border.correct) ? style.videoGreen : '' ||
+            (border.incorrect) ? style.videoRed : ''
+        }>
           {(recVideo !== '') &&
-            <div  width="50%"
-                  height="50%">
-                  <ReactPlayer
-                      width="50%"
-                      height="50%"
-                      url={recVideo.infoVideo.url}
-                      playing
-                      muted
-                  />
-              <div>{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div>
-              <br/> 
-              <div>{template[infoVideo.current.filter]}</div>   
-              </div>
-        }
+            <div width="50%"
+              height="50%">
+              <ReactPlayer
+                width="50%"
+                height="50%"
+                url={recVideo.infoVideo.url}
+                playing
+                muted
+              />
+              <div >{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div>
+              <br />
+              <div>{template[infoVideo.current.filter]}</div>
+            </div>
+          }
         </div>
       }
-      </>
+    </>
   )
 }
 
