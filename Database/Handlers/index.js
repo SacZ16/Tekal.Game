@@ -6,8 +6,9 @@ AWS.config.update({
 })
 
 const dynamodb = new AWS.DynamoDB();
-
 const docClient = new AWS.DynamoDB.DocumentClient();
+
+const TABLE_USER = "USER";
 
 const createUserTable = () => {
     let params = {
@@ -35,22 +36,18 @@ const createUserTable = () => {
     });
 }
 
+//Funcion que guarda los datos del primer loggin 
+//(email y password o email)
 const putUserLogin = (userId, email, password) => {
-    const table = "USER";
-    const items = {
-        userId,
-        email,
-        password,
-    }
     var infoUser = `INFO#${items.userId}`;
 
     let params = {
-        TableName:table,
+        TableName: TABLE_USER,
         Item:{
-            "PK": items.userId,
+            "PK": userId,
             "SK": infoUser,
-            "email":  items.email,
-            "password": items.password,
+            "email":  email,
+            "password": password,
         }
     };
     console.log("Adding a new user item...");
@@ -63,20 +60,16 @@ const putUserLogin = (userId, email, password) => {
     });
 }
 
+//Funcion que guarda los datos del registro
+//name lastname age
 const putUserInfoRegisterItems = (userId, name, lastname, age) => {
-    const table = "USER";
-    const items = {
-        userId,
-        name,
-        lastname,
-        age
-    }
-    var infoUser = `INFO#${items.userId}`;
+
+    var infoUser = `INFO#${userId}`;
 
     let params = {
-        TableName:table,
+        TableName:TABLE_USER,
         Key:{
-            "PK": items.userId,
+            "PK": userId,
             "SK": infoUser,
         },
         UpdateExpression: "set #name = :name, lastname = :lastname, age = :age",
@@ -84,9 +77,9 @@ const putUserInfoRegisterItems = (userId, name, lastname, age) => {
             "#name": "name"
         },
         ExpressionAttributeValues: {
-            ":name": items.name,
-            ":lastname": items.lastname,
-            ":age": items.age
+            ":name": name,
+            ":lastname": lastname,
+            ":age": age
         },
     
     };
@@ -100,20 +93,16 @@ const putUserInfoRegisterItems = (userId, name, lastname, age) => {
     });
 }
 
+//crea las sesiones del usuario
 const putUserSessionItems = (userId, presentations, answers) => {
-    const table = "USER";
     const sessionId = new Date().toString().replace(/ /g, "").slice(6,20);
-    const items = {
-        userId,
-        presentations, 
-        answers
-    }
-    const userSession = `SESSION#${items.userId}#${sessionId}`;
+
+    const userSession = `SESSION#${userId}#${sessionId}`;
 
     let params = {
-        TableName:table,
+        TableName:TABLE_USER,
         Item:{
-            "PK": {"S": items.userId}, 
+            "PK": {"S": userId}, 
             "SK": {"S": userSession}, 
             "loggedIn": {"S": new Date().toString()},
             "presentations": {"SS": presentations},
@@ -131,7 +120,8 @@ const putUserSessionItems = (userId, presentations, answers) => {
     });
 }
 
-
+//funcion que devuelve los datos de las subtablas
+//de info#user o session#user
 const getTable = (tableName, keyValuePK, keyValueSK) => {
     let params = {
         TableName: tableName,
@@ -141,7 +131,7 @@ const getTable = (tableName, keyValuePK, keyValueSK) => {
         }
     };
 
-    docClient.get(params, async function(err, data) {
+    docClient.get(params, function(err, data) {
         if (err) {
             console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
         } else {
@@ -150,6 +140,7 @@ const getTable = (tableName, keyValuePK, keyValueSK) => {
     });
 }
 
+//funcion que trae todas las sesiones de un usuario determinado
 const queryAllSessionsUser = (userId) => {
     let params = {
         TableName : "USER",
@@ -173,7 +164,7 @@ const queryAllSessionsUser = (userId) => {
         }
     });
 }
-
+//trae toda la tabla info del usuario
 const queryAllInfoUser = (userId) => {
     let params = {
         TableName : "USER",
@@ -217,7 +208,7 @@ const userTablesQuery = (keyValue) => {
     });
     
 }
-
+//elimina la tabla pasada por parametro 
 const deleteTable = (tableName) => {
     let params = {
         TableName : tableName
