@@ -81,7 +81,7 @@ const RegisterWithEmail = () => {
                 <input className='inputFormRegister' placeholder='Confirm email' name='Cemail' type='text' onChange={(e) => setConfirmEmail(e.target.value)} required/>
                     {/* <p>Email must be the same</p> */}
                 <input className='inputFormRegister' placeholder='Password' name='password' onChange={(e) => setPassword(e.target.value)} type='password' required/>
-                   {/*  <p>Minimum 8 characters</p>
+                {/*  <p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
                     <p>At least one capital number</p>
                     <p>At least one capital letter</p>
@@ -90,11 +90,11 @@ const RegisterWithEmail = () => {
                     <p>At least 1 special character</p> */}
                 <input className='inputFormRegister' placeholder='Confirm password' name='Cpassword' onChange={(e) => setConfirmPass(e.target.value)} type='password' required/>
                     {/* <p>Passwords must be the same</p> */}
-                <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
                 <p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
                 <GoogleButton/>
                 <FacebookButton/>
             </form>
+                <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
         </>
     )
 }
