@@ -121,7 +121,7 @@ const putUserSessionItems = async (userId, presentations, answers) => {
 
 //funcion que devuelve los datos de las subtablas
 //de info#user o session#user
-const getTable = async (tableName, keyValuePK, keyValueSK) => {
+const getSubtable = async (tableName, keyValuePK, keyValueSK) => {
     try {
         let params = {
             TableName: tableName,
@@ -212,24 +212,6 @@ const userTablesQuery = async (keyValue) => {
     
 }
 
-//borra un usuario con todas sus subtablas
-const deleteUser = async (userId) => {
-    try {
-        let params = {
-            TableName : TABLE_USER,
-            Key: {
-                userId
-            }
-        };
-    
-        const userDeleted = await docClient.delete(params).promise();
-        console.log("Deleted table. Table description JSON:", JSON.stringify(userDeleted, null, 2));
-        return userDeleted;
-    }
-    catch(error) {
-        console.error("Unable to delete table. Error JSON:", JSON.stringify(error, null, 2));
-    }
-}
 
 //elimina la tabla pasada por parametro 
 const deleteTable = async (tableName) => {
@@ -256,7 +238,6 @@ module.exports = {
     queryAllSessionsUser,
     queryAllInfoUser,
     userTablesQuery,
-    getTable,
-    deleteTable,
-    deleteUser
+    getSubtable,
+    deleteTable
 }

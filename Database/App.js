@@ -1,8 +1,8 @@
 const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionItems, 
-    queryAllSessionsUser, queryAllInfoUser, userTablesQuery, getTable, 
-    deleteTable, deleteUser} = require("./Handlers/index")
+    queryAllSessionsUser, queryAllInfoUser, userTablesQuery, getSubtable, 
+    deleteTable} = require("./Handlers/index")
 
-// createUserTable()
+
 
 // //userId, name, lastname, email, password, age
 // putUserInfoItems("ivangeronimo","ivan", "arevalo", null, null, null)
@@ -19,7 +19,7 @@ const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionIt
 // putUserInfoRegisterItems("sopaVerdura", "ivan", "arevalo", "23");
     
 //tableName, keyValuePK, keyValueSK
-getTable("USER", "sopaVerdura", "INFO#sopaVerdura") 
+
 
 // userTablesQuery("PK", "Vacunar")
 
@@ -31,7 +31,7 @@ getTable("USER", "sopaVerdura", "INFO#sopaVerdura")
 
 // queryAllInfoUser("Funciona")
 
-// deleteTable("USER")
+
 
 // userTablesQuery("Funciona");
 // deleteUser("Fabio")
@@ -79,3 +79,9 @@ getTable("USER", "sopaVerdura", "INFO#sopaVerdura")
 //         }
 //     });
 // }
+
+//createUserTable()
+//deleteTable("USER")
+// putUserLogin("Sopa","fsfs@fdsfs.com","contraseña")
+//getSubtable("USER", "Sopa", "INFO#Sopa")
+//putUserInfoRegisterItems("Sopa","Sofia","Pellegrini", "20")
