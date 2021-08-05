@@ -3,9 +3,16 @@ import axios from 'axios';
 import Cookie from 'universal-cookie'
 
 
-
-export const SendDataToBACK = async (email, password) => {
+export const newCookie= (info)=>{
     const cookies= new Cookie();
+    cookies.set('userInfo', info, {
+        maxAge: 60,
+        path: './'
+    });
+    window.location.href='./login'
+}
+export const SendDataToBACK = async (email, password) => {
+
     const objPost = {
         email: email,
         password: password,
@@ -17,11 +24,7 @@ export const SendDataToBACK = async (email, password) => {
     })
     if(status.data.status==400){return alert('usuario o contraseña mal')}
     else if(status.data.status==200){
-        cookies.set('userInfo', status.data.userInfo, {
-            maxAge: 60,
-            path: './'
-        });
-        window.location.href='./login'
+        newCookie(status.data.userInfo)
     }
 }
 
@@ -35,6 +38,6 @@ export const SendDataGoogle = async (email) => {
         method: 'POST',
         data: objPost
     })
-    console.log(status.data)
+    newCookie(status.data)
     return status.data
 }
