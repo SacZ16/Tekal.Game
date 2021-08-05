@@ -6,7 +6,8 @@ AWS.config.update({
 })
 
 const dynamodb = new AWS.DynamoDB();
-const  docClient = new AWS.DynamoDB.DocumentClient();
+
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 const createUserTable = () => {
     let params = {
@@ -81,15 +82,16 @@ const putUserSessionItems = (userId, presentations, answers) => {
     let params = {
         TableName:table,
         Item:{
-            "PK": items.userId, 
-            "SK": userSession, 
-            "presentations": presentations,
-            "answers": answers
+            "PK": {"S": items.userId}, 
+            "SK": {"S": userSession}, 
+            "loggedIn": {"S": new Date().toString()},
+            "presentations": {"SS": presentations},
+            "answers": {"NS": answers}
         }
     };
 
     console.log("Adding a new Session...");
-    docClient.put(params, function(err, data) {
+    dynamodb.putItem(params, function(err, data) {
         if (err) {
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         } else {
@@ -99,13 +101,13 @@ const putUserSessionItems = (userId, presentations, answers) => {
 }
 
 
+
 const getTable = (tableName, keyValuePK, keyValueSK) => {
     let params = {
         TableName: tableName,
         Key:{
-            "PK" : keyValuePK,
-            "SK" : keyValueSK
-
+            "PK" :  keyValuePK,
+            "SK" :  keyValueSK
         }
     };
 
@@ -154,7 +156,7 @@ const userTablesQuery = (keyName, keyValue) => {
         }
     };
     
-    docClient.query(params, function(err, data) {
+    dynamodb.query(params, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
@@ -186,5 +188,6 @@ module.exports = {
     queryAllSessionsUser,
     userTablesQuery,
     getTable,
-    deleteTable
+    deleteTable,
+    logOutUserSession
 }
