@@ -10,6 +10,10 @@ const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    let a = process.env
+
+    console.log(a)
+
     const SendDataToBACK = async (e) => {
         e.preventDefault()
         console.log(email)

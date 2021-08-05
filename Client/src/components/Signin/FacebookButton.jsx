@@ -10,20 +10,24 @@ const FacebookButton = () => {
 
     
     const responseFacebook = (response) => {
-        setProfile(response);
-    }
-    
-    const postAndVerification = async (profile) => {
-        const data = {
-            email: profile.email,
-            test: profile.email
-        }
-        await axios.post('http://localhost:3001/register', data)
+        setProfile(response)
     }
 
-    if(profile.email){
-        postAndVerification(profile)
+    if(profile.email) {
+        console.log(profile)
     }
+    
+    // const postAndVerification = async (profile) => {
+    //     const data = {
+    //         email: profile.email,
+    //         test: profile.email
+    //     }
+    //     await axios.post('http://localhost:3001/register', data)
+    // }
+
+    // if(profile.email){
+    //     postAndVerification(profile)
+    // }
     
     
 
@@ -33,6 +37,7 @@ const FacebookButton = () => {
                 appId={process.env.REACT_APP_ID_FACE}
                 autoLoad={true}
                 fields="name,email,picture"
+                // onClick={responseFacebook}
                 callback={responseFacebook}
                 cssClass='facebookBtn'
                 textButton='Continue with Facebook'

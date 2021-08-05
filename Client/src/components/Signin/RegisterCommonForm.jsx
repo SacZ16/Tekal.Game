@@ -8,7 +8,7 @@ import FacebookButton from './FacebookButton';
 
 
 
-const RegisterCommonForm = () => {
+const RegisterCommonForm = (props) => {
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
 
@@ -45,7 +45,7 @@ const RegisterCommonForm = () => {
                     <input className='inputForm' type='password'  placeholder='Password' onChange={(e) => setpassword(e.target.value)}/>
                     <Link className='forgotPassword'to=''>Forgot password?</Link>
                     <button className='continue' onClick={(e) => register(e)}> Continue </button>
-                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr className='hr' width='40%' color='lightgrey'></hr></p>
                 </form>
                 <GoogleButton/>
                 <FacebookButton/>
