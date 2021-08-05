@@ -35,32 +35,63 @@ const createUserTable = () => {
     });
 }
 
-const putUserInfoItems = (userId, name, lastname, email, password, age) => {
+const putUserLogin = (userId, email, password) => {
     const table = "USER";
     const items = {
         userId,
-        name,
-        lastname,
         email,
         password,
-        age
     }
     var infoUser = `INFO#${items.userId}`;
 
     let params = {
         TableName:table,
         Item:{
-            "PK": {"S": items.userId},
-            "SK": {"S": infoUser},
-            "name": {"S": items.name},
-            "lastName":{"S": items.lastname},
-            "email": {"S": items.email},
-            "password": {"S": items.password},
-            "age": {"S": items.age}
+            "PK": items.userId,
+            "SK": infoUser,
+            "email":  items.email,
+            "password": items.password,
         }
     };
     console.log("Adding a new user item...");
-    dynamodb.putItem(params, function(err, data) {
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else { 
+            console.log("Added user item:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+const putUserInfoRegisterItems = (userId, name, lastname, age) => {
+    const table = "USER";
+    const items = {
+        userId,
+        name,
+        lastname,
+        age
+    }
+    var infoUser = `INFO#${items.userId}`;
+
+    let params = {
+        TableName:table,
+        Key:{
+            "PK": items.userId,
+            "SK": infoUser,
+        },
+        UpdateExpression: "set #name = :name, lastname = :lastname, age = :age",
+        ExpressionAttributeNames: {
+            "#name": "name"
+        },
+        ExpressionAttributeValues: {
+            ":name": items.name,
+            ":lastname": items.lastname,
+            ":age": items.age
+        },
+    
+    };
+    console.log("Adding a new user item...");
+    docClient.update(params, function(err, data) {
         if (err) {
             console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         } else { 
@@ -101,7 +132,6 @@ const putUserSessionItems = (userId, presentations, answers) => {
 }
 
 
-
 const getTable = (tableName, keyValuePK, keyValueSK) => {
     let params = {
         TableName: tableName,
@@ -134,7 +164,7 @@ const queryAllSessionsUser = (userId) => {
         }
     };
 
-    docClient.query(params, function(err, data) {
+    docClient.query(params, async function(err, data) {
         if (err) {
             console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
@@ -144,13 +174,35 @@ const queryAllSessionsUser = (userId) => {
     });
 }
 
-const userTablesQuery = (keyName, keyValue) => {
+const queryAllInfoUser = (userId) => {
     let params = {
         TableName : "USER",
-        KeyConditionExpression: "#PK = :PK",
+        KeyConditionExpression: "#PK = :PK AND #info = :info",
         ExpressionAttributeNames:{
-            "#PK": keyName
+            "#PK": "PK",
+            "#info": "SK"
         },
+        ExpressionAttributeValues: {
+            ":PK": userId,
+            ":info": `INFO#${userId}`,
+        }
+    };
+
+    docClient.query(params, async function(err, data) {
+        if (err) {
+            console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            console.log("Query description JSON:", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+//no anda
+const userTablesQuery = (keyValue) => {
+    let params = {
+        TableName : "USER",
+        KeyConditionExpression: "PK = :PK",
         ExpressionAttributeValues: {
             ":PK": keyValue
         }
@@ -183,11 +235,12 @@ const deleteTable = (tableName) => {
 
 module.exports = {
     createUserTable,
-    putUserInfoItems,
+    putUserInfoRegisterItems,
+    putUserLogin,
     putUserSessionItems,
     queryAllSessionsUser,
+    queryAllInfoUser,
     userTablesQuery,
     getTable,
-    deleteTable,
-    logOutUserSession
+    deleteTable
 }
