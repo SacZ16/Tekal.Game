@@ -34,4 +34,7 @@ async function newUser(user){
     return response.$response.requestId
 }
 
+
+
+
 module.exports = {getallUsers, getUser,newUser}

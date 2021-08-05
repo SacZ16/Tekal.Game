@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,  useEffect  } from 'react';
 import Particles from 'react-particles-js'
 import axios from 'axios';
 import '../Styles/login.css';
@@ -8,8 +8,12 @@ import Cookie from 'universal-cookie'
 import {SendDataToBACK} from '../controllers/dbFunctions'
 
 const LoginPage = () => {
-
     const cookies= new Cookie();
+    useEffect(()=>{
+        if (cookies.get('userInfo')){
+            window.location.href='./'
+        }
+    })
     console.log(cookies.get('userInfo'))
     return (
         <div>

@@ -83,6 +83,7 @@ const RegisterWithEmail = () => {
                 <input className='inputFormRegister' placeholder='Password' name='password' onChange={(e) => setPassword(e.target.value)} type='password' required/>
                    {/*  <p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
+                    <p>At least one capital number</p>
                     <p>At least one capital letter</p>
                     <p>At least one lower case letter</p>
                     <p>No blanks</p>

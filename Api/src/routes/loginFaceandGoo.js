@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
             console.log(user)
             return user }
     }
-    res.json(await (await run()).Item.email)
+    res.json(await (await run()).Item)
 })
 
 module.exports = router;
