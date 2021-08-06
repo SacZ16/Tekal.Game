@@ -57,9 +57,9 @@ const putVideo = async (urlVideoId) => {
             }
         };
         
-        const userLogin = await docClient.put(params).promise();
-        console.log("Added user item");
-        return userLogin;
+        const video = await docClient.put(params).promise();
+        console.log("Added video");
+        return video;
     }
     catch(error){
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
@@ -80,12 +80,12 @@ const putWasTarget = async (urlVideoId) => {
             },
         };
 
-        const hit = docClient.update(params).promise();
+        const target = docClient.update(params).promise();
         console.log("Added target:", JSON.stringify(hit, null, 2));
-        return hit;
+        return target;
     }
     catch(error){
-        console.error("Unable to hit. Error JSON:", JSON.stringify(error, null, 2));
+        console.error("Unable to target. Error JSON:", JSON.stringify(error, null, 2));
     }
 }
 
@@ -108,11 +108,11 @@ const putWatcher = async (urlVideoId, userId) => {
         };
 
         const watcher = docClient.update(params).promise();
-        console.log("Added user item:", JSON.stringify(watcher, null, 2));
+        console.log("Added watcher:", JSON.stringify(watcher, null, 2));
         return watcher;
     }
     catch(error){
-        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+        console.error("Unable to add watcher Error JSON:", JSON.stringify(error, null, 2));
     }
 }
 
