@@ -9,12 +9,14 @@ import {SendDataToBACK} from '../controllers/dbFunctions'
 
 const LoginPage = () => {
     const cookies= new Cookie();
+    
     useEffect(()=>{
         if (cookies.get('userInfo')){
             window.location.href='./'
         }
     })
     console.log(cookies.get('userInfo'))
+    if(cookies.get('userInfo')){return window.location.href='./'}
     return (
         <div>
             <div className='bgLanding'>

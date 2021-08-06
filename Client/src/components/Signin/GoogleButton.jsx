@@ -6,7 +6,6 @@ const GoogleButton = () => {
     
     const responseGoogle = (response) => {
         SendDataGoogle(response.profileObj.email)
-
     }
 
 
