@@ -6,14 +6,25 @@ import brainBack from '../Styles/images/brainBack.png';
 import {Link} from 'react-router-dom';
 import ReactPlayer from 'react-player'
 import tutorial from '../Styles/media/tutorial.mp4'
+import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 
-const Home = () => {
 
+
+
+const Home = () => {
     const [show, setShow] = useState(false)
     const [sessionOn, setSessionOn] = useState(false)
     const [login, setLogin] = useState(true)
     const [startGame, setStartGame] = useState(false)
+    const [checker, setchecker]=useState(false)
+    const cookies= new Cookie();
+
+    if(cookies.get('userInfo')&& !checker){
+        setStartGame(true)
+        setLogin(false)
+        setchecker(true)
+    }
 
     const CurrentSession = () => {
         return(

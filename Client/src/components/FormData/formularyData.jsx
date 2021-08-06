@@ -17,12 +17,16 @@ const FormData = () => {
     const [inputCountry, setInputCountry] = useState('')
     var arrCountries = [];
     const cookies= new Cookie();
-
+    var emailCokkie;
     if(!cookies.get('userInfo')){
         window.location.href='./'
-        return 
     }
-    const emailCokkie= cookies.get('userInfo').Items[0].email
+    console.log(cookies.get('userInfo'))
+
+    if(!cookies.get('userInfo').Items){ emailCokkie=cookies.get('userInfo')[0] }
+    else{emailCokkie = cookies.get('userInfo').Items[0].email}
+    
+    console.log(emailCokkie)
     if(age.length === 2 || age.length === 4) {
         setNames(age + '-')
     }

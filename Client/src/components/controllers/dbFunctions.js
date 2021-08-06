@@ -22,9 +22,9 @@ export const SendDataToBACK = async (email, password) => {
         method: 'POST',
         data: objPost
     })
-    if(status.data.status==400){return alert('usuario o contraseña mal')}
-    else if(status.data.status==200){
-        newCookie({algo:status.data.userInfo, otracosa:'informacion'})
+    if(!status){return alert('usuario o contraseña mal')}
+    else if(status){
+        newCookie(status.data)
     }
 }
 export const SendDataGoogle = async (email) => {

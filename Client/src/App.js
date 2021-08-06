@@ -4,6 +4,7 @@ import FormData from './components/FormData/formularyData';
 import RegisterWithEmail from './components/Signin/RegisterEmail';
 import Home from './components/Home/Home'
 
+
 function App() {
   return (
     <Router>
@@ -16,7 +17,7 @@ function App() {
       <Route exact path='/form'>
       <FormData/>
       </Route>
-      <Route exact path='/home'>
+      <Route exact path='/'>
       <Home/>
       </Route>
     </Router>

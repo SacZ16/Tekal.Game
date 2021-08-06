@@ -14,17 +14,13 @@ router.post('/', async (req, res) => {
     const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(req.body.email)}
 else{return {}}}
     const runUser= await user()
-    if (!runUser.Items){
+    if (!runUser.Items[0]){
         return res.json({ error: 'Email no register', status:'400' })
     }
     else {const validPassword = await bcrypt.compare(req.body.password, runUser.Items[0].password);
     if (!validPassword) return res.json({ error: 'error', status:'400' })
     else{
-        res.json({
-            error: null,
-            status: '200',
-            userInfo:runUser.Item
-        })
+        res.json(runUser.Items)
     }}
 })
 
