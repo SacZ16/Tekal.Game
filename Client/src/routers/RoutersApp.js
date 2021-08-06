@@ -5,13 +5,11 @@ import Finalgame from '../components/Final/Final'
 import FormRegister from '../components/Form/FormRegister'
 import Game from '../components/Game/Game'
 import Home from '../components/Home/Home'
-import Login from '../components/Login/Login'
 
 function RoutersApp() {
     return (
         <>
             <Switch>
-                <Route exact path='/login' component={Login} />
                 <Route path='/home' component={Home} />
                 <Route path='/formRegister' component={FormRegister} />
                 <Route path='/game' component={Game} />

@@ -1,14 +1,17 @@
-import  React, 
-      { useRef, 
-        useState, 
-        useEffect }   from 'react';
-import  ReactPlayer   from 'react-player';
-import { 
-        useDispatch, 
-        useSelector } from 'react-redux';
+import React,
+{
+  useRef,
+  useState,
+  useEffect
+} from 'react';
+import ReactPlayer from 'react-player';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { withRouter } from 'react-router';
-import   style        from '../Game/Game.module.css';
-import   swal         from '@sweetalert/with-react';
+import style from '../Game/Game.module.css';
+import swal from '@sweetalert/with-react';
 
 import { sessionInfo } from '../../redux/action';
 import './progressBar.css';
@@ -17,15 +20,15 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
   const dispatch = useDispatch();
 
-  const { 
-          recVideo, 
-          template, 
-          user, 
-          videos 
-        } = useSelector(state => state); // Traidos del Obj Reducer.
+  const {
+    recVideo,
+    template,
+    user,
+    videos
+  } = useSelector(state => state); // Traidos del Obj Reducer.
 
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
-  seeVideos.current = user.currentGame.seenVideos; 
+  seeVideos.current = user.currentGame.seenVideos;
 
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
@@ -40,7 +43,7 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
   const [color, setColor] = useState('#067eef'); // 
-  
+
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current && template[infoVideo.current.filter]) {
@@ -125,6 +128,7 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
             z-index='5'
             url={recVideo.infoVideo.url}
             onEnded={recVideos}
+            controls={false}
             playing
             muted
           />

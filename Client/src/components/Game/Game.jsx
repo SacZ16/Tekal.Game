@@ -9,7 +9,6 @@ import videosURL from '../../assets/videosurl';
 export const Game = () => {
 
   const dispatch = useDispatch();
-
   const videos = useSelector(state => state.videos);
   const template = useSelector(state => state.template);
 
@@ -18,52 +17,45 @@ export const Game = () => {
 
   /*----------------------------------------*/
 
-// prueba
-var random = Math.round(Math.random() * 1000)
-const template2 = require(`../../assets/level_templates/template_${random}.json`)[2];
-// console.log(random)
-const filler = template2[0] && template2.filter(e => e[1] === 'filler')
-const vig = template2[0] && template2.filter(e => e[1] === 'vig')
-const target = template2[0] && template2.filter(e => e[1] === 'target')
+  // var random = Math.round(Math.random() * 1000)
+  const template2 = require(`../../assets/level_templates/template_717.json`)[2];
 
-const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  const filler = template2[0] && template2.filter(e => e[1] === 'filler')
+  const vig = template2[0] && template2.filter(e => e[1] === 'vig')
+  const target = template2[0] && template2.filter(e => e[1] === 'target')
 
+  const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  const arrVideos = videosURL.map((e, i) => Object.create({}, {
+    id: { value: i },
+    url: { value: e },
+  }))
 
-const arrVideos = videosURL.map((e, i) => Object.create({}, {
-  id: { value: i },
-  url: { value: e }
-}))
-// console.log('template', template2)
-// console.log('videosURL', arrVideos)
+  const videosToSee = [] // array nuevo
 
-const videosToSee = []
-// arrVideos.map(e => arrVideos.filter(b => b.id === e[0])
-template.map(e => videosToSee.push(arrVideos.filter(b => b.id === e[0])[0]))
-console.log(videosToSee)
+  template2.map(e => {
+    videosToSee.push(arrVideos.filter(b => b.id === e[0])[0]
+    );
 
-/*  const videosToSee = []
- console.log(videosToSee)
- for (let i = 0; i < template2.length; i++) {
-   for (let j = 0; j < arrVideos.length; j++) {
-     if (template2[i][0] === arrVideos[j].id) {
-       const obj = {
-         ...arrVideos[j],
-         category: template2[i][1]
-       }
-       videosToSee.push(obj)
-     }
-   }
+    if (videosToSee.find(e => e.id === e[0])) {
+      console.log('repeat')
+      videosToSee[videosToSee.length - 1].category = e[1] + '_repeat'
+      videosToSee[videosToSee.length - 1].idTemplate = e[0]
+    } else {
+      console.log('no repeat')
+      videosToSee[videosToSee.length - 1].category = e[1]
+      videosToSee[videosToSee.length - 1].idTemplate = e[0]
+    }
+  })
+  console.log(videosToSee)
 
- } /
-
-/--------------------------*/
-
-
+  /* const a = arrVideos.map(b => {
+    if (b.id === 0) {
+      return b
+    }
+  })
+  
+  console.log(a) */
   /*----------------------------------------*/
-
-
-
-
 
   /*
     - Se selecciona el template y se mira cuantos videos necesitamos.
