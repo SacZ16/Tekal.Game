@@ -10,6 +10,8 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const TABLE_USER = "USER";
 
+
+
 const createUserTable = () => {
     let params = {
         TableName : "USER",
