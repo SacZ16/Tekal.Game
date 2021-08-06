@@ -1,19 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import style from '../Game/Game.module.css';
+import swal from '@sweetalert/with-react'
+
 import './progressBar.css';
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ stopInterval, history }) => {
 
-  const { recVideo, template,user } = useSelector(state => state);
-  
+  const { recVideo, template, user, videos } = useSelector(state => state);
+
   const seeVideos = useRef();
-  seeVideos.current = user.presentationsGames.seenVideos.length;
-  
+  seeVideos.current = user.presentationsGames.seenVideos;
+
   const infoVideo = useRef();
   infoVideo.current = recVideo;
-  
+
   const infoTemplate = useRef();
   infoTemplate.current = template;
 
@@ -21,11 +24,11 @@ const VideoPlayer = () => {
   const incorrectPoints = useRef(0);
 
   const press = useRef(false);
-const [color,setColor]= useState('#067eef')
-  const [border, setBorder] = useState({
-    correct: false,
-    incorrect: false
-  })
+  const [color, setColor] = useState('#067eef')
+  /*  const [border, setBorder] = useState({
+     correct: false,
+     incorrect: false
+   }) */
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -33,21 +36,21 @@ const [color,setColor]= useState('#067eef')
 
       if (concat === template[infoVideo.current.filter][1]) {
         correctPoints.current++;
-        setBorder({
-          ...border,
-          correct: true,
-          incorrect: false
-        });
+        /*  setBorder({
+           ...border,
+           correct: true,
+           incorrect: false
+         }); */
         setColor('green')
         press.current = true;
       }
       else {
         incorrectPoints.current++;
-        setBorder({
-          ...border,
-          correct: false,
-          incorrect: true
-        });
+        /*   setBorder({
+            ...border,
+            correct: false,
+            incorrect: true
+          }); */
         setColor('red')
         press.current = true;
       }
@@ -68,41 +71,69 @@ const [color,setColor]= useState('#067eef')
   }, [recVideo]);
 
   useEffect(() => {
+    if (incorrectPoints.current === 3) {
+      stopInterval()
+      swal({
+        text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
+        button: 'Continuar',
+      })
+        .then(() => {
+          console.log('Finalizo');
+          history.push('/close')
+        });
+    }
+  }, [incorrectPoints.current])
+
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
   }, []);
-  console.log(color)
-  var bcolor= {'background':`${color}`}
+
+  var bcolor = { 'background': `${color}` }
+
+  useEffect(() => {
+    if (seeVideos.current.length + 1 > videos.length) {
+      swal({
+        text: "Finalizo el Juego",
+        button: 'Continuar',
+      })
+        .then(() => {
+          console.log('Finalizo');
+          history.push('/close')
+        });
+    }
+  }, [seeVideos.current.length]);
+
   return (
-    
+
     <>
-        <div style={bcolor} className={style.fondo}></div>
-        <div className={style.videofondo}></div>
-      <progress 
-        className='progressBar' 
-        id="progress" max={24} //cambiar a template.length cuando seevideos.current tenga mas de 24
-        value={seeVideos.current}>
+      <div style={bcolor} className={style.fondo}></div>
+      <div className={style.videofondo}></div>
+      <progress
+        className='progressBar'
+        id="progress" max={videos.length}
+        value={seeVideos.current.length}>
       </progress>
-      
-          {(recVideo !== '') &&
-            <div width="50%"
-            height="50%" z-index='5'>
-              <ReactPlayer className={style.video}
-                z-index='5'
-                url={recVideo.infoVideo.url}
-                playing
-                muted
-                />
-              {/* <div >{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div> */}
-              <br />
-              {/* <div>{template[infoVideo.current.filter]}</div> */}
-            </div>
-          
+
+      {(recVideo !== '') &&
+        <div width="50%"
+          height="50%" z-index='5'>
+          <ReactPlayer className={style.video}
+            z-index='5'
+            url={recVideo.infoVideo.url}
+            playing
+            muted
+          />
+          {/* <div >{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div> */}
+          <br />
+          {/* <div>{template[infoVideo.current.filter]}</div> */}
+        </div>
+
       }
     </>
   )
 }
 
-export default VideoPlayer
+export default withRouter(VideoPlayer)
