@@ -11,7 +11,6 @@ res.json(await getallUsers())
 })
 
 router.post('/', async (req, res) => {
-    console.log(req.body)
     const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(req.body.email)}
 else{return {}}}
     const runUser= await user()

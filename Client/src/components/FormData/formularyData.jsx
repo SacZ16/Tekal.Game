@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import Cookie from 'universal-cookie'
 
 
 
@@ -14,10 +15,14 @@ const FormData = () => {
     const [browser, setBrowser] = useState([])
     const [prueba, setPrueba] = useState('aaaa-mm-dd')
     const [inputCountry, setInputCountry] = useState('')
-    
     var arrCountries = [];
+    const cookies= new Cookie();
 
-
+    if(!cookies.get('userInfo')){
+        window.location.href='./'
+        return 
+    }
+    const emailCokkie= cookies.get('userInfo').Items[0].email
     if(age.length === 2 || age.length === 4) {
         setNames(age + '-')
     }
@@ -62,6 +67,7 @@ const FormData = () => {
     }
     
     const postRegister = () => {
+
         if(!names){
             alert('')
             return
@@ -78,9 +84,14 @@ const FormData = () => {
             alert('4')
             return
         }
-        let obj = {
+        let obj ={
+                "userId":emailCokkie,
+                "name":names,
+                "lastname":surnames,
+                "age":prueba, 
+                "country":inputCountry
         }
-        // axios.post(`${process.env.REACT_APP_API_URL}URL A PONER`, obj);
+        axios.post(`${process.env.REACT_APP_API_URL}addinfo`, obj);
         window.location.href = ('login')
     }
 

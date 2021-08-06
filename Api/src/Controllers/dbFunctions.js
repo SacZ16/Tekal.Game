@@ -134,7 +134,7 @@ const queryAllInfoUser = async (userId) => {
         };
 
         const queryUserInfo = await connectionDynamo.query(params).promise()
-        console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
     catch(error){

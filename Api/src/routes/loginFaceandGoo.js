@@ -2,7 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const { getallUsers, getUser, newUser, putUserLogin,queryAllInfoUser} = require('../Controllers/dbFunctions.js')
+const { getallUsers, getUser, newUser, putUserLogin, queryAllInfoUser } = require('../Controllers/dbFunctions.js')
 
 
 
@@ -14,15 +14,15 @@ router.post('/', async (req, res) => {
     async function run() {
         const user = await queryAllInfoUser(req.body.email)
         if (!user.Items.length) {
-            putUserLogin({
+            await putUserLogin({
                 "PK": req.body.email,
                 "SK": `INFO#${req.body.email}`,
-                "email": req.body.email,
-            })
+                "email": req.body.email})
+        return await queryAllInfoUser(req.body.email)
         }
-        else { 
-            console.log(user)
-            return user }
+        else {
+            return user
+        }
     }
     res.json(await run())
 })

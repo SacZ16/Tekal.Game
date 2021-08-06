@@ -27,8 +27,6 @@ export const SendDataToBACK = async (email, password) => {
         newCookie({algo:status.data.userInfo, otracosa:'informacion'})
     }
 }
-
-
 export const SendDataGoogle = async (email) => {
     const objPost = {
         email: email
@@ -38,7 +36,7 @@ export const SendDataGoogle = async (email) => {
         method: 'POST',
         data: objPost
     })
-    newCookie(status.data)
+    newCookie(await status.data)
     return status.data
 }
 
