@@ -13,23 +13,23 @@ const { createUserTable, putUserInfoRegisterItems, putUserLogin,putUserSessionIt
 // ivan arevalo 98
 
 //userid email apssword
-// putUserLogin("sopaVerdura", "funciona@gmail", "gfgf")
+// putUserLogin("sopaCarne", "funciona@gmail")
 
 //userId name lastname age
-// putUserInfoRegisterItems("sopaVerdura", "ivan", "arevalo", "23");
+// putUserInfoRegisterItems("sopaCarne", "ivan", "arevalo", "23");
     
 //tableName, keyValuePK, keyValueSK
-getTable("USER", "sopaVerdura", "INFO#sopaVerdura") 
+// getTable("USER", "sopaVerdura", "INFO#sopaVerdura") 
 
 // userTablesQuery("PK", "Vacunar")
 
 // console.log(new Date().toString().replace(/ /g, "").slice(6,20))
 
 // //userId, presentations, answers
-// putUserSessionItems("Funciona", ["dfdfdfdf", "chau"], ["1","0"])
+putUserSessionItems("sopaCarne", ["video1", "video2"], ["1","0"])
 // queryAllSessionsUser("Vacunar")
 
-// queryAllInfoUser("Funciona")
+// queryAllInfoUser("sopaVerdura")
 
 // deleteTable("USER")
 
