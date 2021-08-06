@@ -21,7 +21,7 @@ const VideoPlayer = () => {
   const incorrectPoints = useRef(0);
 
   const press = useRef(false);
-
+const [color,setColor]= useState('#067eef')
   const [border, setBorder] = useState({
     correct: false,
     incorrect: false
@@ -38,6 +38,7 @@ const VideoPlayer = () => {
           correct: true,
           incorrect: false
         });
+        setColor('green')
         press.current = true;
       }
       else {
@@ -47,15 +48,17 @@ const VideoPlayer = () => {
           correct: false,
           incorrect: true
         });
+        setColor('red')
         press.current = true;
       }
       setTimeout(() => {
-        setBorder({
-          ...border,
-          correct: false,
-          incorrect: false,
-          press: true
-        });
+        // setBorder({
+        //   ...border,
+        //   correct: false,
+        //   incorrect: false,
+        //   press: true
+        // });
+        setColor('#067eef')
       }, 500)
     }
   };
@@ -70,35 +73,33 @@ const VideoPlayer = () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
   }, []);
-
+  console.log(color)
+  var bcolor= {'background':`${color}`}
   return (
+    
     <>
+        <div style={bcolor} className={style.fondo}></div>
+        <div className={style.videofondo}></div>
       <progress 
         className='progressBar' 
-        id="progress" max={template.length} 
+        id="progress" max={24} //cambiar a template.length cuando seevideos.current tenga mas de 24
         value={seeVideos.current}>
       </progress>
-      {
-        <div className={
-          (border.correct) ? style.videoGreen : '' ||
-            (border.incorrect) ? style.videoRed : ''
-        }>
+      
           {(recVideo !== '') &&
             <div width="50%"
-              height="50%">
-              <ReactPlayer
-                width="50%"
-                height="50%"
+            height="50%" z-index='5'>
+              <ReactPlayer className={style.video}
+                z-index='5'
                 url={recVideo.infoVideo.url}
                 playing
                 muted
-              />
-              <div >{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div>
+                />
+              {/* <div >{recVideo.infoVideo.id} {recVideo.infoVideo.type} </div> */}
               <br />
-              <div>{template[infoVideo.current.filter]}</div>
+              {/* <div>{template[infoVideo.current.filter]}</div> */}
             </div>
-          }
-        </div>
+          
       }
     </>
   )

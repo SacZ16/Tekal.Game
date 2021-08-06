@@ -3,6 +3,7 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos, userScore } from '../../redux/action';
 import { Link, Redirect } from 'react-router-dom';
+import style from '../Game/Game.module.css';
 
 export const Game = () => {
 
@@ -46,12 +47,14 @@ export const Game = () => {
 
   return (
     < >
+<div className={style.fondo2}>
 
-      <Link to='login'>Volver</Link>
-      <button onClick={recVideos}>Click</button>
+      <Link className={style.Link} to='login'>❌</Link>
+      {/* <button onClick={recVideos}>Click</button> */}
       {tope >= videos.length - 1 ? <Redirect to='close' /> :
         <VideoPlayer />
       }
+      </div>
     </>
   )
 }

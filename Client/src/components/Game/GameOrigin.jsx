@@ -92,16 +92,16 @@ function Game() {
 
     return (
         <div className={style.container}>
-            <Link to='login'>Volver</Link>
+            <Link  to='login'>Volver</Link>
 
             {/* <label for="file">File progress:</label>
 
-            <progress id="file" max="100" value={ }> 70% </progress> */}
+<progress id="file" max="100" value={ }> 70% </progress> */}
 
             <div className={border.correct && style.videoGreen || border.incorrect && style.videoRed}>
                 {
-                    sVideos.length !== videos.length - 1 && <VideoPlayer currentVideo={currentVideo} />
-
+                    sVideos.length !== videos.length - 1 && <VideoPlayer className={style.containerf} currentVideo={currentVideo} />
+                    
                 }
 
                 {

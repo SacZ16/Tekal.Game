@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
+
+.loader{
+    position: relative;
+    width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  left: 100px;
+  background: linear-gradient(45deg,transparent,transparent 40%,#F22C9F);
+  animation: animate 2s linear infinite;
+  }
+  @keyframes animate{
+    0%{transform:rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
+  .loader:before{
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    background: #000;
+    border-radius: 50%;
+    z-index: 1000;
+  }
+  .loader:after{
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: linear-gradient(45deg,transparent,transparent 40%,#F22C9F);
+    border-radius: 50%;
+    z-index: 1000;
+    z-index: 1;
+    filter: blur(30px);
+  }
+  .bgLandingfinal {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.porcentaje{
+    position: absolute;
+    color: cornsilk;
+    margin-left: 115px;
+    margin-top: 40px;
+    font-size: 60px;
+    z-index: 2000;
+}
+.marco{
+    display: flex;
+    position: absolute;
+    top: 35%;
+    right: 75%;
+    font-family: 'Montserrat', sans-serif;
+}
+.yourscore{
+    color: #F22C9F;
+    position: absolute;
+    top: 20%;
+    right: 63%;
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+.copyright {
+    font-size: 10px;
+    position: absolute;
+    bottom: 0%;
+    color: white;
+    margin-left: 7%;
+    margin-bottom: 10px;
+}
