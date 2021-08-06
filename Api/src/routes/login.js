@@ -14,7 +14,8 @@ router.post('/', async (req, res) => {
     const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(req.body.email)}
 else{return {}}}
     const runUser= await user()
-    if (!runUser.Items[0]){
+    console.log(runUser)
+    if (!runUser.Items.length){
         return res.json({ error: 'Email no register', status:'400' })
     }
     else {const validPassword = await bcrypt.compare(req.body.password, runUser.Items[0].password);

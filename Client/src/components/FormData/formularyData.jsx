@@ -23,7 +23,7 @@ const FormData = () => {
     }
     console.log(cookies.get('userInfo'))
 
-    if(!cookies.get('userInfo').Items){ emailCokkie=cookies.get('userInfo')[0] }
+    if(!cookies.get('userInfo').Items){ emailCokkie=cookies.get('userInfo')[0].email }
     else{emailCokkie = cookies.get('userInfo').Items[0].email}
     
     console.log(emailCokkie)

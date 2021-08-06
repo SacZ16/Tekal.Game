@@ -22,7 +22,8 @@ export const SendDataToBACK = async (email, password) => {
         method: 'POST',
         data: objPost
     })
-    if(!status){return alert('usuario o contraseña mal')}
+    console.log(status.data.error)
+    if(status.data.error){return alert('usuario o contraseña mal')}
     else if(status){
         newCookie(status.data)
     }
