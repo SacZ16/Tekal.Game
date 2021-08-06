@@ -42,3 +42,54 @@ const createVideosTable = () => {
         }
     });
 }
+
+//put watcher => agrega un elemento string al array
+const putWatcher = async (urlVideoId, userId) => {
+    try {
+
+        let params = {
+            TableName: "VIDEO",
+            Key:{
+                "PK": urlVideoId,
+            },
+            UpdateExpression: "SET #watchedBy = list_append(#watchedBy, :watcher)",
+            ExpressionAttributeNames : {
+                "#watchedBy" : "watchedBy"
+              },
+            ExpressionAttributeValues: {
+                ":watcher": [userId]
+            },  
+        };
+    
+        const watcher = docClient.update(params).promise();
+        console.log("Added user item:", JSON.stringify(watcher, null, 2));
+        return watcher;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+//put anotaciones => agrega +1 al anotaciones
+const putHitted = async (urlVideoId) => {
+    try {
+
+        let params = {
+            TableName: "VIDEO",
+            Key:{
+                "PK": urlVideoId,
+            },
+            UpdateExpression: "SET targetHitted = :hit",
+            ExpressionAttributeValues: {
+                ":hit": targetHitted++
+            },   
+        };
+    
+        const hit = docClient.update(params).promise();
+        console.log("Added hit:", JSON.stringify(hit, null, 2));
+        return hit;
+    }
+    catch(error){
+        console.error("Unable to hit. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
