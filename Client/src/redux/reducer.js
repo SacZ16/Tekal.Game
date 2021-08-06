@@ -1,6 +1,6 @@
 
 import videos from '../assets/videos.js';
-import { CHANGE_TEMPLATE, CHANGE_VIDEO, SCORE, REC_VIDEO, SEEN_VIDEO } from './action';
+import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO } from './action';
 
 const template = require('../assets/level_templates/prueba.json')[2];
 
@@ -12,28 +12,27 @@ const initialState = {
     template,
     videos,
     user: {
-        id:'',
-        Names:'',
+        id: '',
+        Names: '',
         Surname: '',
-        email:'',
-        password:'',
+        email: '',
+        password: '',
         Contries: '',
         // Departament: '',
         // City: '',
         DateN: '',
-        presentationsGames:{
-            idGame:'',
+        currentGame: {
+            idGame: '',
             numVideosTarget: 100,
-            numAciertos: 30,
-            PromedioAciertos: 30/100,
-            lives:3, 
-            seenVideos:[
-            ]
+            numAciertos: 0,
+            PromedioAciertos: 30 / 100,
+            lives: 0,
+            seenVideos: []
         },
-        TotalGames:{                    //Query
+        TotalGames: {                    //Query
             NumVidoesViewTarget: 1000,  // Sumatoria de Videos Vistos
             NumAciertos: 30,            // Sumatoria de Aciertos de Videos Vistos
-            PromedioAciertos: 30/100,   //  Promedio 
+            PromedioAciertos: 30 / 100,   //  Promedio 
         },
     }
 }
@@ -62,13 +61,16 @@ export default function reducer(state = initialState, { type, payload }) {
                 }
             };
 
-        case SCORE:
+        case SESSION_INFO:
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    correct: payload.correct,
-                    incorrect: payload.incorrect
+                    currentGame: {
+                        ...state.user.currentGame,
+                        numAciertos: payload.correctPoints,
+                        lives: payload.lives
+                    }
                 }
             };
 
@@ -77,12 +79,12 @@ export default function reducer(state = initialState, { type, payload }) {
                 ...state,
                 user: {
                     ...state.user,
-                    presentationsGames:{
-                        ...state.user.presentationsGames,
+                    currentGame: {
+                        ...state.user.currentGame,
                         seenVideos: [
-                                    ...state.user.presentationsGames.seenVideos, 
-                                    payload
-                                ]
+                            ...state.user.currentGame.seenVideos,
+                            payload
+                        ]
                     }
                 }
             };

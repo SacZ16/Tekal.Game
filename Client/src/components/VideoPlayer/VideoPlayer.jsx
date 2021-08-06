@@ -1,18 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import style from '../Game/Game.module.css';
 import swal from '@sweetalert/with-react'
 
 import './progressBar.css';
+import { sessionInfo } from '../../redux/action';
 
 const VideoPlayer = ({ stopInterval, history }) => {
 
+  const dispatch = useDispatch();
   const { recVideo, template, user, videos } = useSelector(state => state);
 
   const seeVideos = useRef();
-  seeVideos.current = user.presentationsGames.seenVideos;
+  seeVideos.current = user.currentGame.seenVideos;
 
   const infoVideo = useRef();
   infoVideo.current = recVideo;
@@ -21,7 +23,7 @@ const VideoPlayer = ({ stopInterval, history }) => {
   infoTemplate.current = template;
 
   const correctPoints = useRef(0);
-  const incorrectPoints = useRef(0);
+  const lives = useRef(3);
 
   const press = useRef(false);
   const [color, setColor] = useState('#067eef')
@@ -29,11 +31,11 @@ const VideoPlayer = ({ stopInterval, history }) => {
      correct: false,
      incorrect: false
    }) */
+  console.log(template[infoVideo.current.filter])
 
   const handleKeyDown = (event) => {
-    if (event.keyCode === 32 && !press.current) {
+    if (event.keyCode === 32 && !press.current && template[infoVideo.current.filter]) {
       const concat = infoVideo.current.infoVideo.type + "_repeat";
-
       if (concat === template[infoVideo.current.filter][1]) {
         correctPoints.current++;
         /*  setBorder({
@@ -45,7 +47,7 @@ const VideoPlayer = ({ stopInterval, history }) => {
         press.current = true;
       }
       else {
-        incorrectPoints.current++;
+        lives.current--;
         /*   setBorder({
             ...border,
             correct: false,
@@ -70,19 +72,18 @@ const VideoPlayer = ({ stopInterval, history }) => {
     press.current = false;
   }, [recVideo]);
 
-  useEffect(() => {
-    if (incorrectPoints.current === 3) {
-      stopInterval()
-      swal({
-        text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
-        button: 'Continuar',
-      })
-        .then(() => {
-          console.log('Finalizo');
-          history.push('/close')
-        });
-    }
-  }, [incorrectPoints.current])
+  /*  useEffect(() => {
+     if (lives.current === 3) {
+       stopInterval()
+       swal({
+         text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
+         button: 'Continuar',
+       })
+         .then(() => {
+           history.push('/close')
+         });
+     }
+   }, [lives.current]) */
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -94,7 +95,9 @@ const VideoPlayer = ({ stopInterval, history }) => {
   var bcolor = { 'background': `${color}` }
 
   useEffect(() => {
+
     if (seeVideos.current.length + 1 > videos.length) {
+      sessionData()
       swal({
         text: "Finalizo el Juego",
         button: 'Continuar',
@@ -104,7 +107,26 @@ const VideoPlayer = ({ stopInterval, history }) => {
           history.push('/close')
         });
     }
-  }, [seeVideos.current.length]);
+    if (lives.current === 0) {
+      sessionData()
+      stopInterval()
+      swal({
+        text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
+        button: 'Continuar',
+      })
+        .then(() => {
+          history.push('/close')
+        });
+    }
+  }, [seeVideos.current.length, lives.current]);
+
+  function sessionData() {
+    let obj = Object.create({}, {
+      correctPoints: { value: correctPoints.current },
+      lives: { value: lives.current }
+    })
+    dispatch(sessionInfo(obj))
+  }
 
   return (
 

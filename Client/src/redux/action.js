@@ -1,7 +1,7 @@
 export const CHANGE_VIDEO = "CHANGE_VIDEO";
 export const CHANGE_TEMPLATE = "CHANGE_TEMPLATE";
 export const REC_VIDEO = "REC_VIDEO";
-export const SCORE = "SCORE";
+export const SESSION_INFO = "SESSION_INFO";
 export const SEEN_VIDEO = "SEEN_VIDEO";
 
 
@@ -41,9 +41,9 @@ export function seenVideos(videos) {
     }
 }
 
-export function userScore(score) {
+export function sessionInfo(obj) {
     return {
-        type: SCORE,
-        payload: score
+        type: SESSION_INFO,
+        payload: obj
     }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
-import { recVideo, seenVideos, userScore } from '../../redux/action';
+import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Game/Game.module.css';
 
@@ -23,7 +23,7 @@ export const Game = () => {
     dispatch(recVideo(filterVideo, tope));
     tope++;
     if (tope >= videos.length) {
-      dispatch(userScore({ correct: 0, incorrect: 3 }))
+
       stopInterval()
     }
   }
