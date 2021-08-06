@@ -2,7 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const { getallUsers, getUser, newUser } = require('../Controllers/dbFunctions.js')
+const { getallUsers, getUser, newUser, putUserLogin,queryAllInfoUser} = require('../Controllers/dbFunctions.js')
 
 
 
@@ -12,16 +12,19 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     async function run() {
-        const user = await getUser(req.body)
-        if (!user.Item) {
-            newUser({ test: req.body.email, email: req.body.email })
-            run()
+        const user = await queryAllInfoUser(req.body.email)
+        if (!user.Items.length) {
+            putUserLogin({
+                "PK": req.body.email,
+                "SK": `INFO#${req.body.email}`,
+                "email": req.body.email,
+            })
         }
         else { 
             console.log(user)
             return user }
     }
-    res.json(await (await run()).Item)
+    res.json(await run())
 })
 
 module.exports = router;

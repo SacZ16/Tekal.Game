@@ -26,7 +26,7 @@ const RegisterWithEmail = () => {
             return;
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(password) && password.length > 0){
+        if (!passwordReject.test(password) && password.length >= 0){
             console.log('ENTREEE2222')
             return;
         }
@@ -39,6 +39,7 @@ const RegisterWithEmail = () => {
             password: password,
             test:email,
         }
+        console.log(user)
         axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
 }
 
