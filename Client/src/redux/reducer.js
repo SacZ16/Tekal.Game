@@ -26,7 +26,8 @@ const initialState = {
             numVideosTarget: 100,
             numAciertos: 0,
             PromedioAciertos: 30 / 100,
-            lives: 0,
+            lives: 3,
+            mood: '', // Estado de Animo
             seenVideos: []
         },
         TotalGames: {                    //Query

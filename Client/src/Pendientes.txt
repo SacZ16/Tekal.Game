@@ -1,0 +1,20 @@
+PENDIENTES.
+
+1. Revisar Archivos de estilo. 
+2. Delay videos.
+3. Colocar estado de animo por juego. 
+4. Sacar estadisticas para ventana Close. 
+5. Crear el array para los videos. 
+6. Boton Reiniciar Juego y Salir(Llevar al Home).
+7. Hablar con los de CSS para colocar las vidas al lado de la barra de progreso.
+8. Revisar los videos Filler y Vig para que no de como ascierto si hace la barra espaciadora
+
+
+-----------------------------------------------
+- Solo importa el que acierto no el que perdio
+- Los videos siempre tienen un tipo? no, se definen en el momento de reproducir el template
+- Cuando se le muestra un video como target a un usuario ahi ya genera una anotacion.
+- la logitud de repuestas es igual a la logitud de videos Target que tenga el template 
+- descarga de API para integracion hablar con JuanSe 
+
+-----------------------------------------------

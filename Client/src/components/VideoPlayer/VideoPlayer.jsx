@@ -1,68 +1,61 @@
-import React, { useRef, useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
-import { useDispatch, useSelector } from 'react-redux';
+import  React, 
+      { useRef, 
+        useState, 
+        useEffect }   from 'react';
+import  ReactPlayer   from 'react-player';
+import { 
+        useDispatch, 
+        useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
-import style from '../Game/Game.module.css';
-import swal from '@sweetalert/with-react'
+import   style        from '../Game/Game.module.css';
+import   swal         from '@sweetalert/with-react';
 
-import './progressBar.css';
 import { sessionInfo } from '../../redux/action';
+import './progressBar.css';
 
-const VideoPlayer = ({ stopInterval, history }) => {
+const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
   const dispatch = useDispatch();
-  const { recVideo, template, user, videos } = useSelector(state => state);
 
-  const seeVideos = useRef();
-  seeVideos.current = user.currentGame.seenVideos;
+  const { 
+          recVideo, 
+          template, 
+          user, 
+          videos 
+        } = useSelector(state => state); // Traidos del Obj Reducer.
 
-  const infoVideo = useRef();
+  const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
+  seeVideos.current = user.currentGame.seenVideos; 
+
+  const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
 
-  const infoTemplate = useRef();
+  const infoTemplate = useRef(); // Template de Prueba generado estatico
   infoTemplate.current = template;
 
-  const correctPoints = useRef(0);
-  const lives = useRef(3);
+  const correctPoints = useRef(0); // Aciertos del usuario en el juego.
 
-  const press = useRef(false);
-  const [color, setColor] = useState('#067eef')
-  /*  const [border, setBorder] = useState({
-     correct: false,
-     incorrect: false
-   }) */
-  console.log(template[infoVideo.current.filter])
+  const lives = useRef(3); // Vidas del usuario iniciando el juego
+
+  const press = useRef(false); // Variable para detectar la barra espaciadora
+
+  const [color, setColor] = useState('#067eef'); // 
+  
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current && template[infoVideo.current.filter]) {
       const concat = infoVideo.current.infoVideo.type + "_repeat";
       if (concat === template[infoVideo.current.filter][1]) {
         correctPoints.current++;
-        /*  setBorder({
-           ...border,
-           correct: true,
-           incorrect: false
-         }); */
         setColor('green')
         press.current = true;
       }
       else {
         lives.current--;
-        /*   setBorder({
-            ...border,
-            correct: false,
-            incorrect: true
-          }); */
         setColor('red')
         press.current = true;
       }
       setTimeout(() => {
-        // setBorder({
-        //   ...border,
-        //   correct: false,
-        //   incorrect: false,
-        //   press: true
-        // });
         setColor('#067eef')
       }, 500)
     }
@@ -71,19 +64,6 @@ const VideoPlayer = ({ stopInterval, history }) => {
   useEffect(() => {
     press.current = false;
   }, [recVideo]);
-
-  /*  useEffect(() => {
-     if (lives.current === 3) {
-       stopInterval()
-       swal({
-         text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
-         button: 'Continuar',
-       })
-         .then(() => {
-           history.push('/close')
-         });
-     }
-   }, [lives.current]) */
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -94,8 +74,8 @@ const VideoPlayer = ({ stopInterval, history }) => {
 
   var bcolor = { 'background': `${color}` }
 
+  /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
-
     if (seeVideos.current.length + 1 > videos.length) {
       sessionData()
       swal({
@@ -103,19 +83,18 @@ const VideoPlayer = ({ stopInterval, history }) => {
         button: 'Continuar',
       })
         .then(() => {
-          console.log('Finalizo');
-          history.push('/close')
+          history.push('/close');
         });
     }
     if (lives.current === 0) {
-      sessionData()
-      stopInterval()
+      sessionData();
+      stopInterval();
       swal({
         text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
         button: 'Continuar',
       })
         .then(() => {
-          history.push('/close')
+          history.push('/close');
         });
     }
   }, [seeVideos.current.length, lives.current]);
@@ -124,8 +103,8 @@ const VideoPlayer = ({ stopInterval, history }) => {
     let obj = Object.create({}, {
       correctPoints: { value: correctPoints.current },
       lives: { value: lives.current }
-    })
-    dispatch(sessionInfo(obj))
+    });
+    dispatch(sessionInfo(obj));
   }
 
   return (
@@ -145,6 +124,7 @@ const VideoPlayer = ({ stopInterval, history }) => {
           <ReactPlayer className={style.video}
             z-index='5'
             url={recVideo.infoVideo.url}
+            onEnded={recVideos}
             playing
             muted
           />
