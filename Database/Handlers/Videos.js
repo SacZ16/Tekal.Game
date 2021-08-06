@@ -43,6 +43,7 @@ const createVideosTable = () => {
     });
 }
 
+<<<<<<< HEAD
 const putVideo = async (urlVideoId) => {
     try{
         let params = {
@@ -89,6 +90,8 @@ const putWasTarget = async (urlVideoId) => {
     }
 }
 
+=======
+>>>>>>> 8ab8857c3dca144b7cb5afb4b5dd979555d6990c
 //put watcher => agrega un elemento string al array
 const putWatcher = async (urlVideoId, userId) => {
     try {
@@ -104,9 +107,15 @@ const putWatcher = async (urlVideoId, userId) => {
               },
             ExpressionAttributeValues: {
                 ":watcher": [userId]
+<<<<<<< HEAD
             },
         };
 
+=======
+            },  
+        };
+    
+>>>>>>> 8ab8857c3dca144b7cb5afb4b5dd979555d6990c
         const watcher = docClient.update(params).promise();
         console.log("Added user item:", JSON.stringify(watcher, null, 2));
         return watcher;
@@ -125,12 +134,21 @@ const putHitted = async (urlVideoId) => {
             Key:{
                 "PK": urlVideoId,
             },
+<<<<<<< HEAD
             UpdateExpression: "set targetHitted = :hit",
             ExpressionAttributeValues: {
                 ":hit": targetHitted++
             },
         };
 
+=======
+            UpdateExpression: "SET targetHitted = :hit",
+            ExpressionAttributeValues: {
+                ":hit": targetHitted++
+            },   
+        };
+    
+>>>>>>> 8ab8857c3dca144b7cb5afb4b5dd979555d6990c
         const hit = docClient.update(params).promise();
         console.log("Added hit:", JSON.stringify(hit, null, 2));
         return hit;
