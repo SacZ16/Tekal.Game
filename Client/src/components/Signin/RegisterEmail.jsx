@@ -5,16 +5,13 @@ import logoTekal from '../Styles/tekalLogo.png';
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import '../Styles/registerForm.css';
-
 const RegisterWithEmail = () => {
     const [email, setEmail] = useState('');
     const [ConfirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
-
     //Estos van a estar seteando errores (osea cuando los inputs se rellenen mal estos estados van a tener algo adentro)
-
-    const SendToBackEnd = (e) => {
+    const SendToBackEnd = async (e) => {
         e.preventDefault()
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(email) && email.length > 0){
@@ -22,25 +19,24 @@ const RegisterWithEmail = () => {
             return;
         }
         if(email !== ConfirmEmail){
-            console.log('ENTREEE222222222222')
             return;
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
         if (!passwordReject.test(password) && password.length >= 0){
-            console.log('ENTREEE2222')
             return;
         }
         if(password !== confirmPass){
-            console.log('ENTasd')
             return;
         }
         const user = {
             email: email,
             password: password,
-            test:email,
         }
         console.log(user)
-        axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+        const response=await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+        if (response.data.status){alert('Usuario Registrado con Exito') 
+        window.location.href='./login'}
+        else{alert('ESE MAIL YA ES EN USO')}
 }
 
     return(
@@ -81,9 +77,9 @@ const RegisterWithEmail = () => {
                     <p>At least 1 special character</p> */}
                 <input className='inputFormRegister' placeholder='Confirm password' name='Cpassword' onChange={(e) => setConfirmPass(e.target.value)} type='password'/>
                     {/* <p>Passwords must be the same</p> */}
-                <p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                    {/* <p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
                 <GoogleButton/>
-                <FacebookButton/>
+                <FacebookButton/> */}
                 <button className='buttonRegister' onClick={(e) => SendToBackEnd(e)}> Register </button>
             </form>
         </>
