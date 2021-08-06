@@ -25,14 +25,16 @@ const RegisterWithEmail = () => {
         setErrorConfirmEmail('')
         setErrorPassword('')
         setErrorConfirmPass('')
-        const emailReject = /^(([^<>()[].,;:\s@"]+(.[^<>()[].,;:\s@"]+)*)|(".+"))@(([^<>()[].,;:\s@"]+.)+[^<>()[].,;:\s@"]{2,})$/i;
+        const emailReject =/^(?:[^<>()[].,;:\s@"]+(.[^<>()[].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[].,;:\s@"]+.)+[^<>()[].,;:\s@"]{2,63}$/i
+        console.log(emailReject.test(email))
         if (!emailReject.test(email) && email.length > 0){
             setErrorEmail(true);
-            console.log(emailReject)
+            console.log('email2')
             return;
         }
         if(email !== ConfirmEmail){
             setErrorConfirmEmail('2');
+            
             return;
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
@@ -49,6 +51,7 @@ const RegisterWithEmail = () => {
             password: password,
             test:email,
         }
+        console.log(user)
         axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
 }
 
@@ -94,7 +97,7 @@ const RegisterWithEmail = () => {
                 <GoogleButton/>
                 <FacebookButton/>
             </form>
-                <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
+                <button className='buttonRegister' onClick={()=>SendToBackEnd()}> Register </button>
         </>
     )
 }

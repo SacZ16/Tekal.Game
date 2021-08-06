@@ -3,7 +3,7 @@ const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
 
-const TABLE_NAME="test"
+const TABLE_NAME="USER"
 
 async function getallUsers(){
     const params = {
@@ -64,22 +64,15 @@ const createUserTable = () => {
 
 //Funcion que guarda los datos del primer loggin 
 //(email y password o email) //LoginsG Y F 
-const putUserLogin = async (userId, email, password) => {
+const putUserLogin = async (user) => {
     try{
-        var infoUser = `INFO#${userId}`;
-
+        
         let params = {
             TableName: TABLE_NAME,
-            Item:{
-                "PK": userId,
-                "SK": infoUser,
-                "email":  email,
-                "password": password,
-            }
+            Item:user
         };
-        
         const userLogin = await connectionDynamo.put(params).promise();
-        console.log("Added user item");
+        // console.log("Added user item");
         return userLogin;
     }
     catch(error){
@@ -128,7 +121,7 @@ const putUserInfoRegisterItems = async ({userId, name, lastname, age, country}) 
 const queryAllInfoUser = async (userId) => {
     try {
         let params = {
-            TableName : TABLE_USER,
+            TableName : TABLE_NAME,
             KeyConditionExpression: "#PK = :PK AND #info = :info",
             ExpressionAttributeNames:{
                 "#PK": "PK",
@@ -140,7 +133,7 @@ const queryAllInfoUser = async (userId) => {
             }
         };
 
-        const queryUserInfo = await docClient.query(params).promise()
+        const queryUserInfo = await connectionDynamo.query(params).promise()
         console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
@@ -152,4 +145,12 @@ const queryAllInfoUser = async (userId) => {
 
 
 
-module.exports = {getallUsers, getUser,newUser,putUserLogin, putUserInfoRegisterItems}
+module.exports = {
+    getallUsers, 
+    getUser,
+    newUser,
+    putUserInfoRegisterItems,
+    createUserTable,
+    putUserLogin,
+    queryAllInfoUser
+}

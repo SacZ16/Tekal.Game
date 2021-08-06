@@ -4,9 +4,9 @@ const {putUserInfoRegisterItems} = require('../Controllers/dbFunctions.js')
 
 
 router.post('/', async (req,res) => {
-    let response = req.body
-    putUserInfoRegisterItems(respose)
-    res.send(country);
+    console.log(req.body)
+    putUserInfoRegisterItems(req.body)
+    res.json('fijate la DB');
 })
 
 
