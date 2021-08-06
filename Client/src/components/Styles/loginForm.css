@@ -1,6 +1,15 @@
-
-
 .form {
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+    z-index: 4; 
+}
+.form2 {
+    display: flex;
+    flex-direction: column; 
+    z-index: 4; 
+}
+.form3 {
     display: flex;
     flex-direction: column; 
     z-index: 4; 
@@ -8,6 +17,7 @@
 
 .containerLanding {
     width: 400px;
+    height: 96%;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.904);
     border-radius: 5px;
@@ -22,14 +32,13 @@
     width: 150px;
     height: 30px;
     margin-top: 40px;
-    margin-left: 20px;
+    margin-left: 37px;
 }
 
 .welcome {
     color:rgb(197, 197, 197);
     font-size: 25px;
     font-weight:normal;
-    margin-left: 45px;
     margin-top: 20px;
 }
 
@@ -42,9 +51,8 @@
 }
 
 .inputForm {
-    width:120%;
+    width:99%;
     padding: 14px 0 14px 0;
-    margin-left: -20px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.788);
     border-style: solid;
@@ -64,7 +72,6 @@
 .forgotPassword{
     color: #74b5eb;
     margin: 10px 0px 10px 0;
-    left: -10%;
     position: relative;
 }
 
@@ -78,9 +85,8 @@
     border-style: none;
     text-transform: uppercase;   
     font-size: 14px; 
-    width:120%;
+    width:99%;
     padding: 14px 0 14px 0;
-    margin-left: -20px;
     background-color: transparent;
     color: white;
     background-color:#1663A2;

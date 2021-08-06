@@ -16,7 +16,9 @@ const RegisterCommonForm = ({props}) => {
     return(
         <>
             <div className='containerLanding'>
-                <form className='form'>
+                <div className='form'>
+
+                <form className='form2'>
                     <img className='logoForm' src={logoTekal} alt="Logo de Tekal"/>
                     <p className='welcome'>Welcome</p>
                     <p className='loginText'>Log in to TekalGame to play.</p>
@@ -24,6 +26,8 @@ const RegisterCommonForm = ({props}) => {
                     <input className='inputForm' type='password'  placeholder='Password' onChange={(e) => setpassword(e.target.value)}/>
                     {/* <button className='continue' onClick= {()=>props(email, password)}> Continue </button> */}
                 </form>
+                <div className='form3'>
+
                     <Link className='forgotPassword'to=''>Forgot password?</Link>
                     <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
                     <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
@@ -32,6 +36,8 @@ const RegisterCommonForm = ({props}) => {
                 <div className='signUp'>
                     <p className='signUpText'>Don´t have an account?</p>
                     <Link className='signUpLink' to='/register'>Sign up</Link>
+                </div>
+                </div>
                 </div>
             </div>
         </>
