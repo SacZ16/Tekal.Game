@@ -9,9 +9,9 @@ AWS.config.update({
 const dynamodb = new AWS.DynamoDB();
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const createVideosTable = () => {
+const createImagesTable = () => {
     let params = {
-        TableName: "VIDEOS",
+        TableName: "IMAGES",
         KeySchema: [
             { AttributeName: "PK", KeyType: "HASH"}
         ],
@@ -34,12 +34,12 @@ const createVideosTable = () => {
     });
 }
 
-const putVideo = async (urlVideoId) => {
+const putImage = async (urlImageId) => {
     try{
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Item:{
-                "PK": urlVideoId ,
+                "PK": urlImageId ,
                 "views":  0,
                 "wasTarget": 0,
                 "targetHitted": 0,
@@ -56,13 +56,13 @@ const putVideo = async (urlVideoId) => {
     }
 }
 
-const putWasTarget = async (urlVideoId) => {
+const putWasTarget = async (urlImageId) => {
     try {
 
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Key:{
-                "PK": {"S": urlVideoId},
+                "PK": {"S": urlImageId},
             },
             UpdateExpression: "SET wasTarget = wasTarget + :inc",
             ExpressionAttributeValues: {
@@ -80,13 +80,13 @@ const putWasTarget = async (urlVideoId) => {
 }
 
 //put views => agrega una view al video
-const putView = async (urlVideoId) => {
+const putView = async (urlImageId) => {
     try {
 
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Key:{
-                "PK": {"S": urlVideoId},
+                "PK": {"S": urlImageId},
             },
             UpdateExpression: "SET #views = #views + :inc",
             ExpressionAttributeNames: {
@@ -107,12 +107,12 @@ const putView = async (urlVideoId) => {
 }
 
 //put watcher => agrega un elemento string al array
-const putWatcher = async (urlVideoId, userId) => {
+const putWatcher = async (urlImageId, userId) => {
     try {
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Key:{
-                "PK": urlVideoId
+                "PK": urlImageId
             },
             UpdateExpression: "SET watchedBy = list_append(watchedBy, :value)",
             ExpressionAttributeValues: {
@@ -131,13 +131,13 @@ const putWatcher = async (urlVideoId, userId) => {
 }
 
 //put anotaciones => agrega +1 al anotaciones
-const putHitted = async (urlVideoId) => {
+const putHitted = async (urlImageId) => {
     try {
 
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Key:{
-                "PK": {"S": urlVideoId},
+                "PK": {"S": urlImageId},
             },
             UpdateExpression: "SET targetHitted = targetHitted + :inc",
             ExpressionAttributeValues: {
@@ -155,35 +155,35 @@ const putHitted = async (urlVideoId) => {
 }
 
 //ME TRAE TODA LA INFO DE UN VIDEO
-const getVideoInfo = async (videoId) => {
+const getImageInfo = async (urlImageId) => {
     try {
         let params = {
-            TableName: "VIDEOS",
+            TableName: "IMAGES",
             Key:{
-                "PK" :  videoId,
+                "PK" :  urlImageId,
             }
         };
 
-        const videoGot = await docClient.get(params).promise();
-        console.log("GetItem succeeded:", JSON.stringify(videoGot, null, 2));
-        return videoGot;
+        const imageGot = await docClient.get(params).promise();
+        console.log("GetImage succeeded:", JSON.stringify(imageGot, null, 2));
+        return imageGot;
     }
     catch(error){
-        console.error("Unable to read item. Error JSON:", JSON.stringify(error, null, 2));
+        console.error("Unable to read image. Error JSON:", JSON.stringify(error, null, 2));
     }
 
 }
 
 //ME TRAE TODA LA INFO DE TODOS LOS VIDEOS
-const queryAllVideos = async () => {
+const queryAllImages = async () => {
     try {
         let params = {
-            TableName : "VIDEOS",
+            TableName : "IMAGES",
         };
         
-        const queryAllTheVideos = await docClient.scan(params).promise();
-        console.log("VIDEOS:", JSON.stringify(queryAllTheVideos, null, 2));
-        return queryAllTheVideos;
+        const queryAllTheImages= await docClient.scan(params).promise();
+        console.log("IMAGES:", JSON.stringify(queryAllTheImages, null, 2));
+        return queryAllTheImages;
     }
     catch(error){
         console.log("Unable to SCAN. Error:", JSON.stringify(error, null, 2));
@@ -191,12 +191,12 @@ const queryAllVideos = async () => {
 }
 
 module.exports = {
-    createVideosTable,
-    putVideo,
+    createImagesTable,
+    putImage,
     putWasTarget,
     putWatcher,
     putHitted,
     putView,
-    getVideoInfo,
-    queryAllVideos
+    getImageInfo,
+    queryAllImages
 }
