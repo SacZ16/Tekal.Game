@@ -2,8 +2,8 @@ const AWS =require ('aws-sdk');
 
 AWS.config.update({
     region:'sa-east-1',
-    KEY:,
-    SECRETKEY: 
+    KEY:'AKIAWCMCZRUF7D3V27PC',
+    SECRETKEY: '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'
 })
 
 const dynamodb = new AWS.DynamoDB();
@@ -54,7 +54,6 @@ const putVideo = async (urlVideoId) => {
                 "wasTarget": 0,
                 "targetHitted": 0,
                 "watchedBy": [] 
-
             }
         };
         
@@ -73,17 +72,16 @@ const putWasTarget = async (urlVideoId) => {
         let params = {
             TableName: "VIDEO",
             Key:{
-                "PK": urlVideoId,
+                "PK": {"S": urlVideoId},
             },
-            UpdateExpression: "set wasTarget = wasTarget + :inc",
+            UpdateExpression: "SET wasTarget = wasTarget + :inc",
             ExpressionAttributeValues: {
                 ":inc": {"N": "1"}
-            },
-            ReturnValues: "UPDATED_OLD"
+            }
         };
 
-        const target = dynamodb.updateItem(params).promise();
-        console.log("Added target:", JSON.stringify(hit, null, 2));
+        const target = await dynamodb.updateItem(params).promise();
+        console.log("Added target:", JSON.stringify(target, null, 2));
         return target;
     }
     catch(error){
@@ -91,25 +89,49 @@ const putWasTarget = async (urlVideoId) => {
     }
 }
 
-//put watcher => agrega un elemento string al array
-const putWatcher = async (urlVideoId, userId) => {
+//put views => agrega una view al video
+const putView = async (urlVideoId) => {
     try {
 
         let params = {
             TableName: "VIDEO",
             Key:{
-                "PK": urlVideoId,
+                "PK": {"S": urlVideoId},
             },
-            UpdateExpression: "SET #watchedBy = list_append(#watchedBy, :watcher)",
-            ExpressionAttributeNames : {
-                "#watchedBy" : "watchedBy"
-              },
+            UpdateExpression: "SET #views = #views + :inc",
+            ExpressionAttributeNames: {
+                "#views": "views"
+            },   
             ExpressionAttributeValues: {
-                ":watcher": [userId]
-            },
+                ":inc": {"N": "1"}
+            }
         };
 
-        const watcher = docClient.update(params).promise();
+        const viewAdded = await dynamodb.updateItem(params).promise();
+        console.log("Added view:", JSON.stringify(viewAdded, null, 2));
+        return viewAdded;
+    }
+    catch(error){
+        console.error("Unable to view. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+//put watcher => agrega un elemento string al array
+const putWatcher = async (urlVideoId, userId) => {
+    try {
+        let params = {
+            TableName: "VIDEO",
+            Key:{
+                "PK": urlVideoId
+            },
+            UpdateExpression: "SET watchedBy = list_append(watchedBy, :value)",
+            ExpressionAttributeValues: {
+                ":value":  [userId]
+            },
+         
+        };
+
+        const watcher = await docClient.update(params).promise();
         console.log("Added watcher:", JSON.stringify(watcher, null, 2));
         return watcher;
     }
@@ -125,15 +147,15 @@ const putHitted = async (urlVideoId) => {
         let params = {
             TableName: "VIDEO",
             Key:{
-                "PK": urlVideoId,
+                "PK": {"S": urlVideoId},
             },
-            UpdateExpression: "set targetHitted = :hit",
+            UpdateExpression: "SET targetHitted = targetHitted + :inc",
             ExpressionAttributeValues: {
-                ":hit": targetHitted++
+                ":inc": {"N": "1"}
             },
         };
 
-        const hit = docClient.update(params).promise();
+        const hit = await dynamodb.updateItem(params).promise();
         console.log("Added hit:", JSON.stringify(hit, null, 2));
         return hit;
     }
@@ -147,5 +169,6 @@ module.exports = {
     putVideo,
     putWasTarget,
     putWatcher,
-    putHitted
+    putHitted,
+    putView
 }
