@@ -2,7 +2,8 @@ const AWS =require ('aws-sdk');
 
 AWS.config.update({
     region:'sa-east-1',
-    endpoint: "http://localhost:8000"
+    KEY:,
+    SECRETKEY: 
 })
 
 const dynamodb = new AWS.DynamoDB();
@@ -22,7 +23,7 @@ const createVideosTable = () => {
     let params = {
         TableName: "VIDEO",
         KeySchema: [
-            { AttributeName: "PK", Keytype: "HASH"}
+            { AttributeName: "PK", KeyType: "HASH"}
         ],
         AttributeDefinitions : [
             { AttributeName: "PK", AttributeType: "S" }
@@ -48,11 +49,11 @@ const putVideo = async (urlVideoId) => {
         let params = {
             TableName: "VIDEO",
             Item:{
-                "PK": { "S" :urlVideoId },
-                "views":  { "N" : "0"},
-                "wasTarget": { "N":"0" },
-                "targetHitted": { "N":"0" },
-                "watchedBy": {"SS" : [] }
+                "PK": urlVideoId ,
+                "views":  0,
+                "wasTarget": 0,
+                "targetHitted": 0,
+                "watchedBy": [] 
 
             }
         };
@@ -74,13 +75,14 @@ const putWasTarget = async (urlVideoId) => {
             Key:{
                 "PK": urlVideoId,
             },
-            UpdateExpression: "set wasTarget = :target",
+            UpdateExpression: "set wasTarget = wasTarget + :inc",
             ExpressionAttributeValues: {
-                ":target": wasTarget++
+                ":inc": {"N": "1"}
             },
+            ReturnValues: "UPDATED_OLD"
         };
 
-        const target = docClient.update(params).promise();
+        const target = dynamodb.updateItem(params).promise();
         console.log("Added target:", JSON.stringify(hit, null, 2));
         return target;
     }
@@ -138,4 +140,12 @@ const putHitted = async (urlVideoId) => {
     catch(error){
         console.error("Unable to hit. Error JSON:", JSON.stringify(error, null, 2));
     }
+}
+
+module.exports = {
+    createVideosTable,
+    putVideo,
+    putWasTarget,
+    putWatcher,
+    putHitted
 }
