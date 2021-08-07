@@ -56,7 +56,7 @@ const putImage = async (urlImageId) => {
     }
 }
 
-const putWasTarget = async (urlImageId) => {
+const putWasTargetImage = async (urlImageId) => {
     try {
 
         let params = {
@@ -80,7 +80,7 @@ const putWasTarget = async (urlImageId) => {
 }
 
 //put views => agrega una view al video
-const putView = async (urlImageId) => {
+const putViewImage = async (urlImageId) => {
     try {
 
         let params = {
@@ -107,7 +107,7 @@ const putView = async (urlImageId) => {
 }
 
 //put watcher => agrega un elemento string al array
-const putWatcher = async (urlImageId, userId) => {
+const putWatcherImage = async (urlImageId, userId) => {
     try {
         let params = {
             TableName: "IMAGES",
@@ -131,7 +131,7 @@ const putWatcher = async (urlImageId, userId) => {
 }
 
 //put anotaciones => agrega +1 al anotaciones
-const putHitted = async (urlImageId) => {
+const putHittedImage = async (urlImageId) => {
     try {
 
         let params = {
@@ -193,10 +193,10 @@ const queryAllImages = async () => {
 module.exports = {
     createImagesTable,
     putImage,
-    putWasTarget,
-    putWatcher,
-    putHitted,
-    putView,
+    putWasTargetImage,
+    putWatcherImage,
+    putHittedImage,
+    putViewImage,
     getImageInfo,
     queryAllImages
 }

@@ -56,7 +56,7 @@ const putVideo = async (urlVideoId) => {
     }
 }
 
-const putWasTarget = async (urlVideoId) => {
+const putWasTargetVideo = async (urlVideoId) => {
     try {
 
         let params = {
@@ -80,7 +80,7 @@ const putWasTarget = async (urlVideoId) => {
 }
 
 //put views => agrega una view al video
-const putView = async (urlVideoId) => {
+const putViewVideo = async (urlVideoId) => {
     try {
 
         let params = {
@@ -107,7 +107,7 @@ const putView = async (urlVideoId) => {
 }
 
 //put watcher => agrega un elemento string al array
-const putWatcher = async (urlVideoId, userId) => {
+const putWatcherVideo = async (urlVideoId, userId) => {
     try {
         let params = {
             TableName: "VIDEOS",
@@ -131,7 +131,7 @@ const putWatcher = async (urlVideoId, userId) => {
 }
 
 //put anotaciones => agrega +1 al anotaciones
-const putHitted = async (urlVideoId) => {
+const putHittedVideo = async (urlVideoId) => {
     try {
 
         let params = {
@@ -193,10 +193,10 @@ const queryAllVideos = async () => {
 module.exports = {
     createVideosTable,
     putVideo,
-    putWasTarget,
-    putWatcher,
-    putHitted,
-    putView,
+    putWasTargetVideo,
+    putWatcherVideo,
+    putHittedVideo,
+    putViewVideo,
     getVideoInfo,
     queryAllVideos
 }
