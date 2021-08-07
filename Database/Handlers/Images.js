@@ -1,10 +1,10 @@
 const AWS =require ('aws-sdk');
-
 AWS.config.update({
     region:'sa-east-1',
     accessKeyId:'',
     secretAccessKey: ''
 })
+
 
 const dynamodb = new AWS.DynamoDB();
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -47,9 +47,9 @@ const putImage = async (urlImageId) => {
             }
         };
         
-        const video = await docClient.put(params).promise();
-        console.log("Added video");
-        return video;
+        const image = await docClient.put(params).promise();
+        console.log("Added image");
+        return image;
     }
     catch(error){
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
@@ -189,6 +189,13 @@ const queryAllImages = async () => {
         console.log("Unable to SCAN. Error:", JSON.stringify(error, null, 2));
     }
 }
+// putImage("sopaDeVerdura")
+// queryAllImages()
+// putWasTargetImage("sopaDeVerdura")
+// putWatcherImage("sopaDeVerdura")
+// putHittedImage("sopaDeVerdura")
+// putViewImage("sopaDeVerdura")
+// putWatcherImage("sopaDeVerdura", "ddssds")
 
 module.exports = {
     createImagesTable,
