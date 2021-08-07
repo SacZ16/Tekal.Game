@@ -2,22 +2,12 @@ const AWS =require ('aws-sdk');
 
 AWS.config.update({
     region:'sa-east-1',
-    KEY:'AKIAWCMCZRUF7D3V27PC',
-    SECRETKEY: '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'
+    accessKeyId:'',
+    secretAccessKey: ''
 })
 
 const dynamodb = new AWS.DynamoDB();
 const docClient = new AWS.DynamoDB.DocumentClient();
-
-//const TABLE_USER = "USER";
-
-//Crear videos 
-//put video => crear el pk (la url) y el campo vistas en 0 target en 0 anotaciones en 0 y watched by []
-//put target => agrega +1 al target
-//put anotaciones => agrega +1 al anotaciones
-//put watcher => agrega un elemento string al array
-
-
 
 const createVideosTable = () => {
     let params = {
@@ -164,11 +154,49 @@ const putHitted = async (urlVideoId) => {
     }
 }
 
+//ME TRAE TODA LA INFO DE UN VIDEO
+const getVideoInfo = async (videoId) => {
+    try {
+        let params = {
+            TableName: "VIDEO",
+            Key:{
+                "PK" :  videoId,
+            }
+        };
+
+        const videoGot = await docClient.get(params).promise();
+        console.log("GetItem succeeded:", JSON.stringify(videoGot, null, 2));
+        return videoGot;
+    }
+    catch(error){
+        console.error("Unable to read item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+
+}
+
+//ME TRAE TODA LA INFO DE TODOS LOS VIDEOS
+const queryAllVideos = async () => {
+    try {
+        let params = {
+            TableName : "VIDEO",
+        };
+        
+        const queryAllSessions = await docClient.scan(params).promise();
+        console.log("VIDEOS:", JSON.stringify(queryAllSessions, null, 2));
+        return queryAllSessions;
+    }
+    catch(error){
+        console.log("Unable to SCAN. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
 module.exports = {
     createVideosTable,
     putVideo,
     putWasTarget,
     putWatcher,
     putHitted,
-    putView
+    putView,
+    getVideoInfo,
+    queryAllVideos
 }
