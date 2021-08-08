@@ -4,9 +4,8 @@
     flex-direction: column;
     width: 400px;
     right: 2%;
-    height: 97%;
-    background-color: rgba(0, 0, 0, 0.904);
-    margin-top:20px;
+    height: 89%;
+    margin-top:35px;
     align-items: center;
     margin-right: 3%;
 }
@@ -32,13 +31,26 @@
     border-radius: 5px;
     outline: none;
 }
+.inputFormRegister2 {
+    width:185%;
+    padding: 14px 0 14px 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.788);
+    border-style: solid;
+    border-width: 0.5px;
+    color: rgb(0, 0, 0);
+    margin-left: -51px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+}
 
 .logoFormRegister{
     width: 150px;
     height: 30px;
     display: flex;
     margin-top: 40px;  
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 }
 
 .buttonRegister {

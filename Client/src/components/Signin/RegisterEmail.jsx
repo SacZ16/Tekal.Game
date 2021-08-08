@@ -2,17 +2,29 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Particles from 'react-particles-js'
 import logoTekal from '../Styles/tekalLogo.png';
+import logoTekalNegro from '../Styles/tekallogonegro.png'
+import logoTekalAzul from '../Styles/tekallogoazul.png'
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
+import Cookie from 'universal-cookie'
 import '../Styles/registerForm.css';
 const RegisterWithEmail = () => {
+    const cookiies= new Cookie(); //no borrar - estilo css
     const [emailcopia,setEmailcopia]=useState('')
     const [passwordcopia,setPasswordcopia]=useState('')
     const [coloremail,setColoremail]=useState('')
     const [colorconfirmEmail,setColorconfirmEmail]=useState('')
     const [colorpassword,setColorpassword]=useState('')
     const [colorconfirmPass,setColorconfirmPass]=useState('')
-           
+    const [colores,setColores]=useState({
+        fondo:cookiies.get('colores'),
+        texto:'white',
+        textomemory:'#F22C9F',
+        textolargo:'rgb(197, 197, 197)',
+        fondoform:'rgba(0, 0, 0, 0.904)',
+        copyr:'rgb(197, 197, 197)'
+    })       
+
     const [input,setInput]= useState({        
         email:"",
         emailcopia:'',
@@ -108,47 +120,85 @@ function myFunction4() {
     var popup = document.getElementById("myPopup3");
     popup.classList.toggle("show");
   }
+  const cambiarfondo = function (evento) {
+    if (evento.target.checked) {   
+        setColores({
+            fondo:'black',
+    texto:'white',
+    textomemory:'#F22C9F',
+    textolargo:'rgb(197, 197, 197)',
+    fondoform:'rgba(0, 0, 0, 0.904)',
+    copyr:'rgb(197, 197, 197)'
+        })  
+        cookiies.set('prueba','true',{path:'/'})//no borrar - estilo css
+        cookiies.set('fondo','#F0F8FB',{path:'/'})//no borrar - estilo css
+        cookiies.set('texto','#2D5DC7',{path:'/'})//no borrar - estilo css
+        cookiies.set('textomemory','#F0814A',{path:'/'})//no borrar - estilo css
+        cookiies.set('textolargo','#1240A7',{path:'/'})//no borrar - estilo css
+        cookiies.set('fondoform','#FFFFFF',{path:'/'})//no borrar - estilo css
+        cookiies.set('copyr','black',{path:'/'})
+    } else {
+        setColores({
+            fondo:'black',
+    texto:'white',
+    textomemory:'#F22C9F',
+    textolargo:'rgb(197, 197, 197)',
+    fondoform:'rgba(0, 0, 0, 0.904)',
+    copyr:'rgb(197, 197, 197)'
+        })  
+        cookiies.set('prueba','false',{path:'/'})//no borrar - estilo css
+        cookiies.set('fondo','black',{path:'/'})//no borrar - estilo css
+        cookiies.set('texto','white',{path:'/'})//no borrar - estilo css
+        cookiies.set('textomemory','#F22C9F',{path:'/'})//no borrar - estilo css
+        cookiies.set('textolargo','rgb(197, 197, 197)',{path:'/'})//no borrar - estilo css
+        cookiies.set('fondoform','rgba(0, 0, 0, 0.904)',{path:'/'})//no borrar - estilo css
+        cookiies.set('copyr','rgb(197, 197, 197)',{path:'/'})//no borrar - estilo css
+    }
+}
+  var a = cookiies.get('prueba')
     return(
         <>
-        <div className='bgLanding'>
-        <Particles
+        {!a || a==='false'?<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' ></input>:<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' defaultChecked></input>}
+            <label className='switch' for='check' ></label>
+        <div style={!a?{'background':`black`,'transition': 'all 0.5s ease-out'}:{'background':`${cookiies.get('fondo')}`,'transition': 'all 0.5s ease-out'}} className='bgLanding'>
+        {cookiies.get('fondo')==='black' || !a?<Particles
                 params={{'particles':{"number":{"value":96,"density":{"enable":true,"value_area":800}}},'line_linked':{'width':'2'},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"}}}}}
-            />
+            />:<div className="wave"></div>}
             </div>
-            <img className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>            
+            {!a || a==='false'?<img className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>:<img className='logoTekal' src={logoTekalAzul} alt="Logo de Tekal"/>}            
             <div className='screenText'>
-                <h1 className='check'>Check how your</h1>
+                <h1 style={!a?{'color': `white`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('texto')}`,'transition': 'all 0.5s ease-out'}} className='check'>Check how your</h1>
                 <div className='text2'>
-                    <h1 className='memory'>memory&nbsp;</h1>
-                    <h1 className='working'>is working</h1> 
+                    <h1 style={!a?{'color': `#F22C9F`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('textomemory')}`,'transition': 'all 0.5s ease-out'}} className='memory'>memory&nbsp;</h1>
+                    <h1 style={!a?{'color': `white`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('texto')}`,'transition': 'all 0.5s ease-out'}} className='working'>is working</h1> 
                 </div>
-            <p className='loremLogin'>
+            <p style={!a?{'color': `rgb(197, 197, 197)`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('textolargo')}`,'transition': 'all 0.5s ease-out'}} className='loremLogin'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut 
                     labore et dolore magna aliqua. Ut enim ad minim veniam, 
                     quis nostrud exercitation ullamco laboris.
             </p>
             </div>
-            <p className='copyrightRegister'>© 2021 Tekal, Inc. All rights reserved</p>
-            <div className='formRegister'>
+            <p style={!a?{'color': `rgb(197, 197, 197)`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('copyr')}`,'transition': 'all 0.5s ease-out'}} className='copyrightRegister'>© 2021 Tekal, Inc. All rights reserved</p>
+            <div style={!a?{'background':`rgba(0, 0, 0, 0.904)`,'transition': 'all 0.5s ease-out'}:{'background':`${cookiies.get('fondoform')}`,'transition': 'all 0.5s ease-out'}} className='formRegister'>
             <form className='formRegister2'>
-            <img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal"/>
+            {!a || a==='false'?<img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal"/>:<img className='logoFormRegister' src={logoTekalNegro} alt="Logo de Tekal"/>}
             <div>
-                <input  style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required/>
+                {cookiies.get('fondo') === 'black'||!a?<input  style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required/>:<input  style={coloremailb} className='inputFormRegister2' placeholder='Email' name='email' type='text' onChange={handleInputChange} required/>}
                 <div class="popup" onClick={()=>myFunction()}>❓
   <span class="popuptext" id="myPopup1">Invalid Email format</span>
 </div>
             </div>
                     {/* <p>Invalid Email format</p> */}
                     <div>
-                <input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required/>
+                    {cookiies.get('fondo') === 'black'||!a?<input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required/>:<input style={colorconfirmEmailb} className='inputFormRegister2' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required/>}
                 <div class="popup" onClick={()=>myFunction2()}>❓
   <span class="popuptext" id="myPopup">Email must be the same</span>
 </div>
                     </div>
                     {/* <p>Email must be the same</p> */}
                     <div>
-                <input  style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required/>
+                    {cookiies.get('fondo') === 'black'||!a?<input  style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required/>:<input  style={colorpasswordb} className='inputFormRegister2' placeholder='Password' name='password' onChange={handleInputChange} type='password' required/>}
                 <div class="popup" onClick={()=>myFunction3()}>❓
   <span class="popuptext" id="myPopup2"><p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
@@ -167,7 +217,7 @@ function myFunction4() {
                     <p>No blanks</p>
                 <p>At least 1 special character</p> */}
                 <div>
-                <input  style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required/>
+                {cookiies.get('fondo') === 'black'||!a?<input  style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required/>:<input  style={colorconfirmPassb} className='inputFormRegister2' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required/>}
                 <div class="popup" onClick={()=>myFunction4()}>❓
   <span class="popuptext" id="myPopup3">Passwords must be the same</span>
 </div>
