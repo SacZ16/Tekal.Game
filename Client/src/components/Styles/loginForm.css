@@ -17,14 +17,13 @@
 
 .containerLanding {
     width: 400px;
-    height: 96%;
+    height: 85%;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.904);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     right: 5%;
-    margin-top: 23px;
+    margin-top: 35px;
     align-items: center;
 }
 
@@ -61,9 +60,22 @@
     color: white;
     margin-top: 10px;
     border-radius: 5px;
+    
+}
+.inputForm2 {
+    width:99%;
+    padding: 14px 0 14px 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.788);
+    border-style: solid;
+    border-color: #1663A2;
+    border-width: 0.5px;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
-::placeholder{
+.inputForm::placeholder{
     text-align: center;
     line-height: 100px;
     color: white;
