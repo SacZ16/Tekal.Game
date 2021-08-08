@@ -16,7 +16,7 @@ import swal from '@sweetalert/with-react';
 import { sessionInfo } from '../../redux/action';
 import '../Styles/progressBar.css';
 
-import videosURL from '../../assets/videosurl';
+// import videosURL from '../../assets/videosurl';
 
 const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
@@ -28,7 +28,6 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
     user,
     videos
   } = useSelector(state => state); // Traidos del Obj Reducer.
-
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
 
@@ -38,21 +37,22 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
   const infoTemplate = useRef(); // Template de Prueba generado estatico
   infoTemplate.current = template;
 
-  const correctPoints = useRef(0); // Aciertos del usuario en el juego.
-
-  const lives = useRef(3); // Vidas del usuario iniciando el juego
-
+  const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
+  const targetNotPress = useRef({ notPress: 0, videosTargetNotPress: [] }); // Videos target en los que no presiono.
+  const lives = useRef(3); // Vidas del usuario 
   const press = useRef(false); // Variable para detectar la barra espaciadora
+  const finish = useRef(false)
 
   const [color, setColor] = useState('#067eef'); // 
 
   // Cambia de color al apretar la barra espaciadora
-
   const handleKeyDown = (event) => {
-    if (event.keyCode === 32 && !press.current && template[infoVideo.current.filter]) {
-      const concat = infoVideo.current.infoVideo.type + "_repeat";
-      if (concat === template[infoVideo.current.filter][1]) {
-        correctPoints.current++;
+    if (event.keyCode === 32 && !press.current) {
+      if (infoVideo.current.category.includes('_')) {
+        if (infoVideo.current.category === 'target_repeat') {
+          targetFound.current.points++;
+          targetFound.current.videosTarget.push(infoVideo.current)
+        }
         setColor('green')
         press.current = true;
       }
@@ -68,8 +68,14 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
   };
 
   // Deja apretar la barra nuevamente
-
   useEffect(() => {
+    if (!press.current) {
+      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0].category === 'vig_repeat') {
+        targetNotPress.current.notPress++
+        targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0])
+        console.log('no apretaste')
+      }
+    }
     press.current = false;
   }, [recVideo]);
 
@@ -88,6 +94,7 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
   useEffect(() => {
     if (seeVideos.current.length + 1 > videos.length) {
+      finish.current = true
       sessionData()
       swal({
         text: "Finalizo el Juego",
@@ -98,6 +105,7 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
         });
     }
     if (lives.current === 0) {
+      finish.current = true
       sessionData();
       stopInterval();
       swal({
@@ -114,7 +122,7 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
   function sessionData() {
     let obj = Object.create({}, {
-      correctPoints: { value: correctPoints.current },
+      targetFound: { value: targetFound.current },
       lives: { value: lives.current }
     });
     dispatch(sessionInfo(obj));
@@ -136,8 +144,8 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
           height="50%" z-index='5'>
           <ReactPlayer className={style.video}
             z-index='5'
-            url={recVideo.infoVideo.url}
-            onEnded={recVideos}
+            url={recVideo[0] && recVideo[0].url}
+            onEnded={!finish && recVideos}
             controls={false}
             playing
             muted

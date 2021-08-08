@@ -44,7 +44,7 @@ export const Game = () => {
     videosToSee[videosToSee.length - 1].category = e[1]
   });
 
-  console.log(videosToSee)
+  // console.log(videosToSee)
 
   /*----------------------------------------*/
 
@@ -70,9 +70,8 @@ export const Game = () => {
       stopInterval()
     }
     viewVideos();
-    const filterVideo = videos.find(video => video.id === template[tope][0]);
-    // console.log(filterVideo)
-    dispatch(recVideo(filterVideo, tope));
+    // const filterVideo = videos.find(video => video.id === template[tope][0]);
+    dispatch(recVideo(videosToSee[tope]));
     tope++;
   }
 
@@ -87,7 +86,7 @@ export const Game = () => {
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videos));
+    dispatch(seenVideos(videosToSee));
   }
 
   // Ejecuta la funcion recVideos al renderizar el componente

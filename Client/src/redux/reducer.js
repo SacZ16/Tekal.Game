@@ -1,14 +1,11 @@
 
 import videos from '../assets/videos.js';
 import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO } from './action';
-
 const template = require('../assets/level_templates/prueba.json')[2];
 
+
 const initialState = {
-    recVideo: {
-        infoVideo: [],
-        filter: ''
-    },
+    recVideo: [],
     template,
     videos,
     user: {
@@ -56,10 +53,7 @@ export default function reducer(state = initialState, { type, payload }) {
         case REC_VIDEO:
             return {
                 ...state,
-                recVideo: {
-                    infoVideo: payload.video,
-                    filter: payload.filter
-                }
+                recVideo: payload
             };
 
         case SESSION_INFO:
