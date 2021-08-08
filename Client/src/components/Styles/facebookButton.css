@@ -1,0 +1,23 @@
+.facebookBtn {
+    background-color: #3B599A;
+    border-style: none;
+    width:227px;
+    border-radius: 5px;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+    padding: 16px 0 16px 0;
+    margin-top: 10px;
+}
+
+.facebookBtn:hover{
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    cursor: pointer;
+}
+
+/* colorFacebook {
+    color:#3B599A
+} */

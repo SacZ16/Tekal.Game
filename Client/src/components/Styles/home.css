@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
+
+.tutorialHome {
+    background-color: white;
+    border-radius: 5px;
+    border-style: none;
+    width: 150px;
+    height: 50px;
+    color: #800FC7;
+    font-weight: bold;
+    font-size:15px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.tutorialHome:hover{
+    border-style: solid;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 5px;
+    border-color: #800FC7;
+    border-width:6px;
+    color: #800FC7
+}
+
+.loginHome{
+    background: white;
+    border-radius: 5px;
+    border-style: none;
+    width: 120px;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    display: flex;
+    right:10%;
+    position: absolute;
+    top: 9%
+}
+
+.loginHome:hover{
+    background-color: transparent;
+    border-style: solid;
+    border-color: white;
+    border-width: 0.5px
+}
+
+.buttonsHome{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 25%;
+    width:100%;
+    align-items:center;
+    z-index: 10;
+    place-content: center;
+}
+
+.startGame {
+    background-color: white;
+    border-radius: 5px;
+    border-style: none;
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    display: flex;
+    margin-right: 20px;
+}
+
+.startGame:hover {
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #800FC7;
+    border-width:6px;
+    width: 150px;
+    height: 50px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    padding-top:-30px
+}
+
+body{
+    min-height: 100vh;
+    background: linear-gradient(to top,#2C2C2B, black);
+    overflow-x: hidden;
+}
+
+.stars {
+    width: 100%;
+    position: absolute;
+}
+
+.brainsBottom{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom:-67px;
+}
+
+.brainBack{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-left: 10px;
+}
+
+.section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section::before{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to top, #1c0522, transparent);
+    z-index: 1000;
+}
+
+.videoTutorial {
+    position: absolute;
+    bottom: -700px;
+    padding-bottom: 50px;
+    margin-left: 25%;
+    width: 700px;
+}
+
+.textHome {
+    position: absolute;
+    color: white;
+    font-size: 65px;
+    margin-top: 15%;
+    font-family: 'Montserrat', sans-serif;
+    width:100%;
+    text-align: center
+}
+
+.sessionBox{
+    background: transparent;
+    width: 12em;
+    position: absolute;
+    right: 0;
+    margin-right:30px;
+    height: 60px;
+    margin-top:30px;
+    border-radius:5px;
+    border-color:white;
+    border-style:solid;
+    border-width:1px
+}
+
+.boxDisplay{
+    display: flex;
+    flex-direction: row
+}
+
+.textBox{
+    display: flex;
+    flex-direction: column
+}
+
+.textBox p {
+    margin-top:10px;
+    font-weight:bold;
+    margin-left:7px;
+    font-size:14px
+}
+
+.btnOpenSessionMenu{
+    height: 20px;
+    margin-top:11%;
+    margin-left:10%;
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+    color: white
+}
+
+.profilePic{
+    width:45px;
+    height:45px;
+    border-radius:100%;
+    margin-left:5%;
+    margin-top:4%;
+    margin-bottom:5%
+}
+
+.sessionStatus{
+    color: rgb(104, 240, 92);
+}
+
+.sessionName{
+    margin-bottom:-5px;
+    color: white
+}
+
+.btnLogOut{
+    background: rgb(255, 255, 255);
+    width: 14.5em;
+    border-style:none;
+    margin-left:-2px;
+    margin-top:6px;
+    padding: 10px 0 10px 0;
+    border-radius:5px;
+    color:rgba(219, 88, 88, 0.986);
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btnLogOut:hover{
+    border-style:solid;
+    border-color: rgba(219, 88, 88, 0.986);
+
+}
