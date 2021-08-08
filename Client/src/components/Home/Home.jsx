@@ -59,7 +59,7 @@ import '../Styles/home.css';
         <section>
             <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal'/>
             <img className='stars' src={stars} alt="starsBackground" id='stars' style={{left:(0 + offset * 0.1) + '%'}}/>
-            <img className='brainBack' src={brainBack} alt="brainBackground" id='brainBack' style={{width:(100 + offset * -0.2) + '%',left:(-0.5 + offset * -0.1) + '%', bottom:(-18)}}/>
+            <img className='brainBack' src={brainBack} alt="brainBackground" id='brainBack' style={{width:(95 + offset * -0.3) + '%',left:(-0.5 + offset * -0.1) + '%', bottom:(20)}}/>
             {startGame?
                 <>
                 <p className='textHome' style={{top:(0 + offset * -0.1) + '%'}}>Memory Challenge</p>
