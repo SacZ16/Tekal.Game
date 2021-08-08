@@ -3,7 +3,7 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
-import style from '../Game/Game.module.css';
+import style from '../Styles/Game.module.css'
 import videosURL from '../../assets/videosurl';
 
 export const Game = () => {

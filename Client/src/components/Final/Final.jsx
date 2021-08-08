@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './final.css'
+import '../Styles/final.css'
 import Particles from 'react-particles-js'
 import { getParticleBaseVelocity } from 'tsparticles/Utils'
 

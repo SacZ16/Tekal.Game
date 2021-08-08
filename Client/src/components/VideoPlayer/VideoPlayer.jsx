@@ -10,11 +10,11 @@ import {
   useSelector
 } from 'react-redux';
 import { withRouter } from 'react-router';
-import style from '../Game/Game.module.css';
+import style from '../Styles/Game.module.css';
 import swal from '@sweetalert/with-react';
 
 import { sessionInfo } from '../../redux/action';
-import './progressBar.css';
+import '../Styles/progressBar.css';
 
 import videosURL from '../../assets/videosurl';
 
