@@ -6,6 +6,7 @@ const loginGooandFace = require('./routes/loginFaceandGoo')
 const countries = require('./routes/countries')
 const creationTable = require('./routes/creationTable')
 const personalInfo = require ('./routes/personalInfo')
+const datauser = require ('./routes/datauser')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const cors = require('cors');
@@ -31,6 +32,7 @@ server.use('/register', register);
 server.use('/logingoogle', loginGooandFace);
 server.use('/addinfo', personalInfo);
 server.use('/createtable', creationTable);
+server.use('/info', datauser);
 
 
 module.exports = server;

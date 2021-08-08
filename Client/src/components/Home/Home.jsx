@@ -63,7 +63,7 @@ import '../Styles/home.css';
                 <>
                 <p className='textHome' style={{top:(0 + offset * -0.1) + '%'}}>Memory Challenge</p>
                 <div className='buttonsHome' style={{opacity:(100 + offset * -0.45) + '%', bottom:(25 + offset * -0.1) + '%'}}>
-                <div className='startGame'><Link to='/login' style={{color: '#800FC7', fontSize:'15px',textDecoration: 'none', width:'100%', height:'100%', paddingTop:'30px', fontFamily:'Montserrat, sans-serif'}} id='btnStartHome'>Start</Link></div>
+                <div className='startGame'><Link to='/game' style={{color: '#800FC7', fontSize:'15px',textDecoration: 'none', width:'100%', height:'100%', paddingTop:'30px', fontFamily:'Montserrat, sans-serif'}} id='btnStartHome'>Start</Link></div>
                 <button className='tutorialHome' id='btnTutorialHome'>Tutorial</button>
                 </div>
                 </>:(null)}

@@ -5,18 +5,50 @@ import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
 import videosURL from '../../assets/videosurl';
+import Cookie from 'universal-cookie'
+import axios from 'axios';
+
+
+
 
 export const Game = () => {
 
   const dispatch = useDispatch();
   const videos = useSelector(state => state.videos);
   const template = useSelector(state => state.template);
+  const [infoUser,SetInfoUser] = useState('')
+
 
   var tope = 0;
   var interval;
-
+  var emailCokkie;
+  const cookies= new Cookie();
   /*----------------------------------------*/
 
+  // Sacando el email
+  if(!cookies.get('userInfo').Items){ emailCokkie=cookies.get('userInfo')[0].email }
+  else{emailCokkie = cookies.get('userInfo').Items[0].email}
+
+  //Sacando info
+  const CheckUserData = async (email) => {
+    let SearchEmail = {
+      email: email
+    }
+    let response = await axios.post('http://localhost:3001/info', SearchEmail)
+    SetInfoUser(response)
+    return response
+  }
+
+  if(!infoUser) {
+  CheckUserData(emailCokkie);
+}
+
+if(infoUser){
+  if(!infoUser.data.Items[0].age || !infoUser.data.Items[0].name){
+    window.location.href = ('form')
+  } 
+}
+// if(checkerInfoUserDB.name && checkerInfoUserDB.ag)
   // Selecciona un template al azar
 
   var random = Math.round(Math.random() * 999)
