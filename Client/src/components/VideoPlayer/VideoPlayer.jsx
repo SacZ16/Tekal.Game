@@ -141,14 +141,16 @@ const VideoPlayer = ({ stopInterval, history, recVideos }) => {
 
       {(recVideo !== '') &&
         <div width="50%"
-          height="50%" z-index='5'>
+          height="50%" z-index='5' >
           <ReactPlayer className={style.video}
             z-index='5'
             url={recVideo[0] && recVideo[0].url}
-            onEnded={!finish && recVideos}
+            onEnded={() => !finish && recVideos}
             controls={false}
             playing
             muted
+            width='100%'
+            height='100%'
           />
         </div>
 
