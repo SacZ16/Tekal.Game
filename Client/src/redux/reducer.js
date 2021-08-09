@@ -1,16 +1,9 @@
-
-import videos from '../assets/videos.js';
+/* import videos from '../assets/videos.js';
+const template = require('../assets/level_templates/prueba.json')[2]; */
 import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO } from './action';
 
-const template = require('../assets/level_templates/prueba.json')[2];
-
 const initialState = {
-    recVideo: {
-        infoVideo: [],
-        filter: ''
-    },
-    template,
-    videos,
+    recVideo: [],
     user: {
         id: '',
         Names: '',
@@ -23,18 +16,9 @@ const initialState = {
         DateN: '',
         currentGame: {
             idGame: '',
-            numVideosTarget: 100,
-            numAciertos: 0,
-            PromedioAciertos: 30 / 100,
-            lives: 3,
             mood: '', // Estado de Animo
             seenVideos: []
-        },
-        TotalGames: {                    //Query
-            NumVidoesViewTarget: 1000,  // Sumatoria de Videos Vistos
-            NumAciertos: 30,            // Sumatoria de Aciertos de Videos Vistos
-            PromedioAciertos: 30 / 100,   //  Promedio 
-        },
+        }
     }
 }
 
@@ -56,10 +40,7 @@ export default function reducer(state = initialState, { type, payload }) {
         case REC_VIDEO:
             return {
                 ...state,
-                recVideo: {
-                    infoVideo: payload.video,
-                    filter: payload.filter
-                }
+                recVideo: payload
             };
 
         case SESSION_INFO:
@@ -69,8 +50,10 @@ export default function reducer(state = initialState, { type, payload }) {
                     ...state.user,
                     currentGame: {
                         ...state.user.currentGame,
-                        numAciertos: payload.correctPoints,
-                        lives: payload.lives
+                        targetFound: payload.targetFound,
+                        targetNotPress: payload.targetNotPress,
+                        lives: payload.lives,
+                        targetVideos: payload.targetVideos
                     }
                 }
             };

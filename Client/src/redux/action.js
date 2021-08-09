@@ -19,13 +19,10 @@ export function changeTemplate(template) {
     }
 }
 
-export function recVideo(video, filter) {
+export function recVideo(video) {
     return {
         type: REC_VIDEO,
-        payload: {
-            video,
-            filter
-        }
+        payload: video
     }
 }
 
@@ -33,11 +30,11 @@ let pos = 0
 export function seenVideos(videos) {
     const videosToSeenQuote = [...videos];
     const viewVideo = videosToSeenQuote.splice(pos, 1);
-    const viewVideoObj = { ...viewVideo };
+    // const viewVideoObj = { ...viewVideo };
     pos++;
     return {
         type: SEEN_VIDEO,
-        payload: viewVideoObj[0]
+        payload: viewVideo
     }
 }
 

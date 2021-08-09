@@ -1,31 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
 import videosURL from '../../assets/videosurl';
-import Cookie from 'universal-cookie'
+import Cookie from 'universal-cookie';
 import axios from 'axios';
-
-
-
 
 export const Game = () => {
 
   const dispatch = useDispatch();
-  const videos = useSelector(state => state.videos);
-  const template = useSelector(state => state.template);
-  const [infoUser,SetInfoUser] = useState('')
-
-
   var tope = 0;
-  var interval;
+
+  /*----------------------------------------*/
+  
+  const [infoUser,SetInfoUser] = useState({firtsrender: false})
   var emailCokkie;
   const cookies= new Cookie();
-  /*----------------------------------------*/
-
-  // Sacando el email
   if(!cookies.get('userInfo').Items){ emailCokkie=cookies.get('userInfo')[0].email }
   else{emailCokkie = cookies.get('userInfo').Items[0].email}
 
@@ -39,28 +31,27 @@ export const Game = () => {
     return response
   }
 
-  if(!infoUser) {
+  if(infoUser.hasOwnProperty('firtsrender')) {
   CheckUserData(emailCokkie);
 }
 
-if(infoUser){
+if(infoUser.data){
   if(!infoUser.data.Items[0].age || !infoUser.data.Items[0].name){
     window.location.href = ('form')
   } 
 }
-// if(checkerInfoUserDB.name && checkerInfoUserDB.ag)
   // Selecciona un template al azar
 
   var random = Math.round(Math.random() * 999)
-  const template2 = require(`../../assets/level_templates/template_${random}.json`)[2];
+  const template = require(`../../assets/level_templates/template_${random}.json`)[2];
 
   // Sacamos los videos unicos
 
-  const filler = template2[0] && template2.filter(e => e[1] === 'filler')
-  const vig = template2[0] && template2.filter(e => e[1] === 'vig')
-  const target = template2[0] && template2.filter(e => e[1] === 'target')
+  const filler = template[0] && template.filter(e => e[1] === 'filler')
+  const vig = template[0] && template.filter(e => e[1] === 'vig')
+  const target = template[0] && template.filter(e => e[1] === 'target')
 
-  const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  // const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
 
   // 
 
@@ -70,13 +61,13 @@ if(infoUser){
   }))
 
   let videosToSee = [] // array nuevo
-
-  template2.map(e => {
+  template.map(e => {
     videosToSee.push(arrVideos.filter(b => b.id === e[0]))
     videosToSee[videosToSee.length - 1].category = e[1]
   });
 
   console.log(videosToSee)
+  console.log(template)
 
   /*----------------------------------------*/
 
@@ -97,38 +88,33 @@ if(infoUser){
 
   // Elige el video que el usuario va a ver
 
-  function recVideos() {
-    if (tope >= videos.length) {
-      stopInterval()
-    }
+  function recVideos(lives) {
+    if (tope >= videosToSee.length || lives === 0) return null
     viewVideos();
-    const filterVideo = videos.find(video => video.id === template[tope][0]);
-    // console.log(filterVideo)
-    dispatch(recVideo(filterVideo, tope));
+    // const filterVideo = videos.find(video => video.id === template[tope][0]);
+    dispatch(recVideo(videosToSee[tope]));
     tope++;
-  }
-
-  function intervalFunction() {
-    interval = setInterval(recVideos, 3000);
-  }
-
-  function stopInterval() {
-    clearInterval(interval);
   }
 
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videos));
+    dispatch(seenVideos(videosToSee));
   }
 
   // Ejecuta la funcion recVideos al renderizar el componente
 
-  useEffect(() => {
-    // intervalFunction();
-    recVideos();
-  }, []);
+  // Ejecuta la funcion recVideos al renderizar el componente
+  // useEffect(() => {
+  //   // intervalFunction();
+  //   console.log('uwu')
+  // }, []);
 
+  
+  console.log(infoUser.hasOwnProperty('firtsrender'))
+  if(!infoUser.data){return (<><h1>cargandooo....</h1></>)}
+  if(!infoUser.data.Items){return (<><h1>cargandooo....</h1></>)}
+  recVideos()
   return (
     < >
       <div className={style.fondo2}>
@@ -136,11 +122,10 @@ if(infoUser){
         <Link className={style.Link} to='login'>❌</Link>
         <button onClick={recVideos}>Click</button>
         {
-          <VideoPlayer stopInterval={stopInterval} recVideos={recVideos} />
+          <VideoPlayer videosToSee={videosToSee} recVideos={recVideos} target={target} />
         }
       </div>
     </>
   )
 }
-
 export default Game;

@@ -19,7 +19,7 @@ const FormData = () => {
     const cookies= new Cookie();
     var emailCokkie;
     if(!cookies.get('userInfo')){
-        window.location.href='./'
+        window.location.href=''
     }
     console.log(cookies.get('userInfo'))
 

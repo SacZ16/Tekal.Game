@@ -11,6 +11,8 @@ import '../Styles/registerForm.css';
 const RegisterWithEmail = () => {
     const cookiies= new Cookie(); //no borrar - estilo css
     const [emailcopia,setEmailcopia]=useState('')
+    const [email,setEmail]=useState('')
+    const [password,setPassword]=useState('')
     const [passwordcopia,setPasswordcopia]=useState('')
     const [coloremail,setColoremail]=useState('')
     const [colorconfirmEmail,setColorconfirmEmail]=useState('')
@@ -43,23 +45,23 @@ const RegisterWithEmail = () => {
     const SendToBackEnd = async (e) => {
         e.preventDefault()
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
-        if (!emailReject.test(input.email) && input.email.length > 0){
+        if (!emailReject.test(email) && email.length > 0){
             return;
         }
-        if(input.email !== input.confirmEmail){
+        if(email !== emailcopia){
             return;
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(input.password) && input.password.length >= 0){
+        if (!passwordReject.test(password) && password.length >= 0){
             return;
         }
-        if(input.password !== input.confirmPass){
+        if(password !== passwordcopia){
             return;
         }
         const user = {
-            email: input.email,
-            password: input.password,
-            test:input.email,
+            email: email,
+            password: password,
+            test:email,
         }
         console.log(user)
         const response=await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
@@ -69,37 +71,70 @@ const RegisterWithEmail = () => {
 }
 
 
-
 const handleInputChange=function(e){
-    setInput({
-        ...input,
-        [e.target.name]: e.target.value
-    })  
+    setEmail(e.target.value) 
+    var inputd= e.target.value
     const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!emailReject.test(input.email) && input.email.length > 1){
+    if (!emailReject.test(inputd) && inputd.length > 1){
         setColoremail("red",)
-    }if(emailReject.test(input.email) && input.email.length > 1){
+        if(emailcopia && emailcopia.length>1 && emailcopia != inputd){
+            setColorconfirmEmail("red")
+        }
+        if(emailcopia && emailcopia.length>1 && emailcopia == inputd){
+            setColorconfirmEmail("#1663A2")
+        }
+    }if(emailReject.test(inputd) && inputd.length > 1){
         setColoremail("#1663A2")
-    }
-    setEmailcopia(input.email.substring(0, input.email.length - 1))
-    if(emailcopia !== input.confirmEmail && input.confirmEmail.length > 1){
+        if(emailcopia && emailcopia.length>1 && emailcopia != inputd){
+            setColorconfirmEmail("red")
+        }
+        if(emailcopia && emailcopia.length>1 && emailcopia == inputd){
+            setColorconfirmEmail("#1663A2")
+        }
+     }}
+
+const handleInputChange2=function(e){
+    setEmailcopia(e.target.value) 
+    const inputd2= e.target.value
+    if(email !== inputd2 && inputd2.length > 1){
         setColorconfirmEmail("red")
-    }if(emailcopia === input.confirmEmail && input.confirmEmail.length > 1 || input.confirmEmail === input.email && input.confirmEmail.length > 1 ){
+    }if(email === inputd2 && inputd2.length > 1 || inputd2 === email && inputd2.length > 1 ){
         setColorconfirmEmail("#1663A2")
     }
+}
+const handleInputChange3=function(e){
+    setPassword(e.target.value) 
+    var inputd3= e.target.value
     const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-    if (!passwordReject.test(input.password) && input.password.length > 1){
-        setColorpassword("red")
-    }if(passwordReject.test(input.password) && input.password.length > 1){
+    if (!passwordReject.test(inputd3) && inputd3.length > 1){
+        setColorpassword("red",)
+        
+        if(passwordcopia && passwordcopia.length>1 && passwordcopia != inputd3){
+            setColorconfirmPass("red")
+        }
+        if(passwordcopia && passwordcopia.length>1 && passwordcopia == inputd3){
+            setColorconfirmPass("#1663A2")
+        }
+    }if(passwordReject.test(inputd3) && inputd3.length > 1){
         setColorpassword("#1663A2")
-    }
-    setPasswordcopia(input.password.substring(0, input.password.length - 1))
-    if(passwordcopia !== input.confirmPass && input.confirmPass.length > 1){
+        if(passwordcopia && passwordcopia.length>1 && passwordcopia != inputd3){
+            setColorconfirmPass("red")
+        }
+        if(passwordcopia && passwordcopia.length>1 && passwordcopia == inputd3){
+            setColorconfirmPass("#1663A2")
+        }
+     }
+}
+const handleInputChange4=function(e){
+    setPasswordcopia(e.target.value)
+    const inputd4= e.target.value
+    if(password !== inputd4 && inputd4.length > 1){
         setColorconfirmPass("red")
-    }if(passwordcopia === input.confirmPass && input.confirmPass.length > 1){
+    }if(password === inputd4 && inputd4.length > 1 || inputd4 === password && inputd4.length > 1 ){
         setColorconfirmPass("#1663A2")
     }
 }
+
 var coloremailb={'border-color':`${coloremail}`}
 var colorconfirmEmailb={'border-color':`${colorconfirmEmail}`}
 var colorpasswordb={'border-color':`${colorpassword}`}
@@ -185,21 +220,21 @@ function myFunction4() {
             {!a || a==='false'?<img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal"/>:<img className='logoFormRegister' src={logoTekalNegro} alt="Logo de Tekal"/>}
             <div>
                 {cookiies.get('fondo') === 'black'||!a?<input  style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required/>:<input  style={coloremailb} className='inputFormRegister2' placeholder='Email' name='email' type='text' onChange={handleInputChange} required/>}
-                <div class="popup" onClick={()=>myFunction()}>❓
+                {coloremail==='#1663A2'?<div class="popup2">✔</div>:<div class="popup" onClick={()=>myFunction()}>❓
   <span class="popuptext" id="myPopup1">Invalid Email format</span>
-</div>
+</div>}
             </div>
                     {/* <p>Invalid Email format</p> */}
                     <div>
-                    {cookiies.get('fondo') === 'black'||!a?<input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required/>:<input style={colorconfirmEmailb} className='inputFormRegister2' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required/>}
-                <div class="popup" onClick={()=>myFunction2()}>❓
+                    {cookiies.get('fondo') === 'black'||!a?<input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange2} required/>:<input style={colorconfirmEmailb} className='inputFormRegister2' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange2} required/>}
+                {colorconfirmEmail==='#1663A2'?<div class="popup2">✔</div>:<div class="popup" onClick={()=>myFunction2()}>❓
   <span class="popuptext" id="myPopup">Email must be the same</span>
-</div>
+</div>}
                     </div>
                     {/* <p>Email must be the same</p> */}
                     <div>
-                    {cookiies.get('fondo') === 'black'||!a?<input  style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required/>:<input  style={colorpasswordb} className='inputFormRegister2' placeholder='Password' name='password' onChange={handleInputChange} type='password' required/>}
-                <div class="popup" onClick={()=>myFunction3()}>❓
+                    {cookiies.get('fondo') === 'black'||!a?<input  style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange3} type='password' required/>:<input  style={colorpasswordb} className='inputFormRegister2' placeholder='Password' name='password' onChange={handleInputChange3} type='password' required/>}
+                {colorpassword==='#1663A2'?<div class="popup2">✔</div>:<div class="popup" onClick={()=>myFunction3()}>❓
   <span class="popuptext" id="myPopup2"><p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
                     <p>At least one capital number</p>
@@ -207,7 +242,7 @@ function myFunction4() {
                     <p>At least one lower case letter</p>
                     <p>No blanks</p>
                 <p>At least 1 special character</p></span>
-</div>
+</div>}
                 </div>
                 {/*  <p>Minimum 8 characters</p>
                     <p>Maximum 15 characters</p>
@@ -217,10 +252,10 @@ function myFunction4() {
                     <p>No blanks</p>
                 <p>At least 1 special character</p> */}
                 <div>
-                {cookiies.get('fondo') === 'black'||!a?<input  style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required/>:<input  style={colorconfirmPassb} className='inputFormRegister2' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required/>}
-                <div class="popup" onClick={()=>myFunction4()}>❓
+                {cookiies.get('fondo') === 'black'||!a?<input  style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange4} type='password' required/>:<input  style={colorconfirmPassb} className='inputFormRegister2' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange4} type='password' required/>}
+                {colorconfirmPass==='#1663A2'?<div class="popup2">✔</div>:<div class="popup" onClick={()=>myFunction4()}>❓
   <span class="popuptext" id="myPopup3">Passwords must be the same</span>
-</div>
+</div>}
                 </div>
                     {/* <p>Passwords must be the same</p> */}
             </form>
