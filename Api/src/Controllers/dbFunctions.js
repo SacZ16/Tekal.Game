@@ -3,7 +3,7 @@ const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
 
-const TABLE_NAME="USER"
+const TABLE_NAME="USER" 
 
 async function getallUsers(){
     const params = {
