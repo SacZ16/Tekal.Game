@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
+a{
+    text-decoration: none;
+}
+
 .tutorialHome {
     background-color: white;
     border-radius: 5px;

@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom'
 import '../Styles/final.css'
 import Particles from 'react-particles-js'
 import { Line } from 'react-chartjs-2'
+import { useSelector } from 'react-redux'
 
 function Finalgame() {
+
+    const { targetFound, targetVideos } = useSelector(state => state.user.currentGame)
+    const score = (targetFound.points / targetVideos) * 100
+
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
-            label: 'sesiones',
+            label: 'Last 5 sessions',
             fill: false,
             borderColor: '#1663A2',
             borderWidth: 6,
-            data: ['60', '43', '1', '80', '74']
+            data: ['60', '43', '1', '80', score]
         }]
     }
     const opciones = {
@@ -32,24 +37,27 @@ function Finalgame() {
             </div>
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>
-                <h1 className="porcentaje">74%</h1>
+                <h1 className="porcentaje">{targetFound.points === 0 ? 0 : score.toFixed(2)}%</h1>
                 <div className='loader'>
                 </div>
             </div>
             <div className="grafico">
-
                 <Line data={data} options={opciones} config={config} />
             </div>
             <div className='buttonRegister2' >
                 <div>
-                    <button className='buttonRegister' >Home</button>
+                    <Link to='/'>
+                        <button className='buttonRegister' >Home</button>
+                    </Link>
                 </div>
                 <div>
-                    <button className='buttonRegister'  >Try again</button>
+                    <Link to='/game'>
+                        <button className='buttonRegister'  >Try again</button>
+                    </Link>
                 </div>
             </div>
             <p className='copyright'>Â© 2021 Tekal, Inc. All rights reserved</p>
-        </div>
+        </div >
     )
 }
 

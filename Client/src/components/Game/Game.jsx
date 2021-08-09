@@ -1,34 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
 import videosURL from '../../assets/videosurl';
+// import axios from 'axios'
 
 export const Game = () => {
 
   const dispatch = useDispatch();
-  const videos = useSelector(state => state.videos);
-  const template = useSelector(state => state.template);
-
   var tope = 0;
-  var interval;
 
   /*----------------------------------------*/
 
   // Selecciona un template al azar
 
   var random = Math.round(Math.random() * 999)
-  const template2 = require(`../../assets/level_templates/template_${random}.json`)[2];
+  const template = require(`../../assets/level_templates/template_${random}.json`)[2];
 
   // Sacamos los videos unicos
 
-  const filler = template2[0] && template2.filter(e => e[1] === 'filler')
-  const vig = template2[0] && template2.filter(e => e[1] === 'vig')
-  const target = template2[0] && template2.filter(e => e[1] === 'target')
+  const filler = template[0] && template.filter(e => e[1] === 'filler')
+  const vig = template[0] && template.filter(e => e[1] === 'vig')
+  const target = template[0] && template.filter(e => e[1] === 'target')
 
-  const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  // const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
 
   // 
 
@@ -38,8 +35,7 @@ export const Game = () => {
   }))
 
   let videosToSee = [] // array nuevo
-
-  template2.map(e => {
+  template.map(e => {
     videosToSee.push(arrVideos.filter(b => b.id === e[0]))
     videosToSee[videosToSee.length - 1].category = e[1]
   });
@@ -65,22 +61,12 @@ export const Game = () => {
 
   // Elige el video que el usuario va a ver
 
-  function recVideos() {
-    if (tope >= videos.length) {
-      stopInterval()
-    }
+  function recVideos(lives) {
+    if (tope >= videosToSee.length || lives === 0) return null
     viewVideos();
     // const filterVideo = videos.find(video => video.id === template[tope][0]);
     dispatch(recVideo(videosToSee[tope]));
     tope++;
-  }
-
-  function intervalFunction() {
-    interval = setInterval(recVideos, 3000);
-  }
-
-  function stopInterval() {
-    clearInterval(interval);
   }
 
   // Guarda los videos que el usuario ve
@@ -92,7 +78,6 @@ export const Game = () => {
   // Ejecuta la funcion recVideos al renderizar el componente
 
   useEffect(() => {
-    // intervalFunction();
     recVideos();
   }, []);
 
@@ -103,7 +88,7 @@ export const Game = () => {
         <Link className={style.Link} to='login'>❌</Link>
         <button onClick={recVideos}>Click</button>
         {
-          <VideoPlayer stopInterval={stopInterval} recVideos={recVideos} />
+          <VideoPlayer videosToSee={videosToSee} recVideos={recVideos} target={target} />
         }
       </div>
     </>

@@ -1,13 +1,10 @@
 
-import videos from '../assets/videos.js';
+/* import videos from '../assets/videos.js';
+const template = require('../assets/level_templates/prueba.json')[2]; */
 import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO } from './action';
-const template = require('../assets/level_templates/prueba.json')[2];
-
 
 const initialState = {
     recVideo: [],
-    template,
-    videos,
     user: {
         id: '',
         Names: '',
@@ -20,10 +17,6 @@ const initialState = {
         DateN: '',
         currentGame: {
             idGame: '',
-            numVideosTarget: 100,
-            numAciertos: 0,
-            PromedioAciertos: 30 / 100,
-            lives: 3,
             mood: '', // Estado de Animo
             seenVideos: []
         },
@@ -63,8 +56,10 @@ export default function reducer(state = initialState, { type, payload }) {
                     ...state.user,
                     currentGame: {
                         ...state.user.currentGame,
-                        numAciertos: payload.correctPoints,
-                        lives: payload.lives
+                        targetFound: payload.targetFound,
+                        targetNotPress: payload.targetNotPress,
+                        lives: payload.lives,
+                        targetVideos: payload.targetVideos
                     }
                 }
             };
