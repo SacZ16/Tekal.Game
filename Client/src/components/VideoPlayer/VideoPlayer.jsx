@@ -26,6 +26,7 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     recVideo,
     user
   } = useSelector(state => state); // Traidos del Obj Reducer.
+
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
 
@@ -83,7 +84,7 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
   }, []);
 
   var bcolor = { 'background': `${color}` }
-  console.log(lives.current)
+
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
     if (seeVideos.current.length + 1 > videosToSee.length) {
@@ -135,11 +136,11 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
       {(recVideo !== '') &&
         <div width="50%"
           height="50%" z-index='5' id='video'
-          /* onClick={(e) => console.log(e)} */>
+        >
           <ReactPlayer className={style.video}
             z-index='5'
             url={recVideo[0] && recVideo[0].url}
-            onEnded={(recVideos)}
+            onEnded={recVideos}
             playing
             muted
             width='100%'

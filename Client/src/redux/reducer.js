@@ -19,12 +19,7 @@ const initialState = {
             idGame: '',
             mood: '', // Estado de Animo
             seenVideos: []
-        },
-        TotalGames: {                    //Query
-            NumVidoesViewTarget: 1000,  // Sumatoria de Videos Vistos
-            NumAciertos: 30,            // Sumatoria de Aciertos de Videos Vistos
-            PromedioAciertos: 30 / 100,   //  Promedio 
-        },
+        }
     }
 }
 

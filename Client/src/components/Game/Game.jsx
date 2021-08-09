@@ -14,6 +14,10 @@ export const Game = () => {
 
   /*----------------------------------------*/
 
+  useEffect(() => {
+    console.log('asa')
+  }, [])
+
   // Selecciona un template al azar
 
   var random = Math.round(Math.random() * 999)
@@ -40,7 +44,8 @@ export const Game = () => {
     videosToSee[videosToSee.length - 1].category = e[1]
   });
 
-  // console.log(videosToSee)
+  console.log(videosToSee)
+  console.log(template)
 
   /*----------------------------------------*/
 
