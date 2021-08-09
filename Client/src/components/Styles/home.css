@@ -92,10 +92,16 @@
     padding-top:-30px
 }
 
-body{
+/* body{
     min-height: 100vh;
     background: linear-gradient(to top,#2C2C2B, black);
     overflow-x: hidden;
+} */
+.homeDiv{
+    min-height: 100vh;
+    background: linear-gradient(to top,#2C2C2B, black);
+    overflow-x: hidden;
+    
 }
 
 .stars {

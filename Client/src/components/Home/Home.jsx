@@ -4,7 +4,6 @@ import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
 import brainBack from '../Styles/images/brainBack.png';
-import profilePic from '../Styles/images/profilePic.jpg';
 import {Link} from 'react-router-dom';
 import ReactPlayer from 'react-player'
 import tutorial from '../Styles/media/tutorial.mp4'
@@ -30,16 +29,17 @@ import '../Styles/home.css';
     if(cookies.get('userInfo')&& !checker){
         setStartGame(true)
         setLogin(false)
+        setSessionOn(true)
         setchecker(true)
     }
 
     const CurrentSession = () => {
         return(
-            <div>
+            <div >
             {sessionOn?
                 <div className='sessionBox'>
                 <div className='boxDisplay'>
-                    <img className='profilePic' src={profilePic} alt='profile_pic'/>
+                    <img className='profilePic' src='https://clinicacontraadicciones.mx/wp-content/uploads/2020/10/TESTIMONIO.jpg' alt='profile_pic'/>
                     <div className='textBox'>
                     <p className='sessionName'>Maximiliano</p>
                     <p className='sessionStatus'>Online</p>
@@ -47,7 +47,8 @@ import '../Styles/home.css';
                     <button className='btnOpenSessionMenu' onClick={e => {setShow(!show)}}>&#9660;</button>
                 </div>
                 {show?
-                    <button className='btnLogOut'>Log out</button>:(null)
+                    <button className='btnLogOut' onClick={()=>{cookies.remove('userInfo')
+                    window.location.href = ('')} }>Log out</button>:(null)
                 }
                 </div>:(null)}
             </div> 
@@ -55,7 +56,7 @@ import '../Styles/home.css';
     }
 
     return (
-        <div>
+        <div className='homeDiv'>
         <section>
             <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal'/>
             <img className='stars' src={stars} alt="starsBackground" id='stars' style={{left:(0 + offset * 0.1) + '%'}}/>
