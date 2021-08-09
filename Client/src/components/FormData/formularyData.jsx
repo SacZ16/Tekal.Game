@@ -110,7 +110,8 @@ const FormData = () => {
                 <input type='text' name='Surnames'onChange={(e) => setSurnames(e.target.value)}/>
                 <label htmlFor='Age'  onChange={(e) => setAge(e.target.value)}>Age</label>
                 <input type='date' name='Age' value={prueba} max={dateCurrent} onChange={(e) => setPrueba(e.target.value)} min={minDate} />
-                <input type="text" value={inputCountry} placeholder="Search.." id="myInput" onChange={(e) => orderCountries(e, pais)}/>
+                <label htmlFor='Country' > Country </label>
+                <input type="text" name='Country' value={inputCountry} placeholder="Search.." id="myInput" onChange={(e) => orderCountries(e, pais)}/>
                     <ul>
                     {
                         browser.map(x => {return(<li onClick={() => {setInputCountry(x)

@@ -47,12 +47,12 @@ function Finalgame() {
             <div className='buttonRegister2' >
                 <div>
                     <Link to='/'>
-                        <button className='buttonRegister' >Home</button>
+                        <button className='buttonRegisters' >Home</button>
                     </Link>
                 </div>
                 <div>
                     <Link to='/game'>
-                        <button className='buttonRegister'  >Try again</button>
+                        <button className='buttonRegisters'  >Try again</button>
                     </Link>
                 </div>
             </div>
