@@ -3,6 +3,7 @@ export const CHANGE_TEMPLATE = "CHANGE_TEMPLATE";
 export const REC_VIDEO = "REC_VIDEO";
 export const SESSION_INFO = "SESSION_INFO";
 export const SEEN_VIDEO = "SEEN_VIDEO";
+export const RESET_REDUCER = "RESET_REDUCER";
 
 
 export function changeVideo(newVideo) {
@@ -30,7 +31,9 @@ let pos = 0
 export function seenVideos(videos) {
     const videosToSeenQuote = [...videos];
     const viewVideo = videosToSeenQuote.splice(pos, 1);
-    // const viewVideoObj = { ...viewVideo };
+    //const viewVideoObj = [...viewVideo[0], { ...viewVideo[0][0], answer: 1, category: viewVideo[0].category }];
+    // console.log(viewVideoObj)
+    // console.log(viewVideo)
     pos++;
     return {
         type: SEEN_VIDEO,
@@ -39,8 +42,16 @@ export function seenVideos(videos) {
 }
 
 export function sessionInfo(obj) {
+    console.log(obj)
     return {
         type: SESSION_INFO,
         payload: obj
+    }
+}
+
+export function resetReducer() {
+    return {
+        type: RESET_REDUCER,
+        payload: ''
     }
 }

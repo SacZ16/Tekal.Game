@@ -1,7 +1,4 @@
-
-/* import videos from '../assets/videos.js';
-const template = require('../assets/level_templates/prueba.json')[2]; */
-import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO } from './action';
+import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO, RESET_REDUCER } from './action';
 
 const initialState = {
     recVideo: [],
@@ -16,7 +13,7 @@ const initialState = {
         // City: '',
         DateN: '',
         currentGame: {
-            idGame: '',
+            email: '',
             mood: '', // Estado de Animo
             seenVideos: []
         }
@@ -53,8 +50,9 @@ export default function reducer(state = initialState, { type, payload }) {
                         ...state.user.currentGame,
                         targetFound: payload.targetFound,
                         targetNotPress: payload.targetNotPress,
-                        lives: payload.lives,
-                        targetVideos: payload.targetVideos
+                        score: payload.score,
+                        /* lives: payload.lives,
+                        targetVideos: payload.targetVideos */
                     }
                 }
             };
@@ -68,11 +66,15 @@ export default function reducer(state = initialState, { type, payload }) {
                         ...state.user.currentGame,
                         seenVideos: [
                             ...state.user.currentGame.seenVideos,
-                            payload
+                            payload,
                         ]
                     }
                 }
             };
+
+        case RESET_REDUCER:
+            state = initialState
+            return state;
 
         default: return state;
     }

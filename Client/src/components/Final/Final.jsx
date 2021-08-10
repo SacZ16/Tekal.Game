@@ -1,15 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import Particles from 'react-particles-js'
 import { Line } from 'react-chartjs-2'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+/* import { reset } from '../../redux/action'
+import swal from '@sweetalert/with-react' */
+import Cookie from 'universal-cookie'
+import { resetReducer } from '../../redux/action'
 
-function Finalgame() {
 
-    const { targetFound, targetVideos } = useSelector(state => state.user.currentGame)
-    const score = (targetFound.points / targetVideos) * 100
 
+function Finalgame({ history }) {
+
+    const dispatch = useDispatch()
+
+    const { currentGame } = useSelector(state => state.user)
+    console.log(currentGame)
+    const { score } = useSelector(state => state.user.currentGame)
+    // const score = ((targetFound && targetFound.points / targetVideos) * 100).toFixed(2)
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -28,6 +37,13 @@ function Finalgame() {
         type: 'line',
         data: data,
     };
+
+    const again = () => {
+        dispatch(resetReducer())
+        history.push('/game')
+    }
+
+
     return (
         <div>
             <div className='bgLandingfinal'>
@@ -37,7 +53,8 @@ function Finalgame() {
             </div>
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>
-                <h1 className="porcentaje">{targetFound.points === 0 ? 0 : score.toFixed(2)}%</h1>
+                {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
+                <h1 className="porcentaje">{score > 0 ? 0 : score}%</h1>
                 <div className='loader'>
                 </div>
             </div>
@@ -51,9 +68,9 @@ function Finalgame() {
                     </Link>
                 </div>
                 <div>
-                    <Link to='/game'>
-                        <button className='buttonRegister'  >Try again</button>
-                    </Link>
+
+                    <button className='buttonRegister' onClick={again}>Try again</button>
+
                 </div>
             </div>
             <p className='copyright'>Â© 2021 Tekal, Inc. All rights reserved</p>
@@ -61,4 +78,4 @@ function Finalgame() {
     )
 }
 
-export default Finalgame
+export default withRouter(Finalgame)

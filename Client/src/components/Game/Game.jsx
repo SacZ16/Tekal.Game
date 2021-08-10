@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
 import videosURL from '../../assets/videosurl';
-// import axios from 'axios'
+import Cookie from 'universal-cookie'
+import axios from 'axios'
 
 export const Game = () => {
 
@@ -14,10 +15,38 @@ export const Game = () => {
 
   /*----------------------------------------*/
 
-  useEffect(() => {
-    console.log('asa')
-  }, [])
+  /*  useEffect(() => {
+     console.log('asa')
+   }, []) */
 
+  /* const [infoUser, SetInfoUser] = useState('')
+  var emailCokkie;
+  const cookies = new Cookie(); */
+
+  /*  // Sacando el email
+   if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
+   else { emailCokkie = cookies.get('userInfo').Items[0].email }
+ 
+   //Sacando info
+   const CheckUserData = async (email) => {
+     let SearchEmail = {
+       email: email
+     }
+     let response = await axios.post('http://localhost:3001/info', SearchEmail)
+     SetInfoUser(response)
+     return response
+   }
+ 
+   if (!infoUser) {
+     CheckUserData(emailCokkie);
+   }
+ 
+   if (infoUser) {
+     if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
+       window.location.href = ('form')
+     }
+   }
+  */
   // Selecciona un template al azar
 
   var random = Math.round(Math.random() * 999)
@@ -29,7 +58,7 @@ export const Game = () => {
   const vig = template[0] && template.filter(e => e[1] === 'vig')
   const target = template[0] && template.filter(e => e[1] === 'target')
 
-  // const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
 
   // 
 
@@ -44,8 +73,8 @@ export const Game = () => {
     videosToSee[videosToSee.length - 1].category = e[1]
   });
 
-  console.log(videosToSee)
-  console.log(template)
+  /* console.log(videosToSee)
+  console.log(template) */
 
   /*----------------------------------------*/
 
@@ -67,11 +96,15 @@ export const Game = () => {
   // Elige el video que el usuario va a ver
 
   function recVideos(lives) {
-    if (tope >= videosToSee.length || lives === 0) return null
-    viewVideos();
-    // const filterVideo = videos.find(video => video.id === template[tope][0]);
-    dispatch(recVideo(videosToSee[tope]));
-    tope++;
+    console.log(lives)
+    if (tope >= videosToSee.length || lives === 0) {
+      return null
+    } else {
+      viewVideos();
+      // const filterVideo = videos.find(video => video.id === template[tope][0]);
+      dispatch(recVideo(videosToSee[tope]));
+      tope++;
+    }
   }
 
   // Guarda los videos que el usuario ve
