@@ -5,7 +5,7 @@ import RegisterWithEmail from './components/Signin/RegisterEmail';
 import Home from './components/Home/Home'
 import FinalGame from './components/Final/Final'
 import Game from './components/Game/Game'
-
+import VerificationEmail from './components/Login/VerificationEmail';
 function App() {
   return (
     <>
@@ -16,6 +16,7 @@ function App() {
         <Route exact path='/form' component={FormData} />
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
+        <Route exact path='/forgotPassword' component={VerificationEmail} />
       </Switch>
     </>
   );

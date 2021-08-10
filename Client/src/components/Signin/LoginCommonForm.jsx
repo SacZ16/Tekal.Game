@@ -8,6 +8,7 @@ import '../Styles/loginForm.css'
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
+import VerificationEmail from '../Login/VerificationEmail';
 
 
 const RegisterCommonForm = ({props,coloresprop}) => {
@@ -17,6 +18,9 @@ const RegisterCommonForm = ({props,coloresprop}) => {
     const [errorPassword, seterrorPassword] = useState('');
     const cookiies= new Cookie(); //no borrar
     var a = cookiies.get('prueba')
+
+
+
     return(
         <>
             <div style={!a?{'background':`rgba(0, 0, 0, 0.904)`,'transition': 'all 0.5s ease-out'}:{'background':`${cookiies.get('fondoform')}`,'transition': 'all 0.5s ease-out'}} className='containerLanding'>
@@ -32,7 +36,7 @@ const RegisterCommonForm = ({props,coloresprop}) => {
                 </form>
                 <div className='form3'>
 
-                    <Link className='forgotPassword'to=''>Forgot password?</Link>
+                    <Link to='/forgotPassword' className='forgotPassword' >Forgot password?</Link>
                     <button style={{'border':'1px solid #1663A2'}} className='continue' onClick= {()=> props(email, password)}> Continue </button>
                     <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
                 <GoogleButton/>
