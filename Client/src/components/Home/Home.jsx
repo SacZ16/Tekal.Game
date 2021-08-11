@@ -32,6 +32,7 @@ import '../Styles/home.css';
         setSessionOn(true)
         setchecker(true)
     }
+    console.log(process.env.REACT_APP_SECRETWORD)
 
     const CurrentSession = () => {
         return(
