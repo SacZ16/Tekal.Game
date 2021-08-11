@@ -7,6 +7,7 @@ import FinalGame from './components/Final/Final'
 import Game from './components/Game/Game'
 import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
+import ChangePassword from './components/ChangePassword/changePassword'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route exact path='/close' component={FinalGame} />
         <Route exact path='/forgotPassword' component={VerificationEmail} />
         <Route exact path='/verificationemail' component={Verification} />
+        <Route exact path='/passwordchange' component={ChangePassword} />
       </Switch>
     </>
   );

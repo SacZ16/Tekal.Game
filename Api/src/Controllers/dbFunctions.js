@@ -178,11 +178,12 @@ const updateEmailVerification = async (userId) => {
 }
 
 const updatePassword = async (userId, pass) => {
+    console.log(userId)
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(pass, salt);
+
     try {
         const infoUser = `INFO#${userId}`;
-
         let params = {
             TableName:"USER",
             Key:{
@@ -191,14 +192,12 @@ const updatePassword = async (userId, pass) => {
             },
             UpdateExpression: "set #verification = :value",
             ExpressionAttributeNames: {
-                "#verification": "Password"
+                "#verification": "password"
             },
             ExpressionAttributeValues: {
                 ":value": password,
             },
-
         };
-
         const registerInfo = connectionDynamo.update(params).promise();
         console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
         return registerInfo;
