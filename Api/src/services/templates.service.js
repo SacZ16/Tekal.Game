@@ -52,7 +52,10 @@ function templateFiller(arrayAssets){
     assetsToSee.push(assetId);
     assetsToSee[i].push(e[1]);
   });
-  
+
+  let target = template[0];
+  assetsToSee.unshift(target);
+
   return assetsToSee;
 }
 
