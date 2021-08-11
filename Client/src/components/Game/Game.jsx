@@ -104,13 +104,11 @@ export const Game = () => {
 
   // Elige el video que el usuario va a ver
 
-  function recVideos(lives) {
-    // console.log(lives)
-    if (tope >= videosToSee.length || lives === 0) {
+  function recVideos() {
+    if (tope >= videosToSee.length) {
       return null
     } else {
       viewVideos();
-      // const filterVideo = videos.find(video => video.id === template[tope][0]);
       dispatch(recVideo(videosToSee[tope]));
       tope++;
     }

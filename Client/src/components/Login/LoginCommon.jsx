@@ -22,7 +22,7 @@ const LoginPage = () => {
         copyr:'rgb(197, 197, 197)'
     })
     cookiies.set('colores',`${colores.fondo}`,{path:'/'})//no borrar - estilo css
-    console.log(colores)
+    // console.log(colores)
     useEffect(()=>{
         if (cookies.get('userInfo')){
             window.location.href='./'

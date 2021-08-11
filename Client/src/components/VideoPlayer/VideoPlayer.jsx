@@ -4,7 +4,7 @@ import React,
   useState,
   useEffect
 } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy'
 import {
   useDispatch,
   useSelector
@@ -12,14 +12,10 @@ import {
 import { withRouter } from 'react-router';
 import style from '../Styles/Game.module.css';
 import swal from '@sweetalert/with-react';
-
 import { sessionInfo } from '../../redux/action';
 import '../Styles/progressBar.css';
-import axios from 'axios';
-
-import videosURL from '../../assets/videosurl';
-
-
+// import axios from 'axios';
+// import videosURL from '../../assets/videosurl';
 
 const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
@@ -29,10 +25,10 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     recVideo,
     user
   } = useSelector(state => state); // Traidos del Obj Reducer.
-  console.log(recVideo)
+  // console.log(recVideo)
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
-  console.log(seeVideos.current)
+  // console.log(seeVideos.current)
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
 
@@ -46,10 +42,12 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
   const [color, setColor] = useState('#067eef'); // Cambia de color al apretar la barra espaciadora
+
   const play = useRef(true) // pausa o inicia el video
+
   const progress = useRef() // segundos viendo el video
   const pressSeconds = useRef([]) // segundos al apretar la barra espaciadora
-  console.log('pressS', pressSeconds.current)
+  // console.log('pressS', pressSeconds.current)
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -179,31 +177,20 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
         value={seeVideos.current.length}>
       </progress>
 
-      {(recVideo !== '') &&
-        <div width="50%"
-          height="50%" z-index='5' id='video'
-        >
-          <ReactPlayer className={style.video}
-            z-index='5'
-            url={recVideo[0] && recVideo[0].url}
-            onProgress={(e) => onProgress(e)}
-            /*  onReady={() => onReady()} */
-            onEnded={recVideos}
-            playing={play.current}
-            muted
-            width='100%'
-            height='100%'
-            progressInterval={250}
-          /* config={{
-            file: {
-              attributes: {
-                preload: 'auto'
-              }
-            }
-          }} */
-          />
-        </div>
-
+      {(recVideo !== '') && <div width="50%" height="50%" z-index='5' id='video'>
+        <ReactPlayer className={style.video}
+          z-index='5'
+          url={recVideo[0] && recVideo[0].url}
+          onProgress={(e) => onProgress(e)}
+          /*  onReady={() => onReady()} */
+          onEnded={recVideos}
+          playing={play.current}
+          muted
+          width='100%'
+          height='100%'
+          progressInterval={250}
+        />
+      </div>
       }
     </>
   )

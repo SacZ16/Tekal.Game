@@ -4,7 +4,7 @@ import Cookie from 'universal-cookie'
 export const newCookie= (info)=>{
     const cookies= new Cookie();
     cookies.set('userInfo', info, {
-        maxAge: 60,
+        maxAge: 600,
         path: './'
     });
     window.location.href='./login'
