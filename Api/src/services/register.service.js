@@ -63,6 +63,32 @@ const sedEmail = async (email) =>{
 });
 
 }
+const sendEmailForPassword = async (email) =>{
+    var tokensendEmail = jwt.sign({ email: email }, 'prueba');
+    await oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+
+    const algo= await oAuth2Client.getAccessToken()
+    console.log( algo.token)
+
+    const transporter= nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            type:'OAUTH2',
+            user:'goyeliseo1@gmail.com',
+            clientId:CLIENT_ID,
+            clientSecret:CLIENT_SECRET,
+            refresh_token:REFRESH_TOKEN,
+            accessToken: algo.token,
+        }
+    });
+
+    await transporter.sendMail({
+        from: 'Pagina Web NodeMailer <goyeliseo1@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: "Hello :heavy_check_mark:", // Subject line
+        text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body
+});
+}
 
 const verificationEmail = async (email) => {
     let infoUser = await queryAllInfoUser(email);
@@ -83,4 +109,4 @@ const verificationEmail = async (email) => {
 
 
 
-module.exports = {registerUser,sedEmail,verificationEmail}
+module.exports = {registerUser,sedEmail,verificationEmail,sendEmailForPassword}

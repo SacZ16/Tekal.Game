@@ -5,7 +5,7 @@ const VerificationEmail = () => {
     const [email, setEmail] = useState ('')
     const [afterButton, setAfterButton] = useState('')
 
-    const emailToBack = () => {
+    const emailToBack = async () => {
         setAfterButton('')
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if(!emailReject.test(email)) {
@@ -16,7 +16,8 @@ const VerificationEmail = () => {
         let user = {
             email: email
         }
-        // axios.post(`${process.env.REACT_APP_API_URL}`, user)
+        let response = await axios.post(`${process.env.REACT_APP_API_URL}verificationchangepassword`, user)
+        console.log(response)
         setAfterButton('If the email is correct we will send a verification message')
     }
 

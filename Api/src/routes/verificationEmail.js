@@ -3,9 +3,6 @@ const router = Router();
 const { queryAllInfoUser, updateEmailVerification } = require('../Controllers/dbFunctions')
 const {verificationEmail} = require('../services/register.service')
 
-router.get('/', (req, res) => {
-    res.send('Hello World')
-})
 
 router.post('/', async (req,res) => {
     let email = req.body.email

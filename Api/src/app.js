@@ -8,6 +8,7 @@ const creationTable = require('./routes/creationTable')
 const personalInfo = require ('./routes/personalInfo')
 const datauser = require ('./routes/datauser')
 const verificationemail = require ('./routes/verificationEmail')
+const VerificationChangePassword = require ('./routes/VerificationChangePassword');
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const cors = require('cors');
@@ -35,6 +36,7 @@ server.use('/addinfo', personalInfo);
 server.use('/createtable', creationTable);
 server.use('/info', datauser);
 server.use('/verification', verificationemail);
+server.use('/verificationchangepassword', VerificationChangePassword);
 
 
 module.exports = server;

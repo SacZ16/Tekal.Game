@@ -2,6 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
+const bcrypt = require('bcrypt');
 
 const TABLE_NAME="USER"
 
@@ -176,6 +177,36 @@ const updateEmailVerification = async (userId) => {
     }
 }
 
+const updatePassword = async (userId, pass) => {
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(pass, salt);
+    try {
+        const infoUser = `INFO#${userId}`;
+
+        let params = {
+            TableName:"USER",
+            Key:{
+                "PK": userId,
+                "SK": infoUser,
+            },
+            UpdateExpression: "set #verification = :value",
+            ExpressionAttributeNames: {
+                "#verification": "Password"
+            },
+            ExpressionAttributeValues: {
+                ":value": password,
+            },
+
+        };
+
+        const registerInfo = connectionDynamo.update(params).promise();
+        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        return registerInfo;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
 
 
 module.exports = {
@@ -186,5 +217,6 @@ module.exports = {
     createUserTable,
     putUserLogin,
     queryAllInfoUser,
-    updateEmailVerification
+    updateEmailVerification,
+    updatePassword
 }
