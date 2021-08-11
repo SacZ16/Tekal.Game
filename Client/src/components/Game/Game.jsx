@@ -40,34 +40,6 @@ if(infoUser.data){
     window.location.href = ('form')
   } 
 }
-  // Selecciona un template al azar
-
-  var random = Math.round(Math.random() * 999)
-  const template = require(`../../assets/level_templates/template_${random}.json`)[2];
-
-  // Sacamos los videos unicos
-
-  const filler = template[0] && template.filter(e => e[1] === 'filler')
-  const vig = template[0] && template.filter(e => e[1] === 'vig')
-  const target = template[0] && template.filter(e => e[1] === 'target')
-
-  // const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
-
-  // 
-
-  const arrVideos = videosURL.map((e, i) => Object.create({}, {
-    id: { value: i },
-    url: { value: e },
-  }))
-
-  let videosToSee = [] // array nuevo
-  template.map(e => {
-    videosToSee.push(arrVideos.filter(b => b.id === e[0]))
-    videosToSee[videosToSee.length - 1].category = e[1]
-  });
-
-  console.log(videosToSee)
-  console.log(template)
 
   /*----------------------------------------*/
 
