@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const {google}= require ('googleapis')
-const {newUser,getallUsers,putUserLogin}= require ('../Controllers/dbFunctions.js')
+const {newUser,getallUsers,putUserLogin,queryAllInfoUser }= require ('../Controllers/dbFunctions.js')
 const jwt = require ('jsonwebtoken')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
@@ -63,6 +63,12 @@ const sedEmail = async (email) =>{
 });
 
 }
+
+const verificationEmail = async (email) => {
+
+}
+
+
 
 
 module.exports = {registerUser,sedEmail}
