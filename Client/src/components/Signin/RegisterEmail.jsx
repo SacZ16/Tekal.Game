@@ -34,10 +34,10 @@ const RegisterWithEmail = () => {
     })
 
     //Estos van a estar seteando errores (osea cuando los inputs se rellenen mal estos estados van a tener algo adentro)
-    const [errorEmail, setErrorEmail] = useState('');
+    /* const [errorEmail, setErrorEmail] = useState('');
     const [errorConfirmEmail, setErrorConfirmEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
-    const [errorConfirmPass, setErrorConfirmPass] = useState('');
+    const [errorConfirmPass, setErrorConfirmPass] = useState(''); */
 
 
     const SendToBackEnd = async (e) => {

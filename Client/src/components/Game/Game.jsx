@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
@@ -14,10 +14,6 @@ export const Game = () => {
   var tope = 0;
 
   /*----------------------------------------*/
-
-  /*  useEffect(() => {
-     console.log('asa')
-   }, []) */
 
   /* const [infoUser, SetInfoUser] = useState('')
   var emailCokkie;
@@ -49,18 +45,31 @@ export const Game = () => {
   */
   // Selecciona un template al azar
 
+
   var random = Math.round(Math.random() * 999)
-  const template = require(`../../assets/level_templates/template_${random}.json`)[2];
+  const template = require(`../../assets/level_templates/template_${random}.json`);
+  const target = template[0] // Total de targets en el template
+  // const totalVideos = template[0] + template[1] // videos que nos tienen que mandar
 
-  // Sacamos los videos unicos
+  /*   const videoArr = [] // array de videos en donde cada posicion es un array
+    template[2].map((e, i) => {
+      if (template[2][i][0] === videoArr.length > 0 && videoArr[i][0]) {
+        videoArr.push([...e, template[2][i][1]])
+      } else {
+        videoArr.push([...e, videosURL[i]])
+      }
+    }) */
+  // console.log(videoArr)
 
-  const filler = template[0] && template.filter(e => e[1] === 'filler')
-  const vig = template[0] && template.filter(e => e[1] === 'vig')
-  const target = template[0] && template.filter(e => e[1] === 'target')
+  /*  const videoObj = videoArr.map(e => Object.create({}, { // en cada posicion hay un objeto
+     id: { value: e[0] },
+     category: { value: e[1] },
+     url: { value: e[2] }
+   })) */
 
-  const totalVideos = filler.length + vig.length + target.length // videos que nos tienen que mandar
+  // console.log(videoObj)
 
-  // 
+  // -------
 
   const arrVideos = videosURL.map((e, i) => Object.create({}, {
     id: { value: i },
@@ -68,13 +77,13 @@ export const Game = () => {
   }))
 
   let videosToSee = [] // array nuevo
-  template.map(e => {
+  template[2].map(e => {
     videosToSee.push(arrVideos.filter(b => b.id === e[0]))
     videosToSee[videosToSee.length - 1].category = e[1]
   });
 
-  /* console.log(videosToSee)
-  console.log(template) */
+  // console.log(videosToSee)
+  // console.log(template)
 
   /*----------------------------------------*/
 
@@ -96,7 +105,7 @@ export const Game = () => {
   // Elige el video que el usuario va a ver
 
   function recVideos(lives) {
-    console.log(lives)
+    // console.log(lives)
     if (tope >= videosToSee.length || lives === 0) {
       return null
     } else {

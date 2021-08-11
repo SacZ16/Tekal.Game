@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
 import axios from 'axios';
 import Cookie from 'universal-cookie'
-
 
 export const newCookie= (info)=>{
     const cookies= new Cookie();

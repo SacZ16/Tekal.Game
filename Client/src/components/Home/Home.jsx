@@ -1,9 +1,9 @@
-import React, {useState,  useEffect  } from 'react';
+import React, {useState} from 'react';
 import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
-import brainBack from '../Styles/images/brainBack.png';
+// import brainBack from '../Styles/images/brainBack.png';
 import profilePic from '../Styles/images/profilePic.jpg';
 import {Link} from 'react-router-dom';
 import ReactPlayer from 'react-player'
@@ -21,7 +21,7 @@ import '../Styles/home.css';
     window.addEventListener('scroll', handleScroll)
 
     const [show, setShow] = useState(false)
-    const [sessionOn, setSessionOn] = useState(false)
+    const [sessionOn, _setSessionOn] = useState(false)
     const [login, setLogin] = useState(true)
     const [startGame, setStartGame] = useState(false)
     const [checker, setchecker]=useState(false)

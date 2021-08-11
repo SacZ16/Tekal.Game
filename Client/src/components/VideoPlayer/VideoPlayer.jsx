@@ -17,7 +17,9 @@ import { sessionInfo } from '../../redux/action';
 import '../Styles/progressBar.css';
 import axios from 'axios';
 
-// import videosURL from '../../assets/videosurl';
+import videosURL from '../../assets/videosurl';
+
+
 
 const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
@@ -27,7 +29,7 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     recVideo,
     user
   } = useSelector(state => state); // Traidos del Obj Reducer.
-
+  console.log(recVideo)
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
   console.log(seeVideos.current)
@@ -43,11 +45,16 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
   const lives = useRef(3); // Vidas del usuario 
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
-  const [color, setColor] = useState('#067eef'); // 
-  // Cambia de color al apretar la barra espaciadora
+  const [color, setColor] = useState('#067eef'); // Cambia de color al apretar la barra espaciadora
+  const play = useRef(true) // pausa o inicia el video
+  const progress = useRef() // segundos viendo el video
+  const pressSeconds = useRef([]) // segundos al apretar la barra espaciadora
+  console.log('pressS', pressSeconds.current)
+
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
       answers.current.push(1)
+      pressSeconds.current.push(progress.current)
       if (infoVideo.current.category.includes('_')) {
         if (infoVideo.current.category === 'target_repeat') {
           targetFound.current.points++;
@@ -72,12 +79,14 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0].category !== 'target_repeat') {
         answers.current.push(0)
+        pressSeconds.current.push(0)
       }
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0].category === 'target_repeat') {
         targetNotPress.current.notPress++
         targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0])
         answers.current.push(0)
-        console.log('no apretaste')
+        pressSeconds.current.push(0)
+        // console.log('no apretaste')
       }
     }
     press.current = false;
@@ -98,6 +107,7 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
     if (seeVideos.current.length + 1 > videosToSee.length) {
+      play.current = false
       videosWithAnswers()
       sessionData()
       swal({
@@ -109,8 +119,8 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
         });
     }
     if (lives.current === 0) {
+      play.current = false
       videosWithAnswers()
-      // recVideos(lives.current)
       sessionData();
       swal({
         text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
@@ -126,7 +136,11 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
   function videosWithAnswers() {
     seeVideos.current.map((e, i) => {
-      finalVideos.current.push([...e[0], { ...e[0][0], answer: answers.current[i], category: e[0].category }])
+      finalVideos.current.push([...e[0], {
+        ...e[0][0], answer: answers.current[i],
+        seconds: pressSeconds.current[i],
+        category: e[0].category
+      }])
     })
   }
 
@@ -145,7 +159,14 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     dispatch(sessionInfo(obj));
   }
 
+  /* const onReady = () => {
+    console.log('ready')
+    play.current = true
+  } */
 
+  const onProgress = (e) => {
+    progress.current = e.playedSeconds
+  }
 
   return (
 
@@ -165,11 +186,21 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
           <ReactPlayer className={style.video}
             z-index='5'
             url={recVideo[0] && recVideo[0].url}
+            onProgress={(e) => onProgress(e)}
+            /*  onReady={() => onReady()} */
             onEnded={recVideos}
-            playing
+            playing={play.current}
             muted
             width='100%'
             height='100%'
+            progressInterval={250}
+          /* config={{
+            file: {
+              attributes: {
+                preload: 'auto'
+              }
+            }
+          }} */
           />
         </div>
 

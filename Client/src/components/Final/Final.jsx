@@ -4,21 +4,15 @@ import '../Styles/final.css'
 import Particles from 'react-particles-js'
 import { Line } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux'
-/* import { reset } from '../../redux/action'
-import swal from '@sweetalert/with-react' */
-import Cookie from 'universal-cookie'
+// import swal from '@sweetalert/with-react'
 import { resetReducer } from '../../redux/action'
-
-
 
 function Finalgame({ history }) {
 
     const dispatch = useDispatch()
 
-    const { currentGame } = useSelector(state => state.user)
-    console.log(currentGame)
     const { score } = useSelector(state => state.user.currentGame)
-    // const score = ((targetFound && targetFound.points / targetVideos) * 100).toFixed(2)
+
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -54,7 +48,7 @@ function Finalgame({ history }) {
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>
                 {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                <h1 className="porcentaje">{score > 0 ? 0 : score}%</h1>
+                <h1 className="porcentaje">{score === Number ? score : 0}%</h1>
                 <div className='loader'>
                 </div>
             </div>

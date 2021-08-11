@@ -1,7 +1,7 @@
 import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO, RESET_REDUCER } from './action';
 
 const initialState = {
-    recVideo: [],
+    recVideo: {},
     user: {
         id: '',
         Names: '',
