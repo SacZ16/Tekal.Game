@@ -1,16 +1,25 @@
 const { Router, response } = require('express');
 const router = Router();
-const { queryAllInfoUser } = require('../Controllers/dbFunctions')
+const { queryAllInfoUser, updateEmailVerification } = require('../Controllers/dbFunctions')
+const {verificationEmail} = require('../services/register.service')
+
+router.get('/', (req, res) => {
+    res.send('Hello World')
+})
 
 router.post('/', async (req,res) => {
-    let email = req.body.email;
-    let infoUser = await queryAllInfoUser(email)
-    console.log(infoUser.Items[0].VerificationEmail)
-    // if(infoUser.Items[0].VerificationEmail){
-
-    // }
-    res.send('AAAAAAAAAAAAAAA');
+    let email = req.body.email
+    let response = await verificationEmail(email)
+    console.log(response)
+    if(response === 'Error' || response === undefined){
+        res.send('This email is not registered')
+    }
+    if(response === 'Email already verified'){
+        res.send('Email already verified')
+    }
+    res.send('Ok')
 })
+
 
 
 module.exports = router;

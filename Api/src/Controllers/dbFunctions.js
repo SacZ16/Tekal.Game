@@ -62,6 +62,10 @@ const createUserTable = () => {
     });
 }
 
+
+
+
+
 //Funcion que guarda los datos del primer loggin 
 //(email y password o email) //LoginsG Y F 
 const putUserLogin = async (user) => {
@@ -143,6 +147,35 @@ const queryAllInfoUser = async (userId) => {
 }
 
 
+const updateEmailVerification = async (userId) => {
+    try {
+        const infoUser = `INFO#${userId}`;
+
+        let params = {
+            TableName:"USER",
+            Key:{
+                "PK": userId,
+                "SK": infoUser,
+            },
+            UpdateExpression: "set #verification = :value",
+            ExpressionAttributeNames: {
+                "#verification": "VerificationEmail"
+            },
+            ExpressionAttributeValues: {
+                ":value": true,
+            },
+
+        };
+
+        const registerInfo = connectionDynamo.update(params).promise();
+        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        return registerInfo;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
 
 
 module.exports = {
@@ -152,5 +185,6 @@ module.exports = {
     putUserInfoRegisterItems,
     createUserTable,
     putUserLogin,
-    queryAllInfoUser
+    queryAllInfoUser,
+    updateEmailVerification
 }
