@@ -65,4 +65,6 @@ const sedEmail = async (email) =>{
 }
 
 
+
+
 module.exports = {registerUser,sedEmail}
