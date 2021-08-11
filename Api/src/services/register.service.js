@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const {google}= require ('googleapis')
 const {newUser,getallUsers,putUserLogin}= require ('../Controllers/dbFunctions.js')
 const jwt = require ('jsonwebtoken')
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const CLIENT_ID='234439557126-rs5svefaj89lrjr3pu0sg32vmelcpo8s.apps.googleusercontent.com'
 const CLIENT_SECRET='uUVc9D-DGdZ_rfvJi85z3Fav'
@@ -25,6 +25,7 @@ const registerUser = async (datos) =>{
             "SK": infoUser,
             "email":  datos.email,
             "password": password,
+            "VerificationEmail": false,
         }
         const response = await putUserLogin(Item)
         return response;
