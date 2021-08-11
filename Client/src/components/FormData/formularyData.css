@@ -1,0 +1,56 @@
+.containerFormData{
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.formPage{
+    display: flex;
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.formPage input {
+    height: 20px;
+}
+
+.formPage2{
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 100%;
+    color: white;
+}
+
+.formPage3{
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 200%;
+    color: white;
+}
+
+.formPage4{
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 300%;
+    color: white;
+}
+
+.btnFormData{
+    z-index: 300;
+    background-color: black;
+    position: absolute;
+    top: 320%;
+    cursor: pointer;
+    color: white;
+}

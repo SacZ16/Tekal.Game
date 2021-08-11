@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import Cookie from 'universal-cookie'
-
+import './formularyData.css'
+import { isDivModeEnabled } from 'tsparticles/Utils';
 
 
 
@@ -18,7 +19,7 @@ const FormData = () => {
     var arrCountries = [];
     const cookies= new Cookie();
     var emailCokkie;
-    if(!cookies.get('userInfo')){
+    /* if(!cookies.get('userInfo')){
         window.location.href=''
     }
     console.log(cookies.get('userInfo'))
@@ -29,7 +30,7 @@ const FormData = () => {
     console.log(emailCokkie)
     if(age.length === 2 || age.length === 4) {
         setNames(age + '-')
-    }
+    } */
     
     const orderCountries = (e, array) => {
         arrCountries = []
@@ -103,13 +104,20 @@ const FormData = () => {
 
     return (
         <div>
-            <form>
-                <label htmlFor='Names'>Names</label>
+            <form className='containerFormData'>
+                <div className='formPage'>
+                <label htmlFor='Names'>What is your name?</label>
                 <input type='text' name='Names' onChange={(e) => setNames(e.target.value)}/>
-                <label htmlFor='Surnames' >Lastnames</label>
+                </div>
+                <div className='formPage2'>
+                <label htmlFor='Surnames' >What is you lastname?</label>
                 <input type='text' name='Surnames'onChange={(e) => setSurnames(e.target.value)}/>
+                </div>
+                <div className='formPage3'>
                 <label htmlFor='Age'  onChange={(e) => setAge(e.target.value)}>Age</label>
                 <input type='date' name='Age' value={prueba} max={dateCurrent} onChange={(e) => setPrueba(e.target.value)} min={minDate} />
+                </div>
+                <div className='formPage4'>
                 <label htmlFor='Country' > Country </label>
                 <input type="text" name='Country' value={inputCountry} placeholder="Search.." id="myInput" onChange={(e) => orderCountries(e, pais)}/>
                     <ul>
@@ -118,8 +126,10 @@ const FormData = () => {
                             orderCountries({target: {value: x}}, pais)}}>{x}</li>)})
                     }
                     </ul>
+                </div>
+                <label for='btnData' className='btnFormData'>Send</label>
             </form>
-            <button onClick={postRegister}> Send </button>
+            <button id='btnData' onClick={postRegister}> Send </button>
         </div>
     )
 }
