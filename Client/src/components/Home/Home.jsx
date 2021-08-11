@@ -13,6 +13,7 @@ import '../Styles/home.css';
     const Home = () => {
     const [offset, setOffset] = useState()
 
+        console.log(process.env)
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
