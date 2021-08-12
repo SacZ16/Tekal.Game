@@ -21,7 +21,7 @@ function templateFiller(arrayAssets){
 
   let target = [numberOfVigs];
   target.unshift(template[0]);
-  target.push(taassetsToSeerget);
+  target.push(assetsToSee);
 
   return target;
 }
