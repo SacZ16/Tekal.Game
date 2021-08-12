@@ -3,7 +3,8 @@ const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
 
-const TABLE_NAME="USER"
+const TABLE_NAME="USER" 
+const TABLE_ASSETS = "ASSETS"
 
 async function getallUsers(){
     const params = {
@@ -48,8 +49,8 @@ const createUserTable = () => {
             { AttributeName: "SK", AttributeType: "S"},
         ],
         ProvisionedThroughput: {       
-            ReadCapacityUnits: 10, 
-            WriteCapacityUnits: 10
+            ReadCapacityUnits: 5, 
+            WriteCapacityUnits: 5
         }
     };
     
@@ -116,7 +117,6 @@ const putUserInfoRegisterItems = async ({userId, name, lastname, age, country}) 
     }
 }
 
-
 //trae toda la tabla info del usuario
 const queryAllInfoUser = async (userId) => {
     try {
@@ -142,8 +142,97 @@ const queryAllInfoUser = async (userId) => {
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const createAssetsTable = () => {
+    let params = {
+        TableName : TABLE_ASSETS,
+        KeySchema: [       
+            { AttributeName: "PK", KeyType: "HASH"}, //Partition key
+            { AttributeName: "SK", KeyType: "RANGE"} //Sort Key
+        ],
+        AttributeDefinitions: [       
+            { AttributeName: "PK",  AttributeType: "S"},
+            { AttributeName: "SK", AttributeType: "S"},
+        ],
+        ProvisionedThroughput: {       
+            ReadCapacityUnits: 5, 
+            WriteCapacityUnits: 5
+        }
+    };
+    
+    dynamodb.createTable(params, function(err, data) {
+        if (err) {
+            console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
+        }
+    });
+}
 
 
+/* const putAssets = async (info) => {
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": info.assetId,
+                "SK": `SESSION#${info.assetId}#${info.sessionCharacteristics.role}#${date}`,
+                "userId":  info.userId,
+                "userMetadata": info.userMetadata,
+                "date": info.date,
+                "fileType": info.fileType,
+                "sessionCharacteristics": info.sessionCharacteristics, 
+            }
+        };
+        
+        const video = await docClient.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+} */
+
+const putAssets = async (info) => {
+    let string2 = info.url.slice(72);
+
+    (function endpointFinder(){
+        var asset = "";
+        for(let i=0; i < string2.length; i++){
+            if(string2[i] !== "?"){
+                asset += string2[i];
+            }
+            else{
+                return asset;
+            }
+        }
+    })();
+
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": asset,
+                "SK": `SESSION#${asset}#${info.category}#${info.date}`,
+                "date": info.date,
+                "fileType": info.type,
+                "sessionCharacteristics": {
+                    role: info.category,
+                    reaction_time: info.seconds,
+                    response: info.answer,
+                }, 
+            }
+        };
+
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
 
 module.exports = {
     getallUsers, 
@@ -152,5 +241,7 @@ module.exports = {
     putUserInfoRegisterItems,
     createUserTable,
     putUserLogin,
-    queryAllInfoUser
+    queryAllInfoUser,
+    createAssetsTable,
+    putAssets,
 }
