@@ -8,6 +8,8 @@ const creationTable = require('./routes/creationTable')
 const personalInfo = require ('./routes/personalInfo')
 const datauser = require ('./routes/datauser')
 const links = require ('./routes/links')
+const assets = require ('./routes/loadingAssets')
+const info = require('./routes/assetsVideoInfo')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const cors = require('cors');
@@ -35,6 +37,8 @@ server.use('/addinfo', personalInfo);
 server.use('/createtable', creationTable);
 server.use('/info', datauser);
 server.use('/links', links)
+server.use('/assets', assets);
+server.use('/videoInfo', info);
 
 
 module.exports = server;

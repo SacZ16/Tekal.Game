@@ -1,4 +1,3 @@
-const { Router, response } = require('express');
 const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
@@ -169,23 +168,81 @@ const createAssetsTable = () => {
     });
 }
 
-
-const putAssets = async (info) => {
+const putPKAssets = async (urlAsset, index) => {
     try{
         let params = {
             TableName: TABLE_ASSETS,
             Item:{
-                "PK": info.assetId,
-                "SK": `SESSION#${info.assetId}#${info.sessionCharacteristics.role}#${date}`,
-                "userId":  info.userId,
-                "userMetadata": info.userMetadata,
-                "date": info.date,
-                "fileType": info.fileType,
-                "sessionCharacteristics": info.sessionCharacteristics, 
+                "PK": urlAsset,
+                "SK": index
             }
         };
         
-        const video = await docClient.put(params).promise();
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+// const putAssets = async (info) => {
+//     try{
+//         let params = {
+//             TableName: TABLE_ASSETS,
+//             Item:{
+//                 "PK": info.assetId,
+//                 "SK": `SESSION#${info.assetId}#${info.sessionCharacteristics.role}#${date}`,
+//                 "userId":  info.userId,
+//                 "userMetadata": info.userMetadata,
+//                 "date": info.date,
+//                 "fileType": info.fileType,
+//                 "sessionCharacteristics": info.sessionCharacteristics, 
+//             }
+//         };
+        
+//         const video = await connectionDynamo.put(params).promise();
+//         console.log("Added video");
+//         return video;
+//     }
+//     catch(error){
+//         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+//     }
+// }
+
+const putAssets = async (info) => {
+    let string2 = info.url.slice(72);
+
+    (function endpointFinder(){
+        var asset = "";
+        for(let i=0; i < string2.length; i++){
+            if(string2[i] !== "?"){
+                asset += string2[i];
+            }
+            else{
+                return asset;
+            }
+        }
+    })();
+
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": asset,
+                "SK": `SESSION#${asset}#${info.category}#${info.date}`,
+                "date": info.date,
+                "fileType": info.type,
+                "sessionCharacteristics": {
+                    role: info.category,
+                    reaction_time: info.seconds,
+                    response: info.answer,
+                }, 
+            }
+        };
+        
+        const video = await connectionDynamo.put(params).promise();
         console.log("Added video");
         return video;
     }
@@ -204,4 +261,5 @@ module.exports = {
     queryAllInfoUser,
     createAssetsTable,
     putAssets,
+    putPKAssets
 }
