@@ -1,17 +1,47 @@
 import React, { useEffect, useState, useRef } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
-import videosURL from '../../assets/videosurl';
-import Cookie from 'universal-cookie'
+// import Cookie from 'universal-cookie'
 import axios from 'axios'
 
 export const Game = () => {
 
   const dispatch = useDispatch();
-  var tope = 0;
+  const tope = useRef(0)
+
+  const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
+  // console.log(videoApi)
+  const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
+  // console.log(videoBlop)
+  const videoToSeeBlop = useRef() // videos con la URL Blop
+  // console.log(videoToSeeBlop.current)
+  useEffect(() => {
+    if (!videoApi) {
+      axios.get('http://localhost:3001/links')
+        .then(res => setVideosApi(res.data))
+    }
+    if (videoApi) {
+      var arregloPromesas = videoApi[2].map(async (url) => {
+        return await fetch(url[0].url)
+          .then(function (res) {
+            return res.blob()
+          })
+          .then(function (video) {
+            // console.log(video)
+            var url = URL.createObjectURL(video)
+            // console.log(url) //la seteas en un array que le vas a pasar a el reproductor de video
+            return url
+          })
+      })
+      Promise.all(arregloPromesas)
+        .then((arregloPromesasResultas) => {
+          setVideoBlop(arregloPromesasResultas)
+        })
+    }
+  }, [videoApi])
 
   /*----------------------------------------*/
 
@@ -22,7 +52,7 @@ export const Game = () => {
   /*  // Sacando el email
    if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
    else { emailCokkie = cookies.get('userInfo').Items[0].email }
- 
+   
    //Sacando info
    const CheckUserData = async (email) => {
      let SearchEmail = {
@@ -32,34 +62,22 @@ export const Game = () => {
      SetInfoUser(response)
      return response
    }
- 
+   
    if (!infoUser) {
      CheckUserData(emailCokkie);
    }
- 
+   
    if (infoUser) {
      if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
        window.location.href = ('form')
      }
    }
   */
+
   // Selecciona un template al azar
 
-
-  var random = Math.round(Math.random() * 999)
-  const template = require(`../../assets/level_templates/template_${random}.json`);
-  const target = template[0] // Total de targets en el template
-  // const totalVideos = template[0] + template[1] // videos que nos tienen que mandar
-
-  /*   const videoArr = [] // array de videos en donde cada posicion es un array
-    template[2].map((e, i) => {
-      if (template[2][i][0] === videoArr.length > 0 && videoArr[i][0]) {
-        videoArr.push([...e, template[2][i][1]])
-      } else {
-        videoArr.push([...e, videosURL[i]])
-      }
-    }) */
-  // console.log(videoArr)
+  /* var random = Math.round(Math.random() * 999)
+  const template = require(`../../assets/level_templates/template_${random}.json`); */
 
   /*  const videoObj = videoArr.map(e => Object.create({}, { // en cada posicion hay un objeto
      id: { value: e[0] },
@@ -71,60 +89,53 @@ export const Game = () => {
 
   // -------
 
-  const arrVideos = videosURL.map((e, i) => Object.create({}, {
-    id: { value: i },
-    url: { value: e },
-  }))
-
-  let videosToSee = [] // array nuevo
-  template[2].map(e => {
-    videosToSee.push(arrVideos.filter(b => b.id === e[0]))
-    videosToSee[videosToSee.length - 1].category = e[1]
-  });
+  /*  const arrVideos = videosURL.map((e, i) => Object.create({}, {
+     id: { value: i },
+     url: { value: e },
+   }))
+   
+   let videosToSee = [] // array nuevo
+   template[2].map(e => {
+     videosToSee.push(arrVideos.filter(b => b.id === e[0]))
+     videosToSee[videosToSee.length - 1].category = e[1]
+   }); */
 
   // console.log(videosToSee)
   // console.log(template)
 
-  /*----------------------------------------*/
-
-  /*
-    - Se selecciona el template y se mira cuantos videos necesitamos.
-    - Get y traer URL de Videos(decir cuantos necesitamos).
-    - Descargar todos los Videos.
-    - Get a donde esta el video y convertir a una URL (VideoURL React).
-    - template y formar array videos a reproducir.
-  ------------------------------------------------------------------------
-  Como lo entendemos 
-  - Get a La BD que nos trae que videos va a ver el usuario.
-  - En caso de que ya haya jugado se debe verificar que videos vio en la BD.
-  - Pasos 
-  - Verificar en BD que videos Vio el cliente 
-  - Mandarlo a la BD de Tekal 
-  */
-
   // Elige el video que el usuario va a ver
 
   function recVideos() {
-    if (tope >= videosToSee.length) {
-      return null
-    } else {
-      viewVideos();
-      dispatch(recVideo(videosToSee[tope]));
-      tope++;
+    if (videoApi) {
+      if (tope.current >= videoApi[2].length) {
+        return null
+      } else {
+        viewVideos();
+        dispatch(recVideo(videoToSeeBlop.current[tope.current]));
+        tope.current++;
+      }
     }
   }
 
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videosToSee));
+    dispatch(seenVideos(videoApi[2]));
   }
 
-  // Ejecuta la funcion recVideos al renderizar el componente
+  // Cambio de videos y guarda un nuevo array con los blop
 
   useEffect(() => {
+    if (videoBlop) {
+      let blop = videoApi[2].map((e, i) => {
+        let arr = []
+        arr.push({ ...e[0], urlBlop: videoBlop[i] }, e[1])
+        return arr
+      })
+      videoToSeeBlop.current = blop
+    }
     recVideos();
-  }, []);
+  }, [videoBlop]);
 
   return (
     < >
@@ -133,7 +144,7 @@ export const Game = () => {
         <Link className={style.Link} to='login'>❌</Link>
         <button onClick={recVideos}>Click</button>
         {
-          <VideoPlayer videosToSee={videosToSee} recVideos={recVideos} target={target} />
+          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} />
         }
       </div>
     </>

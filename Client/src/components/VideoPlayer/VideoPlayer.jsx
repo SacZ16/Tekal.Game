@@ -14,28 +14,28 @@ import style from '../Styles/Game.module.css';
 import swal from '@sweetalert/with-react';
 import { sessionInfo } from '../../redux/action';
 import '../Styles/progressBar.css';
+import axios from 'axios';
 // import axios from 'axios';
 // import videosURL from '../../assets/videosurl';
 
-const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
+const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
 
   const dispatch = useDispatch();
 
-  const {
-    recVideo,
-    user
-  } = useSelector(state => state); // Traidos del Obj Reducer.
-  // console.log(recVideo)
+  const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
+  console.log(recVideo)
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
-  // console.log(seeVideos.current)
+  // console.log(seeVideos)
+
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
 
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
   const targetNotPress = useRef({ notPress: 0, videosTargetNotPress: [] }); // Videos target en los que no presiono.
   const answers = useRef([]) // Respuesta del usuario ante cada video
-
+  const score = 0
+  console.log(((targetFound.current.points / target) * 100))
   const finalVideos = useRef([]) // Videos vistos con respuetsas
   // console.log(finalVideos.current)
   const lives = useRef(3); // Vidas del usuario 
@@ -53,8 +53,8 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     if (event.keyCode === 32 && !press.current) {
       answers.current.push(1)
       pressSeconds.current.push(progress.current)
-      if (infoVideo.current.category.includes('_')) {
-        if (infoVideo.current.category === 'target_repeat') {
+      if (infoVideo.current[1].includes('_')) {
+        if (infoVideo.current[1] === 'target_repeat') {
           targetFound.current.points++;
           targetFound.current.videosTarget.push(infoVideo.current)
         }
@@ -72,14 +72,14 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     }
   };
 
-  // Deja apretar la barra nuevamente
+  // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
     if (!press.current) {
-      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0].category !== 'target_repeat') {
+      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
         answers.current.push(0)
         pressSeconds.current.push(0)
       }
-      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0].category === 'target_repeat') {
+      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] === 'target_repeat') {
         targetNotPress.current.notPress++
         targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0])
         answers.current.push(0)
@@ -104,7 +104,7 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
-    if (seeVideos.current.length + 1 > videosToSee.length) {
+    if (seeVideos.current.length + 1 > videoApi.length) {
       play.current = false
       videosWithAnswers()
       sessionData()
@@ -134,26 +134,29 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
   function videosWithAnswers() {
     seeVideos.current.map((e, i) => {
-      finalVideos.current.push([...e[0], {
+      finalVideos.current.push({
         ...e[0][0], answer: answers.current[i],
         seconds: pressSeconds.current[i],
-        category: e[0].category
-      }])
+        category: e[0][1],
+        type: 'Video',
+        date: new Date()
+      })
     })
   }
+
+  useEffect(() => {
+    console.log(finalVideos.current)
+    axios.post('http://localhost:3001/postinfo', finalVideos.current)
+  }, [finalVideos.current])
 
   function sessionData() {
     let obj = Object.create({}, {
       targetFound: { value: targetFound.current },
       targetNotPress: { value: targetNotPress.current },
-      score: { value: parseInt(((targetFound.current.points / target.length) * 100).toFixed(2)) },
+      score: { value: score.current },
       /* lives: { value: lives.current }, */
       /* targetVideos: { value: target.length } */
     });
-    /* axios.post('/', {
-      finalVideos:  finalVideos.current,
-      email: email
-    }) */
     dispatch(sessionInfo(obj));
   }
 
@@ -171,18 +174,18 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     <>
       <div style={bcolor} className={style.fondo}></div>
       <div className={style.videofondo}></div>
+
       <progress
         className='progressBar'
-        id="progress" max={videosToSee.length}
+        id="progress" max={videoApi.length}
         value={seeVideos.current.length}>
       </progress>
 
       {(recVideo !== '') && <div width="50%" height="50%" z-index='5' id='video'>
         <ReactPlayer className={style.video}
           z-index='5'
-          url={recVideo[0] && recVideo[0].url}
+          url={recVideo[0] && recVideo[0].urlBlop}
           onProgress={(e) => onProgress(e)}
-          /*  onReady={() => onReady()} */
           onEnded={recVideos}
           playing={play.current}
           muted

@@ -35,6 +35,7 @@ function Finalgame({ history }) {
     const again = () => {
         dispatch(resetReducer())
         history.push('/game')
+        
     }
 
 
