@@ -1,6 +1,7 @@
-import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO, RESET_REDUCER } from './action';
+import { CHANGE_TEMPLATE, CHANGE_VIDEO, SESSION_INFO, REC_VIDEO, SEEN_VIDEO, RESET_REDUCER, SET_VIDEOS } from './action';
 
 const initialState = {
+    allVideos: [],
     recVideo: {},
     user: {
         id: '',
@@ -70,6 +71,11 @@ export default function reducer(state = initialState, { type, payload }) {
                         ]
                     }
                 }
+            };
+        case SET_VIDEOS:
+            return {
+                ...state,
+                allVideos: [payload.targetFound, payload.videos]
             };
 
         case RESET_REDUCER:

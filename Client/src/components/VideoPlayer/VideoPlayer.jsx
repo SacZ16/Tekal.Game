@@ -17,6 +17,8 @@ import '../Styles/progressBar.css';
 // import axios from 'axios';
 // import videosURL from '../../assets/videosurl';
 
+
+
 const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
 
   const dispatch = useDispatch();
@@ -25,10 +27,12 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
     recVideo,
     user
   } = useSelector(state => state); // Traidos del Obj Reducer.
-  // console.log(recVideo)
+
+  // console.log(videosToSee)
+  console.log(recVideo)
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
-  // console.log(seeVideos.current)
+  console.log(seeVideos.current)
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
 
@@ -177,14 +181,14 @@ const VideoPlayer = ({ history, videosToSee, recVideos, target }) => {
         value={seeVideos.current.length}>
       </progress>
 
-      {(recVideo !== '') && <div width="50%" height="50%" z-index='5' id='video'>
+      {(recVideo[0] !== '') && <div width="50%" height="50%" z-index='5' id='video'>
         <ReactPlayer className={style.video}
           z-index='5'
-          url={recVideo[0] && recVideo[0].url}
+          url={videosToSee[0]}
           onProgress={(e) => onProgress(e)}
           /*  onReady={() => onReady()} */
           onEnded={recVideos}
-          playing={play.current}
+          playing={true}
           muted
           width='100%'
           height='100%'

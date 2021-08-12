@@ -12,7 +12,7 @@ function Finalgame({ history }) {
     const dispatch = useDispatch()
 
     const { score } = useSelector(state => state.user.currentGame)
-
+    const scoreG = score === Number ? score : 0
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -20,7 +20,7 @@ function Finalgame({ history }) {
             fill: false,
             borderColor: '#1663A2',
             borderWidth: 6,
-            data: ['60', '43', '1', '80', score]
+            data: ['60', '43', '1', '80', scoreG]
         }]
     }
     const opciones = {

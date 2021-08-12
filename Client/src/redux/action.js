@@ -4,6 +4,7 @@ export const REC_VIDEO = "REC_VIDEO";
 export const SESSION_INFO = "SESSION_INFO";
 export const SEEN_VIDEO = "SEEN_VIDEO";
 export const RESET_REDUCER = "RESET_REDUCER";
+export const SET_VIDEOS = "SET_VIDEOS";
 
 
 export function changeVideo(newVideo) {
@@ -42,7 +43,6 @@ export function seenVideos(videos) {
 }
 
 export function sessionInfo(obj) {
-    console.log(obj)
     return {
         type: SESSION_INFO,
         payload: obj
@@ -53,5 +53,15 @@ export function resetReducer() {
     return {
         type: RESET_REDUCER,
         payload: ''
+    }
+}
+
+export function setVideos(videos, target) {
+    return {
+        type: SET_VIDEOS,
+        payload: {
+            videos: videos,
+            target: target
+        }
     }
 }

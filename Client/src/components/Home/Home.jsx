@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
@@ -11,7 +11,60 @@ import tutorial from '../Styles/media/tutorial.mp4'
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 
+//--------------------------------------------
+import videosURL from '../../assets/videosurl';
+import { useDispatch } from 'react-redux';
+import { setVideos } from '../../redux/action';
+
 const Home = () => {
+    //----------------------------------
+   /*  const dispatch = useDispatch();
+    var random = Math.round(Math.random() * 999)
+    const template = require(`../../assets/level_templates/template_${random}.json`);
+    const target = template[0] // Total de targets en el template
+
+    useEffect(() => {
+        var arregloPromesas = videosURL.map(async (url) => {
+            return fetch(url)
+                .then(function (res) {
+                    return res.blob()
+                })
+                .then(function (video) {
+                    // console.log(video)
+                    var url = URL.createObjectURL(video)
+                    // console.log(url) //la seteas en un array que le vas a pasar a el reproductor de video
+                    return url
+                })
+        })
+        Promise.all(arregloPromesas)
+            .then((arregloPromesasResultas) => {
+                return arregloPromesasResultas
+            })
+            .then(res => {
+                let videosToSee2 = [] // array nuevo
+                const arrVideos = res.map((e, i) => Object.create({}, {
+                    id: { value: i },
+                    url: { value: e },
+                }))
+                template[2].map(e => {
+                    videosToSee2.push(arrVideos.filter(b => b.id === e[0]))
+                    videosToSee2[videosToSee2.length - 1].category = e[1]
+                })
+                return videosToSee2
+            })
+            .then(res => {
+                dispatch(setVideos(res, target))
+            })
+    }, []) */
+
+
+
+
+
+
+
+
+    //----------------------------------
     const [offset, setOffset] = useState()
     var emailCokkie;
 
