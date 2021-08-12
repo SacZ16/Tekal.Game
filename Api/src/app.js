@@ -10,6 +10,7 @@ const datauser = require ('./routes/datauser')
 const links = require ('./routes/links')
 const assets = require ('./routes/loadingAssets')
 const info = require('./routes/assetsVideoInfo')
+const game = require('./routes/userGameInfo')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const cors = require('cors');
@@ -39,6 +40,7 @@ server.use('/info', datauser);
 server.use('/links', links)
 server.use('/assets', assets);
 server.use('/videoInfo', info);
+server.use('/gameInfo', game);
 
 
 module.exports = server;

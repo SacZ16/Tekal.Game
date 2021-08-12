@@ -2,12 +2,12 @@ const axios = require('axios').default;
 const AWS =require ('aws-sdk')
 const {connectionDynamo, dynamodb} = require ('../db.js')
 
-const TABLE_NAME="USER" 
+const TABLE_USER="USER" 
 const TABLE_ASSETS = "ASSETS"
 
 async function getallUsers(){
     const params = {
-        TableName: TABLE_NAME
+        TableName: TABLE_USER
     };
     return await connectionDynamo.scan(params).promise();
 }
@@ -16,7 +16,7 @@ async function getallUsers(){
 
 async function getUser(user){
     const params = {
-        TableName: TABLE_NAME,
+        TableName: TABLE_USER,
         Key:{'test':user.email,
         }
     }
@@ -27,7 +27,7 @@ async function getUser(user){
 
 async function newUser(user){
     const params = {
-        TableName: TABLE_NAME,
+        TableName: TABLE_USER,
         Item: user
     };
     const response = await connectionDynamo.put(params).promise();
@@ -38,7 +38,7 @@ async function newUser(user){
 //////////////////////////////////////////////////
 const createUserTable = () => {
     let params = {
-        TableName : TABLE_NAME,
+        TableName : TABLE_USER,
         KeySchema: [       
             { AttributeName: "PK", KeyType: "HASH"}, //Partition key
             { AttributeName: "SK", KeyType: "RANGE"} //Sort Key
@@ -68,7 +68,7 @@ const putUserLogin = async (user) => {
     try{
         
         let params = {
-            TableName: TABLE_NAME,
+            TableName: TABLE_USER,
             Item:user
         };
         const userLogin = await connectionDynamo.put(params).promise();
@@ -89,7 +89,7 @@ const putUserInfoRegisterItems = async ({userId, name, lastname, age, country}) 
         var infoUser = `INFO#${userId}`;
 
         let params = {
-            TableName:TABLE_NAME,
+            TableName:TABLE_USER,
             Key:{
                 "PK": userId,
                 "SK": infoUser,
@@ -120,7 +120,7 @@ const putUserInfoRegisterItems = async ({userId, name, lastname, age, country}) 
 const queryAllInfoUser = async (userId) => {
     try {
         let params = {
-            TableName : TABLE_NAME,
+            TableName : TABLE_USER,
             KeyConditionExpression: "#PK = :PK AND #info = :info",
             ExpressionAttributeNames:{
                 "#PK": "PK",
@@ -141,6 +141,29 @@ const queryAllInfoUser = async (userId) => {
     }
 }
 
+const putUserGameItems = async (data) => {
+    try {
+         const gameDate = new Date().toString().replace(/ /g, "").slice(6,20);
+         const userSession = `GAME#${data.email}#${gameDate}`;
+         let params = {
+             TableName:TABLE_USER,
+             Item:{
+                 "PK": data.email, 
+                 "SK": userSession, 
+                 "playedAt": new Date().toString(),
+                 "presentations": data.presentation,
+                 "answers": data.answer,
+                 "score": data.score.toString()
+             }
+         };
+         const gameAdded = await connectionDynamo.put(params).promise();
+         console.log("Added Session:", JSON.stringify(gameAdded, null, 2));
+         return gameAdded;
+     } 
+     catch (error) {
+         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+     }
+ }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const createAssetsTable = () => {
     let params = {
@@ -264,5 +287,6 @@ module.exports = {
     queryAllInfoUser,
     createAssetsTable,
     putAssets,
-    putPKAssets
+    putPKAssets,
+    putUserGameItems
 }

@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     let info = req.body; 
     let urls = []
     try{
-        for (var i = 0; i < info.length; i++) {
+        for (let i = 0; i < info.length; i++) {
             var object = info[i];
             object.pos= i+1;
             if(urls.includes(object.url)){
@@ -21,7 +21,8 @@ router.post('/', async (req, res) => {
                 urls.push(object.url)
                 object.repeated = false;
             }
-            console.log(object)
+            let assets = await putAssets(object);
+            res.send(assets);
             }
         }   
     catch(error){
