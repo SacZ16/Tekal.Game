@@ -18,15 +18,16 @@ import axios from 'axios';
 // import axios from 'axios';
 // import videosURL from '../../assets/videosurl';
 
-const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
+const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   const dispatch = useDispatch();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-  console.log(recVideo)
+  // console.log(recVideo)
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
-  // console.log(seeVideos)
+  // console.log('videos vistos', seeVideos.current)
+  // console.log('videos totales', videoApi)
 
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
@@ -34,10 +35,10 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
   const targetNotPress = useRef({ notPress: 0, videosTargetNotPress: [] }); // Videos target en los que no presiono.
   const answers = useRef([]) // Respuesta del usuario ante cada video
-  const score = 0
-  console.log(((targetFound.current.points / target) * 100))
+  const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2))
+
   const finalVideos = useRef([]) // Videos vistos con respuetsas
-  // console.log(finalVideos.current)
+  console.log(finalVideos.current)
   const lives = useRef(3); // Vidas del usuario 
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
@@ -47,7 +48,8 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
 
   const progress = useRef() // segundos viendo el video
   const pressSeconds = useRef([]) // segundos al apretar la barra espaciadora
-  // console.log('pressS', pressSeconds.current)
+  console.log('pressS', pressSeconds.current)
+  console.log('anotaciones', answers.current)
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -104,7 +106,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
 
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
-    if (seeVideos.current.length + 1 > videoApi.length) {
+    if (seeVideos.current.length > videoApi.length) {
       play.current = false
       videosWithAnswers()
       sessionData()
@@ -113,6 +115,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
         button: 'Continuar',
       })
         .then(() => {
+          postData()
           history.push('/close');
         });
     }
@@ -125,7 +128,9 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
         button: 'Continuar',
       })
         .then(() => {
+          postData()
           history.push('/close');
+
         });
     }
   }, [seeVideos.current.length, lives.current]);
@@ -142,18 +147,19 @@ const VideoPlayer = ({ history, videoApi, target, recVideos }) => {
         date: new Date()
       })
     })
+    finalVideos.current.unshift(score)
+    finalVideos.current.unshift(email)
   }
 
-  useEffect(() => {
-    console.log(finalVideos.current)
-    axios.post('http://localhost:3001/postinfo', finalVideos.current)
-  }, [finalVideos.current])
+  const postData = async () => {
+    await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
+  }
 
   function sessionData() {
     let obj = Object.create({}, {
       targetFound: { value: targetFound.current },
       targetNotPress: { value: targetNotPress.current },
-      score: { value: score.current },
+      score: { value: score },
       /* lives: { value: lives.current }, */
       /* targetVideos: { value: target.length } */
     });

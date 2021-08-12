@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { Link } from 'react-router-dom';
 import style from '../Styles/Game.module.css'
-// import Cookie from 'universal-cookie'
+import Cookie from 'universal-cookie'
 import axios from 'axios'
 
 export const Game = () => {
@@ -45,34 +45,37 @@ export const Game = () => {
 
   /*----------------------------------------*/
 
-  /* const [infoUser, SetInfoUser] = useState('')
+  const [infoUser, SetInfoUser] = useState('')
   var emailCokkie;
-  const cookies = new Cookie(); */
+  const cookies = new Cookie();
 
-  /*  // Sacando el email
-   if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
-   else { emailCokkie = cookies.get('userInfo').Items[0].email }
-   
-   //Sacando info
-   const CheckUserData = async (email) => {
-     let SearchEmail = {
-       email: email
-     }
-     let response = await axios.post('http://localhost:3001/info', SearchEmail)
-     SetInfoUser(response)
-     return response
-   }
-   
-   if (!infoUser) {
-     CheckUserData(emailCokkie);
-   }
-   
-   if (infoUser) {
-     if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
-       window.location.href = ('form')
-     }
-   }
-  */
+  // Si no estas logeado te reedirige a login
+
+  if (!cookies.get('userInfo')) {
+    window.location.href = ('/login')
+  }
+
+  // Sacando el email
+  if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
+  else { emailCokkie = cookies.get('userInfo').Items[0].email }
+
+  //Sacando info
+  const CheckUserData = async (email) => {
+    let SearchEmail = {
+      email: email
+    }
+    let response = await axios.post('http://localhost:3001/info', SearchEmail)
+    SetInfoUser(response)
+    return response
+  }
+  if (!infoUser) {
+    CheckUserData(emailCokkie);
+  }
+  if (infoUser) {
+    if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
+      window.location.href = ('form')
+    }
+  }
 
   // Selecciona un template al azar
 
@@ -142,9 +145,9 @@ export const Game = () => {
       <div className={style.fondo2}>
 
         <Link className={style.Link} to='login'>❌</Link>
-        <button onClick={recVideos}>Click</button>
+        {/* <button onClick={recVideos}>Click</button> */}
         {
-          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} />
+          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
         }
       </div>
     </>

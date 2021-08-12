@@ -12,7 +12,7 @@ function Finalgame({ history }) {
     const dispatch = useDispatch()
 
     const { score } = useSelector(state => state.user.currentGame)
-
+    console.log(score)
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -35,7 +35,6 @@ function Finalgame({ history }) {
     const again = () => {
         dispatch(resetReducer())
         history.push('/game')
-        
     }
 
 
@@ -49,7 +48,7 @@ function Finalgame({ history }) {
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>
                 {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                <h1 className="porcentaje">{score === Number ? score : 0}%</h1>
+                <h1 className="porcentaje">{score === 0 ? score.toFixed() : score}%</h1>
                 <div className='loader'>
                 </div>
             </div>
