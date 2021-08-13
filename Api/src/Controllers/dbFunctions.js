@@ -164,6 +164,39 @@ const putUserGameItems = async (data) => {
          console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
      }
  }
+
+ const queryAllGameUser = async (userId) => {
+    try {
+        let params = {
+            TableName : "USER",
+            KeyConditionExpression: "#PK = :PK and begins_with(#game, :game)",
+            ExpressionAttributeNames:{
+                "#PK": "PK",
+                "#game": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":PK": userId,
+                ":game": `GAME#${userId}`,
+            }
+        };
+
+        const queryAllGame = await connectionDynamo.query(params).promise();
+        console.log("Query description JSON:", JSON.stringify(queryAllGame, null, 2));
+        return queryAllGame;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+async function getNumberGames(userId){
+    let games = await queryAllGameUser(userId)
+    console.log(games.Count)
+    return games.Count
+}
+
+// getNumberGames("payerasangel@gmail.com")
+// queryAllGameUser("payerasangel@gmail.com")
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const createAssetsTable = () => {
     let params = {
@@ -248,7 +281,6 @@ const putAssets = async (info) => {
             }
         }
     })();
-
     try{
         let params = {
             TableName: TABLE_ASSETS,
@@ -262,8 +294,8 @@ const putAssets = async (info) => {
                     reaction_time: info.seconds,
                     response: info.answer,
                     pos: info.pos,
-                    lag: info.lag,
-                    pos_1st: info.pos_1st,
+                    lag: info.lag || null,
+                    pos_1st: info.pos_1st || null,
                 },
             }
         };
@@ -288,5 +320,7 @@ module.exports = {
     createAssetsTable,
     putAssets,
     putPKAssets,
-    putUserGameItems
+    putUserGameItems,
+    queryAllGameUser,
+    getNumberGames
 }
