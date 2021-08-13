@@ -309,6 +309,25 @@ const putAssets = async (info) => {
     }
 }
 
+const queryAllAssets = async () => {
+    try {
+        let params = {
+            TableName : TABLE_ASSETS,
+            ProjectionExpression: "#PK",
+            ExpressionAttributeNames:{
+                "#PK": "PK"
+            }
+        };
+
+        const queryAssetsInfo = await connectionDynamo.scan(params).promise()
+        // console.log("Query description JSON:", JSON.stringify(queryAssetsInfo, null, 2));
+        return queryAssetsInfo;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
 module.exports = {
     getallUsers, 
     getUser,
@@ -322,5 +341,6 @@ module.exports = {
     putPKAssets,
     putUserGameItems,
     queryAllGameUser,
-    getNumberGames
+    getNumberGames,
+    queryAllAssets
 }
