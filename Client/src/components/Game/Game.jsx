@@ -142,12 +142,12 @@ export const Game = () => {
 
   return (
     < >
-      <div className={style.fondo2}>
+      <div className={style.fondo3}>
 
-        <Link className={style.Link} to='login'>❌</Link>
+        {/*  <Link className={style.Link} to='login'>❌</Link> */}
         {/* <button onClick={recVideos}>Click</button> */}
         {
-          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
+          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
         }
       </div>
     </>

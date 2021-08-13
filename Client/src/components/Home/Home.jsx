@@ -13,7 +13,6 @@ import '../Styles/home.css';
 
 const Home = () => {
     const [offset, setOffset] = useState()
-    var emailCokkie;
 
     const handleScroll = () => {
         setOffset(window.pageYOffset)
@@ -22,7 +21,7 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll)
 
     const [show, setShow] = useState(false)
-    const [sessionOn, _setSessionOn] = useState(false)
+    const [sessionOn, setSessionOn] = useState(false)
     const [login, setLogin] = useState(true)
     const [startGame, setStartGame] = useState(false)
     const [checker, setchecker] = useState(false)
@@ -31,15 +30,11 @@ const Home = () => {
     if (cookies.get('userInfo') && !checker) {
         setStartGame(true)
         setLogin(false)
+        setSessionOn(true)
         setchecker(true)
     }
 
     console.log(cookies.get('userInfo'))
-
-    if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
-    else { emailCokkie = cookies.get('userInfo').Items[0].email }
-
-    console.log(emailCokkie)
 
     const CurrentSession = () => {
         return (

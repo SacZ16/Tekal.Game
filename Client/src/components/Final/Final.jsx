@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { _useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import Particles from 'react-particles-js'
@@ -12,7 +12,9 @@ function Finalgame({ history }) {
     const dispatch = useDispatch()
 
     const { score } = useSelector(state => state.user.currentGame)
-    console.log(score)
+
+    
+
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -36,7 +38,6 @@ function Finalgame({ history }) {
         dispatch(resetReducer())
         history.push('/game')
     }
-
 
     return (
         <div>

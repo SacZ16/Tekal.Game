@@ -42,7 +42,6 @@ export function seenVideos(videos) {
 }
 
 export function sessionInfo(obj) {
-    console.log(obj)
     return {
         type: SESSION_INFO,
         payload: obj
