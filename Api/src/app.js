@@ -37,7 +37,7 @@ server.use('/addinfo', personalInfo);
 server.use('/createtable', creationTable);
 server.use('/info', datauser);
 server.use('/links', links)
-server.use('/postinfo', info)
+server.use('/videoInfo', info)
 server.use('/gameInfo', game);
 
 module.exports = server;

@@ -198,8 +198,8 @@ const createAssetsTable = () => {
 const putAssets = async (info) => {
     let string2 = info.url.slice(72);
 
+    var asset = "";
     (function endpointFinder() {
-        var asset = "";
         for (let i = 0; i < string2.length; i++) {
             if (string2[i] !== "?") {
                 asset += string2[i];
@@ -209,19 +209,21 @@ const putAssets = async (info) => {
             }
         }
     })();
-
     try {
         let params = {
             TableName: TABLE_ASSETS,
             Item: {
                 "PK": asset,
-                "SK": `SESSION#${asset}#${info.category}#${info.date}`,
+                "SK": `SESSION#${ asset }#${ info.category }#${ info.date }`,
                 "date": info.date,
                 "fileType": info.type,
                 "sessionCharacteristics": {
                     role: info.category,
                     reaction_time: info.seconds,
                     response: info.answer,
+                    pos: info.pos,
+                    lag: info.lag || null,
+                    pos_1st: info.pos_1st || null,
                 },
             }
         };
