@@ -1,86 +1,90 @@
-import React,
+import  React,
 {
-  useRef,
-  useState,
-  useEffect
-} from 'react';
-import ReactPlayer from 'react-player/lazy'
+        useRef,
+        useState,
+        useEffect
+}                   from 'react';
+import  ReactPlayer from 'react-player/lazy';
 import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
-import { withRouter } from 'react-router';
-import style from '../Styles/Game.module.css';
-import swal from '@sweetalert/with-react';
-import { sessionInfo } from '../../redux/action';
-import '../Styles/progressBar.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-// import axios from 'axios';
-// import videosURL from '../../assets/videosurl';
+        useDispatch,
+        useSelector
+}                    from 'react-redux';
+import {withRouter } from 'react-router';
+import  style        from '../Styles/Game.module.css';
+import  swal         from '@sweetalert/with-react';
+import {sessionInfo} from '../../redux/action';
+import  axios        from 'axios';
+import {Link }       from 'react-router-dom';
 
-const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
+import '../Styles/progressBar.css';
+
+  const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   const dispatch = useDispatch();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-  // console.log(recVideo)
+  
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
+  
   seeVideos.current = user.currentGame.seenVideos;
-  console.log('videos vistos', seeVideos.current)
-  // console.log('videos totales', videoApi)
-
+  
   const infoVideo = useRef(); // Informacion del Video
+  
   infoVideo.current = recVideo;
 
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
+
   const targetNotPress = useRef({ notPress: 0, videosTargetNotPress: [] }); // Videos target en los que no presiono.
-  const answers = useRef([]) // Respuesta del usuario ante cada video
-  const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)) // puntaje ne base a los target_repeat reconocidos osbre el total de targets
-  const falsePositives = useRef([]) // videos que no son target_repeat
-  const averageFalsePositive = (falsePositives.current.length / seeVideos.current.length) // promedio de falsos postivios
-  const vigilanceRecognized = useRef([]) // videos vigilancia reconocidos
+
+  const answers = useRef([]); // Respuesta del usuario ante cada video
+
+  const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+
+  const falsePositives = useRef([]); // videos que no son target_repeat
+
+  const averageFalsePositive = (falsePositives.current.length / seeVideos.current.length); // promedio de falsos postivios
+
+  const vigilanceRecognized = useRef([]); // videos vigilancia reconocidos
   // const averageVigilanceReconznized = (vigilanceRecognized.current.length / (seeVideos.current.filter(e => e[0][1] === "vig_repeat")).length) // promedio de video de vigilancia reconocidos
 
-  const finalVideos = useRef([]) // Videos vistos con respuetsas
-  console.log(finalVideos.current)
+  const finalVideos = useRef([]); // Videos vistos con respuetsas
+
   const lives = useRef(3); // Vidas del usuario 
+
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
   const [color, setColor] = useState('rgba(255, 255, 255, 0)'); // Cambia de color al apretar la barra espaciadora
 
-  const play = useRef(true) // pausa o inicia el video
+  const play = useRef(true); // pausa o inicia el video
 
-  const progress = useRef() // segundos viendo el video
-  const pressSeconds = useRef([]) // segundos al apretar la barra espaciadora
-  // console.log('pressS', pressSeconds.current)
-  // console.log('anotaciones', answers.current)
-
+  const progress = useRef(); // segundos viendo el video
+  
+  const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
-      answers.current.push(1)
-      pressSeconds.current.push(progress.current)
+      answers.current.push(1);
+      pressSeconds.current.push(progress.current);
       if (infoVideo.current[1].includes('_')) {
         if (infoVideo.current[1] === 'target_repeat') {
           targetFound.current.points++;
-          targetFound.current.videosTarget.push(infoVideo.current)
+          targetFound.current.videosTarget.push(infoVideo.current);
         } else {
-          falsePositives.current.push(infoVideo.current)
-          vigilanceRecognized.current.push(infoVideo.current)
+          falsePositives.current.push(infoVideo.current);
+          vigilanceRecognized.current.push(infoVideo.current);
         }
         setColor('green')
         press.current = true;
       }
       else {
         setColor('red')
-        falsePositives.current.push(infoVideo.current)
+        falsePositives.current.push(infoVideo.current);
         lives.current--;
         press.current = true;
       }
       setTimeout(() => {
-        setColor('rgba(255, 255, 255, 0)')
-      }, 500)
+        setColor('rgba(255, 255, 255, 0)');
+      }, 500);
     }
   };
 
@@ -88,15 +92,14 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   useEffect(() => {
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
-        answers.current.push(0)
-        pressSeconds.current.push(0)
+        answers.current.push(0);
+        pressSeconds.current.push(0);
       }
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] === 'target_repeat') {
-        targetNotPress.current.notPress++
-        targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0])
-        answers.current.push(0)
-        pressSeconds.current.push(0)
-        // console.log('no apretaste')
+        targetNotPress.current.notPress++;
+        targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0]);
+        answers.current.push(0);
+        pressSeconds.current.push(0);
       }
     }
     press.current = false;
@@ -152,7 +155,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
       finalVideos.current.push({
         ...e[0][0], answer: answers.current[i],
         seconds: pressSeconds.current[i],
-        category: e[0][1],
+        category: e[0][1].toUpperCase(),
         type: 'Video',
         date: new Date()
       })
@@ -196,8 +199,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
       }
     }
-    // console.log(e)
-    progress.current = e.playedSeconds
+    progress.current = e.playedSeconds;
   }
 
   return (
@@ -214,10 +216,42 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
           <div className={style.contenedordelvideo}>
             <div style={{ width: '90%', margin: '0', display: 'flex' }}>
-              {lives.current === 3 ? <div style={{ color: 'red', display: 'flex', flexDirection: 'row', width: '70px', marginTop: '-30px' }}>❤ ❤ ❤</div> : null}
-              {lives.current === 2 ? <div style={{ color: 'red', display: 'flex', flexDirection: 'row', width: '70px', marginTop: '-30px' }}>❤ ❤ 💔</div> : null}
-              {lives.current === 1 ? <div style={{ color: 'red', display: 'flex', flexDirection: 'row', width: '70px', marginTop: '-30px' }}>❤ 💔 💔</div> : null}
-              {lives.current === 0 ? <div style={{ color: 'red', display: 'flex', flexDirection: 'row', width: '70px', marginTop: '-30px' }}>💔 💔 💔</div> : null}
+              {
+                lives.current === 3 ? 
+                <div style=
+                  {{ 
+                    color: 'red', display: 'flex', flexDirection: 'row', 
+                    width: '70px', marginTop: '-30px' 
+                  }}>❤ ❤ ❤
+                </div> : null
+              }
+              {
+                lives.current === 2 ? 
+                <div style=
+                  {{ 
+                    color: 'red', display: 'flex', flexDirection: 'row', 
+                    width: '70px', marginTop: '-30px' 
+                  }}>❤ ❤ 💔
+                </div> : null
+              }
+              {
+                lives.current === 1 ? 
+                <div style=
+                  {{ 
+                    color: 'red', display: 'flex', flexDirection: 'row', 
+                    width: '70px', marginTop: '-30px' 
+                  }}>❤ 💔 💔
+                </div> : null
+              }
+              {
+                lives.current === 0 ? 
+                <div style=
+                  {{ 
+                    color: 'red', display: 'flex', flexDirection: 'row', 
+                    width: '70px', marginTop: '-30px' 
+                  }}>💔 💔 💔
+                </div> : null
+              }
               <progress
                 className='progressBar'
                 id="progress" max={videoApi.length}
