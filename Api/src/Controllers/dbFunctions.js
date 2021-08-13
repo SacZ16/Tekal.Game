@@ -141,6 +141,26 @@ const queryAllInfoUser = async (userId) => {
     }
 }
 
+//trae todas las tablas info 
+const scanAllInfo = async () => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            FilterExpression: "contains(SK, :info)",
+            ExpressionAttributeValues: {
+                ":info": `INFO`,
+            }
+        };
+
+        const queryUserInfo = await connectionDynamo.scan(params).promise()
+        console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        return queryUserInfo;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
 const putUserGameItems = async (data) => {
     try {
          const gameDate = new Date().toString().replace(/ /g, "").slice(6,20);
@@ -168,7 +188,7 @@ const putUserGameItems = async (data) => {
  const queryAllGameUser = async (userId) => {
     try {
         let params = {
-            TableName : "USER",
+            TableName : TABLE_USER,
             KeyConditionExpression: "#PK = :PK and begins_with(#game, :game)",
             ExpressionAttributeNames:{
                 "#PK": "PK",
@@ -195,8 +215,26 @@ async function getNumberGames(userId){
     return games.Count
 }
 
-// getNumberGames("payerasangel@gmail.com")
-// queryAllGameUser("payerasangel@gmail.com")
+//trae todos los games jugados
+const queryAllGames= async () => {
+    try {
+        let params = {
+            TableName : TABLE_USER,
+            FilterExpression: "contains(SK, :info)",
+            ExpressionAttributeValues: {
+                ":info": `GAME`,
+            }
+        };
+
+        const queryAllGame = await connectionDynamo.scan(params).promise();
+        console.log("Query description JSON:", JSON.stringify(queryAllGame, null, 2));
+        return queryAllGame;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const createAssetsTable = () => {
     let params = {
@@ -342,5 +380,7 @@ module.exports = {
     putUserGameItems,
     queryAllGameUser,
     getNumberGames,
-    queryAllAssets
+    queryAllAssets,
+    scanAllInfo,
+    queryAllGames
 }
