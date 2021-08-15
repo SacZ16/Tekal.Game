@@ -3,12 +3,13 @@ import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
-import brainBack from '../Styles/images/brainBack.png';
-import {Link} from 'react-router-dom';
-import ReactPlayer from 'react-player'
-import tutorial from '../Styles/media/tutorial.mp4'
+import { Link } from 'react-router-dom';
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
+import RegisterCommonForm from '../Signin/LoginCommonForm';
+import RegisterWithEmail from '../Signin/RegisterEmail';
+
+import Tutorial from '../Tutorial/Tutorial'
 
     const Home = () => {
     const [offset, setOffset] = useState()
@@ -24,7 +25,23 @@ import '../Styles/home.css';
     const [login, setLogin] = useState(true)
     const [startGame, setStartGame] = useState(false)
     const [checker, setchecker]=useState(false)
+
+    //estados de css
+    const [popUpLoginAux, setPopUpLoginAux] = useState('none')
+    const [popUpRegisterAux, setPopUpRegisterAux] = useState('none')
+    const [blurFondo, setBlurFondo] = useState('0px')
+
     const cookies= new Cookie();
+
+    const popUpRegister = () => {
+        setPopUpRegisterAux('flex')
+        setBlurFondo('2px')
+    }
+
+    const popUpLogin = () => {
+        setPopUpLoginAux('flex')
+        setBlurFondo('2px')
+    }
 
     if(cookies.get('userInfo')&& !checker){
         setStartGame(true)
@@ -56,31 +73,50 @@ import '../Styles/home.css';
     }
 
     return (
-        <div className='homeDiv'>
+        <>
+        <div className='formulario_register' style={{display:`${popUpLoginAux}`, zIndex:'10000' ,justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
+            <div style={{width:'500px',height:'85%'}}><RegisterCommonForm/></div>{/* Este es el formulario LOGIN */}
+        </div>
+
+        <div className='formulario_register' style={{display:`${popUpRegisterAux}`, zIndex:'10000' ,justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
+            <div style={{width:'500px',height:'85%'}}><RegisterWithEmail/></div>
+        </div>
+
+        <div className='homeDiv' style={blurFondo ==='2px'? {filter:`blur(${blurFondo}) brightness(90%)`, overflowY:'hidden',transform: 'scale(1.1)'}:null}>
         <section>
             <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal'/>
             <img className='stars' src={stars} alt="starsBackground" id='stars' style={{left:(0 + offset * 0.1) + '%'}}/>
             {startGame?
                 <>
-                <p className='textHome' style={{top:(0 + offset * -0.1) + '%'}}>Memory Challenge</p>
+                <p className='textHome' style={{opacity:(100 + offset * -0.15) + '%', bottom:(50 + offset * -0.1) + '%'}}>Discover how good <br/> is your <span className='memory_style'>memory</span></p>
+                <p className='sub_textHome' style={{opacity:(100 + offset * -5) + '%'}}>It takes only 10 min to discover how good is your memory.<br/> Are you ready?</p>
                 <div className='buttonsHome' style={{opacity:(100 + offset * -0.45) + '%', bottom:(25 + offset * -0.1) + '%'}}>
                 <div className='startGame'><Link to='/game' style={{color: '#800FC7', fontSize:'15px',textDecoration: 'none', width:'100%', height:'100%', paddingTop:'30px', fontFamily:'Montserrat, sans-serif'}} id='btnStartHome'>Start</Link></div>
-                <button className='tutorialHome' id='btnTutorialHome'>Tutorial</button>
                 </div>
                 </>:(null)}
             <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{left:(-1 + offset * -0.1) + '%', bottom:(-7)}}/>
             <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{right:(0 + offset * -0.1) + '%'}}/>
         </section>
-        <div className='videoTutorial'><ReactPlayer url={tutorial} height='550px'/></div>
-        <div className='text'></div>
+        
         <CurrentSession/>
         {login?
             <>
-            <p className='textHome' style={{opacity:(100 + offset * -0.15) + '%', bottom:(50 + offset * -0.1) + '%'}}>Memory Challenge</p>
-            <div className='loginHome'><Link to='/login' style={{color: '#800FC7', textDecoration: 'none', width:'100%', height:'100%', paddingTop:'20px',fontFamily:'Montserrat, sans-serif'}}>Log in</Link></div>
+            <p className='textHome' style={{opacity:(100 + offset * -0.15) + '%', bottom:(50 + offset * -0.1) + '%'}}>Discover how good <br/> is your <span className='memory_style'>memory</span></p>
+            <p className='sub_textHome' style={{opacity:(100 + offset * -5) + '%'}}>It takes only 10 min to discover how good is your memory.<br/> Are you ready?</p>
+            <div className='container_buttons_home'>
+            <button className='registerHome' onClick={() => popUpRegister()}>Sign up</button>
+            <button className='loginHome' onClick={() => popUpLogin()}>Log in</button>
+            </div>
             </>
             :(null)}
         </div>
+
+        <div className='second_screen_home'>
+        <div className='startGameLanding'><Link to='/game' style={{color: '#800FC7', fontSize:'15px',textDecoration: 'none', width:'100%', height:'100%', paddingTop:'30px', fontFamily:'Montserrat, sans-serif'}} id='btnStartHome'>Start</Link></div> 
+        <Tutorial/>
+        </div>
+        
+        </>
     )
 };
 
