@@ -51,13 +51,13 @@ export const Game = () => {
 
   // Si no estas logeado te reedirige a login
 
-  if (!cookies.get('userInfo')) {
-    window.location.href = ('/login')
-  }
+  // if (!cookies.get('userInfo')) {
+  //   window.location.href = ('/login')
+  // }
 
-  // Sacando el email
-  if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
-  else { emailCokkie = cookies.get('userInfo').Items[0].email }
+  //Sacando el email
+  if(cookies.get('userInfo')){if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
+  else { emailCokkie = cookies.get('userInfo').Items[0].email }}
 
   //Sacando info
   const CheckUserData = async (email) => {
@@ -72,9 +72,9 @@ export const Game = () => {
     CheckUserData(emailCokkie);
   }
   if (infoUser) {
-    if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
-      window.location.href = ('form')
-    }
+    // if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
+    //   window.location.href = ('form')
+    // }
   }
 
   // Selecciona un template al azar

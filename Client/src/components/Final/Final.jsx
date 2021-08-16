@@ -1,20 +1,28 @@
 import React, { _useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
-import Particles from 'react-particles-js'
 import { Line } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux'
-// import swal from '@sweetalert/with-react'
 import { resetReducer } from '../../redux/action'
+import  axios        from 'axios';
+import Cookie from 'universal-cookie'
 
-function Finalgame({ history }) {
-
+function  Finalgame({ history }) {
+    
     const dispatch = useDispatch()
-
+    const { recVideo, user } = useSelector(state => state);
+    const cookies = new Cookie();
+    var emailCokkie;
+    //Sacando el email
+    if(cookies.get('userInfo')){if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
+    else { emailCokkie = cookies.get('userInfo').Items[0].email }}
     const { score } = useSelector(state => state.user.currentGame)
 
-    
-
+    const holaa= localStorage.getItem('pruebaa')
+    const resultadoparaenviar = JSON.parse(holaa)
+    if(resultadoparaenviar){
+    resultadoparaenviar.shift()
+    resultadoparaenviar.unshift(emailCokkie)}
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -38,18 +46,22 @@ function Finalgame({ history }) {
         dispatch(resetReducer())
         history.push('/game')
     }
-
+    const postDataa = async () => {
+     await axios.post('http://localhost:3001/videoInfo', `${resultadoparaenviar}`)
+    await axios.post('http://localhost:3001/gameInfo',`${resultadoparaenviar}`)
+    }
+    postDataa()
+    console.log('hola')
+    console.log(localStorage.getItem('score'))
     return (
         <div>
             <div className='bgLandingfinal'>
-                <Particles
-                    params={{ 'particles': { "number": { "value": 96, "density": { "enable": true, "value_area": 800 } } }, 'line_linked': { 'width': '2' }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" } } } }}
-                />
+                
             </div>
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>
                 {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                <h1 className="porcentaje">{score === 0 ? score.toFixed() : score}%</h1>
+                <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
                 <div className='loader'>
                 </div>
             </div>

@@ -15,12 +15,13 @@ import  swal         from '@sweetalert/with-react';
 import {sessionInfo} from '../../redux/action';
 import  axios        from 'axios';
 import {Link }       from 'react-router-dom';
-
+import Cookie from 'universal-cookie'
 import '../Styles/progressBar.css';
 
   const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   const dispatch = useDispatch();
+  const cookies = new Cookie();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
   
@@ -142,7 +143,12 @@ import '../Styles/progressBar.css';
       })
         .then(() => {
           postData()
-          history.push('/close');
+          if (!cookies.get('userInfo')) {
+          history.push('/preclose');
+          }
+          if (cookies.get('userInfo')){
+            history.push('/close');
+          }
 
         });
     }
@@ -165,8 +171,10 @@ import '../Styles/progressBar.css';
   }
 
   const postData = async () => {
-    await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
-    await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
+    // await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
+    // await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
+    localStorage.setItem('pruebaa',JSON.stringify(finalVideos.current))
+    console.log(finalVideos.current)
   }
 
   function sessionData() {
@@ -178,6 +186,8 @@ import '../Styles/progressBar.css';
       /* targetVideos: { value: target.length } */
     });
     dispatch(sessionInfo(obj));
+    localStorage.setItem('score',score)
+    console.log(localStorage.getItem('score'))
   }
 
   const onProgress = (e) => {
@@ -193,7 +203,12 @@ import '../Styles/progressBar.css';
           })
             .then(() => {
               postData()
-              history.push('/close');
+              if (!cookies.get('userInfo')) {
+                history.push('/preclose');
+                }
+                if (cookies.get('userInfo')){
+                  history.push('/close');
+                }
             });
         }, 500)
 

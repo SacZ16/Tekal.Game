@@ -5,6 +5,7 @@ import RegisterWithEmail from './components/Signin/RegisterEmail';
 import Home from './components/Home/Home'
 import FinalGame from './components/Final/Final'
 import Game from './components/Game/Game'
+import PreFinalGame from './components/Prefinal/Prefinal';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path='/form' component={FormData} />
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
+        <Route exact path='/preclose' component={PreFinalGame} />
       </Switch>
     </>
   );

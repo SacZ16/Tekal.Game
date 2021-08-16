@@ -7,7 +7,10 @@ export const newCookie= (info)=>{
         maxAge: 600,
         path: './'
     });
-    window.location.href='./login'
+    if(localStorage.getItem('pruebaa')){
+    window.location.href='./preclose'}
+    if(!localStorage.getItem('pruebaa')){
+    window.location.href='./login'}
 }
 export const SendDataToBACK = async (email, password) => {
 
