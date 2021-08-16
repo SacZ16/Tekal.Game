@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
                 urls.push(object.url);
                 object.repeated = false;
             }
-            await putAssets(email, object); //NO FUNCA COMO DEBERIA REY
+            await putAssets(email, object);
         }
         res.send("asset added");
         }   

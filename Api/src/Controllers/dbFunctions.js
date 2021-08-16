@@ -325,7 +325,7 @@ const putAssets = async (email, info) => {
             TableName: TABLE_ASSETS,
             Item:{
                 "PK": asset,
-                "SK": `SESSION#${asset}#${email}#${info.category}#${info.date}`,
+                "SK": `SESSION#${email}#${asset}#${info.category}#${info.date}`,
                 "date": info.date,
                 "fileType": info.type, 
                 "sessionCharacteristics": {
@@ -367,6 +367,33 @@ const queryAllAssets = async () => {
     }
 }
 
+const viewedVideos = async(email) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            FilterExpression: "begins_with(#SK, :session1)",
+            ExpressionAttributeNames:{
+                "#SK": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":session1": `SESSION#${email}`,
+            }
+        };
+
+        const scanName = await connectionDynamo.scan(params).promise();
+        console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
+        return scanName;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+
+}
+
+
+
+viewedVideos("payerasangel@gmail.com")
+
 module.exports = {
     getallUsers, 
     getUser,
@@ -383,5 +410,6 @@ module.exports = {
     getNumberGames,
     queryAllAssets,
     scanAllInfo,
-    queryAllGames
+    queryAllGames,
+    viewedVideos
 }

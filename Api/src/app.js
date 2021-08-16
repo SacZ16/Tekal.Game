@@ -11,6 +11,7 @@ const links = require ('./routes/links');
 const assets = require ('./routes/loadingAssets');
 const info = require('./routes/assetsVideoInfo');
 const game = require('./routes/userGameInfo');
+const notViewedVideos = require('./routes/notViewedVideos');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -39,6 +40,6 @@ server.use('/links', links)
 server.use('/assets', assets);
 server.use('/videoInfo', info);
 server.use('/gameInfo', game);
-
+server.use('/notViewedVideos', notViewedVideos)
 
 module.exports = server;
