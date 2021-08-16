@@ -1,17 +1,20 @@
 const express = require('express');
-const routes = require('./routes/index.js')
-const login = require('./routes/login')
-const register = require('./routes/register')
-const loginGooandFace = require('./routes/loginFaceandGoo')
-const countries = require('./routes/countries')
-const creationTable = require('./routes/creationTable')
-const personalInfo = require('./routes/personalInfo')
-const datauser = require('./routes/datauser')
-const links = require('./routes/links')
-const info = require('./routes/assetsVideoInfo')
-const game = require('./routes/userGameInfo')
-const morgan = require('morgan')
-const bodyparser = require('body-parser')
+const routes = require('./routes/index.js');
+const login = require('./routes/login');
+const register = require('./routes/register');
+const loginGooandFace = require('./routes/loginFaceandGoo');
+const countries = require('./routes/countries');
+const creationTable = require('./routes/creationTable');
+const personalInfo = require('./routes/personalInfo');
+const datauser = require('./routes/datauser');
+const links = require('./routes/links');
+const info = require('./routes/assetsVideoInfo');
+const game = require('./routes/userGameInfo');
+const verificationemail = require ('./routes/verificationEmail');
+const VerificationChangePassword = require ('./routes/VerificationChangePassword');
+const changepassword = require('./routes/changePassword');
+const morgan = require('morgan');
+const bodyparser = require('body-parser');
 const cors = require('cors');
 
 
@@ -36,8 +39,11 @@ server.use('/logingoogle', loginGooandFace);
 server.use('/addinfo', personalInfo);
 server.use('/createtable', creationTable);
 server.use('/info', datauser);
-server.use('/links', links)
-server.use('/videoInfo', info)
+server.use('/links', links);
+server.use('/videoInfo', info);
 server.use('/gameInfo', game);
+server.use('/verification', verificationemail);
+server.use('/verificationchangepassword', VerificationChangePassword);
+server.use('/changepassword', changepassword);
 
 module.exports = server;

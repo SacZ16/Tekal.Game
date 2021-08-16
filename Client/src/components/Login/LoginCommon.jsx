@@ -9,6 +9,8 @@ import RegisterCommonForm from '../Signin/LoginCommonForm';
 import Cookie from 'universal-cookie'
 import {SendDataToBACK} from '../controllers/dbFunctions'
 
+
+
 const LoginPage = () => {
     const cookies= new Cookie();
     const cookiies= new Cookie(); //no borrar - estilo css
@@ -66,6 +68,9 @@ const LoginPage = () => {
         }
     }
     var a = cookiies.get('prueba')
+
+
+    
     return (
         <div>
             {!a || a==='false'?<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' ></input>:<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' defaultChecked></input>}

@@ -17,6 +17,9 @@ const RegisterCommonForm = ({props,coloresprop}) => {
     const [errorPassword, seterrorPassword] = useState('');
     const cookiies= new Cookie(); //no borrar
     var a = cookiies.get('prueba')
+
+
+    
     return(
         <>
             <div style={!a?{'background':`rgba(0, 0, 0, 0.904)`,'transition': 'all 0.5s ease-out'}:{'background':`${cookiies.get('fondoform')}`,'transition': 'all 0.5s ease-out'}} className='containerLanding'>

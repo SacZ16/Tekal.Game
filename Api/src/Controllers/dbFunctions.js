@@ -262,6 +262,67 @@ const putUserGameItems = async (data) => {
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
     }
 }
+/////////////////////////////////
+const updateEmailVerification = async (userId) => {
+    try {
+        const infoUser = `INFO#${userId}`;
+
+        let params = {
+            TableName:"USER",
+            Key:{
+                "PK": userId,
+                "SK": infoUser,
+            },
+            UpdateExpression: "set #verification = :value",
+            ExpressionAttributeNames: {
+                "#verification": "VerificationEmail"
+            },
+            ExpressionAttributeValues: {
+                ":value": true,
+            },
+
+        };
+
+        const registerInfo = connectionDynamo.update(params).promise();
+        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        return registerInfo;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+const updatePassword = async (userId, pass) => {
+    console.log(userId)
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(pass, salt);
+
+    try {
+        const infoUser = `INFO#${userId}`;
+        let params = {
+            TableName:"USER",
+            Key:{
+                "PK": userId,
+                "SK": infoUser,
+            },
+            UpdateExpression: "set #verification = :value",
+            ExpressionAttributeNames: {
+                "#verification": "password"
+            },
+            ExpressionAttributeValues: {
+                ":value": password,
+            },
+        };
+        const registerInfo = connectionDynamo.update(params).promise();
+        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        return registerInfo;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+
 
 module.exports = {
     getallUsers,
@@ -273,5 +334,7 @@ module.exports = {
     queryAllInfoUser,
     createAssetsTable,
     putAssets,
-    putUserGameItems
+    putUserGameItems,
+    updateEmailVerification,
+    updatePassword
 }
