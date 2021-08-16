@@ -2,20 +2,12 @@ const { Router } = require('express');
 const router = Router();
 const {getAssets} = require('../services/csv.service.js');
 const {templateFiller} = require('../services/templates.service.js');
-const {queryAllAssets} = require('../Controllers/dbFunctions');
+const { videosNotSeen } = require('../services/notViewedVideos.service')
 
-router.get('/', async (_req,res) => {
-    let assetsFromDb = await queryAllAssets();
-    let info = assetsFromDb.Items;
-
-    let array = [];
-    info.forEach(f => {
-        if(!array.includes(f.PK)){
-            array.push(f.PK);
-        }
-    });
-    
-    let assets = await getAssets(array);
+router.post('/', async (req,res) => {
+    let {email} = req.body;
+    let assetsFromDb = await videosNotSeen(email);
+    let assets = await getAssets(assetsFromDb);//transforma en link
     let template = await templateFiller(assets);
     res.send(template);
 })

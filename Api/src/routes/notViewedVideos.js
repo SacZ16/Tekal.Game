@@ -6,15 +6,17 @@ const { viewedVideos, queryAllAssets } = require('../Controllers/dbFunctions.js'
 router.post('/', async (req,res) => {
     //console.log(req.body.email)
     try{
-        const viewedVideos1 = await viewedVideos(req.body.email)
-        //console.log(viewedVideos1)
-        let PKviewed = viewedVideos1.Items.map(v => v.PK)
-        console.log(PKviewed)
-        // const allVideos = await queryAllAssets()
-        // console.log(allVideos)
-        // PKvideos = allVideos.map(v => v.PK)
-        // const notViewedVideos = PKvideos.filter(n => !PKviewed.includes(n))
-        // console.log(notViewedVideos)
+        const viewedVideos1 = await viewedVideos(req.body.email);
+
+        let PKviewed = new Set(viewedVideos1.Items.map(v => v.PK));
+        let arrayViewed = Array.from(PKviewed);
+
+        const allVideos = await queryAllAssets()
+        const setVideos = new Set(allVideos.Items.map(v => v.PK))
+        let arrayVideos = Array.from(setVideos);
+
+        const notViewedVideos = arrayVideos.filter(n => !arrayViewed.includes(n))
+        console.log(notViewedVideos)
         res.send("hola")
 
     }catch(err){
