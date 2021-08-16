@@ -45,7 +45,7 @@ const createUserTable = () => {
         ],
         AttributeDefinitions: [       
             { AttributeName: "PK",  AttributeType: "S"},
-            { AttributeName: "SK", AttributeType: "S"},
+            { AttributeName: "SK", AttributeType: "S"}
         ],
         ProvisionedThroughput: {       
             ReadCapacityUnits: 5, 
@@ -128,11 +128,11 @@ const queryAllInfoUser = async (userId) => {
             },
             ExpressionAttributeValues: {
                 ":PK": userId,
-                ":info": `INFO#${userId}`,
+                ":info": `INFO#${userId}`
             }
         };
 
-        const queryUserInfo = await connectionDynamo.query(params).promise()
+        const queryUserInfo = await connectionDynamo.query(params).promise();
         // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
@@ -152,7 +152,7 @@ const scanAllInfo = async () => {
             }
         };
 
-        const queryUserInfo = await connectionDynamo.scan(params).promise()
+        const queryUserInfo = await connectionDynamo.scan(params).promise();
         console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
@@ -268,7 +268,8 @@ const putPKAssets = async (urlAsset, index) => {
             TableName: TABLE_ASSETS,
             Item:{
                 "PK": urlAsset,
-                "SK": index
+                "SK": index,
+                "views": 0
             }
         };
         
@@ -305,7 +306,7 @@ const putPKAssets = async (urlAsset, index) => {
 //     }
 // }
 
-const putAssets = async (info) => {
+const putAssets = async (email, info) => {
     let string2 = info.url.slice(72);
 
     var asset = "";
@@ -324,7 +325,7 @@ const putAssets = async (info) => {
             TableName: TABLE_ASSETS,
             Item:{
                 "PK": asset,
-                "SK": `SESSION#${asset}#${info.category}#${info.date}`,
+                "SK": `SESSION#${asset}#${email}#${info.category}#${info.date}`,
                 "date": info.date,
                 "fileType": info.type, 
                 "sessionCharacteristics": {

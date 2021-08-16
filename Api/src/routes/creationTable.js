@@ -4,8 +4,8 @@ const {createUserTable}= require('../Controllers/dbFunctions')
 
 
 router.get('/', async(req, res) => {
-    await createUserTable()
-    res.send('Table Created')
+    await createUserTable();
+    res.send('Table Created');
 })
 
 

@@ -14,7 +14,20 @@ router.post('/', async (req, res) => {
             var object = info[i];
             object.pos= i+1;
             answers.push(object.answer);
-            presentations.push(object.url);
+
+            let string2 = object.url.slice(72);
+            var asset = "";
+            (function endpointFinder(){
+                for(let i=0; i < string2.length; i++){
+                    if(string2[i] !== "?"){
+                        asset += string2[i];
+                    }
+                    else{
+                        return asset;
+                    }
+                }
+            })();
+            presentations.push(asset);
         }
         let data = {
             email: email,

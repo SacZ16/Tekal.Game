@@ -6,18 +6,16 @@ const loginGooandFace = require('./routes/loginFaceandGoo')
 const countries = require('./routes/countries')
 const creationTable = require('./routes/creationTable')
 const personalInfo = require ('./routes/personalInfo')
-const datauser = require ('./routes/datauser')
-const links = require ('./routes/links')
-const assets = require ('./routes/loadingAssets')
-const info = require('./routes/assetsVideoInfo')
-const game = require('./routes/userGameInfo')
-const morgan = require('morgan')
-const bodyparser = require('body-parser')
+const datauser = require ('./routes/datauser');
+const links = require ('./routes/links');
+const assets = require ('./routes/loadingAssets');
+const info = require('./routes/assetsVideoInfo');
+const game = require('./routes/userGameInfo');
+const morgan = require('morgan');
+const bodyparser = require('body-parser');
 const cors = require('cors');
 
-
 const server = express();
-
 
 const corsOptions ={
     origin:'http://localhost:3000', 

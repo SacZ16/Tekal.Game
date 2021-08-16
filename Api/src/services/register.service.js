@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const {newUser,getallUsers,putUserLogin}= require ('../Controllers/dbFunctions.js')
+const {putUserLogin}= require ('../Controllers/dbFunctions.js')
 
 const registerUser = async (datos) =>{
     try{
@@ -13,7 +13,7 @@ const registerUser = async (datos) =>{
             "email":  datos.email,
             "password": password,
         }
-        const response = await putUserLogin(Item)
+        const response = await putUserLogin(Item);
         return response;
     }catch(error){
         console.error(error);
