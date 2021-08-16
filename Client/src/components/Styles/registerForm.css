@@ -145,6 +145,16 @@
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
   }
+  .popup2{
+    position: relative;
+    bottom:  35px;
+    left: 150px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: rgb(21, 105, 25);
+  }
   
   /* Add animation (fade in the popup) */
   @-webkit-keyframes fadeIn {

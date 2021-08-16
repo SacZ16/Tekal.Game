@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
-a{
-    text-decoration: none;
-}
-
 .tutorialHome {
     background-color: white;
     border-radius: 5px;
@@ -16,7 +12,87 @@ a{
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 }
+.swal2-container.swal2-center>.swal2-popup{
+    width:50%;
+    background-color: #343434;
+    color: white;
+}
+.swal23{
+    position: absolute;
+    color: white;
+    margin-top: 1%;
+}
+.swal2-inputmh{
+    position: absolute;
+    box-sizing: border-box;
+    width: 45%;
+    height: 2.625em;
+    transition: border-color .1s,box-shadow .1s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    background: inherit;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
+    color: white;
+    font-size: 1.125em;
+    margin-top: 3.5%;
+}
+.swal55{
 
+    position: relative;
+    background-color: rgb(25, 0, 255);
+}
+.swal234{
+    position: absolute;
+    color: white;
+    margin-top: 1%;
+    width: 45%;
+    right: 0;
+    text-align: left;
+}
+.swal2346{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    margin-top: 0;
+    width: 100%;
+}
+.asdasdd{
+    display: inline-block;
+    margin:0;
+    text-align: left;
+}
+.dddd{
+    margin:0;
+}
+.swal2-html-container{
+    text-align: left;
+}
+.row:after {
+    content: "";
+    display: table;
+    color: #FFFF;
+    clear: both;
+  }
+  .column {
+    float: left;
+    width:45%;
+    padding: 10px;
+    color: #FFFF;
+     }
+.swal2-inputmh4{
+    position: unset;
+    box-sizing: border-box;
+    left: 0;
+    width: 100%;
+    background-color: #474747;
+    min-height: none;
+    height: 1.625em;
+    transition: border-color .1s,box-shadow .1s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
+    color: white;
+    font-size: 1.125em;
+}
 .tutorialHome:hover{
     border-style: solid;
     width: 150px;
@@ -29,30 +105,84 @@ a{
     border-width:6px;
     color: #800FC7
 }
+.container_buttons_home{
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    width: 400px;
+    height: max-content;
+    text-align: center;
+    justify-content:space-between;
+    align-items: center;
+    vertical-align: middle;
+    right:4%;
+    position: absolute;
+    top: 7%
+}
+
+body{
+    overflow-x:hidden ;
+}
 
 .loginHome{
-    background: white;
+    background: transparent;
     border-radius: 5px;
-    border-style: none;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
     width: 120px;
     height: 40px;
-    color: white;
     font-weight: bold;
     text-align: center;
     justify-content: center;
     align-items: center;
     vertical-align: middle;
     display: flex;
-    right:10%;
+    right:9%;
     position: absolute;
-    top: 9%
+    top: 8%;
+    color:white
 }
 
 .loginHome:hover{
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.329);
+    border-style: solid;
+    border-width: 0.5px;
+}
+
+.second_screen_home{
+    background-color:#212429;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 100%;
+    color: white;
+}
+
+.registerHome{
+    background: transparent;
+    border-radius: 5px;
     border-style: solid;
     border-color: white;
-    border-width: 0.5px
+    border-width: 1px;
+    width: 120px;
+    height: 40px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    display: flex;
+    right:45%;
+    position: absolute;
+    top: 8%;
+    color: white;
+}
+
+.registerHome:hover{
+    background-color: rgba(255, 255, 255, 0.329);
+    border-style: solid;
+    border-width: 0.5px;
 }
 
 .buttonsHome{
@@ -96,10 +226,22 @@ a{
     padding-top:-30px
 }
 
-body{
+.container__home_dos{
+    display: flex;
+    flex-direction:column
+}
+
+/* body{
     min-height: 100vh;
     background: linear-gradient(to top,#2C2C2B, black);
     overflow-x: hidden;
+}  */
+.homeDiv{
+    min-height: 100vh;
+    background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+    overflow-x:hidden;
+    display: flex;
+    flex-direction:column
 }
 
 .stars {
@@ -137,26 +279,36 @@ section::before{
     bottom: -10px;
     width: 100%;
     height: 150px;
-    background: linear-gradient(to top, #1c0522, transparent);
+    background: linear-gradient(to top, #212429, transparent);
     z-index: 1000;
-}
-
-.videoTutorial {
-    position: absolute;
-    bottom: -700px;
-    padding-bottom: 50px;
-    margin-left: 25%;
-    width: 700px;
 }
 
 .textHome {
     position: absolute;
     color: white;
-    font-size: 65px;
-    margin-top: 15%;
+    font-size: 50px;
+    margin-top: 13%;
     font-family: 'Montserrat', sans-serif;
     width:100%;
-    text-align: center
+    text-align: center;
+}
+
+.memory_style{
+    border-radius:10px;
+    color: #fd53a5;
+    font-weight: bolder;
+    font-size: 51px;
+}
+
+.sub_textHome{
+    position: absolute;
+    color: white;
+    font-size: 18px;
+    margin-top: 24%;
+    font-family: 'Montserrat', sans-serif;
+    width:100%;
+    text-align: center;
+    z-index:5
 }
 
 .sessionBox{
@@ -234,5 +386,8 @@ section::before{
 .btnLogOut:hover{
     border-style:solid;
     border-color: rgba(219, 88, 88, 0.986);
+}
 
+.formulario_register{
+    position: absolute;
 }

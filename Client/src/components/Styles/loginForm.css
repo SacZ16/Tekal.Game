@@ -16,15 +16,16 @@
 }
 
 .containerLanding {
-    width: 400px;
+    background-color: #242224;
+    width: 500px;
     height: 85%;
     position: absolute;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    right: 5%;
-    margin-top: 35px;
+    justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 .logoForm{
@@ -53,9 +54,9 @@
     width:99%;
     padding: 14px 0 14px 0;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.788);
+    background-color: #242224;
     border-style: solid;
-    border-color: #1663A2;
+    border-color: white;
     border-width: 0.5px;
     color: white;
     margin-top: 10px;
@@ -66,11 +67,11 @@
     width:99%;
     padding: 14px 0 14px 0;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.788);
+    background-color: #242224;
     border-style: solid;
-    border-color: #1663A2;
+    border-color: white;
     border-width: 0.5px;
-    color: rgb(0, 0, 0);
+    color: white;
     margin-top: 10px;
     border-radius: 5px;
 }
@@ -82,9 +83,10 @@
 }
 
 .forgotPassword{
-    color: #74b5eb;
+    color: #dddcdc;
     margin: 10px 0px 10px 0;
     position: relative;
+    text-align: end;
 }
 
 .forgotPassword:hover{
@@ -92,19 +94,15 @@
 }
 
 .continue {
-    background: linear-gradient(90deg,#1663A2,#74b5eb,#1663A2);
     text-shadow: 0px 0px 5px rgb(39, 39, 39);
     border-style: none;
     text-transform: uppercase;   
     font-size: 14px; 
     width:99%;
     padding: 14px 0 14px 0;
-    background-color: transparent;
     color: white;
-    background-color:#1663A2;
-    border-radius: 5px;
-    border-style: solid;
-    border-style: none;
+    background-color:#A52971;
+    border-radius: 50px;
 }
 
 .continue:hover{
@@ -137,7 +135,7 @@
 .signUpLink{
     margin-top: 14.5px;
     margin-left: 5px;
-    color: #74b5eb;
+    color: rgb(197, 197, 197);
 }
 
 .signUpLink:hover{
