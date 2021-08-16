@@ -2,10 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
 .slideshow {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     overflow: hidden;
     width: 60%;
     background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+    margin: auto;
   }
 
   .tekalLogo_tutorial{
@@ -36,17 +37,19 @@
   }
 
   .slide p {
-    color: #001431;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bolder;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
   }
 
   .container_text_tutorial{
-    background-color: lightgray;
+    /* background-color: lightgray;
     border-radius: 15px;
     width: max-content;
     padding-right: 20px;
-    padding-left: 20px;
+    padding-left: 20px; */
   }
 
   .container_lang_change{
@@ -79,6 +82,21 @@
   .slideshowSlider {
     white-space: nowrap;
     transition: ease 2000ms;
+  }
+  .prueba88{
+    background-color: violet;
+    width: 100px;
+    display:flex;flex-direction:row;word-wrap: break-word;
+  }
+  .prueba99{
+    width: 100%;
+  }
+  .prueba75{
+    background-color: blue;
+    width: 80%;
+    height: 100px;    
+    white-space:normal;   /* //esto lo soluciona */
+    word-wrap: break-word;
   }
 
   .slide {

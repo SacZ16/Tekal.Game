@@ -12,7 +12,87 @@
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 }
+.swal2-container.swal2-center>.swal2-popup{
+    width:50%;
+    background-color: #343434;
+    color: white;
+}
+.swal23{
+    position: absolute;
+    color: white;
+    margin-top: 1%;
+}
+.swal2-inputmh{
+    position: absolute;
+    box-sizing: border-box;
+    width: 45%;
+    height: 2.625em;
+    transition: border-color .1s,box-shadow .1s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    background: inherit;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
+    color: white;
+    font-size: 1.125em;
+    margin-top: 3.5%;
+}
+.swal55{
 
+    position: relative;
+    background-color: rgb(25, 0, 255);
+}
+.swal234{
+    position: absolute;
+    color: white;
+    margin-top: 1%;
+    width: 45%;
+    right: 0;
+    text-align: left;
+}
+.swal2346{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    margin-top: 0;
+    width: 100%;
+}
+.asdasdd{
+    display: inline-block;
+    margin:0;
+    text-align: left;
+}
+.dddd{
+    margin:0;
+}
+.swal2-html-container{
+    text-align: left;
+}
+.row:after {
+    content: "";
+    display: table;
+    color: #FFFF;
+    clear: both;
+  }
+  .column {
+    float: left;
+    width:45%;
+    padding: 10px;
+    color: #FFFF;
+     }
+.swal2-inputmh4{
+    position: unset;
+    box-sizing: border-box;
+    left: 0;
+    width: 100%;
+    background-color: #474747;
+    min-height: none;
+    height: 1.625em;
+    transition: border-color .1s,box-shadow .1s;
+    border: 1px solid #d9d9d9;
+    border-radius: .1875em;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
+    color: white;
+    font-size: 1.125em;
+}
 .tutorialHome:hover{
     border-style: solid;
     width: 150px;

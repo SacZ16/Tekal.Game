@@ -14,6 +14,7 @@ const colors = [slide1,slide2,slide3,slide4,slide5,slide6,slide7,slide8,];
 
 const imagenes = [slide1,slide2,slide3,slide4,slide5,slide6,slide7,slide8,];
 
+const textoCastellanoPrimera = ['Cuando arranque el juego, verás una serie de videos de 3 segundos','Tu objetivo es identificar los videos que  se repiten durante la partida','Por eso, cuando pienses que un video sale de forma repetida, presiona la tecla ESPACIO', 'Si estás en lo cierto y ese video ya había salido...Bingo! Acertaste','Por el contrario, marcaste un video que sale por primera vez... Te equivocaste :(','Es importante que prestes atención durante el juego, ya que apareceran algunas repeticiones fáciles de detectar: no olvides presionar la barra espaciadora en esos casos, o perderas una vida!','No te equivoques mucho! Solo tienes 3 vidas. Una vez que se acaben, perdiste!','¿Estas instrucciones quedaron en tu memoria?¡Bien! ¡Ahora, a jugar!']
 const textoCastellanoPrimeraLinea = ['Cuando arranque el juego, verás','Tu objetivo es identificar los videos','Por eso, cuando pienses que un video sale de', 'Si estás en lo cierto y ese video ya','Por el contrario, marcaste un video que','Es importante que prestes atención durante el juego, ya que apareceran algunas repeticiones','No te equivoques mucho! Solo tienes 3 vidas.','¿Estas instrucciones quedaron en tu memoria?']
 const textoCastellanoSegundaLinea = ['una serie de videos de 3 segundos','que  se repiten durante la partida','forma repetida, presiona la tecla ESPACIO','había salido...Bingo! Acertaste','sale por primera vez... Te equivocaste :(','fáciles de detectar: no olvides presionar la barra espaciadora en esos casos, o perderas una vida!','Una vez que se acaben, perdiste!','¡Bien! ¡Ahora, a jugar!'];
  
@@ -79,23 +80,23 @@ function Slideshow() {
                   justifyContent:'center',
                   textAlign:'center',
                 }}
-              >
+                >
               { idioma === 'Castellano'?
-                <div className='todopoderoso' style={{width:'100%', zIndex:'5000', display:'flex', justifyContent:'center'}}>
-                <div className='container_text_tutorial'>
-                <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoPrimeraLinea[index]}</p>
-                <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[index]}</p>
-                </div>
-                </div>
+                
+                  <div style={{position:'absolute',width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+
+                <p style={index===5?{fontSize:'26px',whiteSpace:'normal',width:'80%',background:'blue'}:{fontSize:'26px',whiteSpace:'normal',width:'80%',background:'blue'}}>{textoCastellanoPrimera[index]}</p>
+                {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[index]}</p> */}
+                  </div>
                 :
                 <div className='todopoderoso' style={{width:'100%', zIndex:'5000', display:'flex', justifyContent:'center'}}>
                 <div className='container_text_tutorial'>
                 <p style={index===5 || index===4?{fontSize:'15px'}:{fontSize:'26px'}}>{textEnglishFirstLine[index]}</p>
                 <p style={index===5 || index===4?{fontSize:'15px'}:{fontSize:'26px'}}>{textEnglishSecondLine[index]}</p>
                 </div>
-                </div>
+                  </div>
                   }
-              </div>
+                  </div>
             ))
         }
     </div>
