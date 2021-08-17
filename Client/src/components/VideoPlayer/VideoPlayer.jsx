@@ -186,7 +186,8 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
     dispatch(sessionInfo(obj));
     localStorage.setItem('score', score)
   }
-
+  const [progressSe, setProgressSe] = useState(0)
+  console.log(progressSe)
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
@@ -210,6 +211,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         }, 500)
       }
     }
+    setProgressSe( e.playedSeconds)
     progress.current = e.playedSeconds;
   }
 

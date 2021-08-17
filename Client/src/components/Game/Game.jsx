@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useDispatch } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
-import { Link } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 import style from '../Styles/Game.module.css'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
@@ -26,7 +26,8 @@ export const Game = () => {
         email: emailCokkie
       })
         .then(res => {
-          setVideosApi(res.data)})
+          setVideosApi(res.data)
+        })
     }
     if (videoApi) {
       var arregloPromesas = videoApi[2].map(async (url) => {
@@ -149,7 +150,7 @@ export const Game = () => {
 
         {/* <Link className={style.Link} to='login'>❌</Link> */}
         {
-          !videoBlop ? <div style={{ width: '100%', justifyContent: 'center', position: 'absolute', left: '47%', top: '40%', height: '1px', width: '20px' }}><img style={{ height: '80px', width: '80px' }} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' /> <p style={{ color: 'white', fontSize: '25px', marginLeft: '-5px' }}>Loading...</p></div> :
+          !videoBlop ? <Loading /> :
             <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
         }
       </div>
