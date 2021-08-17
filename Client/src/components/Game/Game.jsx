@@ -16,7 +16,7 @@ export const Game = () => {
   const cookies = new Cookie();
 
   const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
-  // console.log(videoApi)
+  console.log(videoApi)
   const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
   // console.log(videoBlop)
   const videoToSeeBlop = useRef() // videos con la URL Blop
@@ -26,7 +26,6 @@ export const Game = () => {
         email: emailCokkie
       })
         .then(res => {
-          console.log(res)
           setVideosApi(res.data)})
     }
     if (videoApi) {
@@ -127,7 +126,7 @@ export const Game = () => {
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videoApi[2]));
+    dispatch(seenVideos(videoApi[2], tope.current));
   }
 
   // Cambio de videos y guarda un nuevo array con los blop
