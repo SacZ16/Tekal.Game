@@ -87,7 +87,7 @@
     min-height: none;
     height: 1.625em;
     transition: border-color .1s,box-shadow .1s;
-    border: 1px solid #d9d9d9;
+    /* border: 1px solid #d9d9d9; */
     border-radius: .1875em;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
     color: white;

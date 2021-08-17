@@ -1,36 +1,36 @@
-import  React,
+import React,
 {
-        useRef,
-        useState,
-        useEffect
-}                   from 'react';
-import  ReactPlayer from 'react-player/lazy';
+  useRef,
+  useState,
+  useEffect
+} from 'react';
+import ReactPlayer from 'react-player/lazy';
 import {
-        useDispatch,
-        useSelector
-}                    from 'react-redux';
-import {withRouter } from 'react-router';
-import  style        from '../Styles/Game.module.css';
-import  swal         from '@sweetalert/with-react';
-import {sessionInfo} from '../../redux/action';
-import  axios        from 'axios';
-import {Link }       from 'react-router-dom';
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import { withRouter } from 'react-router';
+import style from '../Styles/Game.module.css';
+import Swal from 'sweetalert2'
+import { sessionInfo } from '../../redux/action';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Cookie from 'universal-cookie'
 import '../Styles/progressBar.css';
 
-  const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
+const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   const dispatch = useDispatch();
   const cookies = new Cookie();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-  
+
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
-  
+
   seeVideos.current = user.currentGame.seenVideos;
-  
+
   const infoVideo = useRef(); // Informacion del Video
-  
+
   infoVideo.current = recVideo;
 
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
@@ -59,7 +59,7 @@ import '../Styles/progressBar.css';
   const play = useRef(true); // pausa o inicia el video
 
   const progress = useRef(); // segundos viendo el video
-  
+
   const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
 
   const handleKeyDown = (event) => {
@@ -137,20 +137,19 @@ import '../Styles/progressBar.css';
       play.current = false
       videosWithAnswers()
       sessionData();
-      swal({
-        text: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
-        button: 'Continuar',
-      })
-        .then(() => {
-          postData()
-          if (!cookies.get('userInfo')) {
+      Swal.fire({
+        title: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Continuar'
+      }).then(() => {
+        postData()
+        if (!cookies.get('userInfo')) {
           history.push('/preclose');
-          }
-          if (cookies.get('userInfo')){
-            history.push('/close');
-          }
-
-        });
+        }
+        if (cookies.get('userInfo')) {
+          history.push('/close');
+        }
+      })
     }
   }, [seeVideos.current.length, lives.current]);
 
@@ -173,7 +172,7 @@ import '../Styles/progressBar.css';
   const postData = async () => {
     // await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
     // await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
-    localStorage.setItem('pruebaa',JSON.stringify(finalVideos.current))
+    localStorage.setItem('pruebaa', JSON.stringify(finalVideos.current))
     console.log(finalVideos.current)
   }
 
@@ -186,7 +185,7 @@ import '../Styles/progressBar.css';
       /* targetVideos: { value: target.length } */
     });
     dispatch(sessionInfo(obj));
-    localStorage.setItem('score',score)
+    localStorage.setItem('score', score)
     console.log(localStorage.getItem('score'))
   }
 
@@ -197,21 +196,20 @@ import '../Styles/progressBar.css';
           play.current = false
           videosWithAnswers()
           sessionData()
-          swal({
-            text: "Finalizo el Juego",
-            button: 'Continuar',
+          Swal.fire({
+            title: "Finalizo el Juego",
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Continuar'
+          }).then(() => {
+            postData()
+            if (!cookies.get('userInfo')) {
+              history.push('/preclose');
+            }
+            if (cookies.get('userInfo')) {
+              history.push('/close');
+            }
           })
-            .then(() => {
-              postData()
-              if (!cookies.get('userInfo')) {
-                history.push('/preclose');
-                }
-                if (cookies.get('userInfo')){
-                  history.push('/close');
-                }
-            });
         }, 500)
-
       }
     }
     progress.current = e.playedSeconds;
@@ -232,40 +230,40 @@ import '../Styles/progressBar.css';
           <div className={style.contenedordelvideo}>
             <div style={{ width: '90%', margin: '0', display: 'flex' }}>
               {
-                lives.current === 3 ? 
-                <div style=
-                  {{ 
-                    color: 'red', display: 'flex', flexDirection: 'row', 
-                    width: '70px', marginTop: '-30px' 
-                  }}>❤ ❤ ❤
-                </div> : null
+                lives.current === 3 ?
+                  <div style=
+                    {{
+                      color: 'red', display: 'flex', flexDirection: 'row',
+                      width: '70px', marginTop: '-30px'
+                    }}>❤ ❤ ❤
+                  </div> : null
               }
               {
-                lives.current === 2 ? 
-                <div style=
-                  {{ 
-                    color: 'red', display: 'flex', flexDirection: 'row', 
-                    width: '70px', marginTop: '-30px' 
-                  }}>❤ ❤ 💔
-                </div> : null
+                lives.current === 2 ?
+                  <div style=
+                    {{
+                      color: 'red', display: 'flex', flexDirection: 'row',
+                      width: '70px', marginTop: '-30px'
+                    }}>❤ ❤ 💔
+                  </div> : null
               }
               {
-                lives.current === 1 ? 
-                <div style=
-                  {{ 
-                    color: 'red', display: 'flex', flexDirection: 'row', 
-                    width: '70px', marginTop: '-30px' 
-                  }}>❤ 💔 💔
-                </div> : null
+                lives.current === 1 ?
+                  <div style=
+                    {{
+                      color: 'red', display: 'flex', flexDirection: 'row',
+                      width: '70px', marginTop: '-30px'
+                    }}>❤ 💔 💔
+                  </div> : null
               }
               {
-                lives.current === 0 ? 
-                <div style=
-                  {{ 
-                    color: 'red', display: 'flex', flexDirection: 'row', 
-                    width: '70px', marginTop: '-30px' 
-                  }}>💔 💔 💔
-                </div> : null
+                lives.current === 0 ?
+                  <div style=
+                    {{
+                      color: 'red', display: 'flex', flexDirection: 'row',
+                      width: '70px', marginTop: '-30px'
+                    }}>💔 💔 💔
+                  </div> : null
               }
               <progress
                 className='progressBar'

@@ -9,52 +9,76 @@ import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 
 import Tutorial from '../Tutorial/Tutorial'
+import axios from 'axios';
+import GoogleButton from '../Signin/GoogleButton';
+import FacebookButton from '../Signin/FacebookButton';
 
 const Home = () => {
-
+    const MySwal = withReactContent(Swal)
     const [offset, setOffset] = useState()
+
+    // Register Alert
+    const [passwordcopia, setPasswordcopia] = useState('')
+    const [coloremail, setColoremail] = useState('')
+    const [colorpassword, setColorpassword] = useState('')
+    const [colorconfirmPass, setColorconfirmPass] = useState('')
+    var coloremailb = { 'border-color': `${coloremail}` }
+    var colorpasswordb = { 'border-color': `${colorpassword}` }
+    var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
+    const [input, setInput] = useState({
+        email: email,
+        password: password,
+        confirmPass: confirmPass,
+    })
+    //----
 
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
-    if (localStorage.getItem('pruebaa')){localStorage.removeItem('pruebaa')}
-    
+    if (localStorage.getItem('pruebaa')) { localStorage.removeItem('pruebaa') }
+
     window.addEventListener('scroll', handleScroll)
+
     const mostrarLogin = async () => {
         const { value: formValues } = await Swal.fire({
             title: 'Log in',
             html:
-                '<div class="row">'+
-                   '<div class="column" >'+
-                   '<div class="asdasdd">'+
-                   '<p class="dddd">Name</p>'+
-                   '<input class="swal2-inputmh4"/>'+
-                   '<p class="dddd">Date of bith</p>'+
-                   '<input class="swal2-inputmh4"/>'+
-                   '<p class="dddd">Country</p>'+
-                   '<input class="swal2-inputmh4"/>'+
-                   '<p class="dddd">Password</p>'+
-                   '<input class="swal2-inputmh4"/>'+
-                   '<p class="dddd">Genero</p>'+
-                   '<input class="swal2-inputmh4"/>'+
-                    '</div>'+
-                    '</div>'+
-                    '<div class="column" >'+
-                    '<div class="asdasdd">'+
-                    '<p class="dddd">Last Name</p>'+
-                    '<input class="swal2-inputmh4"/>'+
-                    '<p class="dddd">Email</p>'+
-                    '<input class="swal2-inputmh4"/>'+
-                    '<p class="dddd">City/state</p>'+
-                    '<input class="swal2-inputmh4"/>'+
-                    '<p class="dddd">Confirm Password</p>'+
-                    '<input class="swal2-inputmh4"/>'+
-                    '<p class="dddd">Ethnicity</p>'+
-                    '<input class="swal2-inputmh4"/>'+
-                    '</div>'+
+                '<div class="row">' +
+                '<div class="column" >' +
+                '<div class="asdasdd">' +
+                '<p class="dddd">Name</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Date of bith</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Country</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Password</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Genero</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '</div>' +
+                '</div>' +
+                '<div class="column" >' +
+                '<div class="asdasdd">' +
+                '<p class="dddd">Last Name</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Email</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">City/state</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Confirm Password</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '<p class="dddd">Ethnicity</p>' +
+                '<input class="swal2-inputmh4"/>' +
+                '</div>' +
                 '</div>',
             focusConfirm: false,
             preConfirm: () => {
@@ -69,6 +93,117 @@ const Home = () => {
             Swal.fire(JSON.stringify(formValues))
         }
     }
+
+    const prueba = () => {
+        MySwal.fire({
+            html:
+                <div class="row" onChange={handleInputChange}>
+                    <div class="column" >
+                        <div class="asdasdd">
+                            <p class="dddd">Name</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Date of bith</p>
+                            <input class="swal2-inputmh4" type='date' />
+                            <p class="dddd">Country</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Password</p>
+                            <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
+                            <p class="dddd">Genero</p>
+                            <input class="swal2-inputmh4" />
+                            <GoogleButton />
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="asdasdd">
+                            <p class="dddd">Last Name</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Email</p>
+                            <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
+                            <p class="dddd">City/state</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Confirm Password</p>
+                            <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
+                            <p class="dddd">Ethnicity</p>
+                            <input class="swal2-inputmh4" />
+                            <FacebookButton />
+                        </div>
+                    </div>
+                </div>,
+
+            confirmButtonText: <h3 onClick={SendToBackEnd}>Register</h3>,
+
+
+        })
+    }
+
+    // Register Form
+    const SendToBackEnd = async (e) => {
+        e.preventDefault()
+        const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
+        if (!emailReject.test(input.email) && input.email.length > 0) {
+            return;
+        }
+        if (input.email !== input.confirmEmail) {
+            return;
+        }
+        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+        if (!passwordReject.test(input.password) && input.password.length >= 0) {
+            return;
+        }
+        if (input.password !== input.confirmPass) {
+            return;
+        }
+        const user = {
+            email: input.email,
+            password: input.password,
+            test: input.email,
+        }
+        console.log(user)
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+        if (response.data.status) {
+            alert('Usuario Registrado con Exito')
+            window.location.href = './login'
+        }
+        else { alert('ESE MAIL YA ES EN USO') }
+    }
+
+
+
+    const handleInputChange = function (e) {
+        // console.log(e.target.value)
+        if (e.target.name === 'email') setEmail(e.target.value)
+        if (e.target.name === 'password') setPassword(e.target.value)
+        if (e.target.name === 'confirmPass') setConfirmPass(e.target.value)
+        setInput({
+            ...input,
+            email: email,
+            password: password,
+            confirmPass: confirmPass
+        })
+
+
+        const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if (!emailReject.test(input.email) && input.email.length > 1) {
+            setColoremail("red")
+        } if (emailReject.test(input.email) && input.email.length > 1) {
+            setColoremail("#1663A2")
+        }
+        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+        if (!passwordReject.test(input.password) && input.password.length > 1) {
+            setColorpassword("red")
+        } if (passwordReject.test(input.password) && input.password.length > 1) {
+            setColorpassword("#1663A2")
+        }
+        setPasswordcopia(input.password.substring(0, input.password.length - 1))
+        if (passwordcopia !== input.confirmPass && input.confirmPass.length > 1) {
+            setColorconfirmPass("red")
+        } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
+            setColorconfirmPass("#1663A2")
+        }
+    }
+    console.log(input)
+    //-----------
+
     const [show, setShow] = useState(false)
     const [sessionOn, setSessionOn] = useState(false)
     const [login, setLogin] = useState(true)
@@ -123,6 +258,34 @@ const Home = () => {
         )
     }
 
+    const mood2 = (e) => {
+        const currentDate = new Date();
+        const day = currentDate.getDay();
+        localStorage.setItem('mood', e.target.id)
+        localStorage.setItem('date', day)
+        window.location.href = ('/game')
+        MySwal.clickConfirm()
+    }
+
+    const mood = () => {
+        const lastStorageDay = localStorage.getItem('date')
+        const currentDate = new Date();
+        const day = currentDate.getDay();
+        if (lastStorageDay != day) {
+            MySwal.fire({
+                title: <div style={{ borderStyle: 'solid', borderColor: 'red' }}>
+                    <h3>How do you fell to play today?</h3>
+                    <span id='fine' onClick={mood2}>😁</span>
+                    <span id='normal' onClick={mood2}>😐</span>
+                    <span id='bad' onClick={mood2}>☹️</span>
+                </div>,
+                showConfirmButton: false
+            })
+        } else {
+            window.location.href = ('/game')
+        }
+    }
+
     return (
         <>
             <div className='formulario_register' style={{ display: `${popUpLoginAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
@@ -142,7 +305,7 @@ const Home = () => {
                             <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
                             <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                             <div className='buttonsHome' style={{ opacity: (100 + offset * -0.45) + '%', bottom: (25 + offset * -0.1) + '%' }}>
-                                <div className='startGame'><Link to='/game' style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                                <div className='startGame'><button onClick={prueba} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</button></div>
                             </div>
                         </> : (null)}
                     <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
