@@ -30,13 +30,10 @@ const Home = () => {
     var colorpasswordb = { 'border-color': `${colorpassword}` }
     var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPass, setConfirmPass] = useState('')
     const [input, setInput] = useState({
-        email: email,
-        password: password,
-        confirmPass: confirmPass,
+        email: "",
+        password: "",
+        confirmPass: "",
     })
     //----
 
@@ -94,47 +91,7 @@ const Home = () => {
         }
     }
 
-    const prueba = () => {
-        MySwal.fire({
-            html:
-                <div class="row" onChange={handleInputChange}>
-                    <div class="column" >
-                        <div class="asdasdd">
-                            <p class="dddd">Name</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Date of bith</p>
-                            <input class="swal2-inputmh4" type='date' />
-                            <p class="dddd">Country</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Password</p>
-                            <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
-                            <p class="dddd">Genero</p>
-                            <input class="swal2-inputmh4" />
-                            <GoogleButton />
-                        </div>
-                    </div>
-                    <div class="column" >
-                        <div class="asdasdd">
-                            <p class="dddd">Last Name</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Email</p>
-                            <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
-                            <p class="dddd">City/state</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Confirm Password</p>
-                            <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
-                            <p class="dddd">Ethnicity</p>
-                            <input class="swal2-inputmh4" />
-                            <FacebookButton />
-                        </div>
-                    </div>
-                </div>,
 
-            confirmButtonText: <h3 onClick={SendToBackEnd}>Register</h3>,
-
-
-        })
-    }
 
     // Register Form
     const SendToBackEnd = async (e) => {
@@ -169,39 +126,73 @@ const Home = () => {
 
 
 
-    const handleInputChange = function (e) {
-        // console.log(e.target.value)
-        if (e.target.name === 'email') setEmail(e.target.value)
-        if (e.target.name === 'password') setPassword(e.target.value)
-        if (e.target.name === 'confirmPass') setConfirmPass(e.target.value)
-        setInput({
-            ...input,
-            email: email,
-            password: password,
-            confirmPass: confirmPass
-        })
-
-
-        const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("red")
-        } if (emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("#1663A2")
-        }
-        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("red")
-        } if (passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("#1663A2")
-        }
-        setPasswordcopia(input.password.substring(0, input.password.length - 1))
-        if (passwordcopia !== input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("red")
-        } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("#1663A2")
-        }
-    }
+    /*    const handleInputChange = function (e) {
+           setInput({
+               ...input,
+               [e.target.name]: e.target.value
+           })
+           const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+           if (!emailReject.test(input.email) && input.email.length > 1) {
+               setColoremail("red")
+           } if (emailReject.test(input.email) && input.email.length > 1) {
+               setColoremail("#1663A2")
+           }
+           const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+           if (!passwordReject.test(input.password) && input.password.length > 1) {
+               setColorpassword("red")
+           } if (passwordReject.test(input.password) && input.password.length > 1) {
+               setColorpassword("#1663A2")
+           }
+           setPasswordcopia(input.password.substring(0, input.password.length - 1))
+           if (passwordcopia !== input.confirmPass && input.confirmPass.length > 1) {
+               setColorconfirmPass("red")
+           } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
+               setColorconfirmPass("#1663A2")
+           }
+       } */
     console.log(input)
+    const prueba = () => {
+        MySwal.fire({
+            html:
+                <div class="row" /* onChange={handleInputChange} */>
+                    <div class="column" >
+                        <div class="asdasdd">
+                            <p class="dddd">Name</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Date of bith</p>
+                            <input class="swal2-inputmh4" type='date' />
+                            <p class="dddd">Country</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Password</p>
+                            <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
+                            <p class="dddd">Genero</p>
+                            <input class="swal2-inputmh4" />
+                            <GoogleButton />
+                        </div>
+                    </div>
+                    <div class="column" >
+                        <div class="asdasdd">
+                            <p class="dddd">Last Name</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Email</p>
+                            <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
+                            <p class="dddd">City/state</p>
+                            <input class="swal2-inputmh4" />
+                            <p class="dddd">Confirm Password</p>
+                            <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
+                            <p class="dddd">Ethnicity</p>
+                            <input class="swal2-inputmh4" />
+                            <FacebookButton />
+                        </div>
+                    </div>
+                </div>,
+
+            confirmButtonText: <h3 onClick={SendToBackEnd}>Register</h3>,
+            didRender: ((e) => {
+               console.log(e)
+            })
+        })
+    }
     //-----------
 
     const [show, setShow] = useState(false)
@@ -305,7 +296,7 @@ const Home = () => {
                             <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
                             <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                             <div className='buttonsHome' style={{ opacity: (100 + offset * -0.45) + '%', bottom: (25 + offset * -0.1) + '%' }}>
-                                <div className='startGame'><button onClick={prueba} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</button></div>
+                                <div className='startGame'><Link onClick={mood} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
                             </div>
                         </> : (null)}
                     <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />

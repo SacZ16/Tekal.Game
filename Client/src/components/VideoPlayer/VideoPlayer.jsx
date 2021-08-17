@@ -170,9 +170,9 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   }
 
   const postData = async () => {
-    // await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
-    // await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
-    localStorage.setItem('pruebaa', JSON.stringify(finalVideos.current))
+    await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
+    await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
+    // localStorage.setItem('pruebaa', JSON.stringify(finalVideos.current))
     console.log(finalVideos.current)
   }
 
