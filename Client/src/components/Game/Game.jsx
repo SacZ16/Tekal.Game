@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
+import Loading from '../Loading/Loading';
 import { useDispatch } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
-import Loading from '../Loading/Loading';
 import style from '../Styles/Game.module.css'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
@@ -147,8 +147,6 @@ export const Game = () => {
   return (
     < >
       <div className={style.fondo3}>
-
-        {/* <Link className={style.Link} to='login'>❌</Link> */}
         {
           !videoBlop ? <Loading /> :
             <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
