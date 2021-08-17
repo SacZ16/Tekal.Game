@@ -24,7 +24,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   const cookies = new Cookie();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-  
+
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
 
@@ -120,19 +120,6 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
-    /*    if (seeVideos.current.length > videoApi.length) {
-         play.current = false
-         videosWithAnswers()
-         sessionData()
-         swal({
-           text: "Finalizo el Juego",
-           button: 'Continuar',
-         })
-           .then(() => {
-             postData()
-             history.push('/close');
-           });
-       } */
     if (lives.current === 0) {
       play.current = false
       videosWithAnswers()
@@ -161,7 +148,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         seconds: pressSeconds.current[i],
         category: e[0][1].toUpperCase(),
         type: 'Video',
-        date:  `${new Date()}`
+        date: `${new Date()}`
       })
     })
     finalVideos.current.unshift(score)
@@ -211,7 +198,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         }, 500)
       }
     }
-    setProgressSe( e.playedSeconds)
+    setProgressSe(e.playedSeconds)
     progress.current = e.playedSeconds;
   }
 
