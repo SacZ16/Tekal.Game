@@ -10,7 +10,7 @@ import Cookie from 'universal-cookie'
 function Finalgame({ history }) {
 
     const dispatch = useDispatch()
-    const { recVideo, user } = useSelector(state => state);
+    const { score } = useSelector(state => state.user.currentGame)
     const cookies = new Cookie();
     var emailCokkie;
     //Sacando el email
@@ -18,7 +18,6 @@ function Finalgame({ history }) {
         if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
         else { emailCokkie = cookies.get('userInfo').Items[0].email }
     }
-    const { score } = useSelector(state => state.user.currentGame)
 
     const holaa = localStorage.getItem('pruebaa')
     const resultadoparaenviar = JSON.parse(holaa)
@@ -50,11 +49,11 @@ function Finalgame({ history }) {
         dispatch(resetReducer())
         history.push('/game')
     }
-    /* const postDataa = async () => {
-        await axios.post('http://localhost:3001/videoInfo', `${resultadoparaenviar}`)
-        await axios.post('http://localhost:3001/gameInfo', `${resultadoparaenviar}`)
+    const postDataa = async () => {
+        await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
+        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
     }
-    postDataa() */
+    postDataa()
     return (
         <div>
             <div className='bgLandingfinal'>
