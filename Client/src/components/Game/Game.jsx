@@ -144,10 +144,10 @@ export const Game = () => {
     < >
       <div className={style.fondo3}>
 
-        {/*  <Link className={style.Link} to='login'>❌</Link> */}
+         {/* <Link className={style.Link} to='login'>❌</Link> */}
         {/* <button onClick={recVideos}>Click</button> */}
         {
-          !videoBlop ? <h1>Loading...</h1> : <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
+          !videoBlop ? <div style={{width:'100%', justifyContent: 'center', position: 'absolute',left:'47%',top:'40%', height:'1px', width:'20px'}}><img  style={{height:'80px', width:'80px'}}src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/> <p style={{color: 'white', fontSize:'25px', marginLeft:'-5px'}}>Loading...</p></div> : <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
         }
       </div>
     </>

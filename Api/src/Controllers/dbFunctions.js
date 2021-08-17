@@ -2,6 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const AWS = require('aws-sdk')
 const { connectionDynamo, dynamodb } = require('../db.js')
+const bcrypt = require('bcrypt');
 
 const TABLE_USER = "USER"
 const TABLE_ASSETS = "ASSETS"

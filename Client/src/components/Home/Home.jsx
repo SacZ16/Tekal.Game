@@ -9,16 +9,19 @@ import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import Swal from 'sweetalert2'
+import { SendDataToBACK } from '../controllers/dbFunctions'
 
 import Tutorial from '../Tutorial/Tutorial'
 
 const Home = () => {
+
     const [offset, setOffset] = useState()
 
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
-
+    if (localStorage.getItem('pruebaa')){localStorage.removeItem('pruebaa')}
+    
     window.addEventListener('scroll', handleScroll)
     const mostrarLogin = async () => {
         const { value: formValues } = await Swal.fire({
@@ -123,7 +126,7 @@ const Home = () => {
     return (
         <>
             <div className='formulario_register' style={{ display: `${popUpLoginAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-                <div style={{ width: '500px', height: '85%' }}><RegisterCommonForm /></div>{/* Este es el formulario LOGIN */}
+                <div style={{ width: '500px', height: '85%' }}><RegisterCommonForm props={SendDataToBACK} /></div>{/* Este es el formulario LOGIN */}
             </div>
 
             <div className='formulario_register' style={{ display: `${popUpRegisterAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
@@ -160,7 +163,7 @@ const Home = () => {
             </div>
 
             <div className='second_screen_home'>
-                <div className='startGameLanding'><Link to='/game' style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                {/* <div className='startGameLanding'><Link to='/game' style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div> */}
                 <Tutorial />
             </div>
 

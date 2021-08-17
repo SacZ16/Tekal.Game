@@ -23,7 +23,7 @@ const ChangePassword = () => {
                 email:obj.email,
                 password: password}
         await axios.post(`${process.env.REACT_APP_API_URL}changepassword`, emailandPasswor)
-        window.location.href='./login'
+        window.location.href='./'
         }
         return (
             <div>

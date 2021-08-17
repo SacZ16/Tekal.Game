@@ -2,7 +2,7 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const { registerUser } = require('../services/register.service.js')
+const { registerUser, sedEmail} = require('../services/register.service.js')
 const { newUser, getallUsers, queryAllInfoUser } = require('../Controllers/dbFunctions.js')
 
 router.get('/', (req, res) => {
@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
         const datos = req.body
         if (!datos.email || !datos.password) throw new Error({ error: 'datos invalidos' })
         const response = await registerUser(datos)
+        await sedEmail(req.body.email)
         res.status(201).json({ status: true, data: response })
     }
     else{ res.json({ status: false})}

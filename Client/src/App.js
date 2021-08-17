@@ -6,6 +6,10 @@ import Home from './components/Home/Home'
 import FinalGame from './components/Final/Final'
 import Game from './components/Game/Game'
 import PreFinalGame from './components/Prefinal/Prefinal';
+import VerificationEmail from './components/Login/VerificationEmail';
+import Verification from './components/Verification/sendEmailVerification';
+import ChangePassword from './components/ChangePassword/changePassword'
+
 
 function App() {
   return (
@@ -18,6 +22,9 @@ function App() {
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
         <Route exact path='/preclose' component={PreFinalGame} />
+        <Route exact path='/forgotPassword' component={VerificationEmail} />
+        <Route exact path='/verificationemail' component={Verification} />
+        <Route exact path='/passwordchange' component={ChangePassword} />
       </Switch>
     </>
   );
