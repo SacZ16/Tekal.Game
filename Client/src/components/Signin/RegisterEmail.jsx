@@ -110,11 +110,22 @@ const RegisterWithEmail = () => {
         }
         console.log(user)
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
-        if (response.data.status) {
-            alert('Usuario Registrado con Exito')
-            window.location.href = './'
+        if(localStorage.getItem('pruebaa')){
+            if (response.data.status) {
+                alert('Usuario Registrado con Exito')
+                
+                window.location.href='./preclose'
+            }
+            else { alert('ESE MAIL YA ES EN USO') }
         }
-        else { alert('ESE MAIL YA ES EN USO') }
+         if(!localStorage.getItem('pruebaa')){
+                if (response.data.status) {
+                    alert('Usuario Registrado con Exito')
+                    
+                    window.location.href = './'
+                }
+                else { alert('ESE MAIL YA ES EN USO') }
+        }
     }
 
     const handleInputChange = function (e) {
