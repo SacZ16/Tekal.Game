@@ -3,6 +3,8 @@ const axios = require('axios').default;
 const AWS = require('aws-sdk')
 const { connectionDynamo, dynamodb } = require('../db.js')
 const bcrypt = require('bcrypt');
+const ULID = require('ulid')
+
 
 const TABLE_USER = "USER"
 const TABLE_ASSETS = "ASSETS"
@@ -215,7 +217,7 @@ const putAssets = async (email, info) => {
             TableName: TABLE_ASSETS,
             Item: {
                 "PK": asset,
-                "SK": `SESSION#${email}#${asset}#${info.category}#${info.date}`,
+                "SK": `SESSION#${email}#${asset}#${info.category}#${ULID.ulid()}`,
                 "date": info.date,
                 "fileType": info.type,
                 "sessionCharacteristics": {
@@ -240,8 +242,7 @@ const putAssets = async (email, info) => {
 
 const putUserGameItems = async (data) => {
     try {
-        const gameDate = new Date().toString().replace(/ /g, "").slice(6, 20);
-        const userSession = `GAME#${data.email}#${gameDate}`;
+        const userSession = `GAME#${data.email}#${ULID.ulid()}`;
         //console.log("daTA", data)
         let params = {
             TableName: TABLE_USER,
