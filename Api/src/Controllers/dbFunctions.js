@@ -196,7 +196,7 @@ const createAssetsTable = () => {
     }
 } */
 
-const putAssets = async (info) => {
+const putAssets = async (email, info) => {
     let string2 = info.url.slice(72);
 
     var asset = "";
@@ -215,7 +215,7 @@ const putAssets = async (info) => {
             TableName: TABLE_ASSETS,
             Item: {
                 "PK": asset,
-                "SK": `SESSION#${ asset }#${ info.category }#${ info.date }`,
+                "SK": `SESSION#${email}#${asset}#${info.category}#${info.date}`,
                 "date": info.date,
                 "fileType": info.type,
                 "sessionCharacteristics": {
@@ -269,8 +269,8 @@ const updateEmailVerification = async (userId) => {
         const infoUser = `INFO#${userId}`;
 
         let params = {
-            TableName:"USER",
-            Key:{
+            TableName: "USER",
+            Key: {
                 "PK": userId,
                 "SK": infoUser,
             },
@@ -288,7 +288,7 @@ const updateEmailVerification = async (userId) => {
         console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
         return registerInfo;
     }
-    catch(error){
+    catch (error) {
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
     }
 }
@@ -301,8 +301,8 @@ const updatePassword = async (userId, pass) => {
     try {
         const infoUser = `INFO#${userId}`;
         let params = {
-            TableName:"USER",
-            Key:{
+            TableName: "USER",
+            Key: {
                 "PK": userId,
                 "SK": infoUser,
             },
@@ -318,11 +318,52 @@ const updatePassword = async (userId, pass) => {
         console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
         return registerInfo;
     }
-    catch(error){
+    catch (error) {
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
     }
 }
 
+const viewedVideos = async (email) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            FilterExpression: "begins_with(#SK, :session1)",
+            ExpressionAttributeNames: {
+                "#SK": "SK"
+            },
+            ExpressionAttributeValues: {
+                ":session1": `SESSION#${email}`,
+            }
+        };
+
+        const scanName = await connectionDynamo.scan(params).promise();
+        // console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
+        return scanName;
+    }
+    catch (error) {
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+
+}
+
+const queryAllAssets = async () => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            ProjectionExpression: "#PK",
+            ExpressionAttributeNames: {
+                "#PK": "PK"
+            }
+        };
+
+        const queryAssetsInfo = await connectionDynamo.scan(params).promise()
+        // console.log("Query description JSON:", JSON.stringify(queryAssetsInfo, null, 2));
+        return queryAssetsInfo;
+    }
+    catch (error) {
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
 
 
 module.exports = {
@@ -337,5 +378,7 @@ module.exports = {
     putAssets,
     putUserGameItems,
     updateEmailVerification,
-    updatePassword
+    updatePassword,
+    viewedVideos,
+    queryAllAssets
 }
