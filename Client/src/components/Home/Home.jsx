@@ -3,17 +3,17 @@ import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
-import { Link } from 'react-router-dom';
+import { Router } from 'react-router';
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import RegisterWithEmail from '../Signin/RegisterEmail';
+import { Link } from 'react-router-dom';
+import Tutorial from '../Tutorial/Tutorial'
+import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
-
-import Tutorial from '../Tutorial/Tutorial'
-import axios from 'axios';
 import GoogleButton from '../Signin/GoogleButton';
 import FacebookButton from '../Signin/FacebookButton';
 
@@ -30,9 +30,16 @@ const Home = () => {
     var colorpasswordb = { 'border-color': `${colorpassword}` }
     var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
 
+    const [name, setName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [dateofbirth, setDateofbirth] = useState('')
     const [email, setEmail] = useState('')
+    const [country, setCountry] = useState('')
+    const [city, setCity] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+    const [genero, setGenero] = useState('')
+    const [ethnicity, setEthnicity] = useState('')
     const [input, setInput] = useState({
         email: email,
         password: password,
@@ -47,90 +54,115 @@ const Home = () => {
 
     window.addEventListener('scroll', handleScroll)
 
-    const mostrarLogin = async () => {
-        const { value: formValues } = await Swal.fire({
-            title: 'Log in',
-            html:
-                '<div class="row">' +
-                '<div class="column" >' +
-                '<div class="asdasdd">' +
-                '<p class="dddd">Name</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Date of bith</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Country</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Password</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Genero</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '</div>' +
-                '</div>' +
-                '<div class="column" >' +
-                '<div class="asdasdd">' +
-                '<p class="dddd">Last Name</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Email</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">City/state</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Confirm Password</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '<p class="dddd">Ethnicity</p>' +
-                '<input class="swal2-inputmh4"/>' +
-                '</div>' +
-                '</div>',
-            focusConfirm: false,
-            preConfirm: () => {
-                return [
-                    document.getElementById('swal-input1').value,
-                    document.getElementById('swal-input2').value
-                ]
-            }
-        })
+    // const mostrarLogin = async () => {
+    //     const { value: formValues } = await Swal.fire({
+    //         title: 'Log in',
+    //         html:
+    //             '<div class="row">' +
+    //             '<div class="column" >' +
+    //             '<div class="asdasdd">' +
+    //             '<p class="dddd">Name</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Date of birth</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Country</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Password</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Genero</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '</div>' +
+    //             '</div>' +
+    //             '<div class="column" >' +
+    //             '<div class="asdasdd">' +
+    //             '<p class="dddd">Last Name</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Email</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">City/state</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Confirm Password</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '<p class="dddd">Ethnicity</p>' +
+    //             '<input class="swal2-inputmh4"/>' +
+    //             '</div>' +
+    //             '</div>',
+    //         focusConfirm: false,
+    //         preConfirm: () => {
+    //             return [
+    //                 document.getElementById('swal-input1').value,
+    //                 document.getElementById('swal-input2').value
+    //             ]
+    //         }
+    //     })
 
-        if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
-        }
-    }
+    //     if (formValues) {
+    //         Swal.fire(JSON.stringify(formValues))
+    //     }
+    // }
 
     const prueba = () => {
         MySwal.fire({
+            title: 'Log in',
             html:
-                <div class="row" onChange={handleInputChange}>
-                    <div class="column" >
-                        <div class="asdasdd">
-                            <p class="dddd">Name</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Date of bith</p>
-                            <input class="swal2-inputmh4" type='date' />
-                            <p class="dddd">Country</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Password</p>
-                            <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
-                            <p class="dddd">Genero</p>
-                            <input class="swal2-inputmh4" />
-                            <GoogleButton />
-                        </div>
-                    </div>
-                    <div class="column" >
-                        <div class="asdasdd">
-                            <p class="dddd">Last Name</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Email</p>
-                            <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
-                            <p class="dddd">City/state</p>
-                            <input class="swal2-inputmh4" />
-                            <p class="dddd">Confirm Password</p>
-                            <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
-                            <p class="dddd">Ethnicity</p>
-                            <input class="swal2-inputmh4" />
-                            <FacebookButton />
-                        </div>
-                    </div>
-                </div>,
+                // <div class="row" onChange={handleInputChange}>
+                //     <div class="column" >
+                //             <p class="dddd">Name</p>
+                //             <input class="swal2-inputmh4" name='name'/>
+                //             <p class="dddd">Date of bith</p>
+                //             <input class="swal2-inputmh4" type='date' name='date' />
+                //             <p class="dddd">Country</p>
+                //             <input class="swal2-inputmh4" name='country'/>
+                //             <p class="dddd">Password</p>
+                //             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
+                //             <p class="dddd">Genero</p>
+                //             <input class="swal2-inputmh4" name='genero'/>
+                //             <GoogleButton />                        
+                //     </div>
+                //     <div class="column" >
+                //             <p class="dddd">Last Name</p>
+                //             <input class="swal2-inputmh4" name='lastname' />
+                //             <p class="dddd">Email</p>
+                //             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
+                //             <p class="dddd">City/state</p>
+                //             <input class="swal2-inputmh4" name='city'/>
+                //             <p class="dddd">Confirm Password</p>
+                //             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
+                //             <p class="dddd">Ethnicity</p>
+                //             <input class="swal2-inputmh4" name='ethnicity'/>
+                //             <FacebookButton />
+                //             <button onClick={()=>mostrarLogin()}></button>
+                //     </div>
+                // </div>
+                <div style={{overflow:'hidden'}}>
+                <RegisterCommonForm props={SendDataToBACK} style={{posicion:'absolute'}}/>
+                <div style={{display:'flex'}}>
+                <a className='signUpText'>Don´t have an account?</a><a style={{background:'none'}} onClick={pruebare}>register</a>
 
-            confirmButtonText: <h3 onClick={SendToBackEnd}>Register</h3>,
+                </div>
+                </div>
+                ,
+                showCloseButton:true,
+            confirmButtonText: login,
+            showConfirmButton:false
+
+
+        })
+    }
+    const pruebare = () => {
+        MySwal.fire({
+            title: 'Sing up',
+            html:
+                <div style={{overflow:'hidden'}}>
+                <RegisterWithEmail style={{posicion:'absolute'}}/>
+                <div style={{display:'flex'}}>
+                <a className='signUpText'>have an account?</a><a style={{background:'none'}} onClick={prueba}>login</a>
+
+                </div>
+                </div>
+                ,
+                showCloseButton:true,
+                showConfirmButton:false
 
 
         })
@@ -168,18 +200,38 @@ const Home = () => {
     }
 
 
-
+var enviardatos={
+    emailvar: email,
+    passwordvar:password,
+    confirmPassvar:confirmPass,
+    namevar:name,
+    lastnamevar:lastName,
+    dateofbirthvar:dateofbirth,
+    countryvar:country,
+    cityvar:city,
+    generovar:genero,
+    ethnicityvar:ethnicity
+}
+    console.log(enviardatos)
     const handleInputChange = function (e) {
         // console.log(e.target.value)
         if (e.target.name === 'email') setEmail(e.target.value)
         if (e.target.name === 'password') setPassword(e.target.value)
         if (e.target.name === 'confirmPass') setConfirmPass(e.target.value)
+        if (e.target.name === 'name') setName(e.target.value)
+        if (e.target.name === 'lastname') setLastName(e.target.value)
+        if (e.target.name === 'date') setDateofbirth(e.target.value)
+        if (e.target.name === 'country') setCountry(e.target.value)
+        if (e.target.name === 'city') setCity(e.target.value)
+        if (e.target.name === 'genero') setGenero(e.target.value)
+        if (e.target.name === 'ethnicity') setEthnicity(e.target.value)
         setInput({
             ...input,
             email: email,
             password: password,
             confirmPass: confirmPass
         })
+        
 
 
         const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -305,7 +357,7 @@ const Home = () => {
                             <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
                             <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                             <div className='buttonsHome' style={{ opacity: (100 + offset * -0.45) + '%', bottom: (25 + offset * -0.1) + '%' }}>
-                                <div className='startGame'><button onClick={prueba} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</button></div>
+                                <div className='startGame'><Link to={'./game'} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
                             </div>
                         </> : (null)}
                     <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
@@ -318,8 +370,8 @@ const Home = () => {
                         <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
                         <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                         <div className='container_buttons_home'>
-                            <button className='registerHome' onClick={() => popUpRegister()}>Sign up</button>
-                            <button className='loginHome' onClick={() => popUpLogin()}>Log in</button>
+                            <button className='registerHome' onClick={pruebare}>Sign up</button>
+                            <button className='loginHome' onClick={prueba}>Log in</button>
                         </div>
                     </>
                     : (null)}

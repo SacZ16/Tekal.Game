@@ -1,25 +1,29 @@
 .form {
     display: flex;
+    width: 100%;
     flex-direction: column; 
     text-align: center;
     z-index: 4; 
 }
 .form2 {
     display: flex;
+    width: 100%;
     flex-direction: column; 
     z-index: 4; 
+    justify-content: center;
+    align-items: center;
 }
 .form3 {
     display: flex;
+    width: 100%;
     flex-direction: column; 
+    justify-content: center;
+    align-items: center;
     z-index: 4; 
 }
 
 .containerLanding {
-    background-color: #242224;
-    width: 500px;
-    height: 85%;
-    position: absolute;
+    width: 100%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -87,6 +91,9 @@
     margin: 10px 0px 10px 0;
     position: relative;
     text-align: end;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
 }
 
 .forgotPassword:hover{

@@ -8,6 +8,58 @@ import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
 import '../Styles/registerForm.css';
+{/* <div style={{ 'transition': 'all 0.5s ease-out' }} className='formRegister'>
+                <form className='formRegister2'>
+                    <img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal" />
+                    <div>
+                        <input style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required />
+                        {/* <div class="popup" onClick={() => myFunction()}>❓
+                            <span class="popuptext" id="myPopup1">Invalid Email format</span>
+                        </div> */}
+                    //</div>
+                    {/* <p>Invalid Email format</p> */}
+                    //<div>
+                      //  <input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required /> 
+                        {/* <div class="popup" onClick={() => myFunction2()}>❓
+                            <span class="popuptext" id="myPopup">Email must be the same</span>
+                        </div> */}
+                  //  </div>
+                    {/* <p>Email must be the same</p> */}
+                    //<div>
+                      // <input style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required /> 
+                        {/* <div class="popup" onClick={() => myFunction3()}>❓
+                            <span class="popuptext" id="myPopup2"><p>Minimum 8 characters</p>
+                                <p>Maximum 15 characters</p>
+                                <p>At least one capital number</p>
+                                <p>At least one capital letter</p>
+                                <p>At least one lower case letter</p>
+                                <p>No blanks</p>
+                                <p>At least 1 special character</p></span>
+                        </div> */}
+                  //  </div>
+                    {/*  <p>Minimum 8 characters</p>
+                    <p>Maximum 15 characters</p>
+                    <p>At least one capital number</p>
+                    <p>At least one capital letter</p>
+                    <p>At least one lower case letter</p>
+                    <p>No blanks</p>
+                <p>At least 1 special character</p> */}
+                  //  <div>
+                    //    <input style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required /> 
+                        {/* <div class="popup" onClick={() => myFunction4()}>❓
+                            <span class="popuptext" id="myPopup3">Passwords must be the same</span>
+                        </div> */}
+                  //  </div>
+                    {/* <p>Passwords must be the same</p> */}
+                //</form>
+                //<div className='formRegister2'>
+
+                  //  <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
+                    //<p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                    //<GoogleButton />
+                    //<FacebookButton />
+                //</div>
+            //</div> */}
 const RegisterWithEmail = () => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [emailcopia, setEmailcopia] = useState('')
@@ -27,8 +79,6 @@ const RegisterWithEmail = () => {
 
     const [input, setInput] = useState({
         email: "",
-        emailcopia: '',
-        confirmEmail: "",
         password: "",
         confirmPass: "",
     })
@@ -44,9 +94,6 @@ const RegisterWithEmail = () => {
         e.preventDefault()
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
-            return;
-        }
-        if (input.email !== input.confirmEmail) {
             return;
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
@@ -65,7 +112,7 @@ const RegisterWithEmail = () => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
         if (response.data.status) {
             alert('Usuario Registrado con Exito')
-            window.location.href = './login'
+            window.location.href = './'
         }
         else { alert('ESE MAIL YA ES EN USO') }
     }
@@ -80,12 +127,6 @@ const RegisterWithEmail = () => {
             setColoremail("red",)
         } if (emailReject.test(input.email) && input.email.length > 1) {
             setColoremail("#1663A2")
-        }
-        setEmailcopia(input.email.substring(0, input.email.length - 1))
-        if (emailcopia !== input.confirmEmail && input.confirmEmail.length > 1) {
-            setColorconfirmEmail("red")
-        } if (emailcopia === input.confirmEmail && input.confirmEmail.length > 1 || input.confirmEmail === input.email && input.confirmEmail.length > 1) {
-            setColorconfirmEmail("#1663A2")
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
         if (!passwordReject.test(input.password) && input.password.length > 1) {
@@ -157,81 +198,37 @@ const RegisterWithEmail = () => {
     }
     var a = cookiies.get('prueba')
     return (
-        <>
-            {!a || a === 'false' ? <input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' ></input> : <input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' defaultChecked></input>}
-            <label className='switch' for='check' ></label>
-            <div style={!a ? { 'background': `black`, 'transition': 'all 0.5s ease-out' } : { 'background': `${cookiies.get('fondo')}`, 'transition': 'all 0.5s ease-out' }} className='bgLanding'>
-                {cookiies.get('fondo') === 'black' || !a ? <Particles
-                    params={{ 'particles': { "number": { "value": 96, "density": { "enable": true, "value_area": 800 } } }, 'line_linked': { 'width': '2' }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" } } } }}
-                /> : <div className="wave"></div>}
-            </div>
-            {!a || a === 'false' ? <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" /> : <img className='logoTekal' src={logoTekalAzul} alt="Logo de Tekal" />}
-            <div className='screenText'>
-                <h1 style={!a ? { 'color': `white`, 'transition': 'all 0.5s ease-out' } : { 'color': `${cookiies.get('texto')}`, 'transition': 'all 0.5s ease-out' }} className='check'>Check how your</h1>
-                <div className='text2'>
-                    <h1 style={!a ? { 'color': `#F22C9F`, 'transition': 'all 0.5s ease-out' } : { 'color': `${cookiies.get('textomemory')}`, 'transition': 'all 0.5s ease-out' }} className='memory'>memory&nbsp;</h1>
-                    <h1 style={!a ? { 'color': `white`, 'transition': 'all 0.5s ease-out' } : { 'color': `${cookiies.get('texto')}`, 'transition': 'all 0.5s ease-out' }} className='working'>is working</h1>
-                </div>
-                <p style={!a ? { 'color': `rgb(197, 197, 197)`, 'transition': 'all 0.5s ease-out' } : { 'color': `${cookiies.get('textolargo')}`, 'transition': 'all 0.5s ease-out' }} className='loremLogin'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris.
-                </p>
-            </div>
-            <p style={!a ? { 'color': `rgb(197, 197, 197)`, 'transition': 'all 0.5s ease-out' } : { 'color': `${cookiies.get('copyr')}`, 'transition': 'all 0.5s ease-out' }} className='copyrightRegister'>© 2021 Tekal, Inc. All rights reserved</p>
-            <div style={!a ? { 'background': `rgba(0, 0, 0, 0.904)`, 'transition': 'all 0.5s ease-out' } : { 'background': `${cookiies.get('fondoform')}`, 'transition': 'all 0.5s ease-out' }} className='formRegister'>
-                <form className='formRegister2'>
-                    {!a || a === 'false' ? <img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal" /> : <img className='logoFormRegister' src={logoTekalNegro} alt="Logo de Tekal" />}
-                    <div>
-                        {cookiies.get('fondo') === 'black' || !a ? <input style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required /> : <input style={coloremailb} className='inputFormRegister2' placeholder='Email' name='email' type='text' onChange={handleInputChange} required />}
-                        <div class="popup" onClick={() => myFunction()}>❓
-                            <span class="popuptext" id="myPopup1">Invalid Email format</span>
-                        </div>
-                    </div>
-                    {/* <p>Invalid Email format</p> */}
-                    <div>
-                        {cookiies.get('fondo') === 'black' || !a ? <input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required /> : <input style={colorconfirmEmailb} className='inputFormRegister2' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required />}
-                        <div class="popup" onClick={() => myFunction2()}>❓
-                            <span class="popuptext" id="myPopup">Email must be the same</span>
-                        </div>
-                    </div>
-                    {/* <p>Email must be the same</p> */}
-                    <div>
-                        {cookiies.get('fondo') === 'black' || !a ? <input style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required /> : <input style={colorpasswordb} className='inputFormRegister2' placeholder='Password' name='password' onChange={handleInputChange} type='password' required />}
-                        <div class="popup" onClick={() => myFunction3()}>❓
-                            <span class="popuptext" id="myPopup2"><p>Minimum 8 characters</p>
-                                <p>Maximum 15 characters</p>
-                                <p>At least one capital number</p>
-                                <p>At least one capital letter</p>
-                                <p>At least one lower case letter</p>
-                                <p>No blanks</p>
-                                <p>At least 1 special character</p></span>
-                        </div>
-                    </div>
-                    {/*  <p>Minimum 8 characters</p>
-                    <p>Maximum 15 characters</p>
-                    <p>At least one capital number</p>
-                    <p>At least one capital letter</p>
-                    <p>At least one lower case letter</p>
-                    <p>No blanks</p>
-                <p>At least 1 special character</p> */}
-                    <div>
-                        {cookiies.get('fondo') === 'black' || !a ? <input style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required /> : <input style={colorconfirmPassb} className='inputFormRegister2' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required />}
-                        <div class="popup" onClick={() => myFunction4()}>❓
-                            <span class="popuptext" id="myPopup3">Passwords must be the same</span>
-                        </div>
-                    </div>
-                    {/* <p>Passwords must be the same</p> */}
-                </form>
-                <div className='formRegister2'>
-
-                    <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
-                    <p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
-                    <GoogleButton />
-                    <FacebookButton />
-                </div>
-            </div>
+        <>      
+         <div class="row" onChange={handleInputChange}>
+                     <div class="column" >
+                             <p class="dddd">Name</p>
+                             <input class="swal2-inputmh4" name='name'/>
+                             <p class="dddd">Date of bith</p>
+                             <input class="swal2-inputmh4" type='date' name='date' />
+                             <p class="dddd">Country</p>
+                             <input class="swal2-inputmh4" name='country'/>
+                             <p class="dddd">Password</p>
+                             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
+                             <p class="dddd">Genero</p>
+                             <input class="swal2-inputmh4" name='genero'/>
+                             <GoogleButton />                        
+                     </div>
+                     <div class="column" >
+                             <p class="dddd">Last Name</p>
+                             <input class="swal2-inputmh4" name='lastname' />
+                             <p class="dddd">Email</p>
+                             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
+                             <p class="dddd">City/state</p>
+                             <input class="swal2-inputmh4" name='city'/>
+                             <p class="dddd">Confirm Password</p>
+                             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
+                             <p class="dddd">Ethnicity</p>
+                             <input class="swal2-inputmh4" name='ethnicity'/>
+                             <FacebookButton />
+                     </div>
+                 </div>
+                 <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
+            
         </>
     )
 }

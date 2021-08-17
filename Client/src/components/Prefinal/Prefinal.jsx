@@ -7,9 +7,15 @@ import logoTekal from '../Styles/tekalLogo.png';
 import logoTekalAzul from '../Styles/tekallogoazul.png';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import Cookie from 'universal-cookie'
-import {SendDataToBACK} from '../controllers/dbFunctions'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { SendDataToBACK } from '../controllers/dbFunctions'
+import GoogleButton from '../Signin/GoogleButton';
+import FacebookButton from '../Signin/FacebookButton';
+import RegisterWithEmail from '../Signin/RegisterEmail';
 
 const PreFinalgame = () => {
+    const MySwal = withReactContent(Swal)
     const cookies= new Cookie();
     const cookiies= new Cookie(); //no borrar - estilo css
     const [pruebaa,setPruebaa]=useState('')
@@ -66,32 +72,75 @@ const PreFinalgame = () => {
         }
     }
     var a = cookiies.get('prueba')
+    const prueba = () => {
+        MySwal.fire({
+            title: 'Log in',
+            html:
+                // <div class="row" onChange={handleInputChange}>
+                //     <div class="column" >
+                //             <p class="dddd">Name</p>
+                //             <input class="swal2-inputmh4" name='name'/>
+                //             <p class="dddd">Date of bith</p>
+                //             <input class="swal2-inputmh4" type='date' name='date' />
+                //             <p class="dddd">Country</p>
+                //             <input class="swal2-inputmh4" name='country'/>
+                //             <p class="dddd">Password</p>
+                //             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
+                //             <p class="dddd">Genero</p>
+                //             <input class="swal2-inputmh4" name='genero'/>
+                //             <GoogleButton />                        
+                //     </div>
+                //     <div class="column" >
+                //             <p class="dddd">Last Name</p>
+                //             <input class="swal2-inputmh4" name='lastname' />
+                //             <p class="dddd">Email</p>
+                //             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
+                //             <p class="dddd">City/state</p>
+                //             <input class="swal2-inputmh4" name='city'/>
+                //             <p class="dddd">Confirm Password</p>
+                //             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
+                //             <p class="dddd">Ethnicity</p>
+                //             <input class="swal2-inputmh4" name='ethnicity'/>
+                //             <FacebookButton />
+                //             <button onClick={()=>mostrarLogin()}></button>
+                //     </div>
+                // </div>
+                <div style={{overflow:'hidden'}}>
+                <RegisterCommonForm props={SendDataToBACK} style={{posicion:'absolute'}}/>
+                <div style={{display:'flex'}}>
+                <a className='signUpText'>Don´t have an account?</a><a style={{background:'none'}} onClick={pruebare}>register</a>
+
+                </div>
+                </div>
+                ,
+                showCloseButton:true,
+            showConfirmButton:false
+
+
+        })
+    }
+    const pruebare = () => {
+        MySwal.fire({
+            title: 'Sing up',
+            html:
+                <div style={{overflow:'hidden'}}>
+                <RegisterWithEmail style={{posicion:'absolute'}}/>
+                <div style={{display:'flex'}}>
+                <a className='signUpText'>have an account?</a><a style={{background:'none'}} onClick={prueba}>login</a>
+
+                </div>
+                </div>
+                ,
+                showCloseButton:true,
+                showConfirmButton:false
+
+
+        })
+    }
     return (
         <div>
-            {!a || a==='false'?<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' ></input>:<input type='checkbox' className='checkbox' onChange={cambiarfondo} id='check' defaultChecked></input>}
-            <label className='switch' for='check' ></label>
-            <div style={!a?{'background':`black`,'transition': 'all 0.5s ease-out'}:{'background':`${cookiies.get('fondo')}`,'transition': 'all 0.5s ease-out'}} className='bgLanding'>
-           {cookiies.get('fondo')==='black' || !a? <Particles
-                params={{'particles':{"number":{"value":96,"density":{"enable":true,"value_area":800}}},'line_linked':{'width':'2'},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"}}}}}
-            />:<div className="wave"></div>}
-            </div>
-            {cookiies.get('fondo')==='black'|| !a?<img className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>:<img className='logoTekal' src={logoTekalAzul} alt="Logo de Tekal"/>}
-            <div className='screenText'>
-                <h1 style={!a?{'color': `white`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('texto')}`,'transition': 'all 0.5s ease-out'}} className='check'>Check how your</h1>
-                <div className='text2'>
-                    <h1  style={!a?{'color': `#F22C9F`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('textomemory')}`,'transition': 'all 0.5s ease-out'}} className='memory'>memory&nbsp;</h1>
-                    <h1 style={!a?{'color': `white`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('texto')}`,'transition': 'all 0.5s ease-out'}} className='working'>is working</h1> 
-            </div>
-            <p  style={!a?{'color': `rgb(197, 197, 197)`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('textolargo')}`,'transition': 'all 0.5s ease-out'}} className='loremLogin'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut 
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                    quis nostrud exercitation ullamco laboris.
-            </p>
-            </div>
-            <p style={!a?{'color': `rgb(197, 197, 197)`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('copyr')}`,'transition': 'all 0.5s ease-out'}} className='copyright'>© 2021 Tekal, Inc. All rights reserved</p>
-            <RegisterCommonForm props={SendDataToBACK} coloresprop={colores}/>
-
+            <button onClick={pruebare}>Sign up</button>
+            <button onClick={prueba}>Log in</button>
         </div>
     )
 };
