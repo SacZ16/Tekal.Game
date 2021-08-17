@@ -27,13 +27,9 @@ export function recVideo(video) {
     }
 }
 
-let pos = 0
-export function seenVideos(videos) {
+export function seenVideos(videos, pos) {
     const videosToSeenQuote = [...videos];
     const viewVideo = videosToSeenQuote.splice(pos, 1);
-    //const viewVideoObj = [...viewVideo[0], { ...viewVideo[0][0], answer: 1, category: viewVideo[0].category }];
-    // console.log(viewVideoObj)
-    // console.log(viewVideo)
     pos++;
     return {
         type: SEEN_VIDEO,

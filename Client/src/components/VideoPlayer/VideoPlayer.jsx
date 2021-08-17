@@ -24,13 +24,11 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   const cookies = new Cookie();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-
+  
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
-
   seeVideos.current = user.currentGame.seenVideos;
 
   const infoVideo = useRef(); // Informacion del Video
-
   infoVideo.current = recVideo;
 
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
@@ -93,10 +91,12 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   useEffect(() => {
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
+        console.log(seeVideos.current[seeVideos.current.length - 2])
         answers.current.push(0);
         pressSeconds.current.push(0);
       }
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] === 'target_repeat') {
+        console.log(seeVideos.current[seeVideos.current.length - 2])
         targetNotPress.current.notPress++;
         targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0]);
         answers.current.push(0);
@@ -154,7 +154,6 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   }, [seeVideos.current.length, lives.current]);
 
   // Guarda los datos de la sesion en el reducer
-
   function videosWithAnswers() {
     seeVideos.current.map((e, i) => {
       finalVideos.current.push({
@@ -162,7 +161,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         seconds: pressSeconds.current[i],
         category: e[0][1].toUpperCase(),
         type: 'Video',
-        date: new Date()
+        date:  `${new Date()}`
       })
     })
     finalVideos.current.unshift(score)
@@ -170,10 +169,10 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   }
 
   const postData = async () => {
-    // await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
-    // await axios.post('http://localhost:3001/gameInfo', finalVideos.current)
+    /*  await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
+     await axios.post('http://localhost:3001/gameInfo', finalVideos.current) */
     localStorage.setItem('pruebaa', JSON.stringify(finalVideos.current))
-    console.log(finalVideos.current)
+    // console.log(finalVideos.current)
   }
 
   function sessionData() {
@@ -186,7 +185,6 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
     });
     dispatch(sessionInfo(obj));
     localStorage.setItem('score', score)
-    console.log(localStorage.getItem('score'))
   }
 
   const onProgress = (e) => {

@@ -11,17 +11,22 @@ export const Game = () => {
 
   const dispatch = useDispatch();
   const tope = useRef(0)
+  const [infoUser, SetInfoUser] = useState('')
+  var emailCokkie;
+  const cookies = new Cookie();
 
   const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
-  // console.log(videoApi)
+  console.log(videoApi)
   const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
   // console.log(videoBlop)
   const videoToSeeBlop = useRef() // videos con la URL Blop
-  // console.log(videoToSeeBlop.current)
   useEffect(() => {
     if (!videoApi) {
-      axios.get('http://localhost:3001/links')
-        .then(res => setVideosApi(res.data))
+      axios.post('http://localhost:3001/links', {
+        email: emailCokkie
+      })
+        .then(res => {
+          setVideosApi(res.data)})
     }
     if (videoApi) {
       var arregloPromesas = videoApi[2].map(async (url) => {
@@ -44,10 +49,6 @@ export const Game = () => {
   }, [videoApi])
 
   /*----------------------------------------*/
-
-  const [infoUser, SetInfoUser] = useState('')
-  var emailCokkie;
-  const cookies = new Cookie();
 
   // Si no estas logeado te reedirige a login
 
@@ -125,7 +126,7 @@ export const Game = () => {
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videoApi[2]));
+    dispatch(seenVideos(videoApi[2], tope.current));
   }
 
   // Cambio de videos y guarda un nuevo array con los blop

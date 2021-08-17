@@ -4,6 +4,7 @@ const { putAssets } = require('../Controllers/dbFunctions');
 
 router.post('/', async (req, res) => {
     let info = req.body;
+    let email = info[0]
     let urls = [];
     try {
         for (let i = 2; i < info.length; i++) {
@@ -18,9 +19,9 @@ router.post('/', async (req, res) => {
                 urls.push(object.url);
                 object.repeated = false;
             }
-            await putAssets(object); //NO FUNCA COMO DEBERIA REY
-            // res.json("asset added");
+            await putAssets(email, object);
         }
+        res.json("asset added");
     }
     catch (error) {
         console.log(error);

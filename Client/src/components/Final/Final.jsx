@@ -4,25 +4,28 @@ import '../Styles/final.css'
 import { Line } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetReducer } from '../../redux/action'
-import  axios        from 'axios';
+import axios from 'axios';
 import Cookie from 'universal-cookie'
 
-function  Finalgame({ history }) {
-    
+function Finalgame({ history }) {
+
     const dispatch = useDispatch()
-    const { recVideo, user } = useSelector(state => state);
+    const { score } = useSelector(state => state.user.currentGame)
     const cookies = new Cookie();
     var emailCokkie;
     //Sacando el email
-    if(cookies.get('userInfo')){if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
-    else { emailCokkie = cookies.get('userInfo').Items[0].email }}
-    const { score } = useSelector(state => state.user.currentGame)
+    if (cookies.get('userInfo')) {
+        if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
+        else { emailCokkie = cookies.get('userInfo').Items[0].email }
+    }
 
-    const holaa= localStorage.getItem('pruebaa')
+    const holaa = localStorage.getItem('pruebaa')
     const resultadoparaenviar = JSON.parse(holaa)
-    if(resultadoparaenviar){
-    resultadoparaenviar.shift()
-    resultadoparaenviar.unshift(emailCokkie)}
+    console.log(resultadoparaenviar)
+    if (resultadoparaenviar) {
+        resultadoparaenviar.shift()
+        resultadoparaenviar.unshift(emailCokkie)
+    }
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
@@ -47,16 +50,14 @@ function  Finalgame({ history }) {
         history.push('/game')
     }
     const postDataa = async () => {
-     await axios.post('http://localhost:3001/videoInfo', `${resultadoparaenviar}`)
-    await axios.post('http://localhost:3001/gameInfo',`${resultadoparaenviar}`)
+        await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
+        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
     }
     postDataa()
-    console.log('hola')
-    console.log(localStorage.getItem('score'))
     return (
         <div>
             <div className='bgLandingfinal'>
-                
+
             </div>
             <h1 className='yourscore'>Your score is</h1>
             <div className='marco'>

@@ -1,0 +1,13 @@
+[2, 3, 
+    [
+     [1, "vig"],
+     [2, "filler"],
+     [3, "vig"],
+     [4, "target"],
+     [4, "target_repeat"],
+     [5, "target"],
+     [1, "vig_repeat"],
+     [2, "filler"],
+     [3,"vig_repeat"],
+     [5, "target_repeat"]
+     ]]
