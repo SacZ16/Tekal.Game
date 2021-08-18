@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const router = Router()
-const {createUserTable}= require('../Controllers/dbFunctions')
+const {createAssetsTable}= require('../Controllers/dbFunctions')
 
 
 router.get('/', async(req, res) => {
-    await createUserTable()
+    await createAssetsTable()
     res.send('Table Created')
 })
 

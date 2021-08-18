@@ -415,6 +415,26 @@ const queryPK = async (pk) => {
     }
 }
 
+const putPKAssets = async (urlAsset, index) => {
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": urlAsset,
+                "SK": index,
+                "views": 0
+            }
+        };
+
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
 
 
 module.exports = {
@@ -433,5 +453,6 @@ module.exports = {
     viewedVideos,
     queryAllAssets,
     updateView,
-    queryPK
+    queryPK,
+    putPKAssets
 }
