@@ -4,7 +4,6 @@ const { viewedVideos, queryAllAssets } = require('../Controllers/dbFunctions.js'
 
 
 router.post('/', async (req,res) => {
-    //console.log(req.body.email)
     try{
         const viewedVideos1 = await viewedVideos(req.body.email);
 
@@ -22,8 +21,6 @@ router.post('/', async (req,res) => {
     }catch(err){
         console.log(err)
     }
-
-
 })
 
 
