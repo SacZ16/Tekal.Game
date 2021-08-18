@@ -8,8 +8,10 @@ router.post('/', async (req, res) => {
     let { email } = req.body;
     console.log('body', req.body)
     let assetsFromDb = await videosNotSeen(email);
+    console.log("AAAAAAAAAAAAA",assetsFromDb)
     let assets = await getAssets(assetsFromDb);//transforma en link
     let template = await templateFiller(assets);
+
     res.send(template);
 })
 module.exports = router;
