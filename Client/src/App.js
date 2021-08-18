@@ -9,6 +9,7 @@ import PreFinalGame from './components/Prefinal/Prefinal';
 import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
 import ChangePassword from './components/ChangePassword/changePassword'
+import ImagePlayer from './components/ImagePLayer/ImagePlayer';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route exact path='/forgotPassword' component={VerificationEmail} />
         <Route exact path='/verificationemail' component={Verification} />
         <Route exact path='/passwordchange' component={ChangePassword} />
+        <Route exact path='/imageplayer' component={ImagePlayer} />
       </Switch>
     </>
   );

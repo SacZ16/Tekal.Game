@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "chart.js": "^3.5.0",
+    "html-react-parser": "^1.2.8",
+    "infinite-react-carousel": "^1.2.11",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.6.3",
     "object-hash": "^2.2.0",
