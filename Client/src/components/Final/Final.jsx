@@ -1,4 +1,4 @@
-import React, { _useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import { Line } from 'react-chartjs-2'
@@ -49,11 +49,16 @@ function Finalgame({ history }) {
         dispatch(resetReducer())
         history.push('/game')
     }
+
+    useEffect(() => {
+        postDataa()
+    }, [])
+
     const postDataa = async () => {
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
         await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
     }
-    postDataa()
+
     return (
         <div>
             <div className='bgLandingfinal'>
