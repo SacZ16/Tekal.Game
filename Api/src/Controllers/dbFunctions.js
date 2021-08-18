@@ -366,6 +366,32 @@ const queryAllAssets = async () => {
     }
 }
 
+const updateView = async (url) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            Key: {
+                "PK": url,
+                "SK": url,
+            },
+            UpdateExpression: "SET #views = #views + :inc",
+            ExpressionAttributeNames: {
+                "#views": "views"             
+            },                
+            ExpressionAttributeValues: {                 
+                ":inc": 1             
+            }         
+
+        };
+        const updateViews = connectionDynamo.update(params).promise();
+        console.log("Added user item:", JSON.stringify(updateViews, null, 2));
+        return updateViews;
+    }
+    catch (error) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
 
 module.exports = {
     getallUsers,
@@ -381,5 +407,6 @@ module.exports = {
     updateEmailVerification,
     updatePassword,
     viewedVideos,
-    queryAllAssets
+    queryAllAssets,
+    updateView
 }

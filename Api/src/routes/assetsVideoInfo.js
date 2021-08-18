@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { putAssets } = require('../Controllers/dbFunctions');
+const { putAssets, updateView } = require('../Controllers/dbFunctions');
 const {endpoint} = require('../services/endpoint.service');
 
 router.post('/', async (req, res) => {
@@ -24,7 +24,8 @@ router.post('/', async (req, res) => {
             await putAssets(email, object);
         }
         const ends = urls.map(u => endpoint(u));
-        console.log(ends)
+        ends.forEach(u => updateView(u))
+        console.log(urls)
         res.json("asset added");
     }
     catch (error) {
