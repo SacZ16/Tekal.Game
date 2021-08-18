@@ -8,10 +8,16 @@ router.post('/', async (req, res) => {
     let { email } = req.body;
     console.log('body', req.body)
     let assetsFromDb = await videosNotSeen(email);
-    console.log("AAAAAAAAAAAAA",assetsFromDb)
-    let assets = await getAssets(assetsFromDb);//transforma en link
-    let template = await templateFiller(assets);
+    const itemsFromDb = assetsFromDb.map(v => v.Items)
 
-    res.send(template);
+    const videosSorted= itemsFromDb.sort(function (x, y) {
+        return x[0].views - y[0].views;
+    });
+    const videosSortedPK = videosSorted.map(v => v[0].PK)
+    // console.log(videosSortedPK)
+    let assets = await getAssets(videosSortedPK);//transforma en link
+    let template = await templateFiller(assets);
+    console.log(assets)
+    //res.send(template);
 })
 module.exports = router;

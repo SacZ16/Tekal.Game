@@ -392,6 +392,30 @@ const updateView = async (url) => {
     }
 }
 
+const queryPK = async (pk) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            KeyConditionExpression: "#PK = :PK AND #SK = :PK",
+            ExpressionAttributeNames: {
+                "#PK": "PK",
+                "#SK": "SK" 
+            },
+            ExpressionAttributeValues: {
+                ":PK": pk,
+            }
+        };
+
+        const queryUserInfo = await connectionDynamo.query(params).promise()
+        //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        return queryUserInfo;
+    }
+    catch (error) {
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+
 
 module.exports = {
     getallUsers,
@@ -408,5 +432,6 @@ module.exports = {
     updatePassword,
     viewedVideos,
     queryAllAssets,
-    updateView
+    updateView,
+    queryPK
 }

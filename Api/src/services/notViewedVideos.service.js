@@ -1,4 +1,4 @@
-const { viewedVideos, queryAllAssets } = require('../Controllers/dbFunctions');
+const { viewedVideos, queryAllAssets, queryPK } = require('../Controllers/dbFunctions');
 
 async function videosNotSeen(email) {
     try {
@@ -12,9 +12,9 @@ async function videosNotSeen(email) {
         const arrayVideos = Array.from(setVideos);
 
         const notViewedVideos = arrayVideos.filter(n => !arrayViewed.includes(n));
-        return notViewedVideos;
-    }
-    catch (error) {
+        const videos = notViewedVideos.map(async v => await queryPK(v))
+        return Promise.all(videos)
+    }catch (error) {
         console.log(error);
     }
 }
