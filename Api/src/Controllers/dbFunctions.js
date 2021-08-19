@@ -338,7 +338,7 @@ const viewedVideos = async (email) => {
         };
 
         const scanName = await connectionDynamo.scan(params).promise();
-        // console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
+        //console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
         return scanName;
     }
     catch (error) {
@@ -347,14 +347,15 @@ const viewedVideos = async (email) => {
 
 }
 
-const queryAllAssets = async () => {
+const queryAllAssets = async (limite) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
             ProjectionExpression: "#PK",
             ExpressionAttributeNames: {
                 "#PK": "PK"
-            }
+            },
+            Limit: limite
         };
 
         const queryAssetsInfo = await connectionDynamo.scan(params).promise()

@@ -18,6 +18,6 @@ router.post('/', async (req, res) => {
     let assets = await getAssets(videosSortedPK);//transforma en link
     let template = await templateFiller(assets);
     console.log(assets)
-    //res.send(template);
+    res.send(template);
 })
 module.exports = router;

@@ -1,7 +1,7 @@
-// var random = Math.round(Math.random() * 999) 
-// const template = require(../assets/level_templates/template_${random}.json)[2];
+var random = Math.round(Math.random() * 999) 
+const template = require(`../assets/level_templates/template_${random}.json`);
 
-const template = require('../assets/level_templates/prueba2.json');
+// const template = require('../assets/level_templates/prueba2.json');
 const templateFill = template[2];
 // Sacamos los videos unicos
 //Math.round(Math.random * 10)
