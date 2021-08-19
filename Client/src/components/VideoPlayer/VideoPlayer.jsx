@@ -14,9 +14,8 @@ import style from '../Styles/Game.module.css';
 import Swal from 'sweetalert2'
 import { sessionInfo } from '../../redux/action';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Cookie from 'universal-cookie'
-import '../Styles/progressBar.css';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
@@ -60,6 +59,8 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
   const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
 
+  const videoTouch = useRef()
+
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
       answers.current.push(1);
@@ -74,6 +75,35 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         }
         setColor('green')
         press.current = true;
+        recVideos()
+      }
+      else {
+        setColor('red')
+        falsePositives.current.push(infoVideo.current);
+        lives.current--;
+        press.current = true;
+      }
+      setTimeout(() => {
+        setColor('rgba(255, 255, 255, 0)');
+      }, 500);
+    }
+  };
+
+  const handleTouch = () => {
+    if (!press.current) {
+      answers.current.push(1);
+      pressSeconds.current.push(progress.current);
+      if (infoVideo.current[1].includes('_')) {
+        if (infoVideo.current[1] === 'target_repeat') {
+          targetFound.current.points++;
+          targetFound.current.videosTarget.push(infoVideo.current);
+        } else {
+          falsePositives.current.push(infoVideo.current);
+          vigilanceRecognized.current.push(infoVideo.current);
+        }
+        setColor('green')
+        press.current = true;
+        recVideos()
       }
       else {
         setColor('red')
@@ -91,12 +121,12 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   useEffect(() => {
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
-        console.log(seeVideos.current[seeVideos.current.length - 2])
+        // console.log(seeVideos.current[seeVideos.current.length - 2])
         answers.current.push(0);
         pressSeconds.current.push(0);
       }
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] === 'target_repeat') {
-        console.log(seeVideos.current[seeVideos.current.length - 2])
+        // console.log(seeVideos.current[seeVideos.current.length - 2])
         targetNotPress.current.notPress++;
         targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0]);
         answers.current.push(0);
@@ -109,6 +139,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
   // Reconoce la barra espaciadora
 
   useEffect(() => {
+    videoTouch.current.addEventListener("touchstart", handleTouch)
     window.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -173,8 +204,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
     dispatch(sessionInfo(obj));
     localStorage.setItem('score', score)
   }
-  const [progressSe, setProgressSe] = useState(0)
-  console.log(progressSe)
+
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
@@ -198,7 +228,6 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         }, 500)
       }
     }
-    setProgressSe(e.playedSeconds)
     progress.current = e.playedSeconds;
   }
 
@@ -210,62 +239,11 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
       {
         (recVideo !== '') &&
-        <div width="50%"
-          height="50%" z-index='5' id='video'
-        >
-
-          <div className={style.contenedordelvideo}>
-            <div style={{ width: '90%', margin: '0', display: 'flex' }}>
-              {
-                lives.current === 3 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ ❤ ❤
-                  </div> : null
-              }
-              {
-                lives.current === 2 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ ❤ 💔
-                  </div> : null
-              }
-              {
-                lives.current === 1 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ 💔 💔
-                  </div> : null
-              }
-              {
-                lives.current === 0 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>💔 💔 💔
-                  </div> : null
-              }
-              <progress
-                className='progressBar'
-                id="progress" max={videoApi.length}
-                value={seeVideos.current.length}>
-              </progress>
-              <Link style={{ marginLeft: '40px', marginTop: '-37px', color: 'white', fontSize: '25px', textDecoration: 'none' }} to='login'>
-                x
-              </Link>
-            </div>
-
-
+        <div width="50%" height="50%" z-index='5' id='video'>
+          <ProgressBar lives={lives.current} max={videoApi.length} progress={seeVideos.current.length} />
+          <div className={style.contenedordelvideo} ref={videoTouch} >
             <ReactPlayer className={style.video}
               style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}
-              /* style={{ borderColor: `${color}`, borderStyle: 'solid', borderWidth: '5px' }} */
               z-index='5'
               url={recVideo[0] && recVideo[0].urlBlop}
               onProgress={(e) => onProgress(e)}
@@ -276,7 +254,6 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
             />
           </div>
         </div>
-
       }
     </>
   )

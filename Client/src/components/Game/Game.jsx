@@ -6,28 +6,44 @@ import { recVideo, seenVideos } from '../../redux/action';
 import style from '../Styles/Game.module.css'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
+import ImagePlayer from '../ImagePLayer/ImagePlayer';
+
+// Simulamos el arry de imagenes
+import imagePueba from '../../assets/img/imagesPrueba';
+
 
 export const Game = () => {
 
   const dispatch = useDispatch();
   const tope = useRef(0)
+  const mode = localStorage.getItem('mode')
   const [infoUser, SetInfoUser] = useState('')
   var emailCokkie;
   const cookies = new Cookie();
 
   const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
-  console.log(videoApi)
+  // console.log(videoApi)
   const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
   // console.log(videoBlop)
   const videoToSeeBlop = useRef() // videos con la URL Blop
+  // console.log(videoToSeeBlop.current)
+
+  const [imageApi, setImageApi] = useState() // de prueba guarda las imagenes
   useEffect(() => {
     if (!videoApi) {
-      axios.post('http://localhost:3001/links', {
-        email: emailCokkie
-      })
-        .then(res => {
-          setVideosApi(res.data)
+      if (mode === 'videos') {
+        axios.post('http://localhost:3001/links', {
+          email: emailCokkie
         })
+          .then(res => {
+            setVideosApi(res.data)
+          })
+      } else {
+        setTimeout(() => {
+          videoToSeeBlop.current = imagePueba
+          setImageApi(imagePueba)
+        }, 3000)
+      }
     }
     if (videoApi) {
       var arregloPromesas = videoApi[2].map(async (url) => {
@@ -36,9 +52,7 @@ export const Game = () => {
             return res.blob()
           })
           .then(function (video) {
-            // console.log(video)
             var url = URL.createObjectURL(video)
-            // console.log(url) //la seteas en un array que le vas a pasar a el reproductor de video
             return url
           })
       })
@@ -47,6 +61,7 @@ export const Game = () => {
           setVideoBlop(arregloPromesasResultas)
         })
     }
+
   }, [videoApi])
 
   /*----------------------------------------*/
@@ -124,10 +139,26 @@ export const Game = () => {
     }
   }
 
+  function recImages() {
+    if (videoToSeeBlop.current) {
+      if (tope.current >= videoToSeeBlop.current.length) {
+        return null
+      } else {
+        viewVideos();
+        dispatch(recVideo(videoToSeeBlop.current[tope.current]));
+        tope.current++;
+      }
+    }
+  }
+
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videoApi[2], tope.current));
+    // dispatch(seenVideos(videoApi[2], tope.current)); // original de los videos
+    dispatch(seenVideos(videoToSeeBlop.current, tope.current));
+    /*  if (mode === 'images') {
+       tope.current++;
+     } */
   }
 
   // Cambio de videos y guarda un nuevo array con los blop
@@ -142,14 +173,16 @@ export const Game = () => {
       videoToSeeBlop.current = blop
     }
     recVideos();
-  }, [videoBlop]);
+    recImages();
+  }, [videoBlop, imageApi]);
 
   return (
     < >
       <div className={style.fondo3}>
         {
-          !videoBlop ? <Loading /> :
-            <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} />
+          !videoBlop && !videoToSeeBlop.current ? <Loading /> :
+            videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} /> :
+              <ImagePlayer recImages={recImages} />
         }
       </div>
     </>

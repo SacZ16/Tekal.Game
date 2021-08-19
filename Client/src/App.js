@@ -10,6 +10,8 @@ import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
 import ChangePassword from './components/ChangePassword/changePassword'
 import ImagePlayer from './components/ImagePLayer/ImagePlayer';
+import Dashboard from './components/Dashboard/Dashboard'
+import Mobile from './components/Mobile/Mobile';
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
     <>
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/dashboard' component={Dashboard} /> {/* Este seria home, donde estan los resultados */}
         <Route exact path='/login' component={LoginPage} />
         <Route exact path='/register' component={RegisterWithEmail} />
         <Route exact path='/form' component={FormData} />
@@ -26,7 +29,8 @@ function App() {
         <Route exact path='/forgotPassword' component={VerificationEmail} />
         <Route exact path='/verificationemail' component={Verification} />
         <Route exact path='/passwordchange' component={ChangePassword} />
-        <Route exact path='/imageplayer' component={ImagePlayer} />
+        <Route exact path='/imageplayer' component={ImagePlayer} /> {/* Borrar  */}
+        <Route exact path='/touch' component={Mobile} /> {/* Borrar  */}
       </Switch>
     </>
   );

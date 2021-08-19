@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
-const {putUserGameItems} = require('../Controllers/dbFunctions')
+const { putUserGameItems } = require('../Controllers/dbFunctions')
+const { endpoint } = require('../services/endPoint.service')
 
 
 router.post('/', async (req, res) => {
@@ -12,21 +13,11 @@ router.post('/', async (req, res) => {
     try {
         for (let i = 2; i < info.length; i++) {
             var object = info[i];
-            object.pos= i+1;
+            object.pos = i + 1;
             answers.push(object.answer);
 
-            let string2 = object.url.slice(72);
-            var asset = "";
-            (function endpointFinder(){
-                for(let i=0; i < string2.length; i++){
-                    if(string2[i] !== "?"){
-                        asset += string2[i];
-                    }
-                    else{
-                        return asset;
-                    }
-                }
-            })();
+            let asset = endpoint(object.url)
+
             presentations.push(asset);
         }
         let data = {
@@ -38,7 +29,7 @@ router.post('/', async (req, res) => {
         let games = await putUserGameItems(data);
         res.send(games);
     }
-    catch(error) {
+    catch (error) {
         console.log(error)
     }
 })

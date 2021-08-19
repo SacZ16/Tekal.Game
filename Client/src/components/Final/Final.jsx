@@ -1,4 +1,4 @@
-import React, { _useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import { Line } from 'react-chartjs-2'
@@ -21,7 +21,6 @@ function Finalgame({ history }) {
 
     const holaa = localStorage.getItem('pruebaa')
     const resultadoparaenviar = JSON.parse(holaa)
-    console.log(resultadoparaenviar)
     if (resultadoparaenviar) {
         resultadoparaenviar.shift()
         resultadoparaenviar.unshift(emailCokkie)
@@ -49,11 +48,17 @@ function Finalgame({ history }) {
         dispatch(resetReducer())
         history.push('/game')
     }
+
+    useEffect(() => {
+        /* postDataa() */
+    }, [])
+
     const postDataa = async () => {
+        console.log(resultadoparaenviar)
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
         await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
     }
-    postDataa()
+
     return (
         <div>
             <div className='bgLandingfinal'>
@@ -71,7 +76,7 @@ function Finalgame({ history }) {
             </div>
             <div className='buttonRegister2' >
                 <div>
-                    <Link to='/'>
+                    <Link to='/dashboard'>
                         <button className='buttonRegister' >Home</button>
                     </Link>
                 </div>
