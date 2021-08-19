@@ -423,7 +423,8 @@ const putPKAssets = async (urlAsset, index) => {
             Item:{
                 "PK": urlAsset,
                 "SK": index,
-                "views": 0
+                "views": 0,
+                "status": "OK"
             }
         };
 
@@ -433,6 +434,32 @@ const putPKAssets = async (urlAsset, index) => {
     }
     catch(error){
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+const order = async() => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter",
+            KeyConditions: {
+                status: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        "OK"
+                    ]
+                }
+            },
+            ScanIndexForward: true, 
+            Limit: 20
+        };
+
+        const orderByViews = await connectionDynamo.query(params).promise();
+        console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        return orderByViews;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
     }
 }
 

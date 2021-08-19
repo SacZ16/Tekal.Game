@@ -23,7 +23,7 @@ async function videosNotSeen(email) {
             console.log(notViewedVideos)//ASI, NO. >:c REY....
         }
         else{
-        const allVideos = await queryAllAssets(200);
+        const allVideos = await queryAllAssets(9000);
         const setVideos = new Set(allVideos.Items.map(v => v.PK));
         const arrayVideos = Array.from(setVideos);
         // let caca = [];
