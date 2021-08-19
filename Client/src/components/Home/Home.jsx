@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Tutorial from '../Tutorial/Tutorial'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 
@@ -106,7 +107,7 @@ const Home = () => {
             alert('Usuario Registrado con Exito')
             window.location.href = './login'
         }
-        else { alert('ESE MAIL YA ES EN USO') }
+        else { alert('ESE MAIL YA ESTÁ EN USO') }
     }
 
 
@@ -276,10 +277,13 @@ var enviardatos={
             </div>
 
             <div className='second_screen_home'>
-                {/* <div className='startGameLanding'><Link to='/game' style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div> */}
-                <Tutorial />
+            <div className='text_secon_page'  style={{ opacity: (0 + offset * 5) + '%' }}>
+                <p className='second_page_title'>How is your memory working?</p>
+                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet.</p>
+                <div className='startGameLanding'><Link to='/game' style={{ color: 'white', fontSize: '35px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif', marginTop:'10px' }} id='btnStartHome'>Start</Link></div>
             </div>
-
+                <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{height:'500px',left: (75 + offset * -0.1) + '%' }} />
+            </div>
         </>
     )
 };
