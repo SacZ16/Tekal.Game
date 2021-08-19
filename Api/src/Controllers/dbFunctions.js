@@ -1,13 +1,14 @@
 const { Router, response } = require('express');
 const axios = require('axios').default;
-const AWS = require('aws-sdk')
-const { connectionDynamo, dynamodb } = require('../db.js')
+const AWS = require('aws-sdk');
+const { endpoint } = require('../services/endpoint.service');
+const { connectionDynamo, dynamodb } = require('../db.js');
 const bcrypt = require('bcrypt');
-const ULID = require('ulid')
+const ULID = require('ulid');
 
 
-const TABLE_USER = "HENRY-dev-USER"
-const TABLE_ASSETS = "HENRY-dev-ASSET"
+const TABLE_USER = "HENRY-dev-USER";
+const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
     const params = {
@@ -199,19 +200,7 @@ const createAssetsTable = () => {
 } */
 
 const putAssets = async (email, info) => {
-    let string2 = info.url.slice(72);
-
-    var asset = "";
-    (function endpointFinder() {
-        for (let i = 0; i < string2.length; i++) {
-            if (string2[i] !== "?") {
-                asset += string2[i];
-            }
-            else {
-                return asset;
-            }
-        }
-    })();
+    let asset = endpoint(info.url);
     try {
         let params = {
             TableName: TABLE_ASSETS,

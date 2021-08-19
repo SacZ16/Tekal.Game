@@ -8,7 +8,7 @@ function endpoint(url){
             asset += string2[i];
         }
         else {
-            return asset;
+            return asset.slice(29);
         }
     }
 }
