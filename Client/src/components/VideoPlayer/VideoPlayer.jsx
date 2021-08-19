@@ -226,50 +226,20 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         >
 
           <div className={style.contenedordelvideo}>
-            <div style={{ width: '90%', margin: '0', display: 'flex' }}>
-              {
-                lives.current === 3 ?
-                  <div style=
+            <div style={{ width: '90%', marginTop: '-30px', display: 'flex',justifyContent:'center',alignItems:'center'}}>
+              <div className={style.vidasgame} style=
                     {{
                       color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ ❤ ❤
-                  </div> : null
-              }
-              {
-                lives.current === 2 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ ❤ 💔
-                  </div> : null
-              }
-              {
-                lives.current === 1 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>❤ 💔 💔
-                  </div> : null
-              }
-              {
-                lives.current === 0 ?
-                  <div style=
-                    {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                      width: '70px', marginTop: '-30px'
-                    }}>💔 💔 💔
-                  </div> : null
-              }
+                    }}>❤ x {lives.current}
+                  </div> 
+              
               <progress
                 className='progressBar'
-                id="progress" max={videoApi.length}
+                id="progress" 
                 value={seeVideos.current.length}>
               </progress>
-              <Link style={{ marginLeft: '40px', marginTop: '-37px', color: 'white', fontSize: '25px', textDecoration: 'none' }} to='login'>
-                x
+              <Link className={style.xgame} style={{ marginLeft: '40px', marginTop: '-10px', color: 'white', textDecoration: 'none' }} to='login'>
+                ✖
               </Link>
             </div>
 

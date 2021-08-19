@@ -58,16 +58,23 @@
     justify-content: center;
     align-items: center;
 }
+.vidasgame{
+    color: red; 
+    display: flex; 
+    flex-direction: row;
+    width: 10%;
+    font-size: 4vh
+}
 .video{
     min-width: 87%;
     margin-left: 1.7%;
     margin-top: 11px;
     min-height: 83vh;
-    border-radius: 5px;
     color: rgb(0, 0, 0);
     background: black;
-    border-radius: 50px;
+    border-radius: 20px;
     z-index: 5;
+    overflow: hidden;
 }
 .fondo3{
     overflow:hidden;
@@ -88,4 +95,105 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.xgame{
+    font-size: 6vh;
+}
+@media only screen and (max-width: 800px) and (min-width: 768px){
+
+    .vidasgame{
+        font-size: 2.5vh
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+
+}
+@media only screen and (max-width: 767px) and (min-width: 540px){
+
+    .vidasgame{
+        font-size: 2.5vh
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+
+}
+@media only screen and (max-width: 539px) and (min-width: 411px){
+
+    .vidasgame{
+        font-size: 2vh
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+    .xgame{
+        font-size: 3vh;
+    }
+}
+@media only screen and (max-width: 410px) and (min-width: 375px){
+
+    .vidasgame{
+        font-size: 3vh;
+        width: 20%;
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+    .xgame{
+        font-size: 4vh;
+    }
+}
+@media only screen and (max-width: 374px) and (min-width: 360px){
+
+    .vidasgame{
+        font-size: 3vh;
+        width: 20%;
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+    .xgame{
+        font-size: 4vh;
+    }
 }
