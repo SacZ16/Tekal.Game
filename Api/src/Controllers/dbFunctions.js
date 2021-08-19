@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt');
 const ULID = require('ulid')
 
 
-const TABLE_USER = "USER"
-const TABLE_ASSETS = "ASSETS"
+const TABLE_USER = "HENRY-dev-USER"
+const TABLE_ASSETS = "HENRY-dev-ASSET"
 
 async function getallUsers() {
     const params = {
