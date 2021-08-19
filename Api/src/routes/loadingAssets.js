@@ -3,7 +3,7 @@ const router = Router();
 const fs = require("fs");
 const {putPKAssets}= require('../Controllers/dbFunctions');
 
-var data = fs.readFileSync('../Api/src/services/videos1.csv', 'utf8');
+var data = fs.readFileSync('../Api/src/services/videos5.csv', 'utf8');
 // var data = fs.readFileSync('./videos.csv', 'utf8');
 var arrayData = data.split("\r\n").slice(1);
 
