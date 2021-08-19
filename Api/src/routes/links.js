@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const { getAssets } = require('../services/csv.service.js');
-const { templateFiller, templateInfo} = require('../services/templates.service.js');
+const { templateFiller } = require('../services/templates.service.js');
 const { videosNotSeen } = require('../services/notViewedVideos.service');
 const { picker } = require('../services/templatePicker.service');
 
