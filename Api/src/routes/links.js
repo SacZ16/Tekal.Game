@@ -17,7 +17,8 @@ router.post('/', async (req, res) => {
     let assets = await getAssets(itemsFromDb);//transforma en link
  
     let template = templateFiller(templateChoosen, assets);
-   
+    let no = template[2].map(v => v[0].url)
+    console.log(no)
     res.send(template);
 })
 module.exports = router;
