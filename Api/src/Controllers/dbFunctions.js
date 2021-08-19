@@ -440,11 +440,13 @@ const order = async(limite) => {
                 }
             },
             ScanIndexForward: true, 
-            Limit: limite
+            Limit: limite,
+            ExclusiveStartKey:LastEvaluatedKey
+            
         };
 
         const orderByViews = await connectionDynamo.query(params).promise();
-        // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
         return orderByViews;
     }
     catch(error){
@@ -452,7 +454,6 @@ const order = async(limite) => {
     }
 }
 
-// order(100)
 
 
 module.exports = {
