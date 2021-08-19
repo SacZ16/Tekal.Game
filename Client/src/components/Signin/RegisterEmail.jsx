@@ -8,75 +8,9 @@ import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
 import '../Styles/registerForm.css';
-{/* <div style={{ 'transition': 'all 0.5s ease-out' }} className='formRegister'>
-                <form className='formRegister2'>
-                    <img className='logoFormRegister' src={logoTekal} alt="Logo de Tekal" />
-                    <div>
-                        <input style={coloremailb} className='inputFormRegister' placeholder='Email' name='email' type='text' onChange={handleInputChange} required />
-                        {/* <div class="popup" onClick={() => myFunction()}>❓
-                            <span class="popuptext" id="myPopup1">Invalid Email format</span>
-                        </div> */}
-                    //</div>
-                    {/* <p>Invalid Email format</p> */}
-                    //<div>
-                      //  <input style={colorconfirmEmailb} className='inputFormRegister' placeholder='Confirm email' name='confirmEmail' type='text' onChange={handleInputChange} required /> 
-                        {/* <div class="popup" onClick={() => myFunction2()}>❓
-                            <span class="popuptext" id="myPopup">Email must be the same</span>
-                        </div> */}
-                  //  </div>
-                    {/* <p>Email must be the same</p> */}
-                    //<div>
-                      // <input style={colorpasswordb} className='inputFormRegister' placeholder='Password' name='password' onChange={handleInputChange} type='password' required /> 
-                        {/* <div class="popup" onClick={() => myFunction3()}>❓
-                            <span class="popuptext" id="myPopup2"><p>Minimum 8 characters</p>
-                                <p>Maximum 15 characters</p>
-                                <p>At least one capital number</p>
-                                <p>At least one capital letter</p>
-                                <p>At least one lower case letter</p>
-                                <p>No blanks</p>
-                                <p>At least 1 special character</p></span>
-                        </div> */}
-                  //  </div>
-                    {/*  <p>Minimum 8 characters</p>
-                    <p>Maximum 15 characters</p>
-                    <p>At least one capital number</p>
-                    <p>At least one capital letter</p>
-                    <p>At least one lower case letter</p>
-                    <p>No blanks</p>
-                <p>At least 1 special character</p> */}
-                  //  <div>
-                    //    <input style={colorconfirmPassb} className='inputFormRegister' placeholder='Confirm password' name='confirmPass' onChange={handleInputChange} type='password' required /> 
-                        {/* <div class="popup" onClick={() => myFunction4()}>❓
-                            <span class="popuptext" id="myPopup3">Passwords must be the same</span>
-                        </div> */}
-                  //  </div>
-                    {/* <p>Passwords must be the same</p> */}
-                //</form>
-                //<div className='formRegister2'>
-
-                  //  <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
-                    //<p className='orRegister'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
-                    //<GoogleButton />
-                    //<FacebookButton />
-                //</div>
-            //</div> */}
 const RegisterWithEmail = () => {
     const cookiies = new Cookie(); //no borrar - estilo css
-    const [emailcopia, setEmailcopia] = useState('')
-    const [passwordcopia, setPasswordcopia] = useState('')
-    const [coloremail, setColoremail] = useState('')
-    const [colorconfirmEmail, setColorconfirmEmail] = useState('')
-    const [colorpassword, setColorpassword] = useState('')
-    const [colorconfirmPass, setColorconfirmPass] = useState('')
-    const [colores, setColores] = useState({
-        fondo: cookiies.get('colores'),
-        texto: 'white',
-        textomemory: '#F22C9F',
-        textolargo: 'rgb(197, 197, 197)',
-        fondoform: 'rgba(0, 0, 0, 0.904)',
-        copyr: 'rgb(197, 197, 197)'
-    })
-
+    const [passwordcopia, setPasswordcopia] = useState('')    
     const [input, setInput] = useState({
         email: "",
         password: "",
@@ -132,81 +66,8 @@ const RegisterWithEmail = () => {
         setInput({
             ...input,
             [e.target.name]: e.target.value
-        })
-        const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("red",)
-        } if (emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("#1663A2")
-        }
-        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("red")
-        } if (passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("#1663A2")
-        }
-        setPasswordcopia(input.password.substring(0, input.password.length - 1))
-        if (passwordcopia !== input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("red")
-        } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("#1663A2")
-        }
-    }
-    var coloremailb = { 'border-color': `${coloremail}` }
-    var colorconfirmEmailb = { 'border-color': `${colorconfirmEmail}` }
-    var colorpasswordb = { 'border-color': `${colorpassword}` }
-    var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
-    function myFunction() {
-        var popup = document.getElementById("myPopup1");
-        popup.classList.toggle("show");
-    }
-    function myFunction2() {
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-    }
-    function myFunction3() {
-        var popup = document.getElementById("myPopup2");
-        popup.classList.toggle("show");
-    }
-    function myFunction4() {
-        var popup = document.getElementById("myPopup3");
-        popup.classList.toggle("show");
-    }
-    const cambiarfondo = function (evento) {
-        if (evento.target.checked) {
-            setColores({
-                fondo: 'black',
-                texto: 'white',
-                textomemory: '#F22C9F',
-                textolargo: 'rgb(197, 197, 197)',
-                fondoform: 'rgba(0, 0, 0, 0.904)',
-                copyr: 'rgb(197, 197, 197)'
-            })
-            cookiies.set('prueba', 'true', { path: '/' })//no borrar - estilo css
-            cookiies.set('fondo', '#F0F8FB', { path: '/' })//no borrar - estilo css
-            cookiies.set('texto', '#2D5DC7', { path: '/' })//no borrar - estilo css
-            cookiies.set('textomemory', '#F0814A', { path: '/' })//no borrar - estilo css
-            cookiies.set('textolargo', '#1240A7', { path: '/' })//no borrar - estilo css
-            cookiies.set('fondoform', '#FFFFFF', { path: '/' })//no borrar - estilo css
-            cookiies.set('copyr', 'black', { path: '/' })
-        } else {
-            setColores({
-                fondo: 'black',
-                texto: 'white',
-                textomemory: '#F22C9F',
-                textolargo: 'rgb(197, 197, 197)',
-                fondoform: 'rgba(0, 0, 0, 0.904)',
-                copyr: 'rgb(197, 197, 197)'
-            })
-            cookiies.set('prueba', 'false', { path: '/' })//no borrar - estilo css
-            cookiies.set('fondo', 'black', { path: '/' })//no borrar - estilo css
-            cookiies.set('texto', 'white', { path: '/' })//no borrar - estilo css
-            cookiies.set('textomemory', '#F22C9F', { path: '/' })//no borrar - estilo css
-            cookiies.set('textolargo', 'rgb(197, 197, 197)', { path: '/' })//no borrar - estilo css
-            cookiies.set('fondoform', 'rgba(0, 0, 0, 0.904)', { path: '/' })//no borrar - estilo css
-            cookiies.set('copyr', 'rgb(197, 197, 197)', { path: '/' })//no borrar - estilo css
-        }
-    }
+        })        
+    } 
     var a = cookiies.get('prueba')
     return (
         <>      
@@ -219,7 +80,7 @@ const RegisterWithEmail = () => {
                              <p class="dddd">Country</p>
                              <input class="swal2-inputmh4" name='country'/>
                              <p class="dddd">Password</p>
-                             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
+                             <input  id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
                              <p class="dddd">Genero</p>
                              <input class="swal2-inputmh4" name='genero'/>
                              <GoogleButton />                        
@@ -228,11 +89,11 @@ const RegisterWithEmail = () => {
                              <p class="dddd">Last Name</p>
                              <input class="swal2-inputmh4" name='lastname' />
                              <p class="dddd">Email</p>
-                             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
+                             <input  id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
                              <p class="dddd">City/state</p>
                              <input class="swal2-inputmh4" name='city'/>
                              <p class="dddd">Confirm Password</p>
-                             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
+                             <input  id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
                              <p class="dddd">Ethnicity</p>
                              <input class="swal2-inputmh4" name='ethnicity'/>
                              <FacebookButton />

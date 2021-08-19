@@ -91,9 +91,7 @@
     margin: 10px 0px 10px 0;
     position: relative;
     text-align: end;
-    display: flex;
-    justify-content: end;
-    align-items: flex-end;
+    width: 100%;
 }
 
 .forgotPassword:hover{
@@ -109,7 +107,7 @@
     padding: 14px 0 14px 0;
     color: white;
     background-color:#A52971;
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 .continue:hover{

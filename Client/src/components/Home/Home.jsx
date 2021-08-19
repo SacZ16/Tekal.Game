@@ -3,7 +3,6 @@ import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
-import { Router } from 'react-router';
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
@@ -14,21 +13,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
-import GoogleButton from '../Signin/GoogleButton';
-import FacebookButton from '../Signin/FacebookButton';
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
     const [offset, setOffset] = useState()
 
-    // Register Alert
     const [passwordcopia, setPasswordcopia] = useState('')
-    const [coloremail, setColoremail] = useState('')
-    const [colorpassword, setColorpassword] = useState('')
-    const [colorconfirmPass, setColorconfirmPass] = useState('')
-    var coloremailb = { 'border-color': `${coloremail}` }
-    var colorpasswordb = { 'border-color': `${colorpassword}` }
-    var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
 
     const [name, setName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -45,95 +35,15 @@ const Home = () => {
         password: password,
         confirmPass: confirmPass,
     })
-    //----
-
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
     if (localStorage.getItem('pruebaa')) { localStorage.removeItem('pruebaa') }
-
     window.addEventListener('scroll', handleScroll)
-
-    // const mostrarLogin = async () => {
-    //     const { value: formValues } = await Swal.fire({
-    //         title: 'Log in',
-    //         html:
-    //             '<div class="row">' +
-    //             '<div class="column" >' +
-    //             '<div class="asdasdd">' +
-    //             '<p class="dddd">Name</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Date of birth</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Country</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Password</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Genero</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '</div>' +
-    //             '</div>' +
-    //             '<div class="column" >' +
-    //             '<div class="asdasdd">' +
-    //             '<p class="dddd">Last Name</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Email</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">City/state</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Confirm Password</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '<p class="dddd">Ethnicity</p>' +
-    //             '<input class="swal2-inputmh4"/>' +
-    //             '</div>' +
-    //             '</div>',
-    //         focusConfirm: false,
-    //         preConfirm: () => {
-    //             return [
-    //                 document.getElementById('swal-input1').value,
-    //                 document.getElementById('swal-input2').value
-    //             ]
-    //         }
-    //     })
-
-    //     if (formValues) {
-    //         Swal.fire(JSON.stringify(formValues))
-    //     }
-    // }
-
     const prueba = () => {
         MySwal.fire({
             title: 'Log in',
             html:
-                // <div class="row" onChange={handleInputChange}>
-                //     <div class="column" >
-                //             <p class="dddd">Name</p>
-                //             <input class="swal2-inputmh4" name='name'/>
-                //             <p class="dddd">Date of bith</p>
-                //             <input class="swal2-inputmh4" type='date' name='date' />
-                //             <p class="dddd">Country</p>
-                //             <input class="swal2-inputmh4" name='country'/>
-                //             <p class="dddd">Password</p>
-                //             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' />
-                //             <p class="dddd">Genero</p>
-                //             <input class="swal2-inputmh4" name='genero'/>
-                //             <GoogleButton />                        
-                //     </div>
-                //     <div class="column" >
-                //             <p class="dddd">Last Name</p>
-                //             <input class="swal2-inputmh4" name='lastname' />
-                //             <p class="dddd">Email</p>
-                //             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' />
-                //             <p class="dddd">City/state</p>
-                //             <input class="swal2-inputmh4" name='city'/>
-                //             <p class="dddd">Confirm Password</p>
-                //             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' />
-                //             <p class="dddd">Ethnicity</p>
-                //             <input class="swal2-inputmh4" name='ethnicity'/>
-                //             <FacebookButton />
-                //             <button onClick={()=>mostrarLogin()}></button>
-                //     </div>
-                // </div>
                 <div style={{overflow:'hidden'}}>
                 <RegisterCommonForm props={SendDataToBACK} style={{posicion:'absolute'}}/>
                 <div style={{display:'flex'}}>
@@ -262,11 +172,7 @@ var enviardatos={
     const [startGame, setStartGame] = useState(false)
     const [checker, setchecker] = useState(false)
 
-    //estados de css
-    const [popUpLoginAux, setPopUpLoginAux] = useState('none')
-    const [popUpRegisterAux, setPopUpRegisterAux] = useState('none')
-    const [blurFondo, setBlurFondo] = useState('0px')
-
+    
     const cookies = new Cookie();
 
     const popUpRegister = () => {
@@ -340,15 +246,7 @@ var enviardatos={
 
     return (
         <>
-            <div className='formulario_register' style={{ display: `${popUpLoginAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-                <div style={{ width: '500px', height: '85%' }}><RegisterCommonForm props={SendDataToBACK} /></div>{/* Este es el formulario LOGIN */}
-            </div>
-
-            <div className='formulario_register' style={{ display: `${popUpRegisterAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-                <div style={{ width: '500px', height: '85%' }}><RegisterWithEmail /></div>
-            </div>
-
-            <div className='homeDiv' style={blurFondo === '2px' ? { filter: `blur(${blurFondo}) brightness(90%)`, overflowY: 'hidden', transform: 'scale(1.1)' } : null}>
+            <div className='homeDiv'>
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
                     <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
