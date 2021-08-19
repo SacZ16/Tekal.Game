@@ -4,11 +4,11 @@ import React,
   useState,
   useEffect
 } from 'react';
-import ReactPlayer from 'react-player/lazy';
 import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import ReactPlayer from 'react-player/lazy';
 import { withRouter } from 'react-router';
 import style from '../Styles/Game.module.css';
 import Swal from 'sweetalert2'
@@ -18,9 +18,10 @@ import Cookie from 'universal-cookie'
 import ProgressBar from '../ProgressBar/ProgressBar';
 
 const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
-
+  console.log(email)
   const dispatch = useDispatch();
   const cookies = new Cookie();
+  console.log(cookies)
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
 

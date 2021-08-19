@@ -1,13 +1,14 @@
 const { Router, response } = require('express');
 const axios = require('axios').default;
-const AWS = require('aws-sdk')
-const { connectionDynamo, dynamodb } = require('../db.js')
+const AWS = require('aws-sdk');
+const { endpoint } = require('../services/endpoint.service');
+const { connectionDynamo, dynamodb } = require('../db.js');
 const bcrypt = require('bcrypt');
-const ULID = require('ulid')
-const { endpoint } = require('../services/endPoint.service')
+const ULID = require('ulid');
 
-const TABLE_USER = "USER"
-const TABLE_ASSETS = "ASSETS"
+
+const TABLE_USER = "HENRY-dev-USER";
+const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
     const params = {
@@ -199,7 +200,7 @@ const createAssetsTable = () => {
 } */
 
 const putAssets = async (email, info) => {
-    let asset = endpoint(info.url)
+    let asset = endpoint(info.url);
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -326,7 +327,7 @@ const viewedVideos = async (email) => {
         };
 
         const scanName = await connectionDynamo.scan(params).promise();
-        // console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
+        //console.log("Scan description JSON:", JSON.stringify(scanName, null, 2));
         return scanName;
     }
     catch (error) {
@@ -335,14 +336,15 @@ const viewedVideos = async (email) => {
 
 }
 
-const queryAllAssets = async () => {
+const queryAllAssets = async (limite) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
             ProjectionExpression: "#PK",
             ExpressionAttributeNames: {
                 "#PK": "PK"
-            }
+            },
+            Limit: limite
         };
 
         const queryAssetsInfo = await connectionDynamo.scan(params).promise()
@@ -364,11 +366,11 @@ const updateView = async (url) => {
             },
             UpdateExpression: "SET #views = #views + :inc",
             ExpressionAttributeNames: {
-                "#views": "views"
-            },
-            ExpressionAttributeValues: {
-                ":inc": 1
-            }
+                "#views": "views"             
+            },                
+            ExpressionAttributeValues: {                 
+                ":inc": 1             
+            }         
 
         };
         const updateViews = connectionDynamo.update(params).promise();
@@ -379,6 +381,78 @@ const updateView = async (url) => {
         console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
     }
 }
+
+const queryPK = async (pk) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            KeyConditionExpression: "#PK = :PK AND #SK = :PK",
+            ExpressionAttributeNames: {
+                "#PK": "PK",
+                "#SK": "SK" 
+            },
+            ExpressionAttributeValues: {
+                ":PK": pk,
+            }
+        };
+
+        const queryUserInfo = await connectionDynamo.query(params).promise()
+        //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        return queryUserInfo;
+    }
+    catch (error) {
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+const putPKAssets = async (urlAsset, index) => {
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": urlAsset,
+                "SK": index,
+                "views": 0,
+                "status": "OK"
+            }
+        };
+
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+const order = async(limite) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter-by-views",
+            KeyConditions: {
+                status: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        "OK"
+                    ]
+                }
+            },
+            ScanIndexForward: true, 
+            Limit: limite
+        };
+
+        const orderByViews = await connectionDynamo.query(params).promise();
+        // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        return orderByViews;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+// order()
 
 
 module.exports = {
@@ -396,5 +470,8 @@ module.exports = {
     updatePassword,
     viewedVideos,
     queryAllAssets,
-    updateView
+    updateView,
+    queryPK,
+    putPKAssets,
+    order
 }

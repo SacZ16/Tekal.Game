@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     let info = req.body;
     let email = info[0]
     let urls = [];
-
+    
     try {
         for (let i = 2; i < info.length; i++) {
             var object = info[i];

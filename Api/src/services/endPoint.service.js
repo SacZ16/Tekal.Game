@@ -1,4 +1,5 @@
-function endpoint(url){
+
+function endpoint(url){   
     let string2 = url.slice(72);
 
     var asset = "";

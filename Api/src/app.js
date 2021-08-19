@@ -13,6 +13,7 @@ const game = require('./routes/userGameInfo');
 const verificationemail = require ('./routes/verificationEmail');
 const VerificationChangePassword = require ('./routes/VerificationChangePassword');
 const changepassword = require('./routes/changePassword');
+const assets = require ('./routes/loadingAssets');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -45,5 +46,7 @@ server.use('/gameInfo', game);
 server.use('/verification', verificationemail);
 server.use('/verificationchangepassword', VerificationChangePassword);
 server.use('/changepassword', changepassword);
+server.use('/assets', assets);
+
 
 module.exports = server;
