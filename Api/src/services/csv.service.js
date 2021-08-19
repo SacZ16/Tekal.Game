@@ -1,7 +1,11 @@
+require('dotenv').config();
 const axios = require("axios");
+const {
+    KEY_TEKAL_ASSETS,
+} = process.env;
 
 async function getAssets(array) {
-    let assetsName = array.map(i => "https://nv60dd5u3g.execute-api.us-east-1.amazonaws.com/development/tekal-game-asset-input?filename=" + i.replace(/^[0-9]+,/ , ""));
+    let assetsName = array.map(i => `${KEY_TEKAL_ASSETS}` + i.replace(/^[0-9]+,/ , ""));
     let assets = assetsName.map(async v => {
         return await axios.get(v).then(res => res.data.body);
     })
