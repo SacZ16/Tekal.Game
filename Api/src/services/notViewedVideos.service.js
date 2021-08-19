@@ -1,4 +1,4 @@
-const { viewedVideos, queryAllAssets, queryPK } = require('../Controllers/dbFunctions');
+const { viewedVideos, queryAllAssets, queryPK, order } = require('../Controllers/dbFunctions');
 
 async function videosNotSeen(email) {
     try {
@@ -23,21 +23,23 @@ async function videosNotSeen(email) {
             console.log(notViewedVideos)//ASI, NO. >:c REY....
         }
         else{
-        const allVideos = await queryAllAssets(9000);
+        // const allVideos = await queryAllAssets(9000);
+        const allVideos = await order(160);
         const setVideos = new Set(allVideos.Items.map(v => v.PK));
-        const arrayVideos = Array.from(setVideos);
+        // const arrayVideos = Array.from(setVideos);
         // let caca = [];
         // for(let i=0; i < 200; i++){
         //     caca.push(allVideos.Items[i].PK)
         // }
         // console.log(caca),
         // console.log(allVideos)
-        const videos = arrayVideos.map(async v => await queryPK(v));
+        
+        const videos = [...setVideos].map(async v => await queryPK(v));
         return Promise.all(videos);
     }}catch (error) {
         console.log(error);
     }
 }
-videosNotSeen("amapetrice@gmail.com")
+// videosNotSeen("amapetrice@gmail.com")
 
 module.exports = { videosNotSeen };

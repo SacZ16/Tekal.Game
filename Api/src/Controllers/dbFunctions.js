@@ -437,11 +437,11 @@ const putPKAssets = async (urlAsset, index) => {
     }
 }
 
-const order = async() => {
+const order = async(limite) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
-            IndexName: "filter",
+            IndexName: "filter-by-views",
             KeyConditions: {
                 status: {
                     ComparisonOperator: "EQ", 
@@ -451,11 +451,11 @@ const order = async() => {
                 }
             },
             ScanIndexForward: true, 
-            Limit: 20
+            Limit: limite
         };
 
         const orderByViews = await connectionDynamo.query(params).promise();
-        console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
         return orderByViews;
     }
     catch(error){
@@ -463,6 +463,7 @@ const order = async() => {
     }
 }
 
+// order()
 
 
 module.exports = {
@@ -482,5 +483,6 @@ module.exports = {
     queryAllAssets,
     updateView,
     queryPK,
-    putPKAssets
+    putPKAssets,
+    order
 }
