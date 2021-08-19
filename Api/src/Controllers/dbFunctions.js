@@ -142,6 +142,7 @@ const queryAllInfoUser = async (userId) => {
 
         const queryUserInfo = await connectionDynamo.query(params).promise()
         // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        console.log(queryUserInfo, 'ESTOY EN QUERY')
         return queryUserInfo;
     }
     catch (error) {
@@ -298,11 +299,13 @@ const updateEmailVerification = async (userId) => {
 }
 
 const updatePassword = async (userId, pass) => {
-    console.log(userId)
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(pass, salt);
-
-    try {
+    
+        let response = await queryAllInfoUser(userId)
+        if(await !response.Items.length) {
+            return (false)
+        } else {
         const infoUser = `INFO#${userId}`;
         let params = {
             TableName: "USER",
@@ -319,12 +322,11 @@ const updatePassword = async (userId, pass) => {
             },
         };
         const registerInfo = connectionDynamo.update(params).promise();
-        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        // console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        console.log('ESTOY ENTRANDO')
+        console.log(await registerInfo)
         return registerInfo;
-    }
-    catch (error) {
-        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
-    }
+        }
 }
 
 const viewedVideos = async (email) => {
