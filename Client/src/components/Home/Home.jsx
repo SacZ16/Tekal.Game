@@ -253,7 +253,6 @@ var enviardatos={
             setColorconfirmPass("#1663A2")
         }
     }
-    console.log(input)
     //-----------
 
     const [show, setShow] = useState(false)
@@ -268,6 +267,12 @@ var enviardatos={
     const [blurFondo, setBlurFondo] = useState('0px')
 
     const cookies = new Cookie();
+    let sessionUser = "";
+
+    if(cookies.get('userInfo')){
+        sessionUser = cookies.get('userInfo')[0].name + ' ' + cookies.get('userInfo')[0].lastname
+    }
+
 
     const popUpRegister = () => {
         setPopUpRegisterAux('flex')
@@ -294,7 +299,7 @@ var enviardatos={
                         <div className='boxDisplay'>
                             <img className='profilePic' src='https://clinicacontraadicciones.mx/wp-content/uploads/2020/10/TESTIMONIO.jpg' alt='profile_pic' />
                             <div className='textBox'>
-                                <p className='sessionName'>Maximiliano</p>
+                                <p className='sessionName'>{sessionUser}</p>
                                 <p className='sessionStatus'>Online</p>
                             </div>
                             <button className='btnOpenSessionMenu' onClick={e => { setShow(!show) }}>&#9660;</button>

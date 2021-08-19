@@ -81,6 +81,13 @@ const RegisterWithEmail = () => {
         email: "",
         password: "",
         confirmPass: "",
+        name:"",
+        lastname:"",
+        country:"",
+        age:"",
+        city: "",
+        gender: "prefer-not-to-say",
+        ethnicity: "",
     })
 
     //Estos van a estar seteando errores (osea cuando los inputs se rellenen mal estos estados van a tener algo adentro)
@@ -107,6 +114,13 @@ const RegisterWithEmail = () => {
             email: input.email,
             password: input.password,
             test: input.email,
+            name: input.name,
+            lastname:input.lastname,
+            country:input.country,
+            age:input.age,
+            city: input.city,
+            gender: input.gender,
+            ethnicity: input.ethnicity,
         }
         console.log(user)
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
@@ -153,7 +167,6 @@ const RegisterWithEmail = () => {
         }
     }
     var coloremailb = { 'border-color': `${coloremail}` }
-    var colorconfirmEmailb = { 'border-color': `${colorconfirmEmail}` }
     var colorpasswordb = { 'border-color': `${colorpassword}` }
     var colorconfirmPassb = { 'border-color': `${colorconfirmPass}` }
     function myFunction() {
@@ -208,37 +221,44 @@ const RegisterWithEmail = () => {
         }
     }
     var a = cookiies.get('prueba')
+
+    console.log(input)
     return (
         <>      
-         <div class="row" onChange={handleInputChange}>
-                     <div class="column" >
-                             <p class="dddd">Name</p>
-                             <input class="swal2-inputmh4" name='name'/>
-                             <p class="dddd">Date of bith</p>
-                             <input class="swal2-inputmh4" type='date' name='date' />
-                             <p class="dddd">Country</p>
-                             <input class="swal2-inputmh4" name='country'/>
-                             <p class="dddd">Password</p>
-                             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
-                             <p class="dddd">Genero</p>
-                             <input class="swal2-inputmh4" name='genero'/>
-                             <GoogleButton />                        
-                     </div>
-                     <div class="column" >
-                             <p class="dddd">Last Name</p>
-                             <input class="swal2-inputmh4" name='lastname' />
-                             <p class="dddd">Email</p>
-                             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
-                             <p class="dddd">City/state</p>
-                             <input class="swal2-inputmh4" name='city'/>
-                             <p class="dddd">Confirm Password</p>
-                             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
-                             <p class="dddd">Ethnicity</p>
-                             <input class="swal2-inputmh4" name='ethnicity'/>
-                             <FacebookButton />
-                     </div>
-                 </div>
-                 <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
+        <div class="row" onChange={handleInputChange}>
+                    <div class="column" >
+                            <p class="dddd">Name</p>
+                            <input class="swal2-inputmh4" name='name' onChange={handleInputChange}/>
+                            <p class="dddd">Date of birth</p>
+                            <input class="swal2-inputmh4" type='date' name='age' onChange={handleInputChange}/>
+                            <p class="dddd">Country</p>
+                            <input class="swal2-inputmh4" name='country'onChange={handleInputChange}/>
+                            <p class="dddd">Password</p>
+                            <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
+                            <p class="dddd">Gender</p>
+                            <select class="swal2-inputmh4" name='gender' onChange={handleInputChange}>
+                                <option value='prefer-not-to-answer'> Prefer not to say </option>
+                                <option value='male'> Male </option>
+                                <option value='female'> Female </option>
+                                <option value='non-binary'> Non binary </option>
+                            </select>
+                            <GoogleButton />                        
+                    </div>
+                    <div class="column" >
+                            <p class="dddd" >Last Name</p>
+                            <input class="swal2-inputmh4" name='lastname' onChange={handleInputChange}/>
+                            <p class="dddd">Email</p>
+                            <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
+                            <p class="dddd">City/state</p>
+                            <input class="swal2-inputmh4" name='city'  onChange={handleInputChange}/>
+                            <p className="dddd">Confirm Password</p>
+                            <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
+                            <p class="dddd">Ethnicity</p>
+                            <input class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange}/>
+                            <FacebookButton />
+                    </div>
+                </div>
+                <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
             
         </>
     )

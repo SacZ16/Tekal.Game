@@ -89,17 +89,18 @@ const putUserLogin = async (user) => {
 
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
-const putUserInfoRegisterItems = async ({ userId, name, lastname, age, country }) => {
+const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
+    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
     try {
-        var infoUser = `INFO#${userId}`;
+        var infoUser = `INFO#${email}`;
 
         let params = {
             TableName: TABLE_USER,
             Key: {
-                "PK": userId,
+                "PK": email,
                 "SK": infoUser,
             },
-            UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country",
+            UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",
             ExpressionAttributeNames: {
                 "#name": "name"
             },
@@ -107,9 +108,11 @@ const putUserInfoRegisterItems = async ({ userId, name, lastname, age, country }
                 ":name": name,
                 ":lastname": lastname,
                 ":age": age,
-                ":country": country
+                ":country": country,
+                ":ethnicity": ethnicity,
+                ":gender": gender,
+                ":city": city,
             },
-
         };
 
         const registerInfo = connectionDynamo.update(params).promise();

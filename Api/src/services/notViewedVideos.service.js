@@ -3,7 +3,7 @@ const { viewedVideos, queryAllAssets } = require('../Controllers/dbFunctions');
 async function videosNotSeen(email) {
     try {
         const viewedVideos1 = await viewedVideos(email);
-
+        console.log(viewedVideos1)
         const PKviewed = new Set(viewedVideos1.Items.map(v => v.PK));
         const arrayViewed = Array.from(PKviewed);
 
