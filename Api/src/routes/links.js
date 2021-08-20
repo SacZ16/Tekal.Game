@@ -11,16 +11,14 @@ router.post('/', async (req, res) => {
     let templateChoosen = picker();
 
     let assetsFromDb = await videosNotSeen(email);
-    console.log(assetsFromDb)
+    // console.log(assetsFromDb);
+    const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
 
-
-    // const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
-
-    // let assets = await getAssets(itemsFromDb);//transforma en link
+    let assets = await getAssets(itemsFromDb);//transforma en link
  
-    // let template = templateFiller(templateChoosen, assets);
-    // //let no = assetsFromDb.map(v => v.Items)
-    // //console.log(no)
-    res.send(assetsFromDb);
+    let template = templateFiller(templateChoosen, assets);
+    //let no = assetsFromDb.map(v => v.Items)
+    //console.log(no)
+    res.send(template);
 })
 module.exports = router;
