@@ -145,8 +145,8 @@ var enviardatos={
         
 
 
-        const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!emailReject.test(input.email) && input.email.length > 1) {
+      /*   const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+       if (!emailReject.test(input.email) && input.email.length > 1) {
             setColoremail("red")
         } if (emailReject.test(input.email) && input.email.length > 1) {
             setColoremail("#1663A2")
@@ -162,8 +162,8 @@ var enviardatos={
             setColorconfirmPass("red")
         } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
             setColorconfirmPass("#1663A2")
-        }
-    }
+        } */
+    } 
     console.log(input)
     //-----------
 
@@ -177,13 +177,13 @@ var enviardatos={
     const cookies = new Cookie();
 
     const popUpRegister = () => {
-        setPopUpRegisterAux('flex')
-        setBlurFondo('2px')
+        /* setPopUpRegisterAux('flex')
+        setBlurFondo('2px') */
     }
 
     const popUpLogin = () => {
-        setPopUpLoginAux('flex')
-        setBlurFondo('2px')
+       /*  setPopUpLoginAux('flex')
+        setBlurFondo('2px') */
     }
 
     if (cookies.get('userInfo') && !checker) {
@@ -230,7 +230,7 @@ var enviardatos={
         const lastStorageDay = localStorage.getItem('date')
         const currentDate = new Date();
         const day = currentDate.getDay();
-        if (lastStorageDay != day) {
+        if (lastStorageDay !== day) {
             MySwal.fire({
                 title: <div style={{ borderStyle: 'solid', borderColor: 'red' }}>
                     <h3>How do you fell to play today?</h3>
@@ -244,6 +244,25 @@ var enviardatos={
             window.location.href = ('/game')
         }
     }
+
+    var lnks = Array.from(document.getElementsByTagName('a'));
+
+    lnks.forEach(function (v) {
+    if (/#[a-z,0-9]+/.test(v.hash))
+    v.addEventListener("click", animScroll, false)
+    })
+
+    function animScroll(event) {
+        var id, dst, despY;
+        event.preventDefault();  
+        id = event.currentTarget.hash.replace(/#/, ''); 
+        dst = document.getElementById(id); 
+        despY = parseInt(dst.getBoundingClientRect().top)   
+        window.scrollBy({
+        left: 0, top: despY, behavior: 'smooth'
+        });
+        
+        } 
 
     return (
         <>
@@ -267,22 +286,28 @@ var enviardatos={
                 {login ?
                     <>
                         <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
-                        <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
+                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                         <div className='container_buttons_home'>
                             <button className='registerHome' onClick={pruebare}>Sign up</button>
                             <button className='loginHome' onClick={prueba}>Log in</button>
                         </div>
+                        
+                        <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
                     </>
                     : (null)}
-            </div>
+            </div>        
 
-            <div className='second_screen_home'>
-            <div className='text_secon_page'  style={{ opacity: (0 + offset * 5) + '%' }}>
-                <p className='second_page_title'>How is your memory working?</p>
-                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet.</p>
-                <div className='startGameLanding'><Link to='/game' style={{ color: 'white', fontSize: '35px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif', marginTop:'10px' }} id='btnStartHome'>Start</Link></div>
+            <div className='second_screen_home' id='second_screen'>
+            <button className='auxiliarFondo'></button> 
+            <button className='auxiliarFondoDerecha'></button>
+            <div className='text_secon_page'>
+                <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
+                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
+                <Link to='/game'>
+                    <button className='startGameLanding'>Start playing</button>
+                </Link>
             </div>
-                <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{height:'500px',left: (75 + offset * -0.1) + '%' }} />
+                <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
             </div>
         </>
     )

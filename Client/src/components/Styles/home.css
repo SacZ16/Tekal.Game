@@ -147,6 +147,33 @@ body{
     color:white
 }
 
+.auxiliarFondo{
+    z-index: 15000;
+    color: white;
+    box-shadow: 0px 0px 300px 100px rgba(201, 78, 191, 0.281);
+    border-radius: 50px;
+    background-color: transparent;
+    border-style: none;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+}
+
+.auxiliarFondoDerecha{
+    z-index: 15000;
+    color: white;
+    box-shadow: 0px 0px 300px 100px #800fc759;
+    border-radius: 50px;
+    background-color: transparent;
+    border-style: none;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+}
+
 .loginHome:hover{
     background-color: rgba(255, 255, 255, 0.329);
     border-style: solid;
@@ -155,7 +182,6 @@ body{
 
 .second_screen_home{
     background-color:#212429;
-    /* background-image:url(../Styles/background_secondpage.png); */
     position: absolute;
     width: 100%;
     height: 100%;
@@ -163,32 +189,197 @@ body{
     color: white;
     display: flex;
     flex-direction: row;
+    scroll-behavior: smooth;
 }
+
+.button_scroll{
+    background-color: rgba(255, 255, 255, 0.048); 
+    cursor: pointer;
+    color: white ;
+    height: max-content;
+    width: 50px;
+    border-style: none;
+    border-radius: 50px;
+    font-size: 35px;
+    position: absolute;
+    top:90%;
+    left: 50%;
+    z-index: 20000;
+    text-decoration: none;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  color: #fff;
+  letter-spacing: .1em;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+
+.button_scroll {
+    padding-top: 70px;
+  }
+  .button_scroll span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: sdb05 1.5s infinite;
+    animation: sdb05 1.5s infinite;
+    box-sizing: border-box;
+  }
+  @-webkit-keyframes sdb05{
+    0% {
+      -webkit-transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+  @keyframes sdb05 {
+    0% {
+      transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+  
+  
 
 .brain_right{
     position: relative;
-    top: 23vh;
+    top: 15vh;
+    height: 85vh;
 }
+
+@media(min-width: 1366px){
+    .brain_right{
+        position: relative;
+        top: 15vh;
+        height: 85vh;
+        margin-right: -10em;
+    }
+
+    .second_page_subtitle{
+        margin-bottom: 40px;
+    }
+}
+
+@media(min-width: 1440px){
+    .brain_right{
+        position: relative;
+        top: 25vh;
+        height: 75vh;
+        padding-left: 520px;
+    }
+
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 70px;
+        width: 700px !important;
+    }
+
+    .second_page_title{
+        font-size: 75px !important;
+        width: 100% !important;
+    }
+    
+    .second_page_title span{
+        font-size: 75px !important;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+    }
+}
+
+@media(min-width: 1920px){
+    .brain_right{
+        position: relative;
+        top: 24vh;
+        height: 75vh;
+        margin-right: -100%;
+        padding-left: 760px;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+        height: 300px;
+        width: 80em;
+    }
+
+    .second_page_title{
+        font-size: 90px !important;
+    }
+    
+    .second_page_title span{
+        font-size: 90px !important;
+    }
+
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 90px;
+    }
+
+    .startGameLanding{
+        font-size: 30px !important;
+        width: 280px !important;
+    }
+
+    .textHome{
+        font-size: 65px !important;
+    }
+
+    .textHome span{
+        font-size: 65px !important;
+    }
+
+    .sub_textHome{
+        font-size: 25px !important;
+    }
+}
+
 
 .text_secon_page{
     position: relative;
-    top: 20vh;
+    top: 21vh;
     height: 200px;
 }
 
 .second_page_title {
     font-size: 50px;
-    margin-left: 21%;
+    margin-left: 10%;
     font-family: 'Montserrat', sans-serif;
 }
 
 .second_page_subtitle{
     font-size: 20px;
-    margin-left: 21%;
+    margin-left: 10.5%;
     margin-top: -20px;
     font-family: 'Montserrat', sans-serif;
+    width: 70%;
 }
+
 .startGameLanding{
+    cursor: pointer;
     background-color: #C94EBF;
     width: 150px;
     height: 45px;
@@ -197,7 +388,11 @@ body{
     text-align: center;
     align-items: center;
     border-radius: 5px;
-    margin-left: 21%;
+    margin-left: 10.5%;
+    color: white;
+    border-style: none;
+    font-size: 16px;
+    font-weight: 550;
 }
 
 .registerHome{
@@ -349,7 +544,7 @@ section::before{
     font-family: 'Montserrat', sans-serif;
     width:100%;
     text-align: center;
-    z-index:5
+    z-index:5;
 }
 
 .sessionBox{
