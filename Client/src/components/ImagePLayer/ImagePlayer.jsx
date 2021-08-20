@@ -4,13 +4,13 @@ import Timer from 'react-compound-timer';
 import style from '../Styles/Game.module.css';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2'
-import Cookie from 'universal-cookie'
+import withReactContent from 'sweetalert2-react-content'
 import { withRouter } from 'react-router';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
-const ImagePlayer = ({ history, recImages }) => {
+const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
+    const MySwal = withReactContent(Swal)
 
-    const cookies = new Cookie();
     const { user, recVideo } = useSelector(state => state); // Traidos del Obj Reducer.
 
     const seeImages = useRef(); //Videos Vistos por el Usuario en el Juego 
@@ -23,14 +23,13 @@ const ImagePlayer = ({ history, recImages }) => {
 
     const contador = useRef(0)
     const tiempo = useRef();
-    // console.log(tiempo)
 
     // Copia de VideoPlayer
     const answers = useRef([]); // Respuesta del usuario ante cada video
     // console.log(answers.current)
     const press = useRef(false); // Variable para detectar la barra espaciadora
     const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
-    // console.log('Segundos Apretados', pressSeconds.current)
+    console.log('Segundos Apretados', pressSeconds.current)
     const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target
     // console.log('Target Encontrados', targetFound.current)
     const falsePositives = useRef([]); // videos que no son target_repeat
@@ -39,6 +38,8 @@ const ImagePlayer = ({ history, recImages }) => {
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
     const lives = useRef(3); // Vidas del usuario 
     // console.log(lives.current)
+    const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+    console.log(score.current)
     const finalImages = useRef([]); // Videos vistos con respuetsas
     // console.log(finalImages.current)
     //-------------
@@ -50,60 +51,45 @@ const ImagePlayer = ({ history, recImages }) => {
 
     const handleKeyDown = (event) => {
         if (event.keyCode === 32 && !press.current) {
-            answers.current.push(1);
-            pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
-            if (infoImages.current[1].includes('_')) {
-                if (infoImages.current[1] === 'target_repeat') {
-                    targetFound.current.points++;
-                    targetFound.current.videosTarget.push(infoImages.current);
-                } else {
-                    falsePositives.current.push(infoImages.current);
-                    vigilanceRecognized.current.push(infoImages.current);
-                }
-                setColor('green')
-                press.current = true;
-            }
-            else {
-                setColor('red')
-                falsePositives.current.push(infoImages.current);
-                lives.current--;
-                press.current = true;
-            }
-            setTimeout(() => {
-                setColor('rgba(255, 255, 255, 0)');
-            }, 500);
+            handlerGame()
         }
     };
 
     const handleTouch = () => {
         if (!press.current) {
-            answers.current.push(1);
-            pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
-            if (infoImages.current[1].includes('_')) {
-                if (infoImages.current[1] === 'target_repeat') {
-                    targetFound.current.points++;
-                    targetFound.current.videosTarget.push(infoImages.current);
-                } else {
-                    falsePositives.current.push(infoImages.current);
-                    vigilanceRecognized.current.push(infoImages.current);
-                }
-                setColor('green')
-                press.current = true;
-            }
-            else {
-                setColor('red')
-                falsePositives.current.push(infoImages.current);
-                lives.current--;
-                press.current = true;
-            }
-            setTimeout(() => {
-                setColor('rgba(255, 255, 255, 0)');
-            }, 500);
+            handlerGame()
         }
     };
+
+    // tiempo.current &&  console.log(`${tiempo.current.state.s}.${tiempo.current.state.ms}`)
+    const handlerGame = () => {
+        answers.current.push(1);
+        pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
+        if (infoImages.current[1].includes('_')) {
+            if (infoImages.current[1] === 'target_repeat') {
+                targetFound.current.points++;
+                targetFound.current.videosTarget.push(infoImages.current);
+            } else {
+                falsePositives.current.push(infoImages.current);
+                vigilanceRecognized.current.push(infoImages.current);
+            }
+            setColor('green')
+            press.current = true;
+        }
+        else {
+            setColor('red')
+            falsePositives.current.push(infoImages.current);
+            lives.current--;
+            press.current = true;
+        }
+        setTimeout(() => {
+            setColor('rgba(255, 255, 255, 0)');
+        }, 500);
+    }
+
     useEffect(() => {
         imageTouch.current.addEventListener("touchstart", handleTouch)
-        window.addEventListener("contextmenu", (e) => e.preventDefault());
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
@@ -114,57 +100,59 @@ const ImagePlayer = ({ history, recImages }) => {
         if (seeImages.current.length === imagesPrueba.length) {
             setTimeout(() => {
                 if (!press.current) {
-                    if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] !== 'target_repeat') {
-                        // console.log(seeImages.current[seeImages.current.length - 2])
-                        answers.current.push(0);
-                        pressSeconds.current.push(0);
-                    }
-                    if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] === 'target_repeat') {
-                        answers.current.push(0);
-                        pressSeconds.current.push(0);
-                    }
+                    prevAsset()
                 }
                 videosWithAnswers()
                 Swal.fire({
-                    title: "Finalizo el Juego",
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Continuar'
+                    toast: true,
+                    title: "The game has finished",
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
                 }).then(() => {
-
-                    if (!cookies.get('userInfo')) {
-                        history.push('/preclose');
-                    }
-                    if (cookies.get('userInfo')) {
-                        history.push('/close');
-                    }
+                    sessionData()
+                    checkLogin()
                 })
             }, 3500)
         }
         if (lives.current === 0) {
             videosWithAnswers()
-            if (!cookies.get('userInfo')) {
-                history.push('/preclose');
-            }
-            if (cookies.get('userInfo')) {
-                history.push('/close');
-            }
+            MySwal.fire({
+                toast: true,
+                html:
+                    <div>
+                        <h3 style={{color: 'red'}}>Lost all your lives, good luck next time</h3>
+                        <br />
+                    </div>,
+                timer: 2000,
+                showConfirmButton: false,
+                timerProgressBar: true
+            }).then(() => {
+                sessionData()
+                checkLogin()
+            })
         }
     }, [seeImages.current.length, lives.current]);
 
+
     useEffect(() => {
         if (!press.current) {
-            if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] !== 'target_repeat') {
-                // console.log(seeImages.current[seeImages.current.length - 2])
-                answers.current.push(0);
-                pressSeconds.current.push(0);
-            }
-            if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] === 'target_repeat') {
-                answers.current.push(0);
-                pressSeconds.current.push(0);
-            }
+            prevAsset()
         }
         press.current = false;
     }, [seeImages.current])
+
+    const prevAsset = () => {
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] !== 'target_repeat') {
+            // console.log(seeImages.current[seeImages.current.length - 2])
+            answers.current.push(0);
+            pressSeconds.current.push(0);
+        }
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] === 'target_repeat') {
+            answers.current.push(0);
+            pressSeconds.current.push(0);
+        }
+    }
 
     // Guarda los datos de la sesion en el reducer
     function videosWithAnswers() {
@@ -177,14 +165,30 @@ const ImagePlayer = ({ history, recImages }) => {
                 date: `${new Date()}`
             })
         })
-        finalImages.current.unshift(0) // score
-        finalImages.current.unshift('algo@algo.com') // email
+        finalImages.current.unshift(score)
+        finalImages.current.unshift(email)
     }
+
+    function sessionData() {
+        let obj = Object.create({}, {
+            // targetFound: { value: targetFound.current },
+            // targetNotPress: { value: targetNotPress.current },
+            score: { value: score },
+            /* lives: { value: lives.current }, */
+            /* targetVideos: { value: target.length } */
+        });
+        // dispatch(sessionInfo(obj));
+        console.log(score)
+        localStorage.setItem('score', score)
+    }
+
     const handlerChange = () => {
+        if (lives.current === 0) return null
         recImages()
         tiempo.current && tiempo.current.reset();
         contador.current++
     }
+
     useEffect(() => {
         if (seeImages.current.length === 1) {
             setTimeout(() => {
@@ -197,6 +201,10 @@ const ImagePlayer = ({ history, recImages }) => {
             }, 3000);
         }
     }, [seeImages.current.length])
+
+    /* const a = performance.now()
+    const b = performance.now()
+    console.log(b - a) */
 
     return (
         <>

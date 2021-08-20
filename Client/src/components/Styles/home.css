@@ -12,10 +12,35 @@
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 }
+
+a {
+    text-decoration: none;
+}
+
+.moods-title {
+    text-align: center;
+    color: rgba(219, 88, 88, 0.986);
+}
+.moods-img {
+    display: flex;
+    justify-content: space-around;
+}
+
+.moods-img span {
+    font-size: 50px;
+}
+
+.moods-img span:hover {
+    cursor: pointer;
+}
+
 .swal2-container.swal2-center>.swal2-popup{
-    width:50%;
+    width:40%;
     background-color: #343434;
     color: white;
+}
+.swal2-html-container{
+overflow: hidden;
 }
 .swal23{
     position: absolute;
@@ -87,7 +112,7 @@
     min-height: none;
     height: 1.625em;
     transition: border-color .1s,box-shadow .1s;
-    /* border: 1px solid #d9d9d9; */
+    border: 1px solid #d9d9d9;
     border-radius: .1875em;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
     color: white;
@@ -104,6 +129,12 @@
     border-color: #800FC7;
     border-width:6px;
     color: #800FC7
+}
+
+.signUpText{
+    padding-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
 }
 .container_buttons_home{
     display: flex;
@@ -144,6 +175,33 @@ body{
     color:white
 }
 
+.auxiliarFondo{
+    z-index: 15000;
+    color: white;
+    box-shadow: 0px 0px 300px 100px rgba(201, 78, 191, 0.281);
+    border-radius: 50px;
+    background-color: transparent;
+    border-style: none;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+}
+
+.auxiliarFondoDerecha{
+    z-index: 15000;
+    color: white;
+    box-shadow: 0px 0px 300px 100px #800fc759;
+    border-radius: 50px;
+    background-color: transparent;
+    border-style: none;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+}
+
 .loginHome:hover{
     background-color: rgba(255, 255, 255, 0.329);
     border-style: solid;
@@ -157,6 +215,210 @@ body{
     height: 100%;
     top: 100%;
     color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.button_scroll{
+    background-color: rgba(255, 255, 255, 0.048); 
+    cursor: pointer;
+    color: white ;
+    height: max-content;
+    width: 50px;
+    border-style: none;
+    border-radius: 50px;
+    font-size: 35px;
+    position: absolute;
+    top:90%;
+    left: 50%;
+    z-index: 20000;
+    text-decoration: none;
+    text-align: center;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    color: #fff;
+    letter-spacing: .1em;
+    text-decoration: none;
+    transition: opacity .3s;
+}
+
+.button_scroll {
+    padding-top: 70px;
+  }
+  .button_scroll span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: sdb05 1.5s infinite;
+    animation: sdb05 1.5s infinite;
+    box-sizing: border-box;
+  }
+  @-webkit-keyframes sdb05{
+    0% {
+      -webkit-transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+  @keyframes sdb05 {
+    0% {
+      transform: rotate(-45deg) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(-45deg) translate(-20px, 20px);
+      opacity: 0;
+    }
+  }
+  
+.brain_right{
+    position: relative;
+    top: 15vh;
+    height: 85vh;
+}
+
+@media(min-width: 1366px){
+    .brain_right{
+        position: relative;
+        top: 15vh;
+        height: 85vh;
+        margin-right: -10em;
+    }
+
+    .second_page_subtitle{
+        margin-bottom: 40px !important;
+    }
+}
+
+@media(min-width: 1440px){
+    .brain_right{
+        position: relative;
+        top: 25vh;
+        height: 75vh;
+        padding-left: 520px;
+    }
+
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 70px !important;
+        width: 700px !important;
+    }
+
+    .second_page_title{
+        font-size: 75px !important;
+        width: 100% !important;
+    }
+    
+    .second_page_title span{
+        font-size: 75px !important;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+    }
+}
+
+@media(min-width: 1920px){
+    .brain_right{
+        position: relative;
+        top: 24vh;
+        height: 75vh;
+        margin-right: -100%;
+        padding-left: 760px;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+        height: 300px;
+        width: 80em;
+    }
+
+    .second_page_title{
+        font-size: 90px !important;
+    }
+    
+    .second_page_title span{
+        font-size: 90px !important;
+    }
+
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 90px !important;
+    }
+
+    .startGameLanding{
+        font-size: 30px !important;
+        width: 280px !important;
+    }
+
+    .textHome{
+        font-size: 65px !important;
+    }
+
+    .textHome span{
+        font-size: 65px !important;
+    }
+
+    .sub_textHome{
+        font-size: 25px !important;
+    }
+}
+
+
+.text_secon_page{
+    position: relative;
+    top: 21vh;
+    height: 200px;
+}
+
+.second_page_title {
+    font-size: 50px;
+    margin-left: 10%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.second_page_subtitle{
+    font-size: 20px;
+    margin-left: 10.5%;
+    margin-top: -20px;
+    font-family: 'Montserrat', sans-serif;
+    width: 70%;
+    margin-bottom: 40px;
+}
+
+.startGameLanding{
+    cursor: pointer;
+    background-color: #C94EBF;
+    width: 150px;
+    height: 45px;
+    font-family: 'Montserrat', sans-serif;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 10.5%;
+    color: white;
+    border-style: none;
+    font-size: 16px;
+    font-weight: 550;
 }
 
 .registerHome{
@@ -179,27 +441,87 @@ body{
     color: white;
 }
 
+.textHomeSession{
+    position: absolute;
+    color: white;
+    font-size: 50px;
+    margin-top: 12%;
+    font-family: 'Montserrat', sans-serif;
+    width:100%;
+    text-align: center;
+}
+
+.cerebritoHomeResults{
+    z-index: 1000;
+    width: 750px;
+    height: 450px;
+    position: absolute;
+    bottom: 0;
+}
+
 .registerHome:hover{
     background-color: rgba(255, 255, 255, 0.329);
     border-style: solid;
     border-width: 0.5px;
 }
 
+.scores{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 29%;
+    width:40%;
+    margin-left: 26%;
+    align-items:center;
+    z-index: 10;
+    place-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #212429;
+    border-radius: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.column_scores{
+    display: flex;
+    flex-direction: column;
+}
+
+.column_scores h4{
+    color: white;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.column_scores p{
+    color: #C94EBF;
+    font-size: 45px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-top: -25px;
+}
+
 .buttonsHome{
     display: flex;
     flex-direction: row;
     position: absolute;
-    bottom: 25%;
+    bottom: 15%;
     width:100%;
     align-items:center;
-    z-index: 10;
+    z-index: 21000;
     place-content: center;
 }
 
 .startGame {
-    background-color: white;
+    background-color: transparent;
     border-radius: 5px;
-    border-style: none;
+    border-color: white;
+    border-width: 1.5px;
+    border-style: solid;
     width: 150px;
     height: 50px;
     font-weight: bold;
@@ -212,18 +534,7 @@ body{
 }
 
 .startGame:hover {
-    background-color: white;
-    border-radius: 5px;
-    border-style: solid;
-    border-color: #800FC7;
-    border-width:6px;
-    width: 150px;
-    height: 50px;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    vertical-align: middle;
-    padding-top:-30px
+    background-color: rgba(255, 255, 255, 0.178);
 }
 
 .container__home_dos{
@@ -308,7 +619,7 @@ section::before{
     font-family: 'Montserrat', sans-serif;
     width:100%;
     text-align: center;
-    z-index:5
+    z-index:5;
 }
 
 .sessionBox{

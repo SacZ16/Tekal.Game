@@ -18,9 +18,9 @@ function App() {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/dashboard' component={Dashboard} /> {/* Este seria home, donde estan los resultados */}
-        <Route exact path='/login' component={LoginPage} />
-        <Route exact path='/register' component={RegisterWithEmail} />
-        <Route exact path='/form' component={FormData} />
+        <Route exact path='/login' component={LoginPage} /> {/* Borrar */}
+        <Route exact path='/register' component={RegisterWithEmail} /> {/* Borrar */}
+        <Route exact path='/form' component={FormData} /> {/* Borrar */}
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
         <Route exact path='/preclose' component={PreFinalGame} />

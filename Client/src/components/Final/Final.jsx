@@ -11,6 +11,7 @@ function Finalgame({ history }) {
 
     const dispatch = useDispatch()
     const { score } = useSelector(state => state.user.currentGame)
+    console.log(score)
     const cookies = new Cookie();
     var emailCokkie;
     //Sacando el email
@@ -76,7 +77,7 @@ function Finalgame({ history }) {
             </div>
             <div className='buttonRegister2' >
                 <div>
-                    <Link to='/dashboard'>
+                    <Link to='/'>
                         <button className='buttonRegister' >Home</button>
                     </Link>
                 </div>

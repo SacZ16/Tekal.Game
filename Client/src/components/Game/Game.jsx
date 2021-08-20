@@ -7,12 +7,13 @@ import style from '../Styles/Game.module.css'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import ImagePlayer from '../ImagePLayer/ImagePlayer';
+import { withRouter } from 'react-router';
 
-// Simulamos el arry de imagenes
+// Simulamos el array de imagenes
 import imagePueba from '../../assets/img/imagesPrueba';
 
 
-export const Game = () => {
+export const Game = ({ history }) => {
 
   const dispatch = useDispatch();
   const tope = useRef(0)
@@ -22,9 +23,9 @@ export const Game = () => {
   const cookies = new Cookie();
 
   const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
-  // console.log(videoApi)
+  console.log(videoApi)
   const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
-  // console.log(videoBlop)
+  console.log(videoBlop)
   const videoToSeeBlop = useRef() // videos con la URL Blop
   // console.log(videoToSeeBlop.current)
 
@@ -96,39 +97,21 @@ export const Game = () => {
     // }
   }
 
-  // Selecciona un template al azar
+  // Verifica si esta logeado o no al terminar el juego
 
-  /* var random = Math.round(Math.random() * 999)
-  const template = require(`../../assets/level_templates/template_${random}.json`); */
-
-  /*  const videoObj = videoArr.map(e => Object.create({}, { // en cada posicion hay un objeto
-     id: { value: e[0] },
-     category: { value: e[1] },
-     url: { value: e[2] }
-   })) */
-
-  // console.log(videoObj)
-
-  // -------
-
-  /*  const arrVideos = videosURL.map((e, i) => Object.create({}, {
-     id: { value: i },
-     url: { value: e },
-   }))
-   
-   let videosToSee = [] // array nuevo
-   template[2].map(e => {
-     videosToSee.push(arrVideos.filter(b => b.id === e[0]))
-     videosToSee[videosToSee.length - 1].category = e[1]
-   }); */
-
-  // console.log(videosToSee)
-  // console.log(template)
+  function checkLogin() {
+    if (!cookies.get('userInfo')) {
+      history.push('/preclose');
+    }
+    if (cookies.get('userInfo')) {
+      history.push('/close');
+    }
+  }
 
   // Elige el video que el usuario va a ver
 
   function recVideos() {
-    if (videoApi) {
+    if (mode === 'videos' && videoApi) {
       if (tope.current >= videoApi[2].length) {
         return null
       } else {
@@ -137,10 +120,7 @@ export const Game = () => {
         tope.current++;
       }
     }
-  }
-
-  function recImages() {
-    if (videoToSeeBlop.current) {
+    if (mode === 'images' && videoToSeeBlop.current) {
       if (tope.current >= videoToSeeBlop.current.length) {
         return null
       } else {
@@ -156,9 +136,6 @@ export const Game = () => {
   function viewVideos() {
     // dispatch(seenVideos(videoApi[2], tope.current)); // original de los videos
     dispatch(seenVideos(videoToSeeBlop.current, tope.current));
-    /*  if (mode === 'images') {
-       tope.current++;
-     } */
   }
 
   // Cambio de videos y guarda un nuevo array con los blop
@@ -170,10 +147,10 @@ export const Game = () => {
         arr.push({ ...e[0], urlBlop: videoBlop[i] }, e[1])
         return arr
       })
+      console.log(blop)
       videoToSeeBlop.current = blop
     }
     recVideos();
-    recImages();
   }, [videoBlop, imageApi]);
 
   return (
@@ -181,12 +158,12 @@ export const Game = () => {
       <div className={style.fondo3}>
         {
           !videoBlop && !videoToSeeBlop.current ? <Loading /> :
-            videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} /> :
-              <ImagePlayer recImages={recImages} />
+            videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} checkLogin={checkLogin} /> :
+              <ImagePlayer className={style.video} target={2} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} />
         }
       </div>
     </>
   )
 }
 
-export default Game;
+export default withRouter(Game);

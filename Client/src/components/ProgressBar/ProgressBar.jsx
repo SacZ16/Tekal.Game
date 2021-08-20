@@ -1,53 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import style from '../Styles/Game.module.css';
 import '../Styles/progressBar.css';
 
 function ProgressBar({ lives, max, progress }) {
     return (
-        <div style={{ width: '90%', margin: '0', display: 'flex' }}>
-            {
-                lives === 3 ?
-                    <div style=
-                        {{
-                            color: 'red', display: 'flex', flexDirection: 'row',
-                            width: '70px', marginTop: '-30px'
-                        }}>❤ ❤ ❤
-                    </div> : null
-            }
-            {
-                lives === 2 ?
-                    <div style=
-                        {{
-                            color: 'red', display: 'flex', flexDirection: 'row',
-                            width: '70px', marginTop: '-30px'
-                        }}>❤ ❤ 💔
-                    </div> : null
-            }
-            {
-                lives === 1 ?
-                    <div style=
-                        {{
-                            color: 'red', display: 'flex', flexDirection: 'row',
-                            width: '70px', marginTop: '-30px'
-                        }}>❤ 💔 💔
-                    </div> : null
-            }
-            {
-                lives === 0 ?
-                    <div style=
-                        {{
-                            color: 'red', display: 'flex', flexDirection: 'row',
-                            width: '70px', marginTop: '-30px'
-                        }}>💔 💔 💔
-                    </div> : null
-            }
+        <div style={{ width: '90%', marginTop: '-30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className={style.vidasgame} style=
+                {{
+                    color: 'red', display: 'flex', flexDirection: 'row',
+                }}>❤ x {lives}
+            </div>
+
             <progress
                 className='progressBar'
-                id="progress" max={max}
-                value={progress}>
+                id="progress"
+                max={max}
+                value={progress}
+            >
             </progress>
-            <Link style={{ marginLeft: '40px', marginTop: '-37px', color: 'white', fontSize: '25px', textDecoration: 'none' }} to='login'>
-                x
+            <Link className={style.xgame} style={{ marginLeft: '40px', marginTop: '-10px', color: 'white', textDecoration: 'none' }} to='/'>
+                ✖
             </Link>
         </div>
     )

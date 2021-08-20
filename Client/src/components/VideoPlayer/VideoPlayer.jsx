@@ -14,14 +14,11 @@ import style from '../Styles/Game.module.css';
 import Swal from 'sweetalert2'
 import { sessionInfo } from '../../redux/action';
 import axios from 'axios';
-import Cookie from 'universal-cookie'
 import ProgressBar from '../ProgressBar/ProgressBar';
 
-const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
-  console.log(email)
+const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email }) => {
+
   const dispatch = useDispatch();
-  const cookies = new Cookie();
-  console.log(cookies)
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
 
@@ -118,6 +115,8 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
     }
   };
 
+
+
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
     if (!press.current) {
@@ -162,12 +161,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         confirmButtonText: 'Continuar'
       }).then(() => {
         postData()
-        if (!cookies.get('userInfo')) {
-          history.push('/preclose');
-        }
-        if (cookies.get('userInfo')) {
-          history.push('/close');
-        }
+        checkLogin()
       })
     }
   }, [seeVideos.current.length, lives.current]);
@@ -219,12 +213,7 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
             confirmButtonText: 'Continuar'
           }).then(() => {
             postData()
-            if (!cookies.get('userInfo')) {
-              history.push('/preclose');
-            }
-            if (cookies.get('userInfo')) {
-              history.push('/close');
-            }
+            checkLogin()
           })
         }, 500)
       }
@@ -240,9 +229,9 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
       {
         (recVideo !== '') &&
-        <div width="50%" height="50%" z-index='5' id='video'>
+        <div width="50%" height="50%" z-index='5' id='video' className={style.contenedordelvideo}>
           <ProgressBar lives={lives.current} max={videoApi.length} progress={seeVideos.current.length} />
-          <div className={style.contenedordelvideo} ref={videoTouch} >
+          <div ref={videoTouch} >
             <ReactPlayer className={style.video}
               style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}
               z-index='5'
