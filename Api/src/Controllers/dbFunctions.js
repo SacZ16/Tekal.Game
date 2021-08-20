@@ -440,8 +440,41 @@ const order = async(limite) => {
                 }
             },
             ScanIndexForward: true, 
+            Limit: limite
+            
+        };
+
+        const orderByViews = await connectionDynamo.query(params).promise();
+        //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        return orderByViews;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+const orderNext = async(limite, last, views) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter-by-views",
+           
+            KeyConditions: {
+                status: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        "OK"
+                    ]
+                }
+            },
+            ScanIndexForward: true, 
             Limit: limite,
-            ExclusiveStartKey:LastEvaluatedKey
+            ExclusiveStartKey: {
+                views: views,
+                SK: last,
+                PK: last,
+                status: 'OK'
+            },
             
         };
 
@@ -474,5 +507,6 @@ module.exports = {
     updateView,
     queryPK,
     putPKAssets,
-    order
+    order,
+    orderNext
 }
