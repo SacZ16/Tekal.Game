@@ -20,8 +20,8 @@ const RegisterCommonForm = ({props,coloresprop}) => {
                 </form>
                 <div className='form3'>
                      <a className='forgotPassword' href='/forgotPassword'>Forgot password?</a> 
-                    <button style={{'border':'1px solid #1663A2'}} className='continue' onClick= {()=> props(email, password)}> Continue </button>
-                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>or<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                    <button className='continue' onClick= {()=> props(email, password)}> Continue </button>
+                    <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>OR<hr class='hr' width='40%' color='lightgrey'></hr></p>
                     <div style={{position: 'relative',width: '100%'}}>
                 <GoogleButton/>
                 <FacebookButton/>

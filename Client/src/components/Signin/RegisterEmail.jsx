@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Particles from 'react-particles-js'
-import logoTekal from '../Styles/tekalLogo.png';
-import logoTekalNegro from '../Styles/tekallogonegro.png'
-import logoTekalAzul from '../Styles/tekallogoazul.png'
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
 import '../Styles/registerForm.css';
+
 const RegisterWithEmail = () => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [passwordcopia, setPasswordcopia] = useState('')    
@@ -46,19 +43,19 @@ const RegisterWithEmail = () => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
         if(localStorage.getItem('pruebaa')){
             if (response.data.status) {
-                alert('Usuario Registrado con Exito')
+                alert('Usuario Registrado con Éxito')
                 
                 window.location.href='./preclose'
             }
-            else { alert('ESE MAIL YA ES EN USO') }
+            else { alert('ESTE MAIL YA ESTÁ EN USO') }
         }
          if(!localStorage.getItem('pruebaa')){
                 if (response.data.status) {
-                    alert('Usuario Registrado con Exito')
+                    alert('Usuario Registrado con Éxito')
                     
                     window.location.href = './'
                 }
-                else { alert('ESE MAIL YA ES EN USO') }
+                else { alert('ESTE MAIL YA ESTÁ EN USO') }
         }
     }
 
@@ -73,28 +70,28 @@ const RegisterWithEmail = () => {
         <>      
          <div class="row" onChange={handleInputChange}>
                      <div class="column" >
-                             <p class="dddd">Name</p>
+                             <p class="titles_register_form">Name</p>
                              <input class="swal2-inputmh4" name='name'/>
-                             <p class="dddd">Date of bith</p>
+                             <p class="titles_register_form">Date of birth</p>
                              <input class="swal2-inputmh4" type='date' name='date' />
-                             <p class="dddd">Country</p>
+                             <p class="titles_register_form">Country</p>
                              <input class="swal2-inputmh4" name='country'/>
-                             <p class="dddd">Password</p>
+                             <p class="titles_register_form">Password</p>
                              <input  id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
-                             <p class="dddd">Genero</p>
+                             <p class="titles_register_form">Gender</p>
                              <input class="swal2-inputmh4" name='genero'/>
                              <GoogleButton />                        
                      </div>
                      <div class="column" >
-                             <p class="dddd">Last Name</p>
+                             <p class="titles_register_form">Last Name</p>
                              <input class="swal2-inputmh4" name='lastname' />
-                             <p class="dddd">Email</p>
+                             <p class="titles_register_form">Email</p>
                              <input  id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
-                             <p class="dddd">City/state</p>
+                             <p class="titles_register_form">City/State</p>
                              <input class="swal2-inputmh4" name='city'/>
-                             <p class="dddd">Confirm Password</p>
+                             <p class="titles_register_form">Confirm Password</p>
                              <input  id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
-                             <p class="dddd">Ethnicity</p>
+                             <p class="titles_register_form">Ethnicity</p>
                              <input class="swal2-inputmh4" name='ethnicity'/>
                              <FacebookButton />
                      </div>

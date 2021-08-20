@@ -3,12 +3,12 @@ import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
+import cerebritoHomeResults from '../Styles/prefinalmascota.png'
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import { Link } from 'react-router-dom';
-import Tutorial from '../Tutorial/Tutorial'
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
@@ -43,39 +43,33 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll)
     const prueba = () => {
         MySwal.fire({
-            title: 'Log in',
+            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>Log in</p>,
             html:
                 <div style={{overflow:'hidden'}}>
                 <RegisterCommonForm props={SendDataToBACK} style={{posicion:'absolute'}}/>
                 <div style={{display:'flex'}}>
-                <a className='signUpText'>Don´t have an account?</a><a style={{background:'none'}} onClick={pruebare}>register</a>
-
+                <a className='signUpText'>Don´t have an account?&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={pruebare}>Register</a>
                 </div>
                 </div>
                 ,
                 showCloseButton:true,
             confirmButtonText: login,
             showConfirmButton:false
-
-
         })
     }
     const pruebare = () => {
         MySwal.fire({
-            title: 'Sing up',
+            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>Sign up</p>,
             html:
                 <div style={{overflow:'hidden'}}>
                 <RegisterWithEmail style={{posicion:'absolute'}}/>
                 <div style={{display:'flex'}}>
-                <a className='signUpText'>have an account?</a><a style={{background:'none'}} onClick={prueba}>login</a>
-
+                <a className='signUpText'>Do you have an account already?&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={prueba}>Log in</a>
                 </div>
                 </div>
                 ,
                 showCloseButton:true,
                 showConfirmButton:false
-
-
         })
     }
 
@@ -168,9 +162,9 @@ var enviardatos={
     //-----------
 
     const [show, setShow] = useState(false)
-    const [sessionOn, setSessionOn] = useState(false)
-    const [login, setLogin] = useState(true)
-    const [startGame, setStartGame] = useState(false)
+    const [sessionOn, setSessionOn] = useState(false) //setear para que funcione bien
+    const [login, setLogin] = useState(true) //setear para que funcione bien
+    const [startGame, setStartGame] = useState(false) //setear para que funcione bien
     const [checker, setchecker] = useState(false)
 
     
@@ -269,22 +263,30 @@ var enviardatos={
             <div className='homeDiv'>
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
-                    <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
                     {startGame ?
                         <>
-                            <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
-                            <p className='sub_textHome' style={{ opacity: (100 + offset * -5) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
-                            <div className='buttonsHome' style={{ opacity: (100 + offset * -0.45) + '%', bottom: (25 + offset * -0.1) + '%' }}>
-                                <div className='startGame'><Link onClick={mood} style={{ color: '#800FC7', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                        <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota"/>
+                            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>Maximiliano</span></p>
+                            <div className='scores'>
+                                <div className='column_scores'>
+                                    <h4>Last score</h4>
+                                    <p>35%</p>
+                                </div>
+                                <div className='column_scores'>
+                                    <h4>Average score</h4>
+                                    <p>68%</p>
+                                </div>
+                            </div>
+                            <div className='buttonsHome'>
+                            <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
                             </div>
                         </> : (null)}
-                    <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
-                    <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
                 </section>
 
                 <CurrentSession />
                 {login ?
-                    <>
+                <>
+                    <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
                         <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
                         <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
                         <div className='container_buttons_home'>
@@ -293,22 +295,24 @@ var enviardatos={
                         </div>
                         
                         <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
+                        <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
+                    <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
+                    
+                    <div className='second_screen_home' id='second_screen'>
+                        <button className='auxiliarFondo'></button> 
+                        <button className='auxiliarFondoDerecha'></button>
+                    <div className='text_secon_page'>
+                        <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
+                        <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
+                        <Link to='/game'>
+                            <button className='startGameLanding'>Start playing</button>
+                        </Link>
+                    </div>
+                        <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
+                    </div>
                     </>
                     : (null)}
             </div>        
-
-            <div className='second_screen_home' id='second_screen'>
-            <button className='auxiliarFondo'></button> 
-            <button className='auxiliarFondoDerecha'></button>
-            <div className='text_secon_page'>
-                <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
-                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
-                <Link to='/game'>
-                    <button className='startGameLanding'>Start playing</button>
-                </Link>
-            </div>
-                <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
-            </div>
         </>
     )
 };

@@ -108,6 +108,12 @@ overflow: hidden;
     border-width:6px;
     color: #800FC7
 }
+
+.signUpText{
+    padding-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
 .container_buttons_home{
     display: flex;
     flex-direction: row;
@@ -189,7 +195,6 @@ body{
     color: white;
     display: flex;
     flex-direction: row;
-    scroll-behavior: smooth;
 }
 
 .button_scroll{
@@ -208,11 +213,11 @@ body{
     text-decoration: none;
     text-align: center;
     -webkit-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-  color: #fff;
-  letter-spacing: .1em;
-  text-decoration: none;
-  transition: opacity .3s;
+    transform: translate(0, -50%);
+    color: #fff;
+    letter-spacing: .1em;
+    text-decoration: none;
+    transition: opacity .3s;
 }
 
 .button_scroll {
@@ -260,8 +265,6 @@ body{
     }
   }
   
-  
-
 .brain_right{
     position: relative;
     top: 15vh;
@@ -277,7 +280,7 @@ body{
     }
 
     .second_page_subtitle{
-        margin-bottom: 40px;
+        margin-bottom: 40px !important;
     }
 }
 
@@ -291,7 +294,7 @@ body{
 
     .second_page_subtitle{
         font-size: 25px !important;
-        margin-bottom: 70px;
+        margin-bottom: 70px !important;
         width: 700px !important;
     }
 
@@ -336,7 +339,7 @@ body{
 
     .second_page_subtitle{
         font-size: 25px !important;
-        margin-bottom: 90px;
+        margin-bottom: 90px !important;
     }
 
     .startGameLanding{
@@ -376,6 +379,7 @@ body{
     margin-top: -20px;
     font-family: 'Montserrat', sans-serif;
     width: 70%;
+    margin-bottom: 40px;
 }
 
 .startGameLanding{
@@ -415,27 +419,87 @@ body{
     color: white;
 }
 
+.textHomeSession{
+    position: absolute;
+    color: white;
+    font-size: 50px;
+    margin-top: 12%;
+    font-family: 'Montserrat', sans-serif;
+    width:100%;
+    text-align: center;
+}
+
+.cerebritoHomeResults{
+    z-index: 20000;
+    width: 750px;
+    height: 450px;
+    position: absolute;
+    bottom: 0;
+}
+
 .registerHome:hover{
     background-color: rgba(255, 255, 255, 0.329);
     border-style: solid;
     border-width: 0.5px;
 }
 
+.scores{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 29%;
+    width:40%;
+    margin-left: 26%;
+    align-items:center;
+    z-index: 10;
+    place-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #212429;
+    border-radius: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.column_scores{
+    display: flex;
+    flex-direction: column;
+}
+
+.column_scores h4{
+    color: white;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.column_scores p{
+    color: #C94EBF;
+    font-size: 45px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-top: -25px;
+}
+
 .buttonsHome{
     display: flex;
     flex-direction: row;
     position: absolute;
-    bottom: 25%;
+    bottom: 15%;
     width:100%;
     align-items:center;
-    z-index: 10;
+    z-index: 21000;
     place-content: center;
 }
 
 .startGame {
-    background-color: white;
+    background-color: transparent;
     border-radius: 5px;
-    border-style: none;
+    border-color: white;
+    border-width: 1.5px;
+    border-style: solid;
     width: 150px;
     height: 50px;
     font-weight: bold;
@@ -448,18 +512,7 @@ body{
 }
 
 .startGame:hover {
-    background-color: white;
-    border-radius: 5px;
-    border-style: solid;
-    border-color: #800FC7;
-    border-width:6px;
-    width: 150px;
-    height: 50px;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    vertical-align: middle;
-    padding-top:-30px
+    background-color: rgba(255, 255, 255, 0.178);
 }
 
 .container__home_dos{

@@ -29,44 +29,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 1;
-}
-
-.logoForm{
-    width: 150px;
-    height: 30px;
-    margin-top: 40px;
-    margin-left: 37px;
-}
-
-.welcome {
-    color:rgb(197, 197, 197);
-    font-size: 25px;
-    font-weight:normal;
-    margin-top: 20px;
-}
-
-.loginText{
-    color:rgb(197, 197, 197);
-    font-size: 16px;
-    font-weight:normal;
-    margin-left: 5px;
-    margin-top: -7px;
+    z-index: 40000;
 }
 
 .inputForm {
     width:99%;
     padding: 14px 0 14px 0;
     text-align: center;
-    background-color: #242224;
+    background-color: #474747;
     border-style: solid;
-    border-color: white;
+    border-color: rgb(175, 175, 175);
     border-width: 0.5px;
     color: white;
     margin-top: 10px;
     border-radius: 5px;
-    
 }
+
 .inputForm2 {
     width:99%;
     padding: 14px 0 14px 0;
@@ -87,11 +65,12 @@
 }
 
 .forgotPassword{
-    color: #dddcdc;
+    color: white;
     margin: 10px 0px 10px 0;
     position: relative;
     text-align: end;
     width: 100%;
+    font-size: 15px;
 }
 
 .forgotPassword:hover{
@@ -99,14 +78,13 @@
 }
 
 .continue {
-    text-shadow: 0px 0px 5px rgb(39, 39, 39);
     border-style: none;
     text-transform: uppercase;   
     font-size: 14px; 
     width:99%;
     padding: 14px 0 14px 0;
     color: white;
-    background-color:#A52971;
+    background-color:#C94EBF;
     border-radius: 10px;
 }
 
