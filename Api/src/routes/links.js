@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { getAssets } = require('../services/csv.service.js');
+const { getAssets, getListElements, getAssetsVideo} = require('../services/csv.service.js');
 const { templateFiller } = require('../services/templates.service.js');
 const { videosNotSeen } = require('../services/notViewedVideos.service');
 const { picker } = require('../services/templatePicker.service');
@@ -10,13 +10,20 @@ router.post('/', async (req, res) => {
    
     let templateChoosen = picker();
 
-    let assetsFromDb = await videosNotSeen(email);
-    // console.log(assetsFromDb);
-    const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
+    let array = await getListElements();
+    let videos = array[0];
 
-    let assets = await getAssets(itemsFromDb);//transforma en link
+    let links = await getAssetsVideo(videos)
+    console.log(links)
+
+    // let assetsFromDb = await videosNotSeen(email);
  
-    let template = templateFiller(templateChoosen, assets);
+    // const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
+    // console.log(itemsFromDb);
+
+    // let assets = await getAssets(itemsFromDb);//transforma en link
+ 
+    let template = templateFiller(templateChoosen, links);
     //let no = assetsFromDb.map(v => v.Items)
     //console.log(no)
     res.send(template);
