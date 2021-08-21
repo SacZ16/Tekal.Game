@@ -542,7 +542,6 @@ const getSessions = async(email) => {
         console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
     }
 }
-const aaa = queryAllInfoUser("sofia@gmail.com").then(res => console.log(res.Items[0].age))
 
 module.exports = {
     getallUsers,

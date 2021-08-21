@@ -5,42 +5,40 @@ const { notSeen } = require('./compareArray.service')
 
 async function assetNotSeen(email,asset) {
     try {
-        const viewedVideos = await getSessions(email);
-        //console.log(viewedVideos);
-        if(viewedVideos.Items.length > 0){
-            const PKviewed = new Set(viewedVideos.Items.map(v => v.PK));
-            //console.log(PKviewed)
-            const videosLessViews = await orderAsset(1000,asset);
-            const setVideos = videosLessViews.Items.map(v => v.PK);
+        const viewedAssets = await getSessions(email);
+        if(viewedAssets.Items.length > 0){
+            const PKviewed = new Set(viewedAssets.Items.map(v => v.PK));
+            const assetsLessViews = await orderAsset(1000,asset);
+            const setAssets = assetsLessViews.Items.map(v => v.PK);
 
             let array = [];
-            let arrayVideos = array.concat(notSeen(setVideos,[...PKviewed],160));
-            if(videosLessViews.LastEvaluatedKey){
-                let LastEvaluatedKeyPK = videosLessViews.LastEvaluatedKey.PK;
-                let LastEvaluatedKeyViews = videosLessViews.LastEvaluatedKey.views;
+            let arrayAssets = array.concat(notSeen(setAssets,[...PKviewed],160));
+            if(assetsLessViews.LastEvaluatedKey){
+                let LastEvaluatedKeyPK = assetsLessViews.LastEvaluatedKey.PK;
+                let LastEvaluatedKeyViews = assetsLessViews.LastEvaluatedKey.views;
     
-                while(arrayVideos.length < 160){//cambiar el 160 por la cantidad de videos target
-                    let videosLessViewsNext = await orderNextAsset(1000,LastEvaluatedKeyPK, LastEvaluatedKeyViews,asset);
-                    let array2 = videosLessViewsNext.Items.map(v => v.PK);
-                    let arrayChunk = arrayVideos.concat(notSeen(array2,[...PKviewed],160));//tambien :D sofi rompehue
-                    arrayVideos = arrayChunk;
+                while(arrayAssets.length < 160){//cambiar el 160 por la cantidad de videos target
+                    let assetsLessViewsNext = await orderNextAsset(1000,LastEvaluatedKeyPK, LastEvaluatedKeyViews,asset);
+                    let array2 = assetsLessViewsNext.Items.map(v => v.PK);
+                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],160));//tambien :D sofi rompehue
+                    arrayAssets = arrayChunk;
                     LastEvaluatedKeyPK = videosLessViewsNext.LastEvaluatedKey.PK;
                     LastEvaluatedKeyViews = videosLessViewsNext.LastEvaluatedKey.views;
                 }
                 
-                const videos = arrayVideos.map(async v => await queryPK(v));
+                const videos = arrayAssets.map(async v => await queryPK(v));
                 return Promise.all(videos);
 
             }else{
-                const asset = arrayVideos.map(async v => await queryPK(v))
+                const asset = arrayAssets.map(async v => await queryPK(v))
                 return Promise.all(asset)
             }
 
         }else{
-            const allVideos = await orderAsset(160,asset);
-            const setVideos = new Set(allVideos.Items.map(v => v.PK));
+            const allAssets = await orderAsset(160,asset);
+            const setAssets= new Set(allAssets.Items.map(v => v.PK));
 
-            const videos = [...setVideos].map(async v => await queryPK(v));
+            const videos = [...setAssets].map(async v => await queryPK(v));
             return Promise.all(videos);
         }
     }catch (error) {
