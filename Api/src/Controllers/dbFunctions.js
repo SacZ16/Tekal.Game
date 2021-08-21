@@ -209,6 +209,7 @@ const putAssets = async (email, info) => {
                 "SK": `SESSION#${email}#${asset}#${info.category}#${ULID.ulid()}`,
                 "date": info.date,
                 "fileType": info.type,
+                "pivot": "OK",
                 "sessionCharacteristics": {
                     role: info.category,
                     reaction_time: info.seconds,
@@ -487,7 +488,36 @@ const orderNext = async(limite, last, views) => {
     }
 }
 
+const getSessions = async(email) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter-by-session",
+            KeyConditions: {
+                pivot: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        OK,
+                    ]
+                },
+                SK: {
+                    ComparisonOperator: "BEGINS_WITH", 
+                    AttributeValueList: [ 
+                        `SESSION#${email}`,
+                    ]
+                }
 
+            }
+        };
+
+        const sessions = await connectionDynamo.query(params).promise();
+        console.log("Query description JSON:", JSON.stringify(sessions, null, 2));
+        return sessions;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
 
 module.exports = {
     getallUsers,
@@ -508,5 +538,6 @@ module.exports = {
     queryPK,
     putPKAssets,
     order,
-    orderNext
+    orderNext,
+    getSessions
 }

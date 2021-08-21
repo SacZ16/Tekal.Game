@@ -20,6 +20,16 @@ async function getAssetsVideo(array) {
     return allAssets;
 }
 
+async function getAssetsImages(array) {
+    let assetsName = array.map(i => "https://nv60dd5u3g.execute-api.us-east-1.amazonaws.com/v1/tekal-game-asset-input?request_type=SINGLE_DOWNLOAD&filename=image/" + i.replace(/^[0-9]+,/ , ""));
+
+    let assets = assetsName.map(async v => {
+        return await axios.get(v).then(res => res.data.body);
+    });
+    let allAssets = await Promise.all(assets).then(res => res);
+    return allAssets;
+}
+
 
 async function getListElements(){
     let resp = await axios.get("https://nv60dd5u3g.execute-api.us-east-1.amazonaws.com/v1/tekal-game-asset-input?request_type=LIST_ELEMENTS").then(res => (res.data.body));
@@ -32,4 +42,4 @@ async function getListElements(){
 }
 
 
-module.exports = {getAssets, getAssetsVideo, getListElements};
+module.exports = {getAssets, getAssetsVideo, getListElements, getAssetsImages };

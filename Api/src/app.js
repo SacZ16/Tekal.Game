@@ -10,6 +10,7 @@ const datauser = require('./routes/datauser');
 const links = require('./routes/links');
 const info = require('./routes/assetsVideoInfo');
 const game = require('./routes/userGameInfo');
+const images = require('./routes/images');
 const verificationemail = require ('./routes/verificationEmail');
 const VerificationChangePassword = require ('./routes/VerificationChangePassword');
 const changepassword = require('./routes/changePassword');
@@ -47,6 +48,7 @@ server.use('/verification', verificationemail);
 server.use('/verificationchangepassword', VerificationChangePassword);
 server.use('/changepassword', changepassword);
 server.use('/assets', assets);
+server.use('/images', images)
 
 
 module.exports = server;
