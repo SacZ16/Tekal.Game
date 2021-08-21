@@ -5,7 +5,7 @@ const {endpoint} = require('../services/endpoint.service');
 
 router.post('/', async (req, res) => {
     let info = req.body;
-    let email = info[0]
+    let email = info[0];
     let urls = [];
     
     try {

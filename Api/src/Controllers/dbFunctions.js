@@ -406,7 +406,7 @@ const queryPK = async (pk) => {
     }
 }
 
-const putPKAssets = async (urlAsset, index) => {
+const putPKAssetsVideos = async (urlAsset, index) => {
     try{
         let params = {
             TableName: TABLE_ASSETS,
@@ -414,7 +414,7 @@ const putPKAssets = async (urlAsset, index) => {
                 "PK": urlAsset,
                 "SK": index,
                 "views": 0,
-                "status": "OK"
+                "status": "video"
             }
         };
 
@@ -427,7 +427,28 @@ const putPKAssets = async (urlAsset, index) => {
     }
 }
 
-const order = async(limite) => {
+const putPKAssetsImages = async (urlAsset, index) => {
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": urlAsset,
+                "SK": index,
+                "views": 0,
+                "status": "image"
+            }
+        };
+
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+const orderVideo = async(limite) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -436,7 +457,7 @@ const order = async(limite) => {
                 status: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        "OK"
+                        "video"
                     ]
                 }
             },
@@ -454,7 +475,7 @@ const order = async(limite) => {
     }
 }
 
-const orderNext = async(limite, last, views) => {
+const orderNextVideo = async(limite, last, views) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -464,7 +485,7 @@ const orderNext = async(limite, last, views) => {
                 status: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        "OK"
+                        "video"
                     ]
                 }
             },
@@ -497,7 +518,7 @@ const getSessions = async(email) => {
                 pivot: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        OK,
+                        "OK",
                     ]
                 },
                 SK: {
@@ -511,7 +532,7 @@ const getSessions = async(email) => {
         };
 
         const sessions = await connectionDynamo.query(params).promise();
-        console.log("Query description JSON:", JSON.stringify(sessions, null, 2));
+        //console.log("Query description JSON:", JSON.stringify(sessions, null, 2));
         return sessions;
     }
     catch(error){
@@ -536,8 +557,9 @@ module.exports = {
     queryAllAssets,
     updateView,
     queryPK,
-    putPKAssets,
-    order,
-    orderNext,
-    getSessions
+    putPKAssetsVideos,
+    orderVideo,
+    orderNextVideo,
+    getSessions,
+    putPKAssetsImages
 }

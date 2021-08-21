@@ -10,20 +10,20 @@ router.post('/', async (req, res) => {
    
     let templateChoosen = picker();
 
-    let array = await getListElements();
-    let videos = array[1];
+    // let array = await getListElements();
+    // let videos = array[1];
 
-    let links = await getAssetsImages(videos)
-    console.log(links)
+    // let links = await getAssetsImages(videos)
+    // console.log(links)
 
-    // let assetsFromDb = await videosNotSeen(email);
+    let assetsFromDb = await videosNotSeen(email);
  
-    // const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
+    const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
     // console.log(itemsFromDb);
 
-    // let assets = await getAssets(itemsFromDb);//transforma en link
+    let assets = await getAssets(itemsFromDb);//transforma en link
  
-    let template = templateFiller(templateChoosen, links);
+    let template = templateFiller(templateChoosen, assets);
     //let no = assetsFromDb.map(v => v.Items)
     //console.log(no)
     res.send(template);
