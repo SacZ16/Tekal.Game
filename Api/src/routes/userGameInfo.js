@@ -8,6 +8,7 @@ router.post('/', async (req, res) => {
     let info = req.body;
     let answers = [];
     let presentations = [];
+    let emotion = info[2].mood;
     let email = info[0];
     let score = info[1];
     try {
@@ -22,13 +23,15 @@ router.post('/', async (req, res) => {
             email: email,
             score: score,
             answer: answers,
-            presentation: presentations
+            presentation: presentations,
+            emotion: emotion
+
         }
         let games = await putUserGameItems(data);
         res.send(games);
     }
     catch(error) {
-        console.log(error)
+        console.log(error);
     }
 })
 

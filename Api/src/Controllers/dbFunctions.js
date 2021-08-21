@@ -139,7 +139,7 @@ const queryAllInfoUser = async (userId) => {
         };
 
         const queryUserInfo = await connectionDynamo.query(params).promise()
-        // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
     catch (error) {
@@ -210,6 +210,8 @@ const putAssets = async (email, info) => {
                 "date": info.date,
                 "fileType": info.type,
                 "pivot": "OK",
+                "userId": email,
+                "userMetadata": { age: info.age, country: info.country, emotion: info.mood}, 
                 "sessionCharacteristics": {
                     role: info.category,
                     reaction_time: info.seconds,
@@ -242,7 +244,8 @@ const putUserGameItems = async (data) => {
                 "playedAt": new Date().toString(),
                 "presentations": data.presentation,
                 "answers": data.answer,
-                "score": data.score.toString()
+                "score": data.score.toString(),
+                "emotion": data.emotion
             }
         };
         console.log(params)
@@ -539,6 +542,7 @@ const getSessions = async(email) => {
         console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
     }
 }
+const aaa = queryAllInfoUser("sofia@gmail.com").then(res => console.log(res.Items[0].age))
 
 module.exports = {
     getallUsers,

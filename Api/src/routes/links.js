@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
     let template = templateFiller(templateChoosen, assets);
     //let no = assetsFromDb.map(v => v.Items)
     //console.log(no)
+    console.log(assets)
     res.send(template);
 })
 module.exports = router;
