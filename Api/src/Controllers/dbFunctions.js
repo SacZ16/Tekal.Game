@@ -430,13 +430,13 @@ const putPKAssetsVideos = async (urlAsset, index) => {
     }
 }
 
-const putPKAssetsImages = async (urlAsset, index) => {
+const putPKAssetsImages = async (urlAsset) => {
     try{
         let params = {
             TableName: TABLE_ASSETS,
             Item:{
                 "PK": urlAsset,
-                "SK": index,
+                "SK": urlAsset,
                 "views": 0,
                 "status": "image"
             }
@@ -451,7 +451,7 @@ const putPKAssetsImages = async (urlAsset, index) => {
     }
 }
 
-const orderVideo = async(limite) => {
+const orderAsset = async(limite,asset) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -460,7 +460,7 @@ const orderVideo = async(limite) => {
                 status: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        "video"
+                        asset
                     ]
                 }
             },
@@ -478,7 +478,7 @@ const orderVideo = async(limite) => {
     }
 }
 
-const orderNextVideo = async(limite, last, views) => {
+const orderNextAsset = async(limite, last, views,asset) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -488,7 +488,7 @@ const orderNextVideo = async(limite, last, views) => {
                 status: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        "video"
+                        asset
                     ]
                 }
             },
@@ -562,8 +562,8 @@ module.exports = {
     updateView,
     queryPK,
     putPKAssetsVideos,
-    orderVideo,
-    orderNextVideo,
+    orderAsset,
+    orderNextAsset,
     getSessions,
     putPKAssetsImages
 }

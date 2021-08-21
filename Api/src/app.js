@@ -10,14 +10,15 @@ const datauser = require('./routes/datauser');
 const links = require('./routes/links');
 const info = require('./routes/assetsVideoInfo');
 const game = require('./routes/userGameInfo');
-const images = require('./routes/images');
 const verificationemail = require ('./routes/verificationEmail');
 const VerificationChangePassword = require ('./routes/VerificationChangePassword');
 const changepassword = require('./routes/changePassword');
+const assetsImages = require("./routes/loadingImages")
 const assets = require ('./routes/loadingAssets');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
+
 
 
 const server = express();
@@ -48,7 +49,7 @@ server.use('/verification', verificationemail);
 server.use('/verificationchangepassword', VerificationChangePassword);
 server.use('/changepassword', changepassword);
 server.use('/assets', assets);
-server.use('/images', images)
+server.use('/loadingImages', assetsImages)
 
 
 module.exports = server;
