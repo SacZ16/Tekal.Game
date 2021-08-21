@@ -139,7 +139,7 @@ const queryAllInfoUser = async (userId) => {
         };
 
         const queryUserInfo = await connectionDynamo.query(params).promise()
-        // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+        //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
         return queryUserInfo;
     }
     catch (error) {
@@ -209,6 +209,9 @@ const putAssets = async (email, info) => {
                 "SK": `SESSION#${email}#${asset}#${info.category}#${ULID.ulid()}`,
                 "date": info.date,
                 "fileType": info.type,
+                "pivot": "OK",
+                "userId": email,
+                "userMetadata": { age: info.age, country: info.country, emotion: info.mood}, 
                 "sessionCharacteristics": {
                     role: info.category,
                     reaction_time: info.seconds,
@@ -241,7 +244,8 @@ const putUserGameItems = async (data) => {
                 "playedAt": new Date().toString(),
                 "presentations": data.presentation,
                 "answers": data.answer,
-                "score": data.score.toString()
+                "score": data.score.toString(),
+                "emotion": data.emotion
             }
         };
         console.log(params)
@@ -405,7 +409,7 @@ const queryPK = async (pk) => {
     }
 }
 
-const putPKAssets = async (urlAsset, index) => {
+const putPKAssetsVideos = async (urlAsset, index) => {
     try{
         let params = {
             TableName: TABLE_ASSETS,
@@ -413,7 +417,7 @@ const putPKAssets = async (urlAsset, index) => {
                 "PK": urlAsset,
                 "SK": index,
                 "views": 0,
-                "status": "OK"
+                "status": "video"
             }
         };
 
@@ -426,7 +430,28 @@ const putPKAssets = async (urlAsset, index) => {
     }
 }
 
-const order = async(limite) => {
+const putPKAssetsImages = async (urlAsset) => {
+    try{
+        let params = {
+            TableName: TABLE_ASSETS,
+            Item:{
+                "PK": urlAsset,
+                "SK": urlAsset,
+                "views": 0,
+                "status": "image"
+            }
+        };
+
+        const video = await connectionDynamo.put(params).promise();
+        console.log("Added video");
+        return video;
+    }
+    catch(error){
+        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+    }
+}
+
+const orderAsset = async(limite,asset) => {
     try {
         let params = {
             TableName: TABLE_ASSETS,
@@ -435,16 +460,17 @@ const order = async(limite) => {
                 status: {
                     ComparisonOperator: "EQ", 
                     AttributeValueList: [ 
-                        "OK"
+                        asset
                     ]
                 }
             },
             ScanIndexForward: true, 
             Limit: limite
+            
         };
 
         const orderByViews = await connectionDynamo.query(params).promise();
-        // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
         return orderByViews;
     }
     catch(error){
@@ -452,8 +478,70 @@ const order = async(limite) => {
     }
 }
 
-// order()
+const orderNextAsset = async(limite, last, views,asset) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter-by-views",
+           
+            KeyConditions: {
+                status: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        asset
+                    ]
+                }
+            },
+            ScanIndexForward: true, 
+            Limit: limite,
+            ExclusiveStartKey: {
+                views: views,
+                SK: last,
+                PK: last,
+                status: 'OK'
+            },
+            
+        };
 
+        const orderByViews = await connectionDynamo.query(params).promise();
+        //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+        return orderByViews;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
+
+const getSessions = async(email) => {
+    try {
+        let params = {
+            TableName: TABLE_ASSETS,
+            IndexName: "filter-by-session",
+            KeyConditions: {
+                pivot: {
+                    ComparisonOperator: "EQ", 
+                    AttributeValueList: [ 
+                        "OK",
+                    ]
+                },
+                SK: {
+                    ComparisonOperator: "BEGINS_WITH", 
+                    AttributeValueList: [ 
+                        `SESSION#${email}`,
+                    ]
+                }
+
+            }
+        };
+
+        const sessions = await connectionDynamo.query(params).promise();
+        //console.log("Query description JSON:", JSON.stringify(sessions, null, 2));
+        return sessions;
+    }
+    catch(error){
+        console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+    }
+}
 
 module.exports = {
     getallUsers,
@@ -472,6 +560,9 @@ module.exports = {
     queryAllAssets,
     updateView,
     queryPK,
-    putPKAssets,
-    order
+    putPKAssetsVideos,
+    orderAsset,
+    orderNextAsset,
+    getSessions,
+    putPKAssetsImages
 }

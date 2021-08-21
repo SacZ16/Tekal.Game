@@ -1,35 +1,49 @@
-const { viewedVideos, queryAllAssets, queryPK, order } = require('../Controllers/dbFunctions');
+const { getSessions, queryPK, orderAsset, orderNextAsset } = require('../Controllers/dbFunctions');
+const { notSeen } = require('./compareArray.service')
 
-async function videosNotSeen(email) {
+
+
+async function assetNotSeen(email,asset) {
     try {
-        const viewedVideos1 = await viewedVideos(email);
-        // console.log(viewedVideos1);
-        if(!typeof viewedVideos1 === "undefined"){
-            const PKviewed = new Set(viewedVideos1.Items.map(v => v.PK));
-            const arrayViewed = Array.from(PKviewed);
+        const viewedAssets = await getSessions(email);
+        if(viewedAssets.Items.length > 0){
+            const PKviewed = new Set(viewedAssets.Items.map(v => v.PK));
+            const assetsLessViews = await orderAsset(1000,asset);
+            const setAssets = assetsLessViews.Items.map(v => v.PK);
 
-            const thousandVideosOrdered = await order(1000);
-            const setVideos = new Set(thousandVideosOrdered.Items.map(v => v.PK));
-            
-            const notViewedVideos = [...setVideos].filter(function(n) {
-                if (this.count < 200 && !arrayViewed.includes(n)) {
-                    return true;
+            let array = [];
+            let arrayAssets = array.concat(notSeen(setAssets,[...PKviewed],160));
+            if(assetsLessViews.LastEvaluatedKey){
+                let LastEvaluatedKeyPK = assetsLessViews.LastEvaluatedKey.PK;
+                let LastEvaluatedKeyViews = assetsLessViews.LastEvaluatedKey.views;
+    
+                while(arrayAssets.length < 160){//cambiar el 160 por la cantidad de videos target
+                    let assetsLessViewsNext = await orderNextAsset(1000,LastEvaluatedKeyPK, LastEvaluatedKeyViews,asset);
+                    let array2 = assetsLessViewsNext.Items.map(v => v.PK);
+                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],160));//tambien :D sofi rompehue
+                    arrayAssets = arrayChunk;
+                    LastEvaluatedKeyPK = videosLessViewsNext.LastEvaluatedKey.PK;
+                    LastEvaluatedKeyViews = videosLessViewsNext.LastEvaluatedKey.views;
                 }
-                return false;
-                }, {count: 0});
-            console.log(notViewedVideos)//ASI, NO. >:c REY....
+                
+                const videos = arrayAssets.map(async v => await queryPK(v));
+                return Promise.all(videos);
+
+            }else{
+                const asset = arrayAssets.map(async v => await queryPK(v))
+                return Promise.all(asset)
+            }
+
+        }else{
+            const allAssets = await orderAsset(160,asset);
+            const setAssets= new Set(allAssets.Items.map(v => v.PK));
+
+            const videos = [...setAssets].map(async v => await queryPK(v));
+            return Promise.all(videos);
         }
-        else{
-
-        const allVideos = await order(160);
-        const setVideos = new Set(allVideos.Items.map(v => v.PK));
-
-        const videos = [...setVideos].map(async v => await queryPK(v));
-        return Promise.all(videos);
-    }}catch (error) {
+    }catch (error) {
         console.log(error);
     }
 }
-// videosNotSeen("amapetrice@gmail.com")
 
-module.exports = { videosNotSeen };
+module.exports = { assetNotSeen };
