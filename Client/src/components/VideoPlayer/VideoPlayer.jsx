@@ -21,7 +21,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email }) => {
   const dispatch = useDispatch();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-
+  console.log('videos')
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
 

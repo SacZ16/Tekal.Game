@@ -223,8 +223,8 @@ const Home = () => {
     }
 
     const mood = (e) => {
-        if (e.target.id === 'videos') localStorage.setItem('mode', e.target.id)
-        if (e.target.id === 'images') localStorage.setItem('mode', e.target.id)
+        if (e.target.id === 'video') localStorage.setItem('mode', e.target.id)
+        if (e.target.id === 'image') localStorage.setItem('mode', e.target.id)
         const lastStorageDay = localStorage.getItem('date')
         const currentDate = new Date();
         const day = currentDate.getDay();
@@ -248,7 +248,7 @@ const Home = () => {
     }
 
     const playWithOutLogin = () => {
-        localStorage.setItem('mode', 'videos')
+        localStorage.setItem('mode', 'video')
         window.location.href = ('/game')
     }
 
@@ -291,8 +291,8 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className='buttonsHome'>
-                                <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='videos'>Videos</Link></div>
-                                <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='images'>Images</Link></div>
+                                <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='video'>Videos</Link></div>
+                                <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='image'>Images</Link></div>
                             </div>
                         </> : (null)}
                 </section>

@@ -61,32 +61,30 @@ function Finalgame({ history }) {
     }
 
     return (
-        <div>
-            <div className='bgLandingfinal'>
-
-            </div>
-            <h1 className='yourscore'>Your score is</h1>
-            <div className='marco'>
-                {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
-                <div className='loader'>
-                </div>
-            </div>
-            <div className="grafico">
-                <Line data={data} options={opciones} config={config} />
-            </div>
-            <div className='buttonRegister2' >
+        <div className='fondopreclose' >
+           
                 <div>
-                    <Link to='/'>
-                        <button className='buttonRegister' >Home</button>
-                    </Link>
+                    <h1 className='yourscore'>Your score is</h1>
+                    <div className='marco'>
+                        {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
+                        <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
+                        <div className='loader'></div>
+                    </div>
+                    <div className='buttonRegister2' >
+                        <div>
+                            <Link to='/'>
+                                <button className='botnreclose' >Home</button>
+                            </Link>
+                        </div>
+                        <div>
+                            <button className='botnreclose' onClick={again}>Try again</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-
-                    <button className='buttonRegister' onClick={again}>Try again</button>
-
+                <div className="grafico">
+                    <Line data={data} options={opciones} config={config} />
                 </div>
-            </div>
+         
             <p className='copyright'>Â© 2021 Tekal, Inc. All rights reserved</p>
         </div >
     )

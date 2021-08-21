@@ -9,6 +9,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import fondomascota from '../Styles/prefinalmascota.png'
+import Loading from '../Loading/Loading';
 
 const PreFinalgame = () => {
     const MySwal = withReactContent(Swal)
@@ -48,6 +49,7 @@ const PreFinalgame = () => {
             showConfirmButton: false
         })
     }
+
     return (
         <div className="fondopreclose">
             <img className="logotekalpreclose" src={logoTekal} alt="" />

@@ -8,15 +8,15 @@ import withReactContent from 'sweetalert2-react-content'
 import { withRouter } from 'react-router';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
-const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
+const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
     const MySwal = withReactContent(Swal)
 
     const { user, recVideo } = useSelector(state => state); // Traidos del Obj Reducer.
 
     const seeImages = useRef(); //Videos Vistos por el Usuario en el Juego 
     seeImages.current = user.currentGame.seenVideos;
-    // console.log('Videos Vistos', seeImages.current)
-
+    console.log('Videos Vistos', seeImages.current)
+    const mood = localStorage.getItem('mood')
     const infoImages = useRef(); // Informacion del Video
     infoImages.current = recVideo;
     // console.log('Video Actual', infoVideo.current)
@@ -29,7 +29,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
     // console.log(answers.current)
     const press = useRef(false); // Variable para detectar la barra espaciadora
     const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
-    console.log('Segundos Apretados', pressSeconds.current)
+    // console.log('Segundos Apretados', pressSeconds.current)
     const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target
     // console.log('Target Encontrados', targetFound.current)
     const falsePositives = useRef([]); // videos que no son target_repeat
@@ -39,9 +39,9 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
     const lives = useRef(3); // Vidas del usuario 
     // console.log(lives.current)
     const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
-    console.log(score.current)
+    // console.log(score.current)
     const finalImages = useRef([]); // Videos vistos con respuetsas
-    // console.log(finalImages.current)
+    console.log(finalImages.current)
     //-------------
 
     const imageTouch = useRef()
@@ -97,18 +97,22 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
     }, []);
 
     useEffect(() => {
-        if (seeImages.current.length === imagesPrueba.length) {
+        if (seeImages.current.length === imageApi.length) {
             setTimeout(() => {
                 if (!press.current) {
                     prevAsset()
                 }
                 videosWithAnswers()
-                Swal.fire({
+                MySwal.fire({
                     toast: true,
-                    title: "The game has finished",
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
+                    html:
+                        <div >
+                            <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>The game finished</h3>
+                        </div>,
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    width: 500
                 }).then(() => {
                     sessionData()
                     checkLogin()
@@ -120,13 +124,13 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
             MySwal.fire({
                 toast: true,
                 html:
-                    <div>
-                        <h3 style={{color: 'red'}}>Lost all your lives, good luck next time</h3>
-                        <br />
+                    <div >
+                        <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>
                     </div>,
-                timer: 2000,
+                timer: 3000,
                 showConfirmButton: false,
-                timerProgressBar: true
+                timerProgressBar: true,
+                width: 500
             }).then(() => {
                 sessionData()
                 checkLogin()
@@ -162,7 +166,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
                 seconds: pressSeconds.current[i],
                 category: e[0][1].toUpperCase(),
                 type: 'Image',
-                date: `${new Date()}`
+                date: `${new Date()}`,
+                mood: mood
             })
         })
         finalImages.current.unshift(score)
@@ -212,7 +217,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target }) => {
             <div className={style.videofondo}></div>
             <div width="50%" height="50%" z-index='5' id='video'>
                 <div className={style.contenedordelvideo}>
-                    <ProgressBar lives={lives.current} max={imagesPrueba.length} progress={seeImages.current.length} />
+                    <ProgressBar lives={lives.current} max={imageApi.length} progress={seeImages.current.length} />
                     <Timer ref={tiempo} />
                     <div ref={imageTouch}>
                         {recVideo[0] && <img src={recVideo[0].urlBlop} />}

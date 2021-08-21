@@ -29,22 +29,22 @@ export const Game = ({ history }) => {
   const videoToSeeBlop = useRef() // videos con la URL Blop
   // console.log(videoToSeeBlop.current)
 
-  const [imageApi, setImageApi] = useState() // de prueba guarda las imagenes
+  // const [imageApi, setImageApi] = useState() // de prueba guarda las imagenes
   useEffect(() => {
     if (!videoApi) {
-      if (mode === 'videos') {
-        axios.post('http://localhost:3001/links', {
-          email: emailCokkie
+      axios.post('http://localhost:3001/links', {
+        email: emailCokkie,
+        mode: mode
+      })
+        .then(res => {
+          setVideosApi(res.data)
         })
-          .then(res => {
-            setVideosApi(res.data)
-          })
-      } else {
+      /*  
         setTimeout(() => {
           videoToSeeBlop.current = imagePueba
           setImageApi(imagePueba)
         }, 3000)
-      }
+      */
     }
     if (videoApi) {
       var arregloPromesas = videoApi[2].map(async (url) => {
@@ -62,7 +62,6 @@ export const Game = ({ history }) => {
           setVideoBlop(arregloPromesasResultas)
         })
     }
-
   }, [videoApi])
 
   /*----------------------------------------*/
@@ -111,19 +110,9 @@ export const Game = ({ history }) => {
   // Elige el video que el usuario va a ver
 
   function recVideos() {
-    if (mode === 'videos' && videoApi) {
-      if (tope.current >= videoApi[2].length) {
-        return null
-      } else {
-        viewVideos();
-        dispatch(recVideo(videoToSeeBlop.current[tope.current]));
-        tope.current++;
-      }
-    }
-    if (mode === 'images' && videoToSeeBlop.current) {
-      if (tope.current >= videoToSeeBlop.current.length) {
-        return null
-      } else {
+    if (videoApi) {
+      if (tope.current >= videoApi[2].length) return null
+      else {
         viewVideos();
         dispatch(recVideo(videoToSeeBlop.current[tope.current]));
         tope.current++;
@@ -134,8 +123,7 @@ export const Game = ({ history }) => {
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    // dispatch(seenVideos(videoApi[2], tope.current)); // original de los videos
-    dispatch(seenVideos(videoToSeeBlop.current, tope.current));
+    dispatch(seenVideos(videoApi[2], tope.current))
   }
 
   // Cambio de videos y guarda un nuevo array con los blop
@@ -147,19 +135,19 @@ export const Game = ({ history }) => {
         arr.push({ ...e[0], urlBlop: videoBlop[i] }, e[1])
         return arr
       })
-      console.log(blop)
+      // console.log(blop)
       videoToSeeBlop.current = blop
     }
     recVideos();
-  }, [videoBlop, imageApi]);
+  }, [videoBlop]);
 
   return (
     < >
       <div className={style.fondo3}>
         {
           !videoBlop && !videoToSeeBlop.current ? <Loading /> :
-            videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} recVideos={recVideos} email={emailCokkie} checkLogin={checkLogin} /> :
-              <ImagePlayer className={style.video} target={2} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} />
+            mode === 'video' && videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} /> :
+              <ImagePlayer className={style.video} imageApi={videoApi[2]} target={videoApi[0]} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} />
         }
       </div>
     </>

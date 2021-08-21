@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
 .loader{
-    position: relative;
-    width: 150px;
+  position: relative;
+  width: 150px; 
   height: 150px;
   border-radius: 50%;
   left: 100px;
-  background: linear-gradient(45deg,transparent,transparent 40%,#1663A2);
+  background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+
   animation: animated 2s linear infinite;
   }
   @keyframes animated{
@@ -122,4 +123,9 @@
 }
 .buttonRegisters:hover{
     background: linear-gradient(90deg,#F22C9F,#770045,#F22C9F);
+}
+
+.containerFinal{
+    background-color: red !important;
+    display: flex;
 }
