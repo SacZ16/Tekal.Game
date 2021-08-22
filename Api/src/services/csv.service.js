@@ -68,6 +68,7 @@ async function getListElements(){
 
 }
 
+//console.log(getAssetsImages(["twinings_ig_img_5.jpg"]).then(res => console.log(res)))
 
 module.exports = {getAssets, getAssetsVideo, getListElements, getAssetsImages };
 
