@@ -211,13 +211,12 @@ const createAssetsTable = () => {
 } */
 
 const putAssets = async (email, info) => {
-  let asset = endpoint(info.url);
   try {
     let params = {
       TableName: TABLE_ASSETS,
       Item: {
-        PK: asset,
-        SK: `SESSION#${email}#${asset}#${info.category}#${ULID.ulid()}`,
+        PK: info.url,
+        SK: `SESSION#${email}#${info.url}#${info.category}#${ULID.ulid()}`,
         date: info.date,
         fileType: info.type,
         pivot: "OK",
@@ -554,34 +553,26 @@ const getSessions = async (email) => {
 
 //no chekeado por la produccion
 const updateAnnotationsCorrect = async (url) => {
-    try {
-      let params = {
-        TableName: TABLE_ASSETS,
-        Key: {
-          PK:  url ,
-          SK:  url,
-        },
-        UpdateExpression: "SET #correctAnnotations = if_not_exists(#correctAnnotations, :value) + :inc",
-        ExpressionAttributeNames: {
-          "#correctAnnotations": "annotations",
-        },
-        ExpressionAttributeValues: {
-          ":value": 0,
-          ":inc":1
-
-        },
-      };
-      const updateViews = connectionDynamo.update(params).promise();
-      console.log("Added user item:", JSON.stringify(updateViews, null, 2));
-      return updateViews;
-    } catch (error) {
-      console.error(
-        "Unable to add item. Error JSON:",
-        JSON.stringify(error, null, 2)
-      );
-    }
-  };
-  //updateAnnotationsCorrect("twinings_ig_img_5.jpg")
+  try {
+    let params = {
+      TableName: TABLE_ASSETS,
+      Key: {
+        PK:  url ,
+        SK:  url
+      },
+      UpdateExpression: "SET correctAnnotations = if_not_exists(correctAnnotations, :value) + :inc",
+      ExpressionAttributeValues: {
+        ":value": 0,
+        ":inc":1
+      }
+    };
+    const updateViews = connectionDynamo.update(params).promise();
+    console.log("Added user item:", JSON.stringify(updateViews, null, 2));
+    return updateViews;
+  } catch (error) {
+    console.error("Unable to add item. Error JSON:",JSON.stringify(error, null, 2));
+  }
+};
 
 module.exports = {
   getallUsers,
