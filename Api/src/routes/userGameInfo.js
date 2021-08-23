@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {putUserGameItems} = require('../Controllers/dbFunctions');
-const { endpoint } = require('../services/endpoint.service');;
+const { endpointNoMemento } = require('../services/endpoint.service');;
 
 
 router.post('/', async (req, res) => {
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
             var object = info[i];
             object.pos= i+1;
             answers.push(object.answer);
-            let asset = endpoint(object.url);
+            let asset = endpointNoMemento(object.url);
             presentations.push(asset);
         }
         let data = {

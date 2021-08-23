@@ -251,7 +251,6 @@ const putAssets = async (email, info) => {
 const putUserGameItems = async (data) => {
   try {
     const userSession = `GAME#${data.email}#${ULID.ulid()}`;
-    //console.log("daTA", data)
     let params = {
       TableName: TABLE_USER,
       Item: {
@@ -574,6 +573,30 @@ const updateAnnotationsCorrect = async (url) => {
   }
 };
 
+const getGameUser = async (email) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      KeyConditionExpression: "#PK = :PK AND begins_with(#SK, :SK)",
+      ExpressionAttributeNames: {
+        "#PK": "PK",
+        "#SK": "SK",
+      },
+      ExpressionAttributeValues: {
+        ":PK": email,
+        ":SK": `GAME#${email}`
+      },
+    };
+
+    const queryUserInfo = await connectionDynamo.query(params).promise();
+    console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+    return queryUserInfo;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//getGameUser("sofia@gmail.com")
 module.exports = {
   getallUsers,
   getUser,
@@ -597,4 +620,5 @@ module.exports = {
   getSessions,
   putPKAssetsImages,
   updateAnnotationsCorrect,
+  getGameUser
 };
