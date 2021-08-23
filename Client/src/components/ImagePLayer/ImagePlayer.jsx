@@ -2,26 +2,28 @@ import React, { useEffect, useRef, useState } from 'react';
 import imagesPrueba from '../../assets/img/imagesPrueba';
 import Timer from 'react-compound-timer';
 import style from '../Styles/Game.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { withRouter } from 'react-router';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { sessionInfo } from '../../redux/action';
 
-const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
+import cerebroLose from '../Styles/slideSeisEsp.png'
+
+
+const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) => {
     const MySwal = withReactContent(Swal)
-
+    const dispatch = useDispatch();
     const { user, recVideo } = useSelector(state => state); // Traidos del Obj Reducer.
 
     const seeImages = useRef(); //Videos Vistos por el Usuario en el Juego 
     seeImages.current = user.currentGame.seenVideos;
-    console.log('Videos Vistos', seeImages.current)
-    const mood = localStorage.getItem('mood')
+    console.log(seeImages.current)
     const infoImages = useRef(); // Informacion del Video
     infoImages.current = recVideo;
     // console.log('Video Actual', infoVideo.current)
 
-    const contador = useRef(0)
     const tiempo = useRef();
 
     // Copia de VideoPlayer
@@ -38,13 +40,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
     const lives = useRef(3); // Vidas del usuario 
     // console.log(lives.current)
-    const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
-    // console.log(score.current)
+    const score = parseInt(((10 / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+    // console.log(score)
     const finalImages = useRef([]); // Videos vistos con respuetsas
-    console.log(finalImages.current)
+    // console.log(finalImages.current)
     //-------------
 
     const imageTouch = useRef()
+    const timerChange = useRef(null);
 
     const [color, setColor] = useState('rgba(255, 255, 255, 0)'); // Cambia de color al apretar la barra espaciadora
     var bcolor = { 'background': `${color}` }
@@ -61,7 +64,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
         }
     };
 
-    // tiempo.current &&  console.log(`${tiempo.current.state.s}.${tiempo.current.state.ms}`)
     const handlerGame = () => {
         answers.current.push(1);
         pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
@@ -75,6 +77,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
             }
             setColor('green')
             press.current = true;
+            clearTimeout(timerChange.current)
+            handlerChange()
         }
         else {
             setColor('red')
@@ -96,13 +100,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
         }
     }, []);
 
+
+
     useEffect(() => {
         if (seeImages.current.length === imageApi.length) {
             setTimeout(() => {
                 if (!press.current) {
                     prevAsset()
                 }
-                videosWithAnswers()
                 MySwal.fire({
                     toast: true,
                     html:
@@ -114,28 +119,32 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
                     timerProgressBar: true,
                     width: 500
                 }).then(() => {
+                    videosWithAnswers()
                     sessionData()
                     checkLogin()
+                    postData()
                 })
             }, 3500)
         }
-        if (lives.current === 0) {
-            videosWithAnswers()
-            MySwal.fire({
-                toast: true,
-                html:
-                    <div >
-                        <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>
-                    </div>,
-                timer: 3000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 500
-            }).then(() => {
-                sessionData()
-                checkLogin()
-            })
-        }
+        /*   if (lives.current === 0) {
+              console.log(lives.current)
+              MySwal.fire({
+                  toast: true,
+                  html:
+                      <div >
+                          <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>
+                      </div>,
+                  timer: 3000,
+                  showConfirmButton: false,
+                  timerProgressBar: true,
+                  width: 500
+              }).then(() => {
+                  videosWithAnswers()
+                  postData()
+                  sessionData()
+                  checkLogin()
+              })
+          } */
     }, [seeImages.current.length, lives.current]);
 
 
@@ -165,13 +174,17 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
                 ...e[0][0], answer: answers.current[i],
                 seconds: pressSeconds.current[i],
                 category: e[0][1].toUpperCase(),
-                type: 'Image',
+                type: 'image',
                 date: `${new Date()}`,
                 mood: mood
             })
         })
         finalImages.current.unshift(score)
         finalImages.current.unshift(email)
+    }
+
+    const postData = async () => {
+        localStorage.setItem('results', JSON.stringify(finalImages.current))
     }
 
     function sessionData() {
@@ -182,30 +195,54 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi }) => {
             /* lives: { value: lives.current }, */
             /* targetVideos: { value: target.length } */
         });
-        // dispatch(sessionInfo(obj));
+        dispatch(sessionInfo(obj));
         console.log(score)
         localStorage.setItem('score', score)
     }
 
     const handlerChange = () => {
-        if (lives.current === 0) return null
+        if (lives.current === 0) {
+            console.log(lives.current)
+            MySwal.fire({
+                /* toast: true, */
+                title: <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>,
+                html:
+                    <div >
+                        <img src={cerebroLose} alt="" style={{ width: '15vh', height: '20vh' }} />
+                    </div>,
+                timer: 3000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                width: 500
+            }).then(() => {
+                videosWithAnswers()
+                postData()
+                sessionData()
+                checkLogin()
+            })
+            return null
+        }
         recImages()
         tiempo.current && tiempo.current.reset();
-        contador.current++
+
     }
 
     useEffect(() => {
+        start()
+    }, [seeImages.current.length])
+
+    const start = () => {
         if (seeImages.current.length === 1) {
-            setTimeout(() => {
+            timerChange.current = setTimeout(() => {
                 handlerChange()
             }, 3000);
         }
         if (seeImages.current.length > 1) {
-            setTimeout(() => {
+            timerChange.current = setTimeout(() => {
                 handlerChange()
             }, 3000);
         }
-    }, [seeImages.current.length])
+    }
 
     /* const a = performance.now()
     const b = performance.now()

@@ -7,11 +7,19 @@ import { resetReducer } from '../../redux/action'
 import axios from 'axios';
 import Cookie from 'universal-cookie'
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import cerebroLose from '../Styles/slideSeisEsp.png'
+
+
 function Finalgame({ history }) {
+
+    const MySwal = withReactContent(Swal)
+
 
     const dispatch = useDispatch()
     const { score } = useSelector(state => state.user.currentGame)
-    console.log(score)
+
     const cookies = new Cookie();
     var emailCokkie;
     //Sacando el email
@@ -20,8 +28,9 @@ function Finalgame({ history }) {
         else { emailCokkie = cookies.get('userInfo').Items[0].email }
     }
 
-    const holaa = localStorage.getItem('pruebaa')
-    const resultadoparaenviar = JSON.parse(holaa)
+    const results = localStorage.getItem('results')
+    const resultadoparaenviar = JSON.parse(results)
+    console.log(resultadoparaenviar)
     if (resultadoparaenviar) {
         resultadoparaenviar.shift()
         resultadoparaenviar.unshift(emailCokkie)
@@ -46,45 +55,60 @@ function Finalgame({ history }) {
     };
 
     const again = () => {
-        dispatch(resetReducer())
-        history.push('/game')
+        MySwal.fire({
+            toast: true,
+            html:
+                <div >
+                    <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
+                    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'red', paddingBottom: '100px' }}>
+                        <img src={cerebroLose} alt="" style={{ width: '20vh', height: '20vh', backgroundColor:'yellow', padding: '0' }} />
+                    </div>
+                </div>,
+            // timer: 3000,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            width: 500
+        })
+        /*   dispatch(resetReducer())
+          history.push('/game') */
     }
 
     useEffect(() => {
-        /* postDataa() */
+        /*       postDataa() */
     }, [])
 
     const postDataa = async () => {
-        console.log(resultadoparaenviar)
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
         await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
+        localStorage.removeItem('score')
+        localStorage.removeItem('results')
     }
 
     return (
         <div className='fondopreclose' >
-           
-                <div>
-                    <h1 className='yourscore'>Your score is</h1>
-                    <div className='marco'>
-                        {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                        <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
-                        <div className='loader'></div>
+
+            <div>
+                <h1 className='yourscore'>Your score is</h1>
+                <div className='marco'>
+                    {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
+                    <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
+                    <div className='loader'></div>
+                </div>
+                <div className='buttonRegister2' >
+                    <div>
+                        <Link to='/'>
+                            <button className='botnreclose' >Home</button>
+                        </Link>
                     </div>
-                    <div className='buttonRegister2' >
-                        <div>
-                            <Link to='/'>
-                                <button className='botnreclose' >Home</button>
-                            </Link>
-                        </div>
-                        <div>
-                            <button className='botnreclose' onClick={again}>Try again</button>
-                        </div>
+                    <div>
+                        <button className='botnreclose' onClick={again}>Try again</button>
                     </div>
                 </div>
-                <div className="grafico">
-                    <Line data={data} options={opciones} config={config} />
-                </div>
-         
+            </div>
+            <div className="grafico">
+                <Line data={data} options={opciones} config={config} />
+            </div>
+
             <p className='copyright'>Â© 2021 Tekal, Inc. All rights reserved</p>
         </div >
     )

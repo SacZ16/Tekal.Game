@@ -16,12 +16,12 @@ import { sessionInfo } from '../../redux/action';
 import axios from 'axios';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
-const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email }) => {
+const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
 
   const dispatch = useDispatch();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
-  console.log('videos')
+
   const seeVideos = useRef(); //Videos Vistos por el Usuario en el Juego 
   seeVideos.current = user.currentGame.seenVideos;
 
@@ -173,8 +173,9 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email }) => {
         ...e[0][0], answer: answers.current[i],
         seconds: pressSeconds.current[i],
         category: e[0][1].toUpperCase(),
-        type: 'Video',
-        date: `${new Date()}`
+        type: 'video',
+        date: `${new Date()}`,
+        mood: mood
       })
     })
     finalVideos.current.unshift(score)
@@ -182,10 +183,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email }) => {
   }
 
   const postData = async () => {
-    /*  await axios.post('http://localhost:3001/videoInfo', finalVideos.current)
-     await axios.post('http://localhost:3001/gameInfo', finalVideos.current) */
-    localStorage.setItem('pruebaa', JSON.stringify(finalVideos.current))
-    // console.log(finalVideos.current)
+    localStorage.setItem('results', JSON.stringify(finalVideos.current))
   }
 
   function sessionData() {
