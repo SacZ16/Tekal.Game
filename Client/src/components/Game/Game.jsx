@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
+import ImagePlayer from '../ImagePLayer/ImagePlayer';
 import Loading from '../Loading/Loading';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import style from '../Styles/Game.module.css'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
-import ImagePlayer from '../ImagePLayer/ImagePlayer';
 import { withRouter } from 'react-router';
 
 // Simulamos el array de imagenes
@@ -16,39 +16,34 @@ import imagePueba from '../../assets/img/imagesPrueba';
 export const Game = ({ history }) => {
 
   const dispatch = useDispatch();
+  // const { score } = useSelector(state => state.user.currentGame)
   const tope = useRef(0)
+  const mood = localStorage.getItem('mood')
   const mode = localStorage.getItem('mode')
   const [infoUser, SetInfoUser] = useState('')
   var emailCokkie;
   const cookies = new Cookie();
 
-  const [videoApi, setVideosApi] = useState() // videos provenientes de la base de datos
-  console.log(videoApi)
-  const [videoBlop, setVideoBlop] = useState() // array con las URL convertidas
-  console.log(videoBlop)
-  const videoToSeeBlop = useRef() // videos con la URL Blop
-  // console.log(videoToSeeBlop.current)
+  const [assetsApi, setAssetsApi] = useState() // videos/imagenes provenientes de la base de datos
+  console.log(assetsApi)
+  const [assetsBlop, setAssetsBlop] = useState() // array con las URL convertidas
+  // console.log(assetsBlop)
+  const assetsToSeeBlop = useRef() // videos con la URL Blop
+  // console.log(assetsToSeeBlop.current)
 
-  // const [imageApi, setImageApi] = useState() // de prueba guarda las imagenes
   useEffect(() => {
-    if (!videoApi) {
+    if (!assetsApi) {
       axios.post('http://localhost:3001/links', {
         email: emailCokkie,
         mode: mode
       })
         .then(res => {
-          setVideosApi(res.data)
+          setAssetsApi(res.data)
         })
-      /*  
-        setTimeout(() => {
-          videoToSeeBlop.current = imagePueba
-          setImageApi(imagePueba)
-        }, 3000)
-      */
-    }
-    if (videoApi) {
-      var arregloPromesas = videoApi[2].map(async (url) => {
-        return await fetch(url[0].url)
+      }
+      if (assetsApi) {
+        var arregloPromesas = assetsApi[2].map(async (url) => {
+          return await fetch(url[0].url)
           .then(function (res) {
             return res.blob()
           })
@@ -56,21 +51,60 @@ export const Game = ({ history }) => {
             var url = URL.createObjectURL(video)
             return url
           })
-      })
-      Promise.all(arregloPromesas)
+        })
+        Promise.all(arregloPromesas)
         .then((arregloPromesasResultas) => {
-          setVideoBlop(arregloPromesasResultas)
+          setAssetsBlop(arregloPromesasResultas)
+        })
+      }
+    }, [assetsApi])
+    
+    const [buffer, setBuffer] = useState() // de prueba guarda las imagenes
+
+  useEffect(() => {
+    if (!assetsApi) {
+      axios.post('http://localhost:3001/links', {
+        email: emailCokkie,
+        mode: mode
+      })
+        .then(res => {
+          setAssetsApi(res.data)
         })
     }
-  }, [videoApi])
+    if (assetsApi) {
+      var arr1 = assetsApi[2].slice(0, 100).map(async (url) => {
+        return await fetch(url[0].url)
+          .then(function (res) {
+            return res.blob()
+          })
+          .then(function (video) {
+            var url = URL.createObjectURL(video)
+            setBuffer(url)
+          })
+      })
+      var arr2 = assetsApi[2].slice(101).map(async (url) => {
+        return await fetch(url[0].url)
+          .then(function (res) {
+            return res.blob()
+          })
+          .then(function (video) {
+            var url = URL.createObjectURL(video)
+            setBuffer(url)
+          })
+      })
+
+    }
+    if (buffer && buffer.length !== assetsApi[2].length) {
+      Promise.all(buffer)
+        .then((arregloPromesasResultas) => {
+          setAssetsBlop(arregloPromesasResultas)
+        })
+      pos1 *= 10
+      pos2 *= 10
+    }
+  }, [assetsApi, buffer])
 
   /*----------------------------------------*/
-
-  // Si no estas logeado te reedirige a login
-
-  // if (!cookies.get('userInfo')) {
-  //   window.location.href = ('/login')
-  // }
 
   //Sacando el email
   if (cookies.get('userInfo')) {
@@ -90,11 +124,12 @@ export const Game = ({ history }) => {
   if (!infoUser) {
     CheckUserData(emailCokkie);
   }
-  if (infoUser) {
-    // if (!infoUser.data.Items[0].age || !infoUser.data.Items[0].name) {
-    //   window.location.href = ('form')
-    // }
-  }
+
+  useEffect(() => {
+    if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
+    // if (score) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
+  }, [])
+
 
   // Verifica si esta logeado o no al terminar el juego
 
@@ -110,11 +145,13 @@ export const Game = ({ history }) => {
   // Elige el video que el usuario va a ver
 
   function recVideos() {
-    if (videoApi) {
-      if (tope.current >= videoApi[2].length) return null
+    // console.log(assetsToSeeBlop.current)
+    if (assetsApi) {
+      if (tope.current >= assetsApi[2].length) return null
       else {
         viewVideos();
-        dispatch(recVideo(videoToSeeBlop.current[tope.current]));
+        dispatch(recVideo(assetsToSeeBlop.current[tope.current]));
+        // dispatch(recVideo(assetsToSeeBlop2.current[tope.current2]));
         tope.current++;
       }
     }
@@ -123,31 +160,31 @@ export const Game = ({ history }) => {
   // Guarda los videos que el usuario ve
 
   function viewVideos() {
-    dispatch(seenVideos(videoApi[2], tope.current))
+    dispatch(seenVideos(assetsApi[2], tope.current))
   }
 
   // Cambio de videos y guarda un nuevo array con los blop
 
   useEffect(() => {
-    if (videoBlop) {
-      let blop = videoApi[2].map((e, i) => {
+    if (assetsBlop) {
+      let blop = assetsApi[2].map((e, i) => {
         let arr = []
-        arr.push({ ...e[0], urlBlop: videoBlop[i] }, e[1])
+        arr.push({ ...e[0], urlBlop: assetsBlop[i] }, e[1])
         return arr
       })
       // console.log(blop)
-      videoToSeeBlop.current = blop
+      assetsToSeeBlop.current = blop
     }
     recVideos();
-  }, [videoBlop]);
+  }, [assetsBlop]);
 
   return (
     < >
       <div className={style.fondo3}>
         {
-          !videoBlop && !videoToSeeBlop.current ? <Loading /> :
-            mode === 'video' && videoBlop && !videoToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={videoApi[2]} target={videoApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} /> :
-              <ImagePlayer className={style.video} imageApi={videoApi[2]} target={videoApi[0]} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} />
+          !assetsBlop && !assetsToSeeBlop.current ? <Loading /> :
+            mode === 'video' && assetsBlop && !assetsToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} mood={mood} /> :
+              <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} mood={mood} />
         }
       </div>
     </>
