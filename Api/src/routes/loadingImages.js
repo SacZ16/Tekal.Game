@@ -4,7 +4,7 @@ const { getListElements } = require('../services/csv.service');
 const router = Router();
 
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
     try{
         let array = await getListElements();
         let arrayData = array[1];
@@ -12,8 +12,7 @@ router.get('/', async (req, res) => {
         res.send('Assets Created');
 
     }catch(err){
-        res.status(400).send("error")
-        console.log(err)
+        res.status(400).send("error");
     }
 
 

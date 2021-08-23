@@ -14,7 +14,6 @@ AWS.config.update({
     secretAccessKey:''
 })
 const connectionDynamo= new AWS.DynamoDB.DocumentClient();
-// const docClient = new AWS.DynamoDB.DocumentClient();
 const dynamodb = new AWS.DynamoDB();
 
 module.exports = {connectionDynamo, dynamodb};

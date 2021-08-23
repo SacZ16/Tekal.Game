@@ -1,5 +1,5 @@
 const { getSessions, queryPK, orderAsset, orderNextAsset } = require('../Controllers/dbFunctions');
-const { notSeen } = require('./compareArray.service')
+const { notSeen } = require('./compareArray.service');
 
 
 
@@ -17,10 +17,10 @@ async function assetNotSeen(email,asset) {
                 let LastEvaluatedKeyPK = assetsLessViews.LastEvaluatedKey.PK;
                 let LastEvaluatedKeyViews = assetsLessViews.LastEvaluatedKey.views;
     
-                while(arrayAssets.length < 160){//cambiar el 160 por la cantidad de videos target
+                while(arrayAssets.length < 160){
                     let assetsLessViewsNext = await orderNextAsset(1000,LastEvaluatedKeyPK, LastEvaluatedKeyViews,asset);
                     let array2 = assetsLessViewsNext.Items.map(v => v.PK);
-                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],160));//tambien :D sofi rompehue
+                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],160));
                     arrayAssets = arrayChunk;
                     LastEvaluatedKeyPK = videosLessViewsNext.LastEvaluatedKey.PK;
                     LastEvaluatedKeyViews = videosLessViewsNext.LastEvaluatedKey.views;
@@ -31,7 +31,7 @@ async function assetNotSeen(email,asset) {
 
             }else{
                 const asset = arrayAssets.map(async v => await queryPK(v))
-                return Promise.all(asset)
+                return Promise.all(asset);
             }
 
         }else{

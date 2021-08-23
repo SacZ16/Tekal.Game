@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getGameUser } = require('../Controllers/dbFunctions')
+const { getGameUser } = require('../Controllers/dbFunctions');
 const router = Router();
 
 router.post('/', async (req,res) => {
@@ -10,7 +10,7 @@ router.post('/', async (req,res) => {
         const averageScore = score.reduce((a,b)=> a+b) / score.length;
         res.status(200).json({ averageScore:averageScore });
     }catch(err){
-        res.send(err)
+        res.send(err);
     }
 })
 

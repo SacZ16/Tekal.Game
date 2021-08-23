@@ -1,5 +1,5 @@
 function notSeen(array, array2, maxSize) {
-    let array3=[]
+    let array3=[];
     if (!maxSize || maxSize > array.length) {
       maxSize = array.length;
     }
@@ -12,6 +12,6 @@ function notSeen(array, array2, maxSize) {
       }
       i++;
     }
-    return array3
+    return array3;
   }
 module.exports = { notSeen }

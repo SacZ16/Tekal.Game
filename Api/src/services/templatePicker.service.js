@@ -1,4 +1,3 @@
-
 function picker(){
     let random = Math.round(Math.random() * 999);
     const template = require(`../assets/level_templates/template_${random}.json`);

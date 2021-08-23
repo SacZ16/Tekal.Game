@@ -35,7 +35,7 @@ async function getAssetsImages(array) {
         let allAssets = await Promise.all(assets).then(res => res);
         return allAssets;
     }catch(err){
-        console.log(err)
+        console.log(err);
     }
 }
 
@@ -50,11 +50,9 @@ async function getListElements(){
         let arrayConjunto = [videos, images];
         return arrayConjunto;
     }catch(err){
-        console.log(err)
+        console.log(err);
     }
 }
-
-// getAssetsVideo(["burning_3-7-0-0-4-4-5-2-7537004452.mp4"]).then(res => console.log(res))
 
 module.exports = {getAssets, getAssetsVideo, getListElements, getAssetsImages };
 

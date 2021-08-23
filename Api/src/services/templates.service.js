@@ -11,7 +11,7 @@ function templateFiller(template, arrayAssets){
     assetsToSee.push(assetId); //[[{},{}]]
     assetsToSee[i].push(e[1]);
   });
-  let array = []
+  let array = [];
   array.push(template[1]);
   array.push(template[0]);
   array.push(assetsToSee);
