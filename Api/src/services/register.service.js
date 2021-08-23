@@ -102,7 +102,6 @@ const verificationEmail = async (email) => {
     } else {
         return ('Error')
     } 
-    
 }
 
 

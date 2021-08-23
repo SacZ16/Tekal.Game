@@ -270,9 +270,14 @@ var enviardatos={
     let sessionUser = "";
 
     if(cookies.get('userInfo')){
-        sessionUser = cookies.get('userInfo')[0].name + ' ' + cookies.get('userInfo')[0].lastname
+        if(cookies.get('userInfo').Items){
+            sessionUser = cookies.get('userInfo').Items[0].name
+        } else {
+            sessionUser = cookies.get('userInfo')[0].name
+        }
     }
 
+    console.log(cookies.get('userInfo'))
 
     const popUpRegister = () => {
         setPopUpRegisterAux('flex')

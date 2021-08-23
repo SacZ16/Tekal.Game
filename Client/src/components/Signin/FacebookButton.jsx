@@ -11,7 +11,11 @@ const FacebookButton = () => {
     }
 
     if(profile.email){
-        SendDataGoogle(profile.email)
+        let obj = {
+            email: profile.email,
+            name: profile.name.split(' ')[0]
+        }
+        SendDataGoogle(obj)
     }
     
     
