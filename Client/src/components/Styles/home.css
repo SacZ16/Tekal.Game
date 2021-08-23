@@ -177,7 +177,14 @@ overflow: hidden;
 body{
     overflow-x:hidden ;
 }
-
+.swal2-html-container{
+    word-break:normal !important;
+    overflow: hidden !important;
+}
+.swal2-container.swal2-center>.swal2-popup{
+    width: max-content !important;
+    height: max-content !important;
+}
 .loginHome{
     background: transparent;
     border-radius: 5px;
@@ -352,6 +359,7 @@ body{
     border-style: none;
     font-size: 16px;
     font-weight: 550;
+    z-index: 20000;
 }
 
 .startGameLandingMobile{
@@ -704,7 +712,11 @@ section::before{
     .second_page_title span{
         font-size: 90px !important;
     }
-
+.swal2-container.swal2-center>.swal2-popup{
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center
+}
     .second_page_subtitle{
         font-size: 25px !important;
         margin-bottom: 90px !important;
@@ -713,6 +725,7 @@ section::before{
     .startGameLanding{
         font-size: 30px !important;
         width: 280px !important;
+        z-index: 20000;
     }
 
     .textHome{

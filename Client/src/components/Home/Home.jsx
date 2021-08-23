@@ -361,7 +361,7 @@ var enviardatos={
                     <div className='second_screen_home' id='second_screen'>
                         <button className='auxiliarFondo'></button> 
                         <button className='auxiliarFondoDerecha'></button>
-                    <div className='text_secon_page'>
+                    <div className='text_secon_page' style={{zIndex: "1000"}}>
                         <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
                         <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
                             <button  onClick={popUpGameMode} className='startGameLanding'>Start playing</button>
