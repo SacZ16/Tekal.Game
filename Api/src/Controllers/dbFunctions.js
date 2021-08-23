@@ -90,7 +90,6 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
     try {
         var infoUser = `INFO#${email}`;
 
@@ -116,7 +115,7 @@ const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, g
         };
 
         const registerInfo = connectionDynamo.update(params).promise();
-        console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+        // console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
         return registerInfo;
     }
     catch (error) {
@@ -142,7 +141,6 @@ const queryAllInfoUser = async (userId) => {
 
         const queryUserInfo = await connectionDynamo.query(params).promise()
         // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
-        console.log(queryUserInfo, 'ESTOY EN QUERY')
         return queryUserInfo;
     }
     catch (error) {

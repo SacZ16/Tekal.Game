@@ -8,7 +8,10 @@ const { queryAllInfoUser } = require('../Controllers/dbFunctions')
 router.post('/', async (req, res) => {
     let email = req.body.email; 
     let data = await queryAllInfoUser(email)
-    res.send(data)
+    if(!data.Items.length){
+        res.sendStatus(404)
+    }
+    res.status(200).send(data)
 })
 
 

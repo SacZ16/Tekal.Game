@@ -27,6 +27,7 @@
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
     "supertest": "^6.1.6",
+    "supertest-session": "^4.1.0",
     "ulid": "^2.3.0",
     "universal-cookie": "^4.0.4"
   }

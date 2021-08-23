@@ -29,9 +29,10 @@ export const SendDataToBACK = async (email, password) => {
         newCookie(status.data)
     }
 }
-export const SendDataGoogle = async (email) => {
+export const SendDataGoogle = async (obj) => {
     const objPost = {
-        email: email
+        email: obj.email,
+        name: obj.name
     }
     const status= await axios({
         url: 'http://localhost:3001/logingoogle',
