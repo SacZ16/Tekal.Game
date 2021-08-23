@@ -5,16 +5,8 @@ import {SendDataGoogle} from '../controllers/dbFunctions'
 const GoogleButton = () => {
     
     const responseGoogle = (response) => {
-<<<<<<< HEAD
         console.log(response)
-        // SendDataGoogle(response.profileObj.email)
-=======
-        let obj = {
-            email: response.profileObj.email,
-            name: response.profileObj.givenName
-        }
-        SendDataGoogle(obj)
->>>>>>> eca50a27b059119c115f285bf7c6c6888e75e811
+        SendDataGoogle({email:response.profileObj.email,name:response.profileObj.givenName})
     }
     return (
         <div>

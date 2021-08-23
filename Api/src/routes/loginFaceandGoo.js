@@ -17,7 +17,8 @@ router.post('/', async (req, res) => {
             await putUserLogin({
                 "PK": req.body.email,
                 "SK": `INFO#${req.body.email}`,
-                "email": req.body.email})
+                "email": req.body.email,
+                "name": req.body.name})
         return await queryAllInfoUser(req.body.email)
         }
         else {
