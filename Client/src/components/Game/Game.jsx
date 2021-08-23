@@ -9,10 +9,6 @@ import Cookie from 'universal-cookie'
 import axios from 'axios'
 import { withRouter } from 'react-router';
 
-// Simulamos el array de imagenes
-import imagePueba from '../../assets/img/imagesPrueba';
-
-
 export const Game = ({ history }) => {
 
   const dispatch = useDispatch();
@@ -25,41 +21,41 @@ export const Game = ({ history }) => {
   const cookies = new Cookie();
 
   const [assetsApi, setAssetsApi] = useState() // videos/imagenes provenientes de la base de datos
-  console.log(assetsApi)
-  const [assetsBlop, setAssetsBlop] = useState() // array con las URL convertidas
-  // console.log(assetsBlop)
+  // console.log(assetsApi)
+  const [assetsBlop1, setAssetsBlop1] = useState() // array con las URL convertidas
+  // console.log('blop 1', assetsBlop1)
+  const [assetsBlop2, setAssetsBlop2] = useState() // array con las URL convertidas
+  // console.log('blop 2', assetsBlop2)
   const assetsToSeeBlop = useRef() // videos con la URL Blop
-  // console.log(assetsToSeeBlop.current)
+  // console.log('toSee', assetsToSeeBlop.current)
 
-  useEffect(() => {
-    if (!assetsApi) {
-      axios.post('http://localhost:3001/links', {
-        email: emailCokkie,
-        mode: mode
-      })
-        .then(res => {
-          setAssetsApi(res.data)
-        })
-      }
-      if (assetsApi) {
-        var arregloPromesas = assetsApi[2].map(async (url) => {
-          return await fetch(url[0].url)
-          .then(function (res) {
-            return res.blob()
-          })
-          .then(function (video) {
-            var url = URL.createObjectURL(video)
-            return url
-          })
-        })
-        Promise.all(arregloPromesas)
-        .then((arregloPromesasResultas) => {
-          setAssetsBlop(arregloPromesasResultas)
-        })
-      }
-    }, [assetsApi])
-    
-    const [buffer, setBuffer] = useState() // de prueba guarda las imagenes
+  /*  useEffect(() => {
+     if (!assetsApi) {
+       axios.post('http://localhost:3001/links', {
+         email: emailCokkie,
+         mode: mode
+       })
+         .then(res => {
+           setAssetsApi(res.data)
+         })
+     }
+     if (assetsApi) {
+       var arregloPromesas = assetsApi[2].map(async (url) => {
+         return await fetch(url[0].url)
+           .then(function (res) {
+             return res.blob()
+           })
+           .then(function (video) {
+             var url = URL.createObjectURL(video)
+             return url
+           })
+       })
+       Promise.all(arregloPromesas)
+         .then((arregloPromesasResultas) => {
+           setAssetsBlop(arregloPromesasResultas)
+         })
+     }
+   }, [assetsApi]) */
 
   useEffect(() => {
     if (!assetsApi) {
@@ -72,37 +68,39 @@ export const Game = ({ history }) => {
         })
     }
     if (assetsApi) {
-      var arr1 = assetsApi[2].slice(0, 100).map(async (url) => {
+      var arr1 = assetsApi[2].slice(0, 10).map(async (url) => {
         return await fetch(url[0].url)
           .then(function (res) {
             return res.blob()
           })
           .then(function (video) {
             var url = URL.createObjectURL(video)
-            setBuffer(url)
+            return url
           })
       })
-      var arr2 = assetsApi[2].slice(101).map(async (url) => {
-        return await fetch(url[0].url)
-          .then(function (res) {
-            return res.blob()
-          })
-          .then(function (video) {
-            var url = URL.createObjectURL(video)
-            setBuffer(url)
-          })
-      })
-
     }
-    if (buffer && buffer.length !== assetsApi[2].length) {
-      Promise.all(buffer)
-        .then((arregloPromesasResultas) => {
-          setAssetsBlop(arregloPromesasResultas)
+    if (arr1) {
+      Promise.all(arr1)
+        .then((arregloPromesasResultas1) => {
+          setAssetsBlop1(arregloPromesasResultas1)
+        }).then(() => {
+          var arr2 = assetsApi[2].slice(10).map(async (url) => {
+            return await fetch(url[0].url)
+              .then(function (res) {
+                return res.blob()
+              })
+              .then(function (video) {
+                var url = URL.createObjectURL(video)
+                return url
+              })
+          })
+          Promise.all(arr2)
+            .then(res => {
+              setAssetsBlop2(res)
+            })
         })
-      pos1 *= 10
-      pos2 *= 10
     }
-  }, [assetsApi, buffer])
+  }, [assetsApi])
 
   /*----------------------------------------*/
 
@@ -145,13 +143,11 @@ export const Game = ({ history }) => {
   // Elige el video que el usuario va a ver
 
   function recVideos() {
-    // console.log(assetsToSeeBlop.current)
     if (assetsApi) {
       if (tope.current >= assetsApi[2].length) return null
       else {
         viewVideos();
         dispatch(recVideo(assetsToSeeBlop.current[tope.current]));
-        // dispatch(recVideo(assetsToSeeBlop2.current[tope.current2]));
         tope.current++;
       }
     }
@@ -166,24 +162,36 @@ export const Game = ({ history }) => {
   // Cambio de videos y guarda un nuevo array con los blop
 
   useEffect(() => {
-    if (assetsBlop) {
-      let blop = assetsApi[2].map((e, i) => {
+    if (assetsBlop1) {
+      let blop = assetsApi[2].slice(0, 10).map((e, i) => {
         let arr = []
-        arr.push({ ...e[0], urlBlop: assetsBlop[i] }, e[1])
+        arr.push({ ...e[0], urlBlop: assetsBlop1[i] }, e[1])
         return arr
       })
-      // console.log(blop)
       assetsToSeeBlop.current = blop
+      recVideos();
     }
-    recVideos();
-  }, [assetsBlop]);
+  }, [assetsBlop1]);
+
+  useEffect(() => {
+    if (assetsBlop2) {
+      let blop = assetsApi[2].slice(10).map((e, i) => {
+        let arr = []
+        arr.push({ ...e[0], urlBlop: assetsBlop2[i] }, e[1])
+        return arr
+      })
+      blop.map(e => {
+        assetsToSeeBlop.current.push(e)
+      })
+    }
+  }, [assetsBlop2]);
 
   return (
     < >
       <div className={style.fondo3}>
         {
-          !assetsBlop && !assetsToSeeBlop.current ? <Loading /> :
-            mode === 'video' && assetsBlop && !assetsToSeeBlop.current ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} mood={mood} /> :
+          !assetsBlop1 && !assetsToSeeBlop.current ? <Loading /> :
+            mode === 'video' ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} mood={mood} /> :
               <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} mood={mood} />
         }
       </div>

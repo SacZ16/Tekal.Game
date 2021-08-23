@@ -44,7 +44,6 @@ const Home = () => {
                     <div style={{ display: 'flex' }}>
                         <a className='signUpText'>Don´t have an account?&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={pruebare}>Register</a>
                     </div>
-                    <img src={cerebritoHomeResults} alt="" />
                 </div>
             ,
             showCloseButton: true,
@@ -165,19 +164,19 @@ const Home = () => {
 
     }
 
-    const [averageScore, setAverageScore] = useState()
-
-    useEffect(async () => {
-        const res = await axios.post('http://localhost:3001/averageScore', {
-            email: emailCokkie,
-            // mode: mode
-        })
-        setAverageScore(res.data.averageScore)
-    }, [])
+    /*  const [averageScore, setAverageScore] = useState()
+ 
+     useEffect(async () => {
+         const res = await axios.post('http://localhost:3001/averageScore', {
+             email: emailCokkie,
+             // mode: mode
+         })
+         setAverageScore(res.data.averageScore)
+     }, []) */
 
     return (
         <>
-            {!averageScore ? <Loading /> :
+            {
                 <div className='homeDiv'>
                     <section>
                         <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
@@ -192,7 +191,7 @@ const Home = () => {
                                     </div>
                                     <div className='column_scores'>
                                         <h4>Average score</h4>
-                                        <p>{averageScore.toFixed(1)}%</p>
+                                        {/*  <p>{averageScore.toFixed(1)}%</p> */}
                                     </div>
                                 </div>
                                 <div className='buttonsHome'>
