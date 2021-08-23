@@ -30,7 +30,7 @@ function Finalgame({ history }) {
     const data = {
         labels: ['1', '2', '3', '4', '5'],
         datasets: [{
-            label: 'Last 5 sessions',
+            label: false,
             fill: false,
             borderColor: '#1663A2',
             borderWidth: 6,

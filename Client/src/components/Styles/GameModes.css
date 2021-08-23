@@ -1,16 +1,15 @@
 .container_game_modes{
-    background-color:#212429;
-    position: absolute;
+    background-color: #212429;
     width: 100%;
     height: 100%;
     color: white;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .subContainer_game_modes{
-    position: absolute;
     width: 80%;
+    height: 20rem;
     color: white;
     display: flex;
     flex-direction: row;
