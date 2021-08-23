@@ -9,6 +9,7 @@ import PreFinalGame from './components/Prefinal/Prefinal';
 import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
 import ChangePassword from './components/ChangePassword/changePassword'
+import geolocalitation from './components/geoLocalitation/geoLocalitation'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/preclose' component={PreFinalGame} />
         <Route exact path='/forgotPassword' component={VerificationEmail} />
         <Route exact path='/verificationemail' component={Verification} />
+        <Route exact path='/geolocalitation' component={geolocalitation} />
         <Route exact path='/passwordchange' component={ChangePassword} />
       </Switch>
     </>

@@ -212,7 +212,7 @@ var enviardatos={
     generovar:genero,
     ethnicityvar:ethnicity
 }
-    console.log(enviardatos)
+
     const handleInputChange = function (e) {
         // console.log(e.target.value)
         if (e.target.name === 'email') setEmail(e.target.value)
@@ -348,10 +348,10 @@ var enviardatos={
             <div className='formulario_register' style={{ display: `${popUpLoginAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                 <div style={{ width: '500px', height: '85%' }}><RegisterCommonForm props={SendDataToBACK} /></div>{/* Este es el formulario LOGIN */}
             </div>
-
+{/* 
             <div className='formulario_register' style={{ display: `${popUpRegisterAux}`, zIndex: '10000', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                 <div style={{ width: '500px', height: '85%' }}><RegisterWithEmail /></div>
-            </div>
+            </div> */}
 
             <div className='homeDiv' style={blurFondo === '2px' ? { filter: `blur(${blurFondo}) brightness(90%)`, overflowY: 'hidden', transform: 'scale(1.1)' } : null}>
                 <section>

@@ -90,7 +90,6 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
     try {
         var infoUser = `INFO#${email}`;
 
