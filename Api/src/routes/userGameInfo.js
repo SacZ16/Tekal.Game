@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {putUserGameItems} = require('../Controllers/dbFunctions');
-const { endpointNoMemento } = require('../services/endpoint.service');;
+const { endpointNoMemento, endpoint } = require('../services/endpoint.service');;
 
 
 router.post('/', async (req, res) => {
@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
             var object = info[i];
             object.pos= i+1;
             answers.push(object.answer);
-            let asset = endpointNoMemento(object.url);
-            presentations.push(asset);
+            let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint(object.url);
+            presentations.push(pkAssetsTarget);
         }
         let data = {
             email: email,

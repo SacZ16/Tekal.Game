@@ -3,7 +3,7 @@ const picker = require('../services/templatePicker.service');
 function templateFiller(template, arrayAssets){
   let assetsToSee = [];
 
-  let arrAssets = arrayAssets.map((e,i) => { return { url:e, id: i+1 }  });//[{url,id}{url,id}]
+  let arrAssets = arrayAssets.map((e,i) => { return { url:e, id: i }  });//[{url,id}{url,id}]
 
   const templateFiller = template[3];
   templateFiller.forEach((e,i) => {

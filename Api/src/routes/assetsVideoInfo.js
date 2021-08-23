@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
             object.mood = object.mood;
             object.country = country;
             object.pos = i - 2;
-            let pkAssetsTarget = endpointNoMemento(info[i].url);
+            let pkAssetsTarget = info[i].type === "image"? endpointNoMemento(info[i].url) : endpoint(info[i].url);
             object.url = pkAssetsTarget;
             if (info[i].category === "target"){
                 updateView(pkAssetsTarget);
