@@ -10,6 +10,7 @@
     background-color: black;
     z-index: 5;
 }
+
 .fondo{
     position: absolute;
     width: 100%;
@@ -96,11 +97,102 @@
     justify-content: center;
     align-items: center;
 }
-.xgame{
-    font-size: 6vh;
+
+.navGame{
+    position:absolute;
+    width: 80%;
+    top: 2%;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
 }
+
+@media (min-width: 1920px) {
+    .navGame{
+        position: absolute;
+        top:3%;
+    }
+
+}
+
+@media only screen and (max-width: 1919px) and (min-width: 1440px){
+    .navGame{
+        position: absolute;
+        top:3%
+    }
+}
+
+@media only screen and (max-width: 1439px) and (min-width: 1366px){
+    .navGame{
+        position: absolute;
+        top:2.7%
+    }
+}
+
+@media only screen and (max-width: 1365px) and (min-width: 1024px){
+    .navGame{
+        position: absolute;
+        top:2.4%
+    }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 812px) and (max-height:500px) and (min-height:375px){
+    .contenedordelvideo{
+        position: absolute;
+        width: 100%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        bottom:8%
+    }
+
+    .video{
+        max-width: 87%;
+        margin-left: 1.7%;
+        min-height: 83vh;
+        color: rgb(0, 0, 0);
+        background: black;
+        border-radius: 20px;
+        z-index: 5;
+        overflow: hidden;
+    }
+    
+    .navGame{
+        position: absolute;
+        top:1%;
+        margin-top:-42px
+    }
+    .vidasgame{
+        font-size: 2vh
+    }
+    
+    .xgame{
+        font-size: 3vh;
+        padding-top:5px
+    }
+}
+
+@media only screen and (max-width: 854px) and (min-width: 820px){
+    .navGame{
+        position:absolute;
+        top:1%;
+        margin-top:-50px
+    }
+
+    .vidasgame{
+        width:15%
+    }
+}
+
+
 @media only screen and (max-width: 800px) and (min-width: 768px){
 
+    .navGame{
+        position: absolute;
+        top:3%
+    }
+
     .vidasgame{
         font-size: 2.5vh
     }
@@ -117,10 +209,23 @@
     }
 
 }
-@media only screen and (max-width: 767px) and (min-width: 540px){
+
+@media only screen and (max-width: 767px) and (min-width: 540px) and (max-height:414px) and (min-height: 400px){
+    .contenedordelvideo{
+        height:80%;
+        bottom: 8%
+    }
+
+    .navGame{
+        position:absolute;
+        top:1%;
+        margin-top:-55px
+    }
 
     .vidasgame{
-        font-size: 2.5vh
+        font-size: 2.5vh;
+        width:18%;
+        margin-top:-1px
     }
     .video{
         max-width: 87%;
@@ -134,11 +239,62 @@
     overflow: hidden;
     }
 
+    .xgame{
+        padding-top:5px
+    }
+}
+
+@media only screen and (max-width: 540px) and (min-width: 500px) and (max-height:720px) and (min-height:700px){
+    .navGame{
+        position:absolute;
+        bottom:120%;
+    }
+}
+
+@media only screen and (max-width: 720px) and (min-width: 710px) and (max-height:540px) and (min-height:500px){
+    .navGame{
+        position:absolute;
+        top:0%;
+        margin-top:-100px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 540px){
+    .contenedordelvideo{
+        height:80%;
+        bottom: 8%
+    }
+
+    .navGame{
+        margin-top:-45px
+    }
+
+    .vidasgame{
+        font-size: 2.5vh;
+        width:18%;
+        margin-top:-1px
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+
+    .xgame{
+        padding-top:5px
+    }
 }
 @media only screen and (max-width: 539px) and (min-width: 411px){
 
     .vidasgame{
-        font-size: 2vh
+        font-size: 2vh !important;
+        width:13%
     }
     .video{
         max-width: 87%;
@@ -153,30 +309,15 @@
     }
     .xgame{
         font-size: 3vh;
+        padding-top:10px
     }
 }
 @media only screen and (max-width: 410px) and (min-width: 375px){
 
-    .vidasgame{
-        font-size: 3vh;
-        width: 20%;
+    .navGame{
+        position: absolute;
+        margin-top:-5px
     }
-    .video{
-        max-width: 87%;
-    margin-left: 1.7%;
-    margin-top: 11px;
-    min-height: 83vh;
-    color: rgb(0, 0, 0);
-    background: black;
-    border-radius: 20px;
-    z-index: 5;
-    overflow: hidden;
-    }
-    .xgame{
-        font-size: 4vh;
-    }
-}
-@media only screen and (max-width: 374px) and (min-width: 360px){
 
     .vidasgame{
         font-size: 3vh;
@@ -195,5 +336,33 @@
     }
     .xgame{
         font-size: 4vh;
+        padding-top:10px
+    }
+}
+@media only screen and (max-width: 374px) and (min-width: 360px){
+
+    .navGame{
+        position: absolute;
+        margin-top:-5px
+    }
+
+    .vidasgame{
+        font-size: 3vh;
+        width: 20%;
+    }
+    .video{
+        max-width: 87%;
+    margin-left: 1.7%;
+    margin-top: 11px;
+    min-height: 83vh;
+    color: rgb(0, 0, 0);
+    background: black;
+    border-radius: 20px;
+    z-index: 5;
+    overflow: hidden;
+    }
+    .xgame{
+        font-size: 4vh;
+        padding-top:10px
     }
 }

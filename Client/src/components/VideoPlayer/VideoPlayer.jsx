@@ -13,10 +13,12 @@ import { withRouter } from 'react-router';
 import style from '../Styles/Game.module.css';
 import Swal from 'sweetalert2'
 import { sessionInfo } from '../../redux/action';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Cookie from 'universal-cookie'
 import '../Styles/progressBar.css';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+//import axios from 'axios';
 
 const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
 
@@ -226,20 +228,22 @@ const VideoPlayer = ({ history, videoApi, target, recVideos, email }) => {
         >
 
           <div className={style.contenedordelvideo}>
-            <div style={{ width: '90%', marginTop: '-30px', display: 'flex',justifyContent:'center',alignItems:'center'}}>
+            <div  style={{ width: '90%', marginTop: '-30px', display: 'flex',justifyContent:'center',alignItems:'center'}}>
               <div className={style.vidasgame} style=
                     {{
-                      color: 'red', display: 'flex', flexDirection: 'row',
-                    }}>❤ x {lives.current}
-                  </div> 
+                      color: 'white', display: 'flex', flexDirection: 'row', fontFamily:'Montserrat, sans-serif', fontSize:'20px', fontWeight:'bold'
+                    }}><FavoriteIcon style={{fontSize:'20px'}}/> x {lives.current}
+              </div> 
+
               
               <progress
-                className='progressBar'
                 id="progress" 
-                value={seeVideos.current.length}>
+                value={seeVideos.current.length}
+              >
               </progress>
-              <Link className={style.xgame} style={{ marginLeft: '40px', marginTop: '-10px', color: 'white', textDecoration: 'none' }} to='login'>
-                ✖
+
+              <Link className={style.xgame}  to='/'>
+                <HighlightOffIcon style={{ marginLeft: '70px', marginBottom: '1%', color: 'white', textDecoration: 'none', fontSize:'25px' }}/>
               </Link>
             </div>
 

@@ -1,0 +1,85 @@
+.container_game_modes{
+    background-color:#212429;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.subContainer_game_modes{
+    position: absolute;
+    width: 80%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    bottom: 35%;
+}
+
+.subContainer_game_modes_unlock{
+    position: absolute;
+    width: 80%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    bottom: 25%;
+}
+
+.game_mode a {
+    background-color: #C94EBF;
+    text-decoration: none;
+    color: white;
+    padding: 1em 5em 1em 5em;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.game_mode p {
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 1em;
+    font-size: 20px;
+}
+
+.game_mode:hover{
+    background-color: #c94ebf2d;
+    border-radius: 15px;
+}
+
+.game_mode_gray{
+    filter: grayscale(100);
+}
+
+.unlock{
+    font-size: 10px !important;
+   margin-top: 40px;
+}
+
+.game_mode_gray a {
+    cursor: default;
+    background-color: #C94EBF;
+    text-decoration: none;
+    color: white;
+    padding: 1em 5em 1em 5em;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.game_mode_gray p {
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 1em;
+    font-size: 20px;
+}
+
+.game_mode:hover {
+    transform: scale(1.1);
+    transition: all .4s ease-out;
+}

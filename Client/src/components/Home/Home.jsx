@@ -14,6 +14,9 @@ import Swal from 'sweetalert2'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
+import MenuIcon from '@material-ui/icons/Menu';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import GameModes from '../GameModes/GameModes';
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
@@ -66,6 +69,18 @@ const Home = () => {
                 <div style={{display:'flex'}}>
                 <a className='signUpText'>Do you have an account already?&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={prueba}>Log in</a>
                 </div>
+                </div>
+                ,
+                showCloseButton:true,
+                showConfirmButton:false
+        })
+    }
+
+    const popUpGameMode = () => {
+        MySwal.fire({
+            html:
+                <div>
+                    <GameModes/>
                 </div>
                 ,
                 showCloseButton:true,
@@ -166,6 +181,7 @@ var enviardatos={
     const [login, setLogin] = useState(true) //setear para que funcione bien
     const [startGame, setStartGame] = useState(false) //setear para que funcione bien
     const [checker, setchecker] = useState(false)
+    const [showMobileLogOut, setShowMobileLogOut] = useState(false)
 
     
     const cookies = new Cookie();
@@ -226,8 +242,8 @@ var enviardatos={
         const day = currentDate.getDay();
         if (lastStorageDay !== day) {
             MySwal.fire({
-                title: <div style={{ borderStyle: 'solid', borderColor: 'red' }}>
-                    <h3>How do you fell to play today?</h3>
+                title: <div className='mood_container' style={{ borderStyle: 'none'}}>
+                    <h3>How do you feel today?</h3>
                     <span id='fine' onClick={mood2}>😁</span>
                     <span id='normal' onClick={mood2}>😐</span>
                     <span id='bad' onClick={mood2}>☹️</span>
@@ -258,8 +274,52 @@ var enviardatos={
         
         } 
 
+       /*  let sessionUser = '';
+
+        if(cookies.get('userInfo')){
+            sessionUser = cookies.get('userInfo')[0].name
+        } */
+
+        //console.log(cookies.get('userInfo'))    //Arreglar el nombre
+        
     return (
         <>
+        {login?
+        <div className="pantallamovil">
+            <div className="contenedortextomovil">
+                <p className='subtitlemovil'>Lorem ipsum, dolor sit amet.</p>
+                <div className='startGameLandingMobile'><Link to='/game' style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position:'relative', top:'15%', left:'1.9%'}} id='btnStartHome'><PlayArrowIcon style={{fontSize:'50px'}}/></Link></div>
+            </div>
+        </div>:(null)
+        }
+        {startGame? 
+            <div className="pantallaMovilScore">
+            <div className="contenedorTextoMovilScore">
+            <div>
+               <MenuIcon className='menuMobile' onClick={() => {setShowMobileLogOut(!showMobileLogOut)}} style={{color:'white', fontSize:'30px'}}/>
+               {showMobileLogOut?
+                <button className='logOutMobile' onClick={() => {
+                                cookies.remove('userInfo')
+                                window.location.href = ('')
+                            }}>Log out</button>:null
+               }
+            </div>
+            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>Maximiliano</span></p>
+            <div className='scores_mobile'>
+                <div className='column_scores_mobile'>
+                    <h4>Last score</h4>
+                    <p>35%</p>
+                </div>
+                <div className='column_scores_mobile'>
+                    <h4>Average score</h4>
+                    <p>68%</p>
+                </div>
+            </div>
+                <div className='startGameLandingMobile'><Link to='/game' style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position:'relative', top:'15%', left:'1.9%'}} id='btnStartHome'><PlayArrowIcon style={{fontSize:'50px'}}/></Link></div>
+            </div>
+        </div>:(null)
+        }
+
             <div className='homeDiv'>
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
@@ -304,9 +364,7 @@ var enviardatos={
                     <div className='text_secon_page'>
                         <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
                         <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
-                        <Link to='/game'>
-                            <button className='startGameLanding'>Start playing</button>
-                        </Link>
+                            <button  onClick={popUpGameMode} className='startGameLanding'>Start playing</button>
                     </div>
                         <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
                     </div>
