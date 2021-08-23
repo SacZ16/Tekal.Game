@@ -1,7 +1,6 @@
 
-function endpoint(url){   
+function endpoint(url){   // data memento
     let string2 = url.slice(72);
-
     var asset = "";
     for (let i = 0; i < string2.length; i++) {
         if (string2[i] !== "?") {
@@ -13,4 +12,18 @@ function endpoint(url){
     }
 }
 
-module.exports = {endpoint};
+function endpointNoMemento(url){ 
+    let string2 = url.slice(78);
+    var asset = "";
+    for (let i = 0; i < string2.length; i++) {
+        if (string2[i] !== "?") {
+            asset += string2[i];
+        }else{
+            return asset;
+        } 
+    }
+}
+        
+
+
+module.exports = {endpoint, endpointNoMemento};

@@ -1,12 +1,12 @@
 const picker = require('../services/templatePicker.service');
 
-function templateFiller(template, arrayAssets){
+function templateFiller(template, arrayAssets) {
   let assetsToSee = [];
 
-  let arrAssets = arrayAssets.map((e,i) => { return { url:e, id: i+1 }  });//[{url,id}{url,id}]
+  let arrAssets = arrayAssets.map((e, i) => { return { url: e, id: i } });//[{url,id}{url,id}]
 
   const templateFiller = template[3];
-  templateFiller.forEach((e,i) => {
+  templateFiller.forEach((e, i) => {
     let assetId = arrAssets.filter(b => b.id === e[0]);//[{url,id},{},{}] ordenados como en el template
     assetsToSee.push(assetId); //[[{},{}]]
     assetsToSee[i].push(e[1]);
@@ -19,4 +19,4 @@ function templateFiller(template, arrayAssets){
 }
 
 
-module.exports = {templateFiller};
+module.exports = { templateFiller };

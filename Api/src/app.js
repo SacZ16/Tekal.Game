@@ -14,6 +14,7 @@ const verificationemail = require ('./routes/verificationEmail');
 const VerificationChangePassword = require ('./routes/VerificationChangePassword');
 const changepassword = require('./routes/changePassword');
 const assetsImages = require("./routes/loadingImages")
+const averageScore = require("./routes/averageScore")
 const assets = require ('./routes/loadingAssets');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
@@ -50,6 +51,7 @@ server.use('/verificationchangepassword', VerificationChangePassword);
 server.use('/changepassword', changepassword);
 server.use('/assets', assets);
 server.use('/loadingImages', assetsImages)
+server.use('/averageScore', averageScore)
 
 
 module.exports = server;
