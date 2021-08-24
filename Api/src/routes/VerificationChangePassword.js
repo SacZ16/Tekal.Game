@@ -12,7 +12,7 @@ router.post('/', async (req,res) => {
         await sendEmailForPassword(email);
         res.send('Ok')
     } else {
-        res.send('Email not registered')
+        res.json('Email not registered')
     }
 })
 

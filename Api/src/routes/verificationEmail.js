@@ -6,14 +6,13 @@ const {verificationEmail} = require('../services/register.service')
 router.post('/', async (req,res) => {
     let email = req.body.email
     let response = await verificationEmail(email)
-    console.log(response)
     if(response === 'Error' || response === undefined){
-        res.send('This email is not registered')
+        return res.json('This email is not registered')
     }
     if(response === 'Email already verified'){
-        res.send('Email already verified')
+        return res.json('Email already verified')
     }
-    res.send('Ok')
+    return res.json('Ok')
 })
 
 

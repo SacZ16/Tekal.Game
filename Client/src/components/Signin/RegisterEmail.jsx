@@ -222,7 +222,6 @@ const RegisterWithEmail = () => {
     }
     var a = cookiies.get('prueba')
 
-    console.log(input)
     return (
         <>      
         <div class="row" onChange={handleInputChange}>

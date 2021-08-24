@@ -6,17 +6,17 @@ import {SendDataGoogle} from '../controllers/dbFunctions'
 
 const FacebookButton = () => {
     const [profile, setProfile] = useState('')
-    const responseFacebook = (response) => {
-        setProfile(response)
+    const responseFacebook = async (response) => {
+        if(response.email){
+            console.log(response)
+            let obj = {
+                email: response.email,
+                name: response.name.split(' ')[0]
+            }
+            console.log(await SendDataGoogle(obj))
+        }
     }
 
-    if(profile.email){
-        let obj = {
-            email: profile.email,
-            name: profile.name.split(' ')[0]
-        }
-        SendDataGoogle(obj)
-    }
     
     
 

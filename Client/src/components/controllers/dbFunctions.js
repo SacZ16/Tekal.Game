@@ -30,6 +30,7 @@ export const SendDataToBACK = async (email, password) => {
     }
 }
 export const SendDataGoogle = async (obj) => {
+    console.log(obj)
     const objPost = {
         email: obj.email,
         name: obj.name

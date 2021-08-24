@@ -212,7 +212,6 @@ var enviardatos={
     generovar:genero,
     ethnicityvar:ethnicity
 }
-    console.log(enviardatos)
     const handleInputChange = function (e) {
         // console.log(e.target.value)
         if (e.target.name === 'email') setEmail(e.target.value)
