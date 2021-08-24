@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
-import FacebookLogin from 'react-facebook-login';
 import '../Styles/facebookButton.css'
 import axios from 'axios'
-import {SendDataGoogle} from '../controllers/dbFunctions'
-import jwt, { decode } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import {
     useLocation
 } from "react-router-dom";
 
 const ChangePassword = () => {
-    const [response, setResponse] = useState('')
     const [password, setpassword] = useState('')
     const [confirmpassword, setconfirmpassword] = useState('')
 

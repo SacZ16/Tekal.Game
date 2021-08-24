@@ -21,7 +21,7 @@ export const SendDataToBACK = async (email, password) => {
         password: password,
     }
     const status = await axios({
-        url: 'http://localhost:3001/login',
+        url: 'https://asdasdas324.herokuapp.com/login',
         method: 'POST',
         data: objPost
     })
@@ -40,7 +40,7 @@ export const SendDataGoogle = async (obj) => {
         name: obj.name
     }
     const status = await axios({
-        url: 'http://localhost:3001/logingoogle',
+        url: 'https://asdasdas324.herokuapp.com/logingoogle',
         method: 'POST',
         data: objPost
     })

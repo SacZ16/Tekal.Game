@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { withRouter } from 'react-router';
 
@@ -36,7 +36,7 @@ export const Game = ({ history }) => {
   /* Trae los activos de la API */
   useEffect(() => {
     if (!assetsApi) {
-      axios.post('http://localhost:3001/links', {
+      axios.post('https://asdasdas324.herokuapp.com/links', {
         email: emailCokkie,
         mode: mode
       })

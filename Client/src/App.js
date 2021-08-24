@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from 'react-router-dom'
+import {Route, Switch } from 'react-router-dom'
 import LoginPage from './components/Login/LoginCommon'
 import FormData from './components/FormData/formularyData';
 import RegisterWithEmail from './components/Signin/RegisterEmail';

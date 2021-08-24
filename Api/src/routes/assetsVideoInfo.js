@@ -1,8 +1,34 @@
 const { Router } = require('express');
-const router = Router();
+//const {endpoint, endpointNoMemento} = require('../services/endpoint.service');
+//const {endpoint, endpointNoMemento} = require('../../src/services/endPoint.service');
 const { putAssets, updateView, queryAllInfoUser, updateAnnotationsCorrect } = require('../Controllers/dbFunctions');
-const {endpoint, endpointNoMemento} = require('../services/endpoint.service');
+const router = Router();
 
+function endpoint(url){   // data memento
+    let string2 = url.slice(72);
+    var asset = "";
+    for (let i = 0; i < string2.length; i++) {
+        if (string2[i] !== "?") {
+            asset += string2[i];
+        }
+        else {
+            return asset.slice(29);
+        }
+    }
+}
+
+function endpointNoMemento(url){ 
+    let string2 = url.slice(78);
+    var asset = "";
+    for (let i = 0; i < string2.length; i++) {
+        if (string2[i] !== "?") {
+            asset += string2[i];
+        }else{
+            return asset;
+        } 
+    }
+}
+   
 router.post('/', async (req, res) => {
     let info = req.body;
     let email = info[0];

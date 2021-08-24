@@ -1,8 +1,32 @@
 const { Router } = require('express');
 const router = Router();
 const { putUserGameItems } = require('../Controllers/dbFunctions');
-const { endpointNoMemento, endpoint } = require('../services/endpoint.service');;
+//const { endpointNoMemento, endpoint } = require('../services/endpoint.service');;
 
+function endpoint(url){   // data memento
+    let string2 = url.slice(72);
+    var asset = "";
+    for (let i = 0; i < string2.length; i++) {
+        if (string2[i] !== "?") {
+            asset += string2[i];
+        }
+        else {
+            return asset.slice(29);
+        }
+    }
+}
+
+function endpointNoMemento(url){ 
+    let string2 = url.slice(78);
+    var asset = "";
+    for (let i = 0; i < string2.length; i++) {
+        if (string2[i] !== "?") {
+            asset += string2[i];
+        }else{
+            return asset;
+        } 
+    }
+}
 
 router.post('/', async (req, res) => {
     let info = req.body;

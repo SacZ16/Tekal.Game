@@ -19,7 +19,7 @@ const FacebookButton = () => {
     }
 
 
-
+console.log(process.env.REACT_APP_ID_FACE)
     return (
         <div>
             <FacebookLogin

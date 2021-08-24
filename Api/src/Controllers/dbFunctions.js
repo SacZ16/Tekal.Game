@@ -1,7 +1,7 @@
 const { Router, response } = require("express");
 const axios = require("axios").default;
 const AWS = require("aws-sdk");
-const { endpoint } = require("../services/endpoint.service");
+//const { endpoint } = require("../services/endpoint.service");
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
@@ -279,7 +279,7 @@ const updateEmailVerification = async (userId) => {
     const infoUser = `INFO#${userId}`;
 
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,
@@ -312,7 +312,7 @@ const updatePassword = async (userId, pass) => {
   try {
     const infoUser = `INFO#${userId}`;
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,

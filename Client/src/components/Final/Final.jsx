@@ -12,7 +12,6 @@ import withReactContent from 'sweetalert2-react-content'
 
 function Finalgame({ history }) {
 
-    const MySwal = withReactContent(Swal)
 
 
     const dispatch = useDispatch()
@@ -58,12 +57,12 @@ function Finalgame({ history }) {
     }
 
     useEffect(() => {
-        /* postDataa() */
+         postDataa() 
     }, [])
 
     const postDataa = async () => {
-        await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
-        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
+        await axios.post('https://asdasdas324.herokuapp.com/videoInfo', resultadoparaenviar)
+        await axios.post('https://asdasdas324.herokuapp.com/gameInfo', resultadoparaenviar)
         localStorage.removeItem('score')
         localStorage.removeItem('results')
     }

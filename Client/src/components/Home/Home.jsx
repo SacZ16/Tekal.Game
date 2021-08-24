@@ -146,9 +146,8 @@ const Home = () => {
     }
 
     const [averageScore, setAverageScore] = useState()
-
     useEffect(async () => {
-        const res = await axios.post('http://localhost:3001/averageScore', {
+        const res = await axios.post('https://asdasdas324.herokuapp.com/averageScore', {
             email: emailCokkie,
             // mode: mode
         })
