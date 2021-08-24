@@ -12,6 +12,7 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
 
     const cookiies = new Cookie(); //no borrar
     var a = cookiies.get('prueba')
+
     const checker = async (email, password) => {
         if (!email || !password) setErr('Complete all fields')
         const checker2 = await props(email, password)
@@ -30,6 +31,7 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
             })
         }
     }
+    
     return (
         <>
             <div className='containerLanding'>

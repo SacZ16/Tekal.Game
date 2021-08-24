@@ -4,6 +4,7 @@ import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
 import cerebritoHomeResults from '../Styles/prefinalmascota.png'
+import cerebroPerfil from '../Styles/cerebritoPerfil.png'
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
@@ -15,14 +16,19 @@ import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import Loading from '../Loading/Loading';
+//-----------------
+import MenuIcon from '@material-ui/icons/Menu';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import GameModes from '../GameModes/GameModes';
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
     const score = localStorage.getItem('score')
     const mood = localStorage.getItem('mood')
     const cookies = new Cookie();
-
+    console.log(cookies.get('userInfo'))
     var emailCokkie;
+
 
     if (cookies.get('userInfo')) {
         if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
@@ -74,6 +80,17 @@ const Home = () => {
     const [login, setLogin] = useState(true) //setear para que funcione bien
     const [startGame, setStartGame] = useState(false) //setear para que funcione bien
     const [checker, setchecker] = useState(false)
+    const [showMobileLogOut, setShowMobileLogOut] = useState(false)
+
+    let sessionUser = "";
+
+    if (cookies.get('userInfo')) {
+        if (cookies.get('userInfo').Items) {
+            sessionUser = cookies.get('userInfo').Items[0].name
+        } else {
+            sessionUser = cookies.get('userInfo')[0].name
+        }
+    }
 
     if (cookies.get('userInfo') && !checker) {
         setStartGame(true)
@@ -88,12 +105,14 @@ const Home = () => {
                 {sessionOn ?
                     <div className='sessionBox'>
                         <div className='boxDisplay'>
-                            <img className='profilePic' src='https://clinicacontraadicciones.mx/wp-content/uploads/2020/10/TESTIMONIO.jpg' alt='profile_pic' />
+
+                            <img className='profilePic' src={cerebroPerfil} alt='profile_pic' />
+
                             <div className='textBox'>
-                                <p className='sessionName'>Maximiliano</p>
+                                <p className='sessionName'>{sessionUser}</p>
                                 <p className='sessionStatus'>Online</p>
                             </div>
-                            <button className='btnOpenSessionMenu' onClick={e => { setShow(!show) }}>&#9660;</button>
+                            <button className='btnOpenSessionMenu' onClick={() => { setShow(!show) }}>&#9660;</button>
                         </div>
                         {show ?
                             <button className='btnLogOut' onClick={() => {
@@ -106,44 +125,6 @@ const Home = () => {
         )
     }
 
-    const mood2 = (e) => {
-        const currentDate = new Date();
-        const day = currentDate.getDay();
-        localStorage.setItem('mood', e.target.id)
-        localStorage.setItem('date', day)
-        window.location.href = ('/game')
-        MySwal.clickConfirm()
-    }
-
-    const moodFunction = (e) => {
-        if (e.target.id === 'video') localStorage.setItem('mode', e.target.id)
-        if (e.target.id === 'image') localStorage.setItem('mode', e.target.id)
-        const lastStorageDay = localStorage.getItem('date')
-        const currentDate = new Date();
-        const day = currentDate.getDay();
-        if (lastStorageDay != day) {
-            MySwal.fire({
-                html:
-                    <div>
-                        <h2 className='moods-title'>How do you fell to play today?</h2>
-                        <div className='moods-img'>
-                            <span id='fine' onClick={mood2}>😁</span>
-                            <span id='normal' onClick={mood2}>😐</span>
-                            <span id='bad' onClick={mood2}>☹️</span>
-                        </div>
-                    </div>,
-                showConfirmButton: false,
-
-            })
-        } else {
-            window.location.href = ('/game')
-        }
-    }
-
-    const playWithOutLogin = () => {
-        localStorage.setItem('mode', 'video')
-        window.location.href = ('/game')
-    }
 
     var lnks = Array.from(document.getElementsByTagName('a'));
 
@@ -164,74 +145,116 @@ const Home = () => {
 
     }
 
-    /*  const [averageScore, setAverageScore] = useState()
- 
-     useEffect(async () => {
-         const res = await axios.post('http://localhost:3001/averageScore', {
-             email: emailCokkie,
-             // mode: mode
-         })
-         setAverageScore(res.data.averageScore)
-     }, []) */
+    const [averageScore, setAverageScore] = useState()
 
+    useEffect(async () => {
+        const res = await axios.post('http://localhost:3001/averageScore', {
+            email: emailCokkie,
+            // mode: mode
+        })
+        setAverageScore(res.data.averageScore)
+    }, [])
+
+    const popUpGameMode = () => {
+        MySwal.fire({
+            html:
+                <div>
+                    <GameModes />
+                </div>
+            ,
+            showCloseButton: true,
+            showConfirmButton: false
+        })
+    }
     return (
         <>
-            {
-                <div className='homeDiv'>
-                    <section>
-                        <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
-                        {startGame ?
-                            <>
-                                <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
-                                <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>Maximiliano</span></p>
-                                <div className='scores'>
-                                    <div className='column_scores'>
-                                        <h4>Last score</h4>
-                                        <p>{score ? `${score}%` : 0}</p>
-                                    </div>
-                                    <div className='column_scores'>
-                                        <h4>Average score</h4>
-                                        {/*  <p>{averageScore.toFixed(1)}%</p> */}
-                                    </div>
-                                </div>
-                                <div className='buttonsHome'>
-                                    <div className='startGame'><Link onClick={moodFunction} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='video'>Videos</Link></div>
-                                    <div className='startGame'><Link onClick={moodFunction} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='image'>Images</Link></div>
-                                </div>
-                            </> : (null)}
-                    </section>
-
-                    <CurrentSession />
-                    {login ?
-                        <>
-                            <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
-                            <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
-                            <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
-                            <div className='container_buttons_home'>
-                                <button className='registerHome' onClick={pruebare}>Sign up</button>
-                                <button className='loginHome' onClick={prueba}>Log in</button>
-                            </div>
-
-                            <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
-                            <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
-                            <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
-
-                            <div className='second_screen_home' id='second_screen'>
-                                <button className='auxiliarFondo'></button>
-                                <button className='auxiliarFondoDerecha'></button>
-                                <div className='text_secon_page'>
-                                    <p className='second_page_title'>How is your <br /> <span className='memory_style'>memory</span> working?</p>
-                                    <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
-                                    <Link >
-                                        <button onClick={playWithOutLogin} className='startGameLanding'>Start playing</button>
-                                    </Link>
-                                </div>
-                                <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{ left: (67 + offset * -0.1) + '%' }} />
-                            </div>
-                        </>
-                        : (null)}
-                </div>
+            {login ?
+                <div className="pantallamovil">
+                    <div className="contenedortextomovil">
+                        <p className='subtitlemovil'>Lorem ipsum, dolor sit amet.</p>
+                        <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
+                    </div>
+                </div> : (null)
             }
+            {startGame ?
+                <div className="pantallaMovilScore">
+                    <div className="contenedorTextoMovilScore">
+                        <div>
+                            <MenuIcon className='menuMobile' onClick={() => { setShowMobileLogOut(!showMobileLogOut) }} style={{ color: 'white', fontSize: '30px' }} />
+                            {showMobileLogOut ?
+                                <button className='logOutMobile' onClick={() => {
+                                    cookies.remove('userInfo')
+                                    window.location.href = ('')
+                                }}>Log out</button> : null
+                            }
+                        </div>
+                        <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>{sessionUser}</span></p>
+                        <div className='scores_mobile'>
+                            <div className='column_scores_mobile'>
+                                <h4>Last score</h4>
+                                <p>35%</p>
+                            </div>
+                            <div className='column_scores_mobile'>
+                                <h4>Average score</h4>
+                                <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
+                            </div>
+                        </div>
+                        <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
+                    </div>
+                </div> : (null)
+            }
+
+            <div className='homeDiv'>
+                <section>
+                    <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+                    {startGame ?
+                        <>
+                            <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
+                            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>{sessionUser}</span></p>
+                            <div className='scores'>
+                                <div className='column_scores'>
+                                    <h4>Last score</h4>
+                                    <p>35%</p>
+                                </div>
+                                <div className='column_scores'>
+                                    <h4>Average score</h4>
+                                    <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
+                                </div>
+                            </div>
+                            <div className='buttonsHome'>
+                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                            </div>
+                        </> : (null)}
+                </section>
+
+                <CurrentSession />
+                {login ?
+                    <>
+                        <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
+                        <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
+                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
+                        <div className='container_buttons_home'>
+                            <button className='registerHome' onClick={pruebare}>Sign up</button>
+                            <button className='loginHome' onClick={prueba}>Log in</button>
+                        </div>
+
+                        <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
+                        <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
+                        <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
+
+                        <div className='second_screen_home' id='second_screen'>
+                            <button className='auxiliarFondo'></button>
+                            <button className='auxiliarFondoDerecha'></button>
+                            <div className='text_secon_page' style={{ zIndex: "1000" }}>
+                                <p className='second_page_title'>How is your <br /> <span className='memory_style'>memory</span> working?</p>
+                                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
+                                <button onClick={popUpGameMode} className='startGameLanding'>Start playing</button>
+                            </div>
+                            <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{ left: (67 + offset * -0.1) + '%' }} />
+                        </div>
+                    </>
+                    : (null)}
+            </div>
         </>
     )
 };

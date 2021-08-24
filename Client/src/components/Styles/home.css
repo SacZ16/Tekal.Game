@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
+body {
+    margin: 0;
+    cursor: default;
+}
+
+.logoTekal{
+    position: absolute;
+    width: 55px;
+    height: 12px;
+    margin-top: 4%;
+    margin-left: 7%;
+}
+
 .tutorialHome {
     background-color: white;
     border-radius: 5px;
@@ -12,28 +25,6 @@
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 }
-
-a {
-    text-decoration: none;
-}
-
-.moods-title {
-    text-align: center;
-    color: rgba(219, 88, 88, 0.986);
-}
-.moods-img {
-    display: flex;
-    justify-content: space-around;
-}
-
-.moods-img span {
-    font-size: 50px;
-}
-
-.moods-img span:hover {
-    cursor: pointer;
-}
-
 .swal2-container.swal2-center>.swal2-popup{
     width:40%;
     background-color: #343434;
@@ -118,6 +109,7 @@ overflow: hidden;
     color: white;
     font-size: 1.125em;
 }
+
 .tutorialHome:hover{
     border-style: solid;
     width: 150px;
@@ -154,7 +146,14 @@ overflow: hidden;
 body{
     overflow-x:hidden ;
 }
-
+.swal2-html-container{
+    word-break:normal !important;
+    overflow: hidden !important;
+}
+.swal2-container.swal2-center>.swal2-popup{
+    width: max-content !important;
+    height: max-content !important;
+}
 .loginHome{
     background: transparent;
     border-radius: 5px;
@@ -293,96 +292,6 @@ body{
     height: 85vh;
 }
 
-@media(min-width: 1366px){
-    .brain_right{
-        position: relative;
-        top: 15vh;
-        height: 85vh;
-        margin-right: -10em;
-    }
-
-    .second_page_subtitle{
-        margin-bottom: 40px !important;
-    }
-}
-
-@media(min-width: 1440px){
-    .brain_right{
-        position: relative;
-        top: 25vh;
-        height: 75vh;
-        padding-left: 520px;
-    }
-
-    .second_page_subtitle{
-        font-size: 25px !important;
-        margin-bottom: 70px !important;
-        width: 700px !important;
-    }
-
-    .second_page_title{
-        font-size: 75px !important;
-        width: 100% !important;
-    }
-    
-    .second_page_title span{
-        font-size: 75px !important;
-    }
-
-    .text_secon_page{
-        position: absolute;
-        top: 15vh !important;
-    }
-}
-
-@media(min-width: 1920px){
-    .brain_right{
-        position: relative;
-        top: 24vh;
-        height: 75vh;
-        margin-right: -100%;
-        padding-left: 760px;
-    }
-
-    .text_secon_page{
-        position: absolute;
-        top: 15vh !important;
-        height: 300px;
-        width: 80em;
-    }
-
-    .second_page_title{
-        font-size: 90px !important;
-    }
-    
-    .second_page_title span{
-        font-size: 90px !important;
-    }
-
-    .second_page_subtitle{
-        font-size: 25px !important;
-        margin-bottom: 90px !important;
-    }
-
-    .startGameLanding{
-        font-size: 30px !important;
-        width: 280px !important;
-    }
-
-    .textHome{
-        font-size: 65px !important;
-    }
-
-    .textHome span{
-        font-size: 65px !important;
-    }
-
-    .sub_textHome{
-        font-size: 25px !important;
-    }
-}
-
-
 .text_secon_page{
     position: relative;
     top: 21vh;
@@ -419,6 +328,21 @@ body{
     border-style: none;
     font-size: 16px;
     font-weight: 550;
+    z-index: 20000;
+}
+
+.startGameLandingMobile{
+    background-color: #C94EBF;
+    width: 150px;
+    height: 45px;
+    font-family: 'Montserrat', sans-serif;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    color: white;
+    border-style: none;
+    font-weight: 550;
 }
 
 .registerHome{
@@ -452,11 +376,11 @@ body{
 }
 
 .cerebritoHomeResults{
-    z-index: 1000;
-    width: 750px;
-    height: 450px;
+    width: 680px;
+    height: 400px;
     position: absolute;
     bottom: 0;
+    z-index: 0;
 }
 
 .registerHome:hover{
@@ -701,4 +625,958 @@ section::before{
 
 .formulario_register{
     position: absolute;
+}
+
+.pantallamovil{
+    display: none;
+}
+
+.pantallaMovilScore{
+    display: none;
+}
+
+.subtitlemovil{
+    font-size: 3vh;
+    color: #FFFF;
+    font-family: 'Montserrat', sans-serif;
+}
+.contenedortextomovil{
+    display: flex;
+    text-align:center;
+    flex-direction: column;
+    bottom: 10%;
+    height: 40%;
+    width: 100%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;    
+}
+.titlemovil{
+    font-size: 5vh;
+    color: #FFFF;
+    font-family: 'Montserrat', sans-serif;
+}
+
+@media(min-width: 1920px){
+    .brain_right{
+        position: relative;
+        top: 24vh;
+        height: 75vh;
+        margin-right: -100%;
+        padding-left: 128em;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+        height: 300px;
+        width: 80em;
+    }
+
+    .second_page_title{
+        font-size: 90px !important;
+    }
+    
+    .second_page_title span{
+        font-size: 90px !important;
+    }
+.swal2-container.swal2-center>.swal2-popup{
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center
+}
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 90px !important;
+    }
+
+    .startGameLanding{
+        font-size: 30px !important;
+        width: 280px !important;
+        z-index: 20000;
+    }
+
+    .textHome{
+        font-size: 65px !important;
+    }
+
+    .textHome span{
+        font-size: 65px !important;
+    }
+
+    .sub_textHome{
+        font-size: 25px !important;
+    }
+    .textHomeSession{
+        font-size: 80px;
+    }
+    .textHomeSession span{
+        font-size: 80px;
+    }
+
+    .scores{
+        height: 220px;
+    }
+
+    .buttonsHome{
+        margin-top: -20px;
+    }
+
+    .cerebritoHomeResults{
+        height: 600px;
+        width: 1000px;
+    }
+
+    .column_scores h4{
+        font-size: 50px;
+    }
+
+    .column_scores p{
+        font-size: 70px;
+    }
+}
+
+@media(min-width: 1440px) and (max-width:1900px){
+    .brain_right{
+        position: relative;
+        top: 25vh;
+        height: 75vh;
+        padding-left: 76em;
+    }
+
+    .second_page_subtitle{
+        font-size: 25px !important;
+        margin-bottom: 70px !important; 
+        width: 700px !important;
+    }
+
+    .second_page_title{
+        font-size: 75px !important;
+        width: 100% !important;
+    }
+    
+    .second_page_title span{
+        font-size: 75px !important;
+    }
+
+    .text_secon_page{
+        position: absolute;
+        top: 15vh !important;
+    }
+
+    .scores{
+        padding-bottom: 90px;
+    }
+
+    .cerebritoHomeResults{
+        height: 480px;
+        width: 850px;
+    }
+}
+
+@media(min-width: 1366px) and (max-width:1400px){
+    .brain_right{
+        position: relative;
+        top: 15vh;
+        height: 85vh;
+        margin-right: -10em;
+    }
+
+    .second_page_subtitle{
+        margin-bottom: 40px !important;
+    }
+
+    .textHomeSession{
+        padding-top: 40px;
+    }
+}
+
+@media(max-width: 1024px) and (min-width:1000px){
+    .scores{
+        padding-bottom: 80px !important;
+    }
+
+    .brain_right{
+        position: absolute!important;
+        margin-left: 38em!important;
+    }
+    .text_secon_page{
+        margin-left: -1em!important;
+        width: 60%!important;
+    }
+    .sub_textHome{
+        margin-top: 18em!important;
+    }
+}
+
+@media(max-width: 768px) and (min-width:750px){
+
+    .scores{
+       position: absolute!important;
+       top: 35%!important;
+       height: 200px!important;
+    }
+
+    .buttonsHome{
+        position: absolute!important;
+        top: 50%!important;
+        left: 15px!important;
+    }
+
+    .brain_right{
+        height: 600px!important;
+        margin-top: 16.5em !important;
+        margin-right: -18em!important;
+    }
+
+    .text_secon_page{
+        margin-top: -10em!important;
+    }
+}
+
+@media(max-width: 720px) and (min-width:700px){
+    .textHome{
+        margin-top: 2.8em!important;
+    }
+    .sub_textHome{
+        margin-top: 17em!important;
+    }
+    .textHomeSession{
+        font-size: 40px!important;
+        padding-top: 50px!important;
+    }
+    .textHomeSession span{
+        font-size: 40px!important;
+    }
+    .scores{
+       position: absolute!important;
+       top: 40%!important;
+       height: 80px!important;
+    }
+
+    .buttonsHome{
+        position: absolute!important;
+        top: 70%!important;
+        left: 15px!important;
+    }
+
+    .cerebritoHomeResults{
+        height: 280px!important;
+        width: 500px!important;
+    }
+
+    .brain_right{
+        position:absolute!important;
+        bottom: 0!important;
+        margin-left: 17em!important;
+    }
+
+    .text_secon_page{
+        position: absolute!important;
+        left: 0!important;
+        margin-left: -2em!important;
+        width: 70%!important;
+        margin-top: -7em!important;
+    }
+
+    .second_page_title{
+        font-size: 30px!important;
+    }
+
+    .second_page_title span{
+        font-size: 30px!important;
+    }
+
+    .second_page_subtitle{
+        margin-top: 10px!important;
+        font-size: 17px!important;
+    }
+}
+
+@media only screen and (max-width: 649px) and (min-width: 0px) {
+    .homeDiv{
+        display: none!important;
+    }
+    .second_screen_home{
+        display: none!important;
+    }
+    .pantallamovil{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+    .pantallaMovilScore{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    .contenedorTextoMovilScore{
+        display: flex!important;
+        flex-direction: column!important;
+    }
+
+    .textHomeSession{
+        font-size: 35px!important;
+        font-weight: bold!important;
+        width: 90%!important;
+        text-align: center!important;
+        margin-left: 5%!important;
+        margin-right: 5%!important;
+        margin-top: 30%!important;
+    }
+
+    .textHomeSession span{
+        font-size: 35px!important;
+        font-weight: bold!important;
+    }
+    .startGameLandingMobile{
+        position: absolute!important;
+        border-radius: 50px!important;
+        width: 70px!important;
+        height: 70px!important;
+        bottom: 15%!important;
+        left: 41%!important;
+    }
+
+    .scores_mobile{
+        display: flex!important;
+    flex-direction: column!important;
+    position: absolute!important;
+    bottom: 32%!important;
+    width:50%!important;
+    height: 25%!important;
+    margin-left: 13.5%!important;
+    align-items:center!important;
+    z-index: 10!important;
+    place-content: center!important;
+    display: flex!important;
+    justify-content: space-between!important;
+    background-color: #212429!important;
+    border-radius: 15px!important;
+    padding-left: 50px!important;
+    padding-right: 50px!important;
+    padding-top: 30px!important;
+    padding-bottom: 30px!important;
+    }
+    .column_scores_mobile{
+        display: flex!important;
+        flex-direction: column!important;
+    }
+    
+    .column_scores_mobile h4{
+        color: white!important;
+        font-size: 17px!important;
+        font-family: 'Montserrat', sans-serif!important;
+        font-weight: bold!important;
+        margin-top: 2px!important;
+    }
+    
+    .column_scores_mobile p{
+        color: #C94EBF!important;
+        font-size: 34px!important;
+        font-family: 'Montserrat', sans-serif!important;
+        text-align: center!important;
+        margin-top: -10px!important;
+        font-weight: bold!important;
+    }
+
+    .menuMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 2%!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 7%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+    }
+
+}
+
+@media only screen and (max-width: 360px) and (min-width: 0px) {
+    .scores_mobile{
+        margin-left: 12%!important;
+    }
+
+    .subtitlemovil{
+        padding-bottom: 40px!important;
+    }
+
+    .textHomeSession{
+        font-size: 35px!important;
+        font-weight: bold!important;
+        width: 90%!important;
+        text-align: center!important;
+        margin-left: 5%!important;
+        margin-top: 30%!important;
+    }
+
+    .textHomeSession span{
+        font-size: 35px!important;
+        font-weight: bold!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 7%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+    }
+}
+
+@media only screen and (max-width: 731px) and (max-height: 411px) {
+    .homeDiv{
+        display: none!important;
+    }
+
+    .pantallaMovilScore{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    .menuMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 5%!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 15%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+        z-index: 10000!important;
+    }
+
+    .startGameLandingMobile{
+        border-radius: 50px!important;
+        height: 70px!important;
+        width: 70px!important;
+        position: absolute!important;
+        bottom: 10%!important;
+        left: 43.5%!important;
+    }
+    
+    .textHomeSession{
+        width: 50%!important;
+        text-align: left!important;
+        position: absolute!important;
+        left: 5%!important;
+        top: 5%!important;
+    }
+
+    .scores_mobile{
+        display: flex!important;
+        flex-direction: row!important;
+        position: absolute!important;
+        bottom: 32%!important;
+        width:25%!important;
+        right: 5%!important;
+        top: 23%!important;
+        height: 25%!important;
+        align-items:center!important;
+        z-index: 10!important;
+        place-content: center!important;
+        display: flex!important;
+        justify-content: space-between!important;
+        background-color: #212429!important;
+        border-radius: 15px!important;
+        padding-left: 50px!important;
+        padding-right: 50px!important;
+        padding-top: 30px!important;
+        padding-bottom: 30px!important;
+    }
+
+    .column_scores_mobile{
+        text-align: center!important;
+    }
+
+    .column_scores_mobile h4 {
+        text-align: center!important;
+        color: white!important;
+        font-size: 20px!important;
+        width: 100%!important;
+        font-family: 'Montserrat', sans-serif!important;
+    }
+    .column_scores_mobile p {
+        text-align: center!important;
+        color: #C94EBF!important;
+        font-size: 30px!important;
+        font-family: 'Montserrat', sans-serif!important;
+
+    }
+}
+
+@media only screen and (max-width: 640px) and (max-height: 360px) and (min-width: 0px) and (min-height: 0px) {
+    .textHomeSession{
+        position: absolute !important;
+        left: 5% !important;
+        top: 1% !important;
+        margin-top: 3em!important;
+    }
+
+    .startGameLandingMobile{
+        margin-left: .5em!important;
+    }
+
+    .subtitlemovil{
+        margin-top: -6em!important;
+    }
+}
+
+@media only screen and (max-width: 736px) and (max-height: 414px) and (min-width: 641px) and (min-height: 361px) {
+    .homeDiv{
+        display: none!important;
+    }
+
+    .pantallamovil{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    .pantallaMovilScore{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    
+    .menuMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 5%!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 15%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+        z-index: 10000!important;
+    }
+
+    .startGameLandingMobile{
+        border-radius: 50px!important;
+        height: 70px!important;
+        width: 70px!important;
+        position: absolute!important;
+        bottom: 10%!important;
+        left: 46%!important;
+    }
+
+    .subtitlemovil{
+        margin-top: -3.5em!important;
+    }
+    
+    .textHomeSession{
+        width: 50%!important;
+        text-align: left!important;
+        position: absolute!important;
+        left: 5%!important;
+        top: 5%!important;
+    }
+
+    .scores_mobile{
+        display: flex!important;
+        flex-direction: row!important;
+        position: absolute!important;
+        bottom: 32%!important;
+        width:25%!important;
+        right: 5%!important;
+        top: 23%!important;
+        height: 25%!important;
+        align-items:center!important;
+        z-index: 10!important;
+        place-content: center!important;
+        display: flex!important;
+        justify-content: space-between!important;
+        background-color: #212429!important;
+        border-radius: 15px!important;
+        padding-left: 50px!important;
+        padding-right: 50px!important;
+        padding-top: 30px!important;
+        padding-bottom: 30px!important;
+    }
+
+    .column_scores_mobile{
+        text-align: center!important;
+    }
+
+    .column_scores_mobile h4 {
+        text-align: center!important;
+        color: white!important;
+        font-size: 20px!important;
+        width: 100%!important;
+        font-family: 'Montserrat', sans-serif!important;
+    }
+    .column_scores_mobile p {
+        text-align: center!important;
+        color: #C94EBF!important;
+        font-size: 30px!important;
+        font-family: 'Montserrat', sans-serif!important;
+
+    }
+}
+
+@media only screen and (max-width: 854px) and (max-height: 530px) and (min-width: 737px) and (min-height: 415px) {
+    .homeDiv{
+        display: none!important;
+    }
+
+    .pantallamovil{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    .pantallaMovilScore{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    
+    .menuMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 5%!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 15%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+        z-index: 10000!important;
+    }
+
+    .startGameLandingMobile{
+        border-radius: 50px!important;
+        height: 70px!important;
+        width: 70px!important;
+        position: absolute!important;
+        bottom: 10%!important;
+        left: 46%!important;
+    }
+
+    .subtitlemovil{
+        margin-top: -3em!important;
+    }
+    
+    .textHomeSession{
+        width: 50%!important;
+        text-align: left!important;
+        position: absolute!important;
+        left: 5%!important;
+        top: 5%!important;
+    }
+
+    .scores_mobile{
+        display: flex!important;
+        flex-direction: row!important;
+        position: absolute!important;
+        bottom: 32%!important;
+        width:25%!important;
+        right: 5%!important;
+        top: 23%!important;
+        height: 25%!important;
+        align-items:center!important;
+        z-index: 10!important;
+        place-content: center!important;
+        display: flex!important;
+        justify-content: space-between!important;
+        background-color: #212429!important;
+        border-radius: 15px!important;
+        padding-left: 50px!important;
+        padding-right: 50px!important;
+        padding-top: 30px!important;
+        padding-bottom: 30px!important;
+    }
+
+    .column_scores_mobile{
+        text-align: center!important;
+    }
+
+    .column_scores_mobile h4 {
+        text-align: center!important;
+        color: white!important;
+        font-size: 20px!important;
+        width: 100%!important;
+        font-family: 'Montserrat', sans-serif!important;
+    }
+    .column_scores_mobile p {
+        text-align: center!important;
+        color: #C94EBF!important;
+        font-size: 30px!important;
+        font-family: 'Montserrat', sans-serif!important;
+
+    }
+}
+
+@media only screen and (max-width: 812px) and (max-height: 375px) and (min-width: 641px) and (min-height: 361px) {
+    .homeDiv{
+        display: none!important;
+    }
+
+    .pantallamovil{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+
+    .pantallaMovilScore{
+        display: flex!important;
+        position:absolute!important;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429!important;
+        width: 100%!important;
+        height: 100%!important;
+        overflow: hidden!important;
+    }
+
+    
+    .menuMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 5%!important;
+    }
+
+    .logOutMobile{
+        position: absolute!important;
+        right: 5%!important;
+        top: 15%!important;
+        background-color: transparent!important;
+        border-style: solid!important;
+        border-color: white!important;
+        color: white!important;
+        border-radius: 5px!important;
+        padding: 10px 40px 10px 40px!important;
+        z-index: 10000!important;
+    }
+
+    .startGameLandingMobile{
+        border-radius: 50px!important;
+        height: 70px!important;
+        width: 70px!important;
+        position: absolute!important;
+        bottom: 10%!important;
+        left: 46%!important;
+    }
+
+    .subtitlemovil{
+        margin-top: -5em!important;
+    }
+        
+    .textHomeSession{
+        width: 50%!important;
+        text-align: left!important;
+        position: absolute!important;
+        left: 5%!important;
+        top: 1% !important;
+        margin-top: 2em!important;
+    }
+
+    .scores_mobile{
+        display: flex!important;
+        flex-direction: row!important;
+        position: absolute!important;
+        bottom: 32%!important;
+        width:25%!important;
+        right: 5%!important;
+        top: 23%!important;
+        height: 25%!important;
+        align-items:center !important;
+        z-index: 10 !important;
+        place-content: center !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        background-color: #212429 !important;
+        border-radius: 15px !important;
+        padding-left: 50px !important;
+        padding-right: 50px !important;
+        padding-top: 30px !important;
+        padding-bottom: 30px !important;
+    }
+
+    .column_scores_mobile{
+        text-align: center !important;
+    }
+
+    .column_scores_mobile h4 {
+        text-align: center !important;
+        color: white !important;
+        font-size: 20px !important;
+        width: 100% !important;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+    .column_scores_mobile p {
+        text-align: center !important;
+        color: #C94EBF !important;
+        font-size: 30px !important;
+        font-family: 'Montserrat', sans-serif !important;
+
+    }
+}
+
+@media only screen and (max-width: 900px) and (max-height: 500px) and (min-width: 0px) and (min-height: 0px) {
+    .homeDiv{
+        display: none;
+    }
+
+    .pantallamovil{
+        display: flex;
+        position:absolute;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+
+    .pantallaMovilScore{
+        display: flex;
+        position:absolute;
+        background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    
+    .menuMobile{
+        position: absolute;
+        right: 5%;
+        top: 5%;
+    }
+
+    .logOutMobile{
+        position: absolute;
+        right: 5%;
+        top: 15%;
+        background-color: transparent;
+        border-style: solid;
+        border-color: white;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 40px 10px 40px;
+        z-index: 10000;
+    }
+
+    .startGameLandingMobile{
+        border-radius: 50px;
+        height: 70px;
+        width: 70px;
+        position: absolute;
+        bottom: 10%;
+        left: 46%;
+    }
+
+    .subtitlemovil{
+        margin-top: -5em;
+    }
+        
+    .textHomeSession{
+        width: 50%;
+        text-align: left;
+        position: absolute;
+        left: 5%;
+        top: 1% ;
+        margin-top: 2em;
+    }
+
+    .scores_mobile{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        bottom: 32%;
+        width:25%;
+        right: 5%;
+        top: 23%;
+        height: 25%;
+        align-items:center;
+        z-index: 10;
+        place-content: center;
+        display: flex;
+        justify-content: space-between;
+        background-color: #212429;
+        border-radius: 15px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .column_scores_mobile{
+        text-align: center;
+    }
+
+    .column_scores_mobile h4 {
+        text-align: center;
+        color: white;
+        font-size: 20px;
+        width: 100%;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .column_scores_mobile p {
+        text-align: center;
+        color: #C94EBF;
+        font-size: 30px;
+        font-family: 'Montserrat', sans-serif;
+
+    }
 }

@@ -10,6 +10,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import { sessionInfo } from '../../redux/action';
 
 import cerebroLose from '../Styles/slideSeisEsp.png'
+import cerebroEnd from '../Styles/cerebrito_derecha.png'
 
 
 const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) => {
@@ -40,7 +41,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
     const lives = useRef(3); // Vidas del usuario 
     // console.log(lives.current)
-    const score = parseInt(((10 / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+    const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
     // console.log(score)
     const finalImages = useRef([]); // Videos vistos con respuetsas
     // console.log(finalImages.current)
@@ -93,7 +94,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
 
     useEffect(() => {
         imageTouch.current.addEventListener("touchstart", handleTouch)
-        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        imageTouch.current.addEventListener("contextmenu", (e) => e.preventDefault());
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
@@ -112,7 +113,10 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
                     toast: true,
                     html:
                         <div >
-                            <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>The game finished</h3>
+                            <h1 style={{ color: 'red', textAlign: 'center' }}>The Game has finished</h1>
+                            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
+                            </div>
                         </div>,
                     timer: 3000,
                     showConfirmButton: false,
@@ -126,25 +130,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
                 })
             }, 3500)
         }
-        /*   if (lives.current === 0) {
-              console.log(lives.current)
-              MySwal.fire({
-                  toast: true,
-                  html:
-                      <div >
-                          <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>
-                      </div>,
-                  timer: 3000,
-                  showConfirmButton: false,
-                  timerProgressBar: true,
-                  width: 500
-              }).then(() => {
-                  videosWithAnswers()
-                  postData()
-                  sessionData()
-                  checkLogin()
-              })
-          } */
     }, [seeImages.current.length, lives.current]);
 
 
@@ -202,13 +187,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
 
     const handlerChange = () => {
         if (lives.current === 0) {
-            console.log(lives.current)
             MySwal.fire({
-                /* toast: true, */
-                title: <h3 style={{ color: 'red', display: 'flex', justifyContent: 'center' }}>Lost all your lives, good luck next time</h3>,
+                toast: true,
                 html:
                     <div >
-                        <img src={cerebroLose} alt="" style={{ width: '15vh', height: '20vh' }} />
+                        <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
+                        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+                        </div>
                     </div>,
                 timer: 3000,
                 showConfirmButton: false,
@@ -224,7 +210,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
         }
         recImages()
         tiempo.current && tiempo.current.reset();
-
     }
 
     useEffect(() => {

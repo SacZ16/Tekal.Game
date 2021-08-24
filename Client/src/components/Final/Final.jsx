@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { resetReducer } from '../../redux/action'
 import axios from 'axios';
 import Cookie from 'universal-cookie'
-
+import logoTekal from '../Styles/tekalLogo.png';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import cerebroLose from '../Styles/slideSeisEsp.png'
-
 
 function Finalgame({ history }) {
 
@@ -55,26 +53,12 @@ function Finalgame({ history }) {
     };
 
     const again = () => {
-        MySwal.fire({
-            toast: true,
-            html:
-                <div >
-                    <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
-                    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'red', paddingBottom: '100px' }}>
-                        <img src={cerebroLose} alt="" style={{ width: '20vh', height: '20vh', backgroundColor:'yellow', padding: '0' }} />
-                    </div>
-                </div>,
-            // timer: 3000,
-            showConfirmButton: false,
-            timerProgressBar: true,
-            width: 500
-        })
-        /*   dispatch(resetReducer())
-          history.push('/game') */
+        dispatch(resetReducer())
+        history.push('/game')
     }
 
     useEffect(() => {
-        /*       postDataa() */
+        /* postDataa() */
     }, [])
 
     const postDataa = async () => {
@@ -85,32 +69,38 @@ function Finalgame({ history }) {
     }
 
     return (
-        <div className='fondopreclose' >
+        <div>
+            <div className='bgLandingfinal'>
 
-            <div>
-                <h1 className='yourscore'>Your score is</h1>
-                <div className='marco'>
-                    {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
-                    <h1 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h1>
-                    <div className='loader'></div>
-                </div>
-                <div className='buttonRegister2' >
-                    <div>
-                        <Link to='/'>
-                            <button className='botnreclose' >Home</button>
-                        </Link>
+                <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+
+                <div className='containerDataFinalPage'>
+                    <div className='finalPageColumnLeft'>
+                        <h1 className='yourscore'>You are among the 30% of the people your age with highest memory! </h1>
+                        <div className="grafico">
+                            <Line data={data} options={opciones} config={config} />
+                        </div>
+                        <div className='buttonRegister2'>
+                            <Link to='/'>
+                                <button className='buttonRegister' >Home</button>
+                            </Link>
+                            <button className='buttonRegister' onClick={again}>Try again</button>
+                        </div>
                     </div>
-                    <div>
-                        <button className='botnreclose' onClick={again}>Try again</button>
+
+                    <div className='finalPageColumnRight'>
+                        {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
+                        <div className='containerResultFinalPage'>
+                            <h1>Your score</h1>
+                            <h2 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h2>
+                            <p>Identificaste ? de los ? videos repetidos en el juego.</p>
+                        </div>
+                        <button className='share'>Share</button>
                     </div>
+
                 </div>
             </div>
-            <div className="grafico">
-                <Line data={data} options={opciones} config={config} />
-            </div>
-
-            <p className='copyright'>Â© 2021 Tekal, Inc. All rights reserved</p>
-        </div >
+        </div>
     )
 }
 

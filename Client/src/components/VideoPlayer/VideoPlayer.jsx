@@ -12,13 +12,18 @@ import ReactPlayer from 'react-player/lazy';
 import { withRouter } from 'react-router';
 import style from '../Styles/Game.module.css';
 import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import { sessionInfo } from '../../redux/action';
 import axios from 'axios';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
+import cerebroLose from '../Styles/slideSeisEsp.png'
+import cerebroEnd from '../Styles/cerebrito_derecha.png'
+
 const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
 
   const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal)
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
 
@@ -119,6 +124,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
 
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
+
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
         // console.log(seeVideos.current[seeVideos.current.length - 2])
@@ -140,7 +146,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
 
   useEffect(() => {
     videoTouch.current.addEventListener("touchstart", handleTouch)
-    window.addEventListener("contextmenu", (e) => e.preventDefault());
+    videoTouch.current.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -155,10 +161,19 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
       play.current = false
       videosWithAnswers()
       sessionData();
-      Swal.fire({
-        title: "UPS perdiste tus 3 vidas, a prestar mas atencion la proxima vez",
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Continuar'
+      MySwal.fire({
+        toast: true,
+        html:
+          <div >
+            <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
+            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+            </div>
+          </div>,
+        timer: 3000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: 500
       }).then(() => {
         postData()
         checkLogin()
@@ -181,7 +196,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
     finalVideos.current.unshift(score)
     finalVideos.current.unshift(email)
   }
-
+  console.log(new Date().getDay())
   const postData = async () => {
     localStorage.setItem('results', JSON.stringify(finalVideos.current))
   }
@@ -205,10 +220,19 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
           play.current = false
           videosWithAnswers()
           sessionData()
-          Swal.fire({
-            title: "Finalizo el Juego",
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Continuar'
+          MySwal.fire({
+            toast: true,
+            html:
+              <div >
+                <h1 style={{ color: 'red', textAlign: 'center' }}>The Game has finished</h1>
+                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
+                </div>
+              </div>,
+            timer: 3000,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            width: 500
           }).then(() => {
             postData()
             checkLogin()
@@ -218,6 +242,8 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
     }
     progress.current = e.playedSeconds;
   }
+
+ 
 
   return (
 

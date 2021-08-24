@@ -2,25 +2,28 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import style from '../Styles/Game.module.css';
 import '../Styles/progressBar.css';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 function ProgressBar({ lives, max, progress }) {
     return (
         <div style={{ width: '90%', marginTop: '-30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div className={style.vidasgame} style=
                 {{
-                    color: 'red', display: 'flex', flexDirection: 'row',
-                }}>❤ x {lives}
+                    color: 'white', display: 'flex', flexDirection: 'row', fontFamily: 'Montserrat, sans-serif', fontSize: '20px', fontWeight: 'bold'
+                }}><FavoriteIcon style={{ fontSize: '20px' }} /> x {lives}
             </div>
 
             <progress
-                className='progressBar'
                 id="progress"
                 max={max}
                 value={progress}
             >
             </progress>
-            <Link className={style.xgame} style={{ marginLeft: '40px', marginTop: '-10px', color: 'white', textDecoration: 'none' }} to='/'>
-                ✖
+
+            <Link className={style.xgame} to='/'>
+                <HighlightOffIcon style={{ marginLeft: '70px', marginBottom: '1%', color: 'white', textDecoration: 'none', fontSize: '25px' }} />
             </Link>
         </div>
     )

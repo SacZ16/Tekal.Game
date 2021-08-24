@@ -1,62 +1,39 @@
 import { useEffect, useState, useRef } from 'react';
-import VideoPlayer from '../VideoPlayer/VideoPlayer'
-import ImagePlayer from '../ImagePLayer/ImagePlayer';
-import Loading from '../Loading/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
-import style from '../Styles/Game.module.css'
-import Cookie from 'universal-cookie'
-import axios from 'axios'
 import { withRouter } from 'react-router';
+
+import Cookie from 'universal-cookie';
+import axios from 'axios';
+
+// Componentes
+import Loading from '../Loading/Loading';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import ImagePlayer from '../ImagePLayer/ImagePlayer';
+// Estilos
+import style from '../Styles/Game.module.css'
 
 export const Game = ({ history }) => {
 
   const dispatch = useDispatch();
   // const { score } = useSelector(state => state.user.currentGame)
-  const tope = useRef(0)
-  const mood = localStorage.getItem('mood')
-  const mode = localStorage.getItem('mode')
-  const [infoUser, SetInfoUser] = useState('')
-  var emailCokkie;
-  const cookies = new Cookie();
+  const tope = useRef(0) // Determina posicion del video/imagen
+  const mood = localStorage.getItem('mood') // Toma el estado de animo 
+  const mode = localStorage.getItem('mode') // Toma el modo de juego
+
+  var emailCokkie // Email del usuario
+  const cookies = new Cookie()
 
   const [assetsApi, setAssetsApi] = useState() // videos/imagenes provenientes de la base de datos
   // console.log(assetsApi)
-  const [assetsBlop1, setAssetsBlop1] = useState() // array con las URL convertidas
+  const [assetsBlop1, setAssetsBlop1] = useState() // array con las 10 primeras URLs en formato Blop
   // console.log('blop 1', assetsBlop1)
-  const [assetsBlop2, setAssetsBlop2] = useState() // array con las URL convertidas
+  const [assetsBlop2, setAssetsBlop2] = useState() // array con el resto de URLs en formato Blop
   // console.log('blop 2', assetsBlop2)
-  const assetsToSeeBlop = useRef() // videos con la URL Blop
+  const assetsToSeeBlop = useRef() // array final para ser mostrado al usuario
   // console.log('toSee', assetsToSeeBlop.current)
 
-  /*  useEffect(() => {
-     if (!assetsApi) {
-       axios.post('http://localhost:3001/links', {
-         email: emailCokkie,
-         mode: mode
-       })
-         .then(res => {
-           setAssetsApi(res.data)
-         })
-     }
-     if (assetsApi) {
-       var arregloPromesas = assetsApi[2].map(async (url) => {
-         return await fetch(url[0].url)
-           .then(function (res) {
-             return res.blob()
-           })
-           .then(function (video) {
-             var url = URL.createObjectURL(video)
-             return url
-           })
-       })
-       Promise.all(arregloPromesas)
-         .then((arregloPromesasResultas) => {
-           setAssetsBlop(arregloPromesasResultas)
-         })
-     }
-   }, [assetsApi]) */
-
+  /* Trae los activos de la API */
   useEffect(() => {
     if (!assetsApi) {
       axios.post('http://localhost:3001/links', {
@@ -110,24 +87,10 @@ export const Game = ({ history }) => {
     else { emailCokkie = cookies.get('userInfo').Items[0].email }
   }
 
-  //Sacando info
-  const CheckUserData = async (email) => {
-    let SearchEmail = {
-      email: email
-    }
-    let response = await axios.post('http://localhost:3001/info', SearchEmail)
-    SetInfoUser(response)
-    return response
-  }
-  if (!infoUser) {
-    CheckUserData(emailCokkie);
-  }
-
   useEffect(() => {
     if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
     // if (score) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
   }, [])
-
 
   // Verifica si esta logeado o no al terminar el juego
 
@@ -140,7 +103,7 @@ export const Game = ({ history }) => {
     }
   }
 
-  // Elige el video que el usuario va a ver
+  // Elige el video/imagen que el usuario va a ver
 
   function recVideos() {
     if (assetsApi) {

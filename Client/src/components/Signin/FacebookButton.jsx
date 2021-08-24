@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import '../Styles/facebookButton.css'
-import {SendDataGoogle} from '../controllers/dbFunctions'
+import { SendDataGoogle } from '../controllers/dbFunctions'
 
 
 const FacebookButton = () => {
@@ -10,11 +10,15 @@ const FacebookButton = () => {
         setProfile(response)
     }
 
-    if(profile.email){
-        SendDataGoogle(profile.email)
+    if (profile.email) {
+        let obj = {
+            email: profile.email,
+            name: profile.name.split(' ')[0]
+        }
+        SendDataGoogle(obj)
     }
-    
-    
+
+
 
     return (
         <div>
@@ -26,7 +30,7 @@ const FacebookButton = () => {
                 callback={responseFacebook}
                 cssClass='facebookBtn'
                 textButton='Continue with Facebook'
-                />
+            />
         </div>
     );
 }

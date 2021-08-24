@@ -1,38 +1,68 @@
-.progressBar{
-    width: 70%;
+
+ progress {
     margin-left: 1.7%;
-    margin-top: 11px;
-    height: 10px;
-    border-radius: 5px;
-    color: violet;
- }
+    border-radius: 15px;
+    width: 70%;
+    height: 13px;
+  }
+  progress::-webkit-progress-bar {
+    background-color: #E7E7E7;
+    border-radius: 7px;
+  }
+  progress::-webkit-progress-value {
+    transition: width 1s;
+    width: 85%;
+    background: #C94EBF;
+    border-radius: 7px;
+  }
+
+  
+
+  @media only screen and (max-width: 812px) and (min-width: 540px){
+
+    progress{
+        width: 60%;
+        margin-left: 1.7%;
+        margin-top: 0px;
+        height: 10px;
+        border-radius: 5px;
+        margin-right:-25px
+        }
+
+}
  
- ::-webkit-progress-value {  
-     transition: width 1s;
-     width: 85%;
-     background: #80CCE8;
- }
  @media only screen and (max-width: 539px) and (min-width: 411px){
 
-    .progressBar{
+    progress{
         width: 60%;
-    margin-left: 1.7%;
-    margin-top: 11px;
+    margin-left: 2.5%;
+    margin-right:-40px;
+    margin-top: 5px;
     height: 10px;
     border-radius: 5px;
-    color: violet;
     }
 
 }
 @media only screen and (max-width: 410px) and (min-width: 375px){
 
-    .progressBar{
-        width: 50%;
-    margin-left: 1.7%;
-    margin-top: 11px;
+    progress{
+    width: 50%;
+    margin-left: 3%;
+    margin-top: 6px;
     height: 10px;
     border-radius: 5px;
-    color: violet;
+    margin-right:-40px
     }
+}
 
+@media only screen and (max-width: 374px) and (min-width: 360px){
+
+    progress{
+    width: 50%;
+    margin-left: 3%;
+    margin-top: 6px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right:-45px
+    }
 }
