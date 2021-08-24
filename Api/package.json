@@ -4,7 +4,8 @@
   "description": "Proyect Tekal Game",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
+    "start": "node index.js",
+    "devStart": "nodemon -L",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tekal",
