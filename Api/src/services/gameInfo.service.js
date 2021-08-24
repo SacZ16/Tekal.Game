@@ -1,12 +1,13 @@
 const { putUserGameItems } = require("../Controllers/dbFunctions");
 const { endpointNoMemento, endpoint } = require("./endpoint.service");
 
-function loadGameInfo(array){
+async function loadGameInfo(array){
     let answers = [];
     let presentations = [];
     let emotion = array[2].mood;
     let email = array[0];
     let score = array[1];
+    let date = array[3].date
     for (let i = 2; i < array.length; i++) {
         var object = array[i];
         object.pos= i+1;
@@ -19,7 +20,9 @@ function loadGameInfo(array){
         score: score,
         answer: answers,
         presentation: presentations,
-        emotion: emotion
+        emotion: emotion,
+        date: date,
+        type: info[2].type
     }
     let games = await putUserGameItems(data);
     return games;

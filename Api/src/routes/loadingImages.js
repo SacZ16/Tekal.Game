@@ -3,7 +3,16 @@ const { putPKAssetsImages } = require('../Controllers/dbFunctions');
 const { getListElements } = require('../services/csv.service');
 const router = Router();
 
-
+/**
+ * @swagger
+ * /loadingImages:
+ *   get:
+ *     summary: Carga la DB de imagenes
+ *     description: Carga la DB de imagenes en base al link de data/images
+ *     responses:
+ *       200:
+ *         description: Cargo la DB de imagenes.
+ */
 router.get('/', async (_req, res) => {
     try{
         let array = await getListElements();

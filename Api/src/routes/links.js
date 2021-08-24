@@ -5,6 +5,23 @@ const { templateFiller } = require('../services/templates.service.js');
 const { assetNotSeen } = require('../services/notViewedVideos.service');
 const { picker } = require('../services/templatePicker.service');
 
+/**
+ * @swagger
+ * /links:
+ *   post:
+ *     summary: Recibe el email del usuario y el modo de juego, generando el template correspondiente.
+ *     description: Realiza una busqueda en la Db utilizando el email para buscar que videos no haya el usuario en ese modo de juego, y luego de escoger un template random, lo llena con las urls correspondientes.
+ *     responses:
+ *       200:
+ *         description: Devuelve al front el template que tiene que ver el usuario.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: integer, object
+ *                 example: [39, 41, 86, [{url: "url", id: 10}, "vig"],[{url: "url2", id: 2}, "target"]]                     
+ */
 router.post('/', async (req, res) => {
     let { email } = req.body;
     let { mode } =req.body;

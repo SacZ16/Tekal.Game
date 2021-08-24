@@ -230,10 +230,10 @@ const putUserGameItems = async (data) => {
       Item: {
         PK: data.email,
         SK: userSession,
-        playedAt: new Date().toString(),
+        playedAt: data.date,
         presentations: data.presentation,
         answers: data.answer,
-        score: data.score.toString(),
+        score: data.score,
         emotion: data.emotion,
       },
     };
@@ -749,6 +749,33 @@ const detailsOfAsset = async (asset) => {
 
 //I want to get the average vigilance score of a user 
 //(how many vigilances were recognized divided by the number of vigilance repeats shown)
+
+
+const lowerScore = async (type,score) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        },
+        score: {
+          ComparisonOperator: "LT",
+          AttributeValueList: [score]
+        }
+      },
+      ScanIndexForward: false,
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
 
 
 module.exports = {

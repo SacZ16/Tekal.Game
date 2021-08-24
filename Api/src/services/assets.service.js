@@ -1,7 +1,7 @@
 const { updateView, updateAnnotationsCorrect, putAssets, queryAllInfoUser } = require("../Controllers/dbFunctions");
 const { endpointNoMemento, endpoint } = require("./endpoint.service");
 
-function loadEndpoints(array){
+async function loadEndpoints(array){
     let email = array[0];
     let urls = [];
     const userInfo = await queryAllInfoUser(email);
