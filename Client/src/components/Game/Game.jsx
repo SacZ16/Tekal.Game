@@ -20,6 +20,7 @@ export const Game = ({ history }) => {
   const tope = useRef(0) // Determina posicion del video/imagen
   const mood = localStorage.getItem('mood') // Toma el estado de animo 
   const mode = localStorage.getItem('mode') // Toma el modo de juego
+  const date = useRef(0)
 
   var emailCokkie // Email del usuario
   const cookies = new Cookie()
@@ -89,7 +90,7 @@ export const Game = ({ history }) => {
 
   useEffect(() => {
     if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
-    // if (score) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
+    if (cookies.get('sessionData')) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
   }, [])
 
   // Verifica si esta logeado o no al terminar el juego
@@ -148,6 +149,23 @@ export const Game = ({ history }) => {
       })
     }
   }, [assetsBlop2]);
+
+  // Saca la fecha actual segun el formato dado
+
+  useEffect(() => {
+    function join(t, a, s) {
+      function format(m) {
+        let f = new Intl.DateTimeFormat('en', m);
+        return f.format(t);
+      }
+      return a.map(format).join(s);
+    }
+
+    let a = [{ day: 'numeric' }, { month: 'numeric' }, { year: 'numeric' }];
+    let s = join(new Date, a, '-');
+    date.current = s
+    console.log(date);
+  }, [])
 
   return (
     < >

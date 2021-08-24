@@ -1,4 +1,7 @@
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import LoginPage from './components/Login/LoginCommon'
+import FormData from './components/FormData/formularyData';
+import RegisterWithEmail from './components/Signin/RegisterEmail';
 import Home from './components/Home/Home'
 import FinalGame from './components/Final/Final'
 import Game from './components/Game/Game'
@@ -12,6 +15,9 @@ function App() {
     <>
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={LoginPage} /> {/* Borrar */}
+        <Route exact path='/register' component={RegisterWithEmail} /> {/* Borrar */}
+        <Route exact path='/form' component={FormData} /> {/* Borrar */}
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
         <Route exact path='/preclose' component={PreFinalGame} />

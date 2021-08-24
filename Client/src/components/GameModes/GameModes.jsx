@@ -8,6 +8,11 @@ import BurstModeIcon from '@material-ui/icons/BurstMode'; //long
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Cookie from 'universal-cookie'
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
 
 const GameModes = () => {
 
@@ -39,7 +44,7 @@ const GameModes = () => {
         const day = currentDate.getDay();
         if (lastStorageDay != day) {
             MySwal.fire({
-                title: <h3 style={{ color: 'white' }}>How do you feel today?</h3>,
+                title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
                 html:
                     <div className='mood_container' style={{ borderStyle: 'none' }}>
                         <span id='fine' onClick={mood2}>😁</span>

@@ -15,13 +15,11 @@
 }
 .logotekalpreclose{
     position: absolute;
-    top: 0;
-    left: 0;
-    max-width: 15vh;
-    margin: 2vh;
+    top: 10%;
+    left: 5%;
+    max-width: 10vh;
 }
-.botnreclose{
-    text-shadow: 0px 0px 5px rgb(39, 39, 39);
+.btnPreclose{
     text-transform: uppercase;   
     font-size: 3vh; 
     width: 100%;
@@ -34,31 +32,38 @@
     cursor: pointer;
     margin: 10px;
 }
-.textopreclose{
-    position: absolute;
-    right: 0;
-    font-size: 7vh;
-    top: 0;
-    width: 60vh;
+
+.btnPreclose:hover{
+    background-color:#ffffff21;
+}
+
+.column_right_preclose{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+
+.textopreclose{
+    font-family:'Montserrat', sans-serif; 
+    font-size: 4vh;
+    font-weight: 600;
+    width: 60vh;
     background-color: #E7E7E7;
-    padding: 1vh 5vh 3vh 1vh;
+    padding: 2vh 5vh 2vh 5vh;
     border-radius: 20px;
-    margin: 0;
+    margin-bottom: 1em;
     text-align: center;
 }
 .imagenpreclose{
-    width: 130vh;
+    width: 110vh;
+    margin-left: -5em;
 }
-.dvipreclose{    
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 400px;
+.buttonsPreclose{    
     display: flex;
     flex-direction: row;
-
+    margin-top: 5em;
 }
 @media only screen and (max-width: 374px) and (min-width: 360px) {  
     .dvipreclose{
@@ -72,7 +77,7 @@
         width: 40%;
         font-size: 2.5vh;
     }
-    .botnreclose{
+    .btnPreclose{
         font-size: 2vh;
         padding: 0.5vh;
         width: 100%;

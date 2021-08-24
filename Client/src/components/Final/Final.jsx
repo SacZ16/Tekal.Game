@@ -1,24 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import { Line } from 'react-chartjs-2'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { resetReducer } from '../../redux/action'
 import axios from 'axios';
 import Cookie from 'universal-cookie'
 import logoTekal from '../Styles/tekalLogo.png';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
 
 function Finalgame({ history }) {
-
-    const MySwal = withReactContent(Swal)
-
-
     const dispatch = useDispatch()
-    const { score } = useSelector(state => state.user.currentGame)
-
     const cookies = new Cookie();
+    const [sessionData, setSessionData] = useState({
+        score: 0,
+        totalTargets: 0
+    })
+    const { score, totalTargets } = sessionData
+    useEffect(() => {
+        if (cookies.get('sessionData')) {
+            setSessionData({ ...sessionData, score: cookies.get('sessionData').score })
+            setSessionData({ ...sessionData, totalTargets: cookies.get('sessionData').totalTargets })
+            // const totalTargets = cookies.get('sessionData').totalTargets
+        } else {
+            history.push('/')
+        }
+    }, [])
+
     var emailCokkie;
     //Sacando el email
     if (cookies.get('userInfo')) {
@@ -53,6 +66,7 @@ function Finalgame({ history }) {
     };
 
     const again = () => {
+        cookies.remove('sessionData')
         dispatch(resetReducer())
         history.push('/game')
     }
@@ -63,10 +77,20 @@ function Finalgame({ history }) {
 
     const postDataa = async () => {
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
-        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
-        localStorage.removeItem('score')
+        await axios.post('http://localhost:3001/sessionData', resultadoparaenviar)
         localStorage.removeItem('results')
     }
+
+    /* Cambio de idioma */
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
+
 
     return (
         <div>
@@ -76,26 +100,28 @@ function Finalgame({ history }) {
 
                 <div className='containerDataFinalPage'>
                     <div className='finalPageColumnLeft'>
-                        <h1 className='yourscore'>You are among the 30% of the people your age with highest memory! </h1>
+                        <h1 className='yourscore'>{<Translate content="tituloLastScreen" component="span" />}</h1>
                         <div className="grafico">
                             <Line data={data} options={opciones} config={config} />
                         </div>
+                        <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
                         <div className='buttonRegister2'>
                             <Link to='/'>
                                 <button className='buttonRegister' >Home</button>
                             </Link>
-                            <button className='buttonRegister' onClick={again}>Try again</button>
+                            <button className='buttonRegister' onClick={again}>{<Translate content="intentarNuevamente" component="span" />}</button>
                         </div>
                     </div>
 
                     <div className='finalPageColumnRight'>
                         {/* <h1 className="porcentaje">{targetFound && targetFound.points === 0 ? 0 : score === Number ? score : 0}%</h1> */}
                         <div className='containerResultFinalPage'>
-                            <h1>Your score</h1>
-                            <h2 className="porcentaje">{localStorage.getItem('score') === 0 ? localStorage.getItem('score').toFixed() : localStorage.getItem('score')}%</h2>
-                            <p>Identificaste ? de los ? videos repetidos en el juego.</p>
+                            <h1>{<Translate content="tituloResultadoLastScreen" component="span" />}</h1>
+                            <h2 className="porcentaje">{score === 0 ? score.toFixed() : score.toFixed(2)}%</h2>
+                            <p>{<Translate content="textoResultadoLastScreen" component="span" />}</p>
+                            {/* <p>Identificaste {score} de los {totalTargets} videos target repetidos en el juego.</p> */}
                         </div>
-                        <button className='share'>Share</button>
+                        <button className='share'>{<Translate content="compartir" component="span" />}</button>
                     </div>
 
                 </div>

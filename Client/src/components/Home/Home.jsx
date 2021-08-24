@@ -20,13 +20,29 @@ import Loading from '../Loading/Loading';
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import GameModes from '../GameModes/GameModes';
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
     const score = localStorage.getItem('score')
     const mood = localStorage.getItem('mood')
     const cookies = new Cookie();
-    console.log(cookies.get('userInfo'))
+
+    const [sessionData, setSessionData] = useState({})
+
+
+    useEffect(() => {
+        if (cookies.get('sessionData')) {
+            setSessionData({ ...sessionData, score: cookies.get('sessionData').score })
+        }
+    }, [])
+
+
+
     var emailCokkie;
 
 
@@ -43,15 +59,14 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll)
     const prueba = () => {
         MySwal.fire({
-            title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>Log in</p>,
+            title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonLogin" component="span" />}</p>,
             html:
                 <div style={{ overflow: 'hidden' }}>
                     <RegisterCommonForm props={SendDataToBACK} style={{ posicion: 'absolute' }} />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>Don´t have an account?&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={pruebare}>Register</a>
+                        <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</a>
                     </div>
-                </div>
-            ,
+                </div>,
             showCloseButton: true,
             confirmButtonText: login,
             showConfirmButton: false
@@ -59,15 +74,14 @@ const Home = () => {
     }
     const pruebare = () => {
         MySwal.fire({
-            title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>Sign up</p>,
+            title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
             html:
                 <div style={{ overflow: 'hidden' }}>
                     <RegisterWithEmail style={{ posicion: 'absolute' }} />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>Do you have an account already?&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={prueba}>Log in</a>
+                        <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={prueba}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
-                </div>
-            ,
+                </div>,
             showCloseButton: true,
             showConfirmButton: false
         })
@@ -110,7 +124,7 @@ const Home = () => {
 
                             <div className='textBox'>
                                 <p className='sessionName'>{sessionUser}</p>
-                                <p className='sessionStatus'>Online</p>
+                                <p className='sessionStatus'>{<Translate content="estadoSesion" component="span" />}</p>
                             </div>
                             <button className='btnOpenSessionMenu' onClick={() => { setShow(!show) }}>&#9660;</button>
                         </div>
@@ -118,7 +132,7 @@ const Home = () => {
                             <button className='btnLogOut' onClick={() => {
                                 cookies.remove('userInfo')
                                 window.location.href = ('')
-                            }}>Log out</button> : (null)
+                            }}>{<Translate content="desloguear" component="span" />}</button> : (null)
                         }
                     </div> : (null)}
             </div>
@@ -166,16 +180,46 @@ const Home = () => {
             showConfirmButton: false
         })
     }
+
+    // Traducciones
+    if (!localStorage.getItem('idioma')) {
+        localStorage.setItem('idioma', 'es')
+    }
+
+    const handleChange = (e) => {
+        localStorage.setItem('idioma', `${e.target.value}`)
+        setLanguage(localStorage.getItem('idioma'))
+    }
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
+
+
+
     return (
         <>
+            <select className="Header-lang" value={lang} onChange={handleChange}>
+                <option value="es">Es</option>
+                <option value="en">En</option>
+            </select>
+
+            {/* No logeado mobile */}
             {login ?
                 <div className="pantallamovil">
                     <div className="contenedortextomovil">
-                        <p className='subtitlemovil'>Lorem ipsum, dolor sit amet.</p>
-                        <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
+                        <p className='subtitlemovil'>{<Translate content="titleLandingSecondPage" component="span" />}</p>
+                        <div className='startGameLandingMobile'><Link to='/game' style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
                     </div>
                 </div> : (null)
             }
+
+            {/* Logeado Mobile */}
             {startGame ?
                 <div className="pantallaMovilScore">
                     <div className="contenedorTextoMovilScore">
@@ -185,17 +229,17 @@ const Home = () => {
                                 <button className='logOutMobile' onClick={() => {
                                     cookies.remove('userInfo')
                                     window.location.href = ('')
-                                }}>Log out</button> : null
+                                }}>{<Translate content="desloguear" component="span" />}</button> : null
                             }
                         </div>
-                        <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>{sessionUser}</span></p>
+                        <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>Maximiliano</span></p>
                         <div className='scores_mobile'>
                             <div className='column_scores_mobile'>
-                                <h4>Last score</h4>
-                                <p>35%</p>
+                                <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
+                                <p>{sessionData.score ? sessionData.score : 0}%</p>
                             </div>
                             <div className='column_scores_mobile'>
-                                <h4>Average score</h4>
+                                <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                 <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
                             </div>
                         </div>
@@ -203,39 +247,42 @@ const Home = () => {
                     </div>
                 </div> : (null)
             }
-
+            {/* Home no mobile */}
             <div className='homeDiv'>
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+                    {/* Home Logeado */}
                     {startGame ?
                         <>
                             <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
-                            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>{sessionUser}</span></p>
+                            <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>Maximiliano</span></p>
                             <div className='scores'>
                                 <div className='column_scores'>
-                                    <h4>Last score</h4>
-                                    <p>35%</p>
+                                    <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
+                                    <p>{sessionData.score ? sessionData.score : 0}%</p>
                                 </div>
                                 <div className='column_scores'>
-                                    <h4>Average score</h4>
+                                    <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                     <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
                                 </div>
                             </div>
                             <div className='buttonsHome'>
-                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                                <div className='startGame'><Link onClick={popUpGameMode}  style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>
                         </> : (null)}
                 </section>
 
-                <CurrentSession />
+                <CurrentSession /> {/* Componente sesión activa */}
+
+                {/* Home no logeado */}
                 {login ?
                     <>
                         <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
-                        <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
-                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
+                        <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>{<Translate content="tituloLandingPage" component="span" />}<span className='memory_style'>{<Translate content="memoria" component="span" />}</span>?</p>
+                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>{<Translate content="subtituloLandingPage" component="span" />}</p>
                         <div className='container_buttons_home'>
-                            <button className='registerHome' onClick={pruebare}>Sign up</button>
-                            <button className='loginHome' onClick={prueba}>Log in</button>
+                            <button className='registerHome' onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</button>
+                            <button className='loginHome' onClick={prueba}>{<Translate content="botonLogin" component="span" />}</button>
                         </div>
 
                         <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
@@ -246,9 +293,9 @@ const Home = () => {
                             <button className='auxiliarFondo'></button>
                             <button className='auxiliarFondoDerecha'></button>
                             <div className='text_secon_page' style={{ zIndex: "1000" }}>
-                                <p className='second_page_title'>How is your <br /> <span className='memory_style'>memory</span> working?</p>
-                                <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
-                                <button onClick={popUpGameMode} className='startGameLanding'>Start playing</button>
+                                <p className='second_page_title'>{<Translate content="bienvenidaHome" component="span" />}</p>
+                                <p className='second_page_subtitle'>{<Translate content="subTitleLandingSecondPage" component="span" />}</p>
+                                <button onClick={popUpGameMode} className='startGameLanding'>{<Translate content="botonPlayLanding" component="span" />}</button>
                             </div>
                             <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{ left: (67 + offset * -0.1) + '%' }} />
                         </div>

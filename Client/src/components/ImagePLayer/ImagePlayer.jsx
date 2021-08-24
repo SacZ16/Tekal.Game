@@ -11,16 +11,18 @@ import { sessionInfo } from '../../redux/action';
 
 import cerebroLose from '../Styles/slideSeisEsp.png'
 import cerebroEnd from '../Styles/cerebrito_derecha.png'
+import Cookies from 'universal-cookie';
 
 
 const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) => {
     const MySwal = withReactContent(Swal)
+    const cookies = new Cookies();
     const dispatch = useDispatch();
     const { user, recVideo } = useSelector(state => state); // Traidos del Obj Reducer.
 
     const seeImages = useRef(); //Videos Vistos por el Usuario en el Juego 
     seeImages.current = user.currentGame.seenVideos;
-    console.log(seeImages.current)
+    // console.log(seeImages.current)
     const infoImages = useRef(); // Informacion del Video
     infoImages.current = recVideo;
     // console.log('Video Actual', infoVideo.current)
@@ -53,8 +55,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     const [color, setColor] = useState('rgba(255, 255, 255, 0)'); // Cambia de color al apretar la barra espaciadora
     var bcolor = { 'background': `${color}` }
 
+    const a = useRef(0)
+    const b = useRef(0)
+    const c = useRef(b.current - a.current)
+
     const handleKeyDown = (event) => {
         if (event.keyCode === 32 && !press.current) {
+            b.current = performance.now()
+            console.log((b.current - a.current))
             handlerGame()
         }
     };
@@ -173,16 +181,17 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     }
 
     function sessionData() {
-        let obj = Object.create({}, {
-            // targetFound: { value: targetFound.current },
-            // targetNotPress: { value: targetNotPress.current },
-            score: { value: score },
-            /* lives: { value: lives.current }, */
-            /* targetVideos: { value: target.length } */
-        });
-        dispatch(sessionInfo(obj));
-        console.log(score)
-        localStorage.setItem('score', score)
+        /*  let obj = Object.create({}, {
+             targetFound: { value: targetFound.current },
+             targetNotPress: { value: targetNotPress.current },
+             score: { value: score },
+             totalTargets: { value: target }
+         }); */
+        cookies.set('sessionData', {
+            score: score,
+            totalTargets: target
+        })
+        // dispatch(sessionInfo(obj));
     }
 
     const handlerChange = () => {
@@ -213,6 +222,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     }
 
     useEffect(() => {
+        a.current = performance.now()
+        console.log(a)
         start()
     }, [seeImages.current.length])
 

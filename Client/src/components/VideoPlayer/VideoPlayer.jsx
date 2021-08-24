@@ -14,11 +14,13 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
 
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal)
+  const cookies = new Cookies();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
 
@@ -170,7 +172,6 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         timerProgressBar: true,
         width: 500
       }).then(() => {
-        postData()
         checkLogin()
       })
     }
@@ -191,21 +192,20 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
     finalVideos.current.unshift(score)
     finalVideos.current.unshift(email)
   }
-  console.log(new Date().getDay())
-  const postData = async () => {
-    localStorage.setItem('results', JSON.stringify(finalVideos.current))
-  }
 
   function sessionData() {
     let obj = Object.create({}, {
       targetFound: { value: targetFound.current },
       targetNotPress: { value: targetNotPress.current },
       score: { value: score },
-      /* lives: { value: lives.current }, */
-      /* targetVideos: { value: target.length } */
+      totalTargets: { value: target }
     });
+    cookies.set('sessionData', {
+      score: score,
+      totalTargets: target
+    })
+    localStorage.setItem('results', JSON.stringify(finalVideos.current))
     dispatch(sessionInfo(obj));
-    localStorage.setItem('score', score)
   }
 
   const onProgress = (e) => {
@@ -229,7 +229,6 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
             timerProgressBar: true,
             width: 500
           }).then(() => {
-            postData()
             checkLogin()
           })
         }, 500)
