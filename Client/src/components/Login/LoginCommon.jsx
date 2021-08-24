@@ -80,7 +80,7 @@ const LoginPage = () => {
                 params={{'particles':{"number":{"value":96,"density":{"enable":true,"value_area":800}}},'line_linked':{'width':'2'},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"}}}}}
             />:<div className="wave"></div>}
             </div>
-            {cookiies.get('fondo')==='black'|| !a?<img className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>:<img className='logoTekal' src={logoTekalAzul} alt="Logo de Tekal"/>}
+            {cookiies.get('fondo')==='black'|| !a? <img  className='logoTekal' src={logoTekal} alt="Logo de Tekal"/>: <img  className='logoTekal' src={logoTekalAzul} alt="Logo de Tekal"/>}
             <div className='screenText'>
                 <h1 style={!a?{'color': `white`,'transition': 'all 0.5s ease-out'}:{'color': `${cookiies.get('texto')}`,'transition': 'all 0.5s ease-out'}} className='check'>Check how your</h1>
                 <div className='text2'>

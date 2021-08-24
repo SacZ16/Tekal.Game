@@ -5,6 +5,15 @@ body {
     cursor: default;
 }
 
+img{
+    user-select:none;
+    pointer-events: none;
+}
+
+.Header-lang{
+    position: absolute;
+}
+
 .logoTekal{
     position: absolute;
     width: 55px;
@@ -94,6 +103,28 @@ overflow: hidden;
     padding: 10px;
     color: #FFFF;
      }
+
+    .Header-lang{
+        font-family:'Montserrat', sans-serif; 
+        background-color: transparent;
+        border-style: solid;
+        border-color: white;
+        border-width: 1px;
+        font-size: 20px;
+        color: white;
+        padding: 5px;
+        border-radius: 10px;
+        position:fixed;
+        right: 1.5%;
+        bottom: 5%;
+        z-index: 5000000;
+    }
+
+    .Header-lang option { 
+        background-color: #212429;
+        color: white;
+    }
+
 .swal2-inputmh4{
     position: unset;
     box-sizing: border-box;
@@ -122,7 +153,7 @@ overflow: hidden;
     color: white;
     margin-top: -10px;
     font-family: 'Montserrat', sans-serif;
-
+    font-size: 40px;
 }
 
 .mood_container span{

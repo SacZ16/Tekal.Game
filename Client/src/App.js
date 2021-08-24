@@ -8,8 +8,6 @@ import PreFinalGame from './components/Prefinal/Prefinal';
 import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
 import ChangePassword from './components/ChangePassword/changePassword'
-import GameModes from './components/GameModes/GameModes'; // borrar luego
-
 
 function App() {
   return (

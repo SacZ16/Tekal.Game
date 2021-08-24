@@ -1,44 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
 import brainBottomRight from '../Styles/images/brainBottomRight.png';
-import cerebritoHomeResults from '../Styles/prefinalmascota.png'
-import Cookie from 'universal-cookie'
-import '../Styles/home.css';
+import cerebritoHomeResults from '../Styles/prefinalmascota.png';
+import Cookie from 'universal-cookie';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import GameModes from '../GameModes/GameModes';
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+import '../Styles/home.css';
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
     const [offset, setOffset] = useState()
-
-    const [passwordcopia, setPasswordcopia] = useState('')
-
-    const [name, setName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [dateofbirth, setDateofbirth] = useState('')
-    const [email, setEmail] = useState('')
-    const [country, setCountry] = useState('')
-    const [city, setCity] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPass, setConfirmPass] = useState('')
-    const [genero, setGenero] = useState('')
-    const [ethnicity, setEthnicity] = useState('')
-    const [input, setInput] = useState({
-        email: email,
-        password: password,
-        confirmPass: confirmPass,
-    })
+   
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
@@ -46,12 +32,12 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll)
     const prueba = () => {
         MySwal.fire({
-            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>Log in</p>,
+            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>{<Translate content="botonLogin" component="span"/>}</p>,
             html:
                 <div style={{overflow:'hidden'}}>
                 <RegisterCommonForm props={SendDataToBACK} style={{posicion:'absolute'}}/>
                 <div style={{display:'flex'}}>
-                <a className='signUpText'>Don´t have an account?&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={pruebare}>Register</a>
+                <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span"/>}&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={pruebare}>{<Translate content="botonRegistro" component="span"/>}</a>
                 </div>
                 </div>
                 ,
@@ -62,12 +48,12 @@ const Home = () => {
     }
     const pruebare = () => {
         MySwal.fire({
-            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>Sign up</p>,
+            title: <p style={{color:'white', marginBottom:0, fontFamily:'Montserrat, sans-serif'}}>{<Translate content="botonRegistro" component="span"/>}</p>,
             html:
                 <div style={{overflow:'hidden'}}>
                 <RegisterWithEmail style={{posicion:'absolute'}}/>
                 <div style={{display:'flex'}}>
-                <a className='signUpText'>Do you have an account already?&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={prueba}>Log in</a>
+                <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span"/>}&nbsp;</a><a style={{background:'none', marginTop:'15px', color:'white', fontFamily:'Montserrat, sans-serif', fontSize:'14px'}} onClick={prueba}>{<Translate content="botonLogin" component="span"/>}</a>
                 </div>
                 </div>
                 ,
@@ -88,113 +74,14 @@ const Home = () => {
         })
     }
 
-    // Register Form
-    const SendToBackEnd = async (e) => {
-        e.preventDefault()
-        const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
-        if (!emailReject.test(input.email) && input.email.length > 0) {
-            return;
-        }
-        if (input.email !== input.confirmEmail) {
-            return;
-        }
-        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(input.password) && input.password.length >= 0) {
-            return;
-        }
-        if (input.password !== input.confirmPass) {
-            return;
-        }
-        const user = {
-            email: input.email,
-            password: input.password,
-            test: input.email,
-        }
-        console.log(user)
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
-        if (response.data.status) {
-            alert('Usuario Registrado con Exito')
-            window.location.href = './login'
-        }
-        else { alert('ESE MAIL YA ESTÁ EN USO') }
-    }
-
-
-var enviardatos={
-    emailvar: email,
-    passwordvar:password,
-    confirmPassvar:confirmPass,
-    namevar:name,
-    lastnamevar:lastName,
-    dateofbirthvar:dateofbirth,
-    countryvar:country,
-    cityvar:city,
-    generovar:genero,
-    ethnicityvar:ethnicity
-}
-    console.log(enviardatos)
-    const handleInputChange = function (e) {
-        // console.log(e.target.value)
-        if (e.target.name === 'email') setEmail(e.target.value)
-        if (e.target.name === 'password') setPassword(e.target.value)
-        if (e.target.name === 'confirmPass') setConfirmPass(e.target.value)
-        if (e.target.name === 'name') setName(e.target.value)
-        if (e.target.name === 'lastname') setLastName(e.target.value)
-        if (e.target.name === 'date') setDateofbirth(e.target.value)
-        if (e.target.name === 'country') setCountry(e.target.value)
-        if (e.target.name === 'city') setCity(e.target.value)
-        if (e.target.name === 'genero') setGenero(e.target.value)
-        if (e.target.name === 'ethnicity') setEthnicity(e.target.value)
-        setInput({
-            ...input,
-            email: email,
-            password: password,
-            confirmPass: confirmPass
-        })
-        
-
-
-      /*   const emailReject = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-       if (!emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("red")
-        } if (emailReject.test(input.email) && input.email.length > 1) {
-            setColoremail("#1663A2")
-        }
-        const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-        if (!passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("red")
-        } if (passwordReject.test(input.password) && input.password.length > 1) {
-            setColorpassword("#1663A2")
-        }
-        setPasswordcopia(input.password.substring(0, input.password.length - 1))
-        if (passwordcopia !== input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("red")
-        } if (passwordcopia === input.confirmPass && input.confirmPass.length > 1) {
-            setColorconfirmPass("#1663A2")
-        } */
-    } 
-    console.log(input)
-    //-----------
-
     const [show, setShow] = useState(false)
-    const [sessionOn, setSessionOn] = useState(false) //setear para que funcione bien
-    const [login, setLogin] = useState(true) //setear para que funcione bien
-    const [startGame, setStartGame] = useState(false) //setear para que funcione bien
+    const [sessionOn, setSessionOn] = useState(false) 
+    const [login, setLogin] = useState(true) 
+    const [startGame, setStartGame] = useState(false) 
     const [checker, setchecker] = useState(false)
     const [showMobileLogOut, setShowMobileLogOut] = useState(false)
-
     
     const cookies = new Cookie();
-
-    const popUpRegister = () => {
-        /* setPopUpRegisterAux('flex')
-        setBlurFondo('2px') */
-    }
-
-    const popUpLogin = () => {
-       /*  setPopUpLoginAux('flex')
-        setBlurFondo('2px') */
-    }
 
     if (cookies.get('userInfo') && !checker) {
         setStartGame(true)
@@ -209,10 +96,10 @@ var enviardatos={
                 {sessionOn ?
                     <div className='sessionBox'>
                         <div className='boxDisplay'>
-                            <img className='profilePic' src='https://clinicacontraadicciones.mx/wp-content/uploads/2020/10/TESTIMONIO.jpg' alt='profile_pic' />
+                             <img  className='profilePic' src='https://clinicacontraadicciones.mx/wp-content/uploads/2020/10/TESTIMONIO.jpg' alt='profile_pic' />
                             <div className='textBox'>
                                 <p className='sessionName'>Maximiliano</p>
-                                <p className='sessionStatus'>Online</p>
+                                <p className='sessionStatus'>{<Translate content="estadoSesion" component="span"/>}</p>
                             </div>
                             <button className='btnOpenSessionMenu' onClick={e => { setShow(!show) }}>&#9660;</button>
                         </div>
@@ -220,7 +107,7 @@ var enviardatos={
                             <button className='btnLogOut' onClick={() => {
                                 cookies.remove('userInfo')
                                 window.location.href = ('')
-                            }}>Log out</button> : (null)
+                            }}>{<Translate content="desloguear" component="span"/>}</button> : (null)
                         }
                     </div> : (null)}
             </div>
@@ -243,7 +130,7 @@ var enviardatos={
         if (lastStorageDay !== day) {
             MySwal.fire({
                 title: <div className='mood_container' style={{ borderStyle: 'none'}}>
-                    <h3>How do you feel today?</h3>
+                    <h3>{<Translate content="estadoDeAnimo" component="h3"/>}</h3>
                     <span id='fine' onClick={mood2}>😁</span>
                     <span id='normal' onClick={mood2}>😐</span>
                     <span id='bad' onClick={mood2}>☹️</span>
@@ -262,6 +149,8 @@ var enviardatos={
     v.addEventListener("click", animScroll, false)
     })
 
+
+   /*  Boton de scroll landing page */
     function animScroll(event) {
         var id, dst, despY;
         event.preventDefault();  
@@ -271,27 +160,44 @@ var enviardatos={
         window.scrollBy({
         left: 0, top: despY, behavior: 'smooth'
         });
-        
         } 
 
-       /*  let sessionUser = '';
+        /* Cambio de idioma */
+        if(!localStorage.getItem('idioma')){
+            localStorage.setItem('idioma', 'es')
+        }
 
-        if(cookies.get('userInfo')){
-            sessionUser = cookies.get('userInfo')[0].name
-        } */
+        const handleChange = (e) => {
+            localStorage.setItem('idioma', `${e.target.value}`)
+            setLanguage(localStorage.getItem('idioma'))
+        }
 
-        //console.log(cookies.get('userInfo'))    //Arreglar el nombre
+        const [language, setLanguage] = useState(localStorage.getItem('idioma'));
         
+        const lang = language;
+      
+        counterpart.registerTranslations('en',en);
+        counterpart.registerTranslations('es',es);
+        counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
     return (
         <>
+        <select className="Header-lang" value={lang} onChange={handleChange}>
+            <option value="es">Es</option>
+            <option value="en">En</option>
+        </select>
+
+        {/* No logeado mobile */}
         {login?
         <div className="pantallamovil">
             <div className="contenedortextomovil">
-                <p className='subtitlemovil'>Lorem ipsum, dolor sit amet.</p>
+                <p className='subtitlemovil'>{<Translate content="titleLandingSecondPage" component="span"/>}</p>
                 <div className='startGameLandingMobile'><Link to='/game' style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position:'relative', top:'15%', left:'1.9%'}} id='btnStartHome'><PlayArrowIcon style={{fontSize:'50px'}}/></Link></div>
             </div>
         </div>:(null)
         }
+
+        {/* Logeado Mobile */}
         {startGame? 
             <div className="pantallaMovilScore">
             <div className="contenedorTextoMovilScore">
@@ -299,19 +205,19 @@ var enviardatos={
                <MenuIcon className='menuMobile' onClick={() => {setShowMobileLogOut(!showMobileLogOut)}} style={{color:'white', fontSize:'30px'}}/>
                {showMobileLogOut?
                 <button className='logOutMobile' onClick={() => {
-                                cookies.remove('userInfo')
-                                window.location.href = ('')
-                            }}>Log out</button>:null
+                    cookies.remove('userInfo')
+                    window.location.href = ('')
+                }}>{<Translate content="desloguear" component="span"/>}</button>:null
                }
             </div>
-            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>Maximiliano</span></p>
+            <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span"/>}&nbsp; <span className='memory_style'>Maximiliano</span></p>
             <div className='scores_mobile'>
                 <div className='column_scores_mobile'>
-                    <h4>Last score</h4>
+                    <h4>{<Translate content="ultimoResultado" component="span"/>}</h4>
                     <p>35%</p>
                 </div>
                 <div className='column_scores_mobile'>
-                    <h4>Average score</h4>
+                    <h4>{<Translate content="promedioResultados" component="span"/>}</h4>
                     <p>68%</p>
                 </div>
             </div>
@@ -319,54 +225,57 @@ var enviardatos={
             </div>
         </div>:(null)
         }
-
+        {/* Home no mobile */}
             <div className='homeDiv'>
                 <section>
-                    <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+                     <img  className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+                    {/* Home Logeado */}
                     {startGame ?
                         <>
-                        <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota"/>
-                            <p className='textHomeSession'>Welcome &nbsp; <span className='memory_style'>Maximiliano</span></p>
+                         <img  className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota"/>
+                            <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span"/>}&nbsp; <span className='memory_style'>Maximiliano</span></p>
                             <div className='scores'>
                                 <div className='column_scores'>
-                                    <h4>Last score</h4>
+                                    <h4>{<Translate content="ultimoResultado" component="span"/>}</h4>
                                     <p>35%</p>
                                 </div>
                                 <div className='column_scores'>
-                                    <h4>Average score</h4>
+                                    <h4>{<Translate content="promedioResultados" component="span"/>}</h4>
                                     <p>68%</p>
                                 </div>
                             </div>
                             <div className='buttonsHome'>
-                            <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>Start</Link></div>
+                            <div className='startGame'><Link onClick={mood} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span"/>}</Link></div>
                             </div>
                         </> : (null)}
                 </section>
 
-                <CurrentSession />
+                <CurrentSession /> {/* Componente sesión activa */}
+
+                {/* Home no logeado */}
                 {login ?
                 <>
-                    <img className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
-                        <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>Discover how good <br /> is your <span className='memory_style'>memory</span></p>
-                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>It takes only 10 min to discover how good is your memory.<br /> Are you ready?</p>
-                        <div className='container_buttons_home'>
-                            <button className='registerHome' onClick={pruebare}>Sign up</button>
-                            <button className='loginHome' onClick={prueba}>Log in</button>
-                        </div>
+                    <img  className='stars' src={stars} alt="starsBackground" id='stars' style={{ left: (0 + offset * 0.1) + '%' }} />
+                        <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>{<Translate content="tituloLandingPage" component="span"/>}<span className='memory_style'>{<Translate content="memoria" component="span"/>}</span>?</p>
+                        <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>{<Translate content="subtituloLandingPage" component="span"/>}</p>
+                    <div className='container_buttons_home'>
+                        <button className='registerHome' onClick={pruebare}>{<Translate content="botonRegistro" component="span"/>}</button>
+                        <button className='loginHome' onClick={prueba}>{<Translate content="botonLogin" component="span"/>}</button>
+                    </div>
                         
                         <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
-                        <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
-                    <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
+                        <img  className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
+                        <img  className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
                     
                     <div className='second_screen_home' id='second_screen'>
                         <button className='auxiliarFondo'></button> 
                         <button className='auxiliarFondoDerecha'></button>
                     <div className='text_secon_page' style={{zIndex: "1000"}}>
-                        <p className='second_page_title'>How is your <br/> <span className='memory_style'>memory</span> working?</p>
-                        <p className='second_page_subtitle'>Lorem ipsum, dolor sit amet. Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.Lorem ipsum, dolor sit amet.</p>
-                            <button  onClick={popUpGameMode} className='startGameLanding'>Start playing</button>
+                        <p className='second_page_title'>{<Translate content="bienvenidaHome" component="span"/>}</p>
+                        <p className='second_page_subtitle'>{<Translate content="subTitleLandingSecondPage" component="span"/>}</p>
+                        <button  onClick={popUpGameMode} className='startGameLanding'>{<Translate content="botonPlayLanding" component="span"/>}</button>
                     </div>
-                        <img className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
+                        <img  className='brain_right' src={cerebritoDerecha} alt="brain" id='brain' style={{left: (67 + offset * -0.1) + '%' }} />
                     </div>
                     </>
                     : (null)}

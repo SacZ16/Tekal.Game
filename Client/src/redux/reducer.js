@@ -17,7 +17,7 @@ const initialState = {
             mood: '', // Estado de Animo
             seenVideos: []
         }
-    }
+    },
 }
 
 export default function reducer(state = initialState, { type, payload }) {
