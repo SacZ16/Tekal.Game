@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-
 
 const GeoLocalitation = () => {
     const [localitation, setlocalitation] = useState({})
@@ -15,7 +14,6 @@ const GeoLocalitation = () => {
                 setlocalitation({ city: filterResponse.city, country: filterResponse.countryName })
                 return
             });
-            console.log()
         }
     }
     if (!localitation.hasOwnProperty('city')) {

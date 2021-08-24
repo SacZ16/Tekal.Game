@@ -1,24 +1,19 @@
-import React,
-{
-  useRef,
-  useState,
-  useEffect
-} from 'react';
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
-import ReactPlayer from 'react-player/lazy';
+import { useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
-import style from '../Styles/Game.module.css';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import { sessionInfo } from '../../redux/action';
-import axios from 'axios';
+// Componentes
+import ReactPlayer from 'react-player/lazy';
 import ProgressBar from '../ProgressBar/ProgressBar';
-
+// Estilos
+import style from '../Styles/Game.module.css';
 import cerebroLose from '../Styles/slideSeisEsp.png'
 import cerebroEnd from '../Styles/cerebrito_derecha.png'
+// Notificaciones
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+import axios from 'axios';
 
 const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
 
@@ -243,7 +238,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
     progress.current = e.playedSeconds;
   }
 
- 
+
 
   return (
 
