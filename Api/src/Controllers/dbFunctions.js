@@ -1,6 +1,7 @@
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
+const { getAge } = require("../services/dateToAge.service.js");
 
 const TABLE_USER = "HENRY-dev-USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
@@ -92,6 +93,7 @@ const putUserInfoRegisterItems = async ({
   age,
   country,
 }) => {
+  const finalAge = getAge(age);
   try {
     var infoUser = `INFO#${userId}`;
 
@@ -109,7 +111,7 @@ const putUserInfoRegisterItems = async ({
       ExpressionAttributeValues: {
         ":name": name,
         ":lastname": lastname,
-        ":age": age,
+        ":age": finalAge,
         ":country": country,
       },
     };
@@ -252,7 +254,7 @@ const updateEmailVerification = async (userId) => {
     const infoUser = `INFO#${userId}`;
 
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,
@@ -285,7 +287,7 @@ const updatePassword = async (userId, pass) => {
   try {
     const infoUser = `INFO#${userId}`;
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,
@@ -568,7 +570,187 @@ const getGameUser = async (email) => {
   }
 };
 
-//getGameUser("sofia@gmail.com")
+
+//I want to know the total set of sessions played
+const totalSessions = async () => {
+  try {
+    let params = {
+      TableName: TABLE_ASSETS,
+      IndexName: "filter-by-session",
+      KeyConditions: {
+        pivot: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: ["OK"],
+        },
+        SK: {
+          ComparisonOperator: "BEGINS_WITH",
+          AttributeValueList: [`SESSION#`],
+        },
+      },
+    };
+
+    const sessions = await connectionDynamo.query(params).promise();
+    console.log("Query description JSON:", JSON.stringify(sessions, null, 2));
+    return sessions;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//I want to be able to fetch all users in a certain age group
+const userCertainAge = async (age1, age2) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      FilterExpression: "begins_with(#info, :info)",
+      ExpressionAttributeNames: {
+        "#info": "SK"
+      },
+      ExpressionAttributeValues: {
+        ":info": "INFO#"
+      },
+    };
+    const queryUserInfo = await connectionDynamo.scan(params).promise();
+    const items = queryUserInfo.Items;
+    const usersAge = []; 
+    items.forEach(u => {if(u.age){ 
+      let ageS = u.age.toString();
+      let ageT = getAge(ageS);
+      if(ageT >= age1 && ageT <= age2){
+        usersAge.push({
+          id: u.PK, 
+          age: ageT
+        })}
+    }})
+    return usersAge;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//I want to be able to fetch all users in a certain location
+const userCertainLocation = async (location) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      FilterExpression: "begins_with(#info, :info)",
+      ExpressionAttributeNames: {
+        "#info": "SK"
+      },
+      ExpressionAttributeValues: {
+        ":info": "INFO#"
+      },
+    };
+    const queryUserInfo = await connectionDynamo.scan(params).promise();
+    const items = queryUserInfo.Items;
+    const usersInLocation = []; 
+    items.forEach(u => {if(u.city){ 
+      if(u.city === location){
+        usersInLocation.push({
+          id: u.PK, 
+          city: u.city
+        })}
+    }})
+    console.log(usersInLocation);
+    return usersInLocation;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//I want to know how many sessions(games) a user has played 
+const gamesPlayed = async (email) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      KeyConditionExpression: "#PK = :PK AND begins_with(#SK, :SK)",
+      ExpressionAttributeNames: {
+        "#PK": "PK",
+        "#SK": "SK",
+      },
+      ExpressionAttributeValues: {
+        ":PK": email,
+        ":SK": "GAME#"
+      },
+    };
+
+    const gamesPlayed = await connectionDynamo.query(params).promise();
+    //console.log("Query description JSON:", JSON.stringify(gamesPlayed, null, 2));
+    return gamesPlayed;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//I want to get number of sessions played by a user
+const numberOfSessionPlayed = async (id) =>{
+  let games = await gamesPlayed(id);
+  let count = games.Count;
+  return count;
+}
+
+//I want to know how many users saw a given asset
+const viewedBy = async (asset) => {
+  try {
+    let params = {
+      TableName: TABLE_ASSETS,
+      KeyConditionExpression: "#PK = :PK AND begins_with(#SK, :SK)",
+      ExpressionAttributeNames: {
+        "#PK": "PK",
+        "#SK": "SK",
+      },
+      ExpressionAttributeValues: {
+        ":PK": asset,
+        ":SK": "SESSION#"
+      },
+    };
+
+    const viewedBy = await connectionDynamo.query(params).promise();
+    //console.log("Query description JSON:", JSON.stringify(viewedBy, null, 2));
+    return viewedBy;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//I want to know the details of the full session where an asset was shown
+const detailsOfAsset = async (asset) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      FilterExpression: "begins_with(#info, :info)",
+      ExpressionAttributeNames: {
+        "#info": "SK"
+      },
+      ExpressionAttributeValues: {
+        ":info": "GAME#"
+      },
+    };
+    const queryUserInfo = await connectionDynamo.scan(params).promise();
+    const items = queryUserInfo.Items;
+    const usersInLocation = []; 
+    items.forEach(u => {if(u.presentations.includes(asset)){ 
+      usersInLocation.push(u);
+    }})
+    console.log(usersInLocation);
+    return usersInLocation;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+}
+
+//I want to get the number of false positives of a user in a session 
+//(how many times the user pressed spacebar on a video that wasnt a target_repeat)
+
+
+
+//I want to get the average false positive rate of a user in a session 
+//(false positives divided by number of videos shown)
+
+//I want to get the average vigilance score of a user 
+//(how many vigilances were recognized divided by the number of vigilance repeats shown)
+
+
 module.exports = {
   getallUsers,
   getUser,

@@ -5,7 +5,7 @@ const { loadGameInfo } = require('../services/gameInfo.service');
 router.post('/', async (req, res) => {
     let info = req.body;
     try {
-        loadGameInfo(info);
+        let games = await loadGameInfo(info);
         res.send(games);
     }
     catch(error) {
