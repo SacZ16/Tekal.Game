@@ -9,16 +9,19 @@ const { getallUsers, getUser, newUser, putUserLogin, queryAllInfoUser } = requir
 router.get('/', async (req, res) => {
     res.json('estas en facebook')
 })
-
 router.post('/', async (req, res) => {
+    const { email, name } = req.body
+    console.log(email)
     async function run() {
-        const user = await queryAllInfoUser(req.body.email)
+        const user = await queryAllInfoUser(email)
         if (!user.Items.length) {
             await putUserLogin({
-                "PK": req.body.email,
-                "SK": `INFO#${req.body.email}`,
-                "email": req.body.email})
-        return await queryAllInfoUser(req.body.email)
+                "PK": email,
+                "SK": `INFO#${email}`,
+                "email": email,
+                "name": name
+            })
+            return await queryAllInfoUser(email)
         }
         else {
             return user

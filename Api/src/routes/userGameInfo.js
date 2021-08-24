@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const {putUserGameItems} = require('../Controllers/dbFunctions');
+const { putUserGameItems } = require('../Controllers/dbFunctions');
 const { endpointNoMemento, endpoint } = require('../services/endpoint.service');;
 
 
@@ -14,9 +14,9 @@ router.post('/', async (req, res) => {
     try {
         for (let i = 2; i < info.length; i++) {
             var object = info[i];
-            object.pos= i+1;
+            object.pos = i + 1;
             answers.push(object.answer);
-            let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint(object.url);
+            let pkAssetsTarget = object.type === "image" ? endpointNoMemento(object.url) : endpoint(object.url);
             presentations.push(pkAssetsTarget);
         }
         let data = {
@@ -24,13 +24,13 @@ router.post('/', async (req, res) => {
             score: score,
             answer: answers,
             presentation: presentations,
-            emotion: emotion
-
+            emotion: emotion,
+            type: info[2].type
         }
         let games = await putUserGameItems(data);
         res.send(games);
     }
-    catch(error) {
+    catch (error) {
         console.log(error);
     }
 })

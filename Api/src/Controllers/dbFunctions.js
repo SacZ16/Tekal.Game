@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const ULID = require("ulid");
 
 const TABLE_USER = "HENRY-dev-USER";
+// const TABLE_USER = "USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
@@ -71,12 +72,14 @@ const createUserTable = () => {
 //Funcion que guarda los datos del primer loggin
 //(email y password o email) //LoginsG Y F
 const putUserLogin = async (user) => {
+  // console.log(user)
   try {
     let params = {
       TableName: TABLE_USER,
       Item: user,
     };
     const userLogin = await connectionDynamo.put(params).promise();
+    console.log(userLogin)
     // console.log("Added user item");
     return userLogin;
   } catch (error) {
@@ -89,45 +92,39 @@ const putUserLogin = async (user) => {
 
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
-const putUserInfoRegisterItems = async ({
-  userId,
-  name,
-  lastname,
-  age,
-  country,
-}) => {
+const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
   try {
-    var infoUser = `INFO#${userId}`;
+    var infoUser = `INFO#${email}`;
 
     let params = {
       TableName: TABLE_USER,
       Key: {
-        PK: userId,
-        SK: infoUser,
+        "PK": email,
+        "SK": infoUser,
       },
-      UpdateExpression:
-        "set #name = :name, lastname = :lastname, age = :age, country= :country",
+      UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",
       ExpressionAttributeNames: {
-        "#name": "name",
+        "#name": "name"
       },
       ExpressionAttributeValues: {
         ":name": name,
         ":lastname": lastname,
         ":age": age,
         ":country": country,
+        ":ethnicity": ethnicity,
+        ":gender": gender,
+        ":city": city,
       },
     };
 
     const registerInfo = connectionDynamo.update(params).promise();
     console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
     return registerInfo;
-  } catch (error) {
-    console.error(
-      "Unable to add item. Error JSON:",
-      JSON.stringify(error, null, 2)
-    );
   }
-};
+  catch (error) {
+    console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
+  }
+}
 
 //trae toda la tabla info del usuario
 const queryAllInfoUser = async (userId) => {
@@ -146,7 +143,7 @@ const queryAllInfoUser = async (userId) => {
     };
 
     const queryUserInfo = await connectionDynamo.query(params).promise();
-    //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+    // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
     return queryUserInfo;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
@@ -250,7 +247,8 @@ const putAssets = async (email, info) => {
 
 const putUserGameItems = async (data) => {
   try {
-    const userSession = `GAME#${data.email}#${ULID.ulid()}`;
+    const userSession = `GAME#${data.email}#${ULID.ulid()}`
+
     let params = {
       TableName: TABLE_USER,
       Item: {
@@ -261,6 +259,7 @@ const putUserGameItems = async (data) => {
         answers: data.answer,
         score: data.score.toString(),
         emotion: data.emotion,
+        type: data.type
       },
     };
     console.log(params);
@@ -556,20 +555,20 @@ const updateAnnotationsCorrect = async (url) => {
     let params = {
       TableName: TABLE_ASSETS,
       Key: {
-        PK:  url ,
-        SK:  url
+        PK: url,
+        SK: url
       },
       UpdateExpression: "SET correctAnnotations = if_not_exists(correctAnnotations, :value) + :inc",
       ExpressionAttributeValues: {
         ":value": 0,
-        ":inc":1
+        ":inc": 1
       }
     };
     const updateViews = connectionDynamo.update(params).promise();
     console.log("Added user item:", JSON.stringify(updateViews, null, 2));
     return updateViews;
   } catch (error) {
-    console.error("Unable to add item. Error JSON:",JSON.stringify(error, null, 2));
+    console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
   }
 };
 

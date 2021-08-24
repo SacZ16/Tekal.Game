@@ -2,8 +2,8 @@ const { Router, response } = require('express');
 const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
-const { registerUser, sedEmail} = require('../services/register.service.js')
-const { newUser, getallUsers, queryAllInfoUser } = require('../Controllers/dbFunctions.js')
+const { registerUser, sedEmail } = require('../services/register.service.js')
+const { newUser, getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
 
 router.get('/', (req, res) => {
     getallUsers()
@@ -13,15 +13,19 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+
     const user = await queryAllInfoUser(req.body.email)
-    if (!user.Items.length) { 
+    if (!user.Items.length) {
         const datos = req.body
+        console.log('datos', datos)
         if (!datos.email || !datos.password) throw new Error({ error: 'datos invalidos' })
-        const response = await registerUser(datos)
+        var response = await registerUser(datos)
+        // console.log(response)
         await sedEmail(req.body.email)
+        await putUserInfoRegisterItems(datos)
         res.status(201).json({ status: true, data: response })
     }
-    else{ res.json({ status: false})}
+    else { res.json({ status: false }) }
 })
 
 module.exports = router;
