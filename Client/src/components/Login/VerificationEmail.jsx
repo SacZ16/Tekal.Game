@@ -22,10 +22,13 @@ const VerificationEmail = () => {
 
     var messageErrorPass = ''
     var messageOkPass =''
+    var placeholderEmail =''
     if(localStorage.getItem('idioma') === 'en') messageErrorPass = 'Enter a valid email';
     if(localStorage.getItem('idioma') === 'es') messageErrorPass = 'Ingresá un email válido';
     if(localStorage.getItem('idioma') === 'es') messageOkPass = 'Te enviamos un correo de verificación';
     if(localStorage.getItem('idioma') === 'en') messageOkPass = 'We sent you a verification email';
+    if(localStorage.getItem('idioma') === 'es') placeholderEmail = 'Correo electrónico';
+    if(localStorage.getItem('idioma') === 'en') placeholderEmail = 'Email';
 
     const emailToBack = async () => {
         setAfterButton('')
@@ -46,7 +49,7 @@ const VerificationEmail = () => {
         <div className='forgotPassContainer'>
             <div className='subcontainer_forgotPass'>
             <label htmlFor='Email'> {<Translate content="olvidasteContrasena" component="span" />}</label>
-            <input className='inputForgotPass' name='Email' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
+            <input className='inputForgotPass' name='Email' placeholder={placeholderEmail} onChange={(e) => setEmail(e.target.value)}/>
             <button  onClick={emailToBack}>{<Translate content="enviar" component="p" />}</button>
             <h3> {afterButton} </h3>
             </div>
