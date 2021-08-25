@@ -779,6 +779,48 @@ const lowerScore = async (type,score) => {
   }
 };
 
+//devuelve todos los games
+const scanAllGamesType = async (type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      FilterExpression: "begins_with(#info, :info)",
+      ExpressionAttributeNames: {
+        "#info": "SK"
+      },
+      ExpressionAttributeValues: {
+        ":info": "GAME#"
+      },
+    };
+    const queryUserInfo = await connectionDynamo.scan(params).promise();
+    const items = queryUserInfo.Items;
+    const gamesType = []; 
+    items.forEach(u => {if(u.type === type){ 
+      gamesType.push(u);
+    }})
+    const cantGamesType = gamesType.length;
+    console.log(cantGamesType);
+    return gamesType;
+  } catch  (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+}
+
+//devuelve la cantidad de games menores a tal valor
+const scanAllGamesLowerThan = async (value, type) => {
+  try {
+    const games = await scanAllGamesType(type);
+    const gamesLower = []; 
+    games.forEach(u => {if(u.score < value){ 
+      gamesLower.push(u);
+    }})
+    const cantGamesLower = gamesLower.length;
+    console.log(cantGamesLower);
+    return cantGamesLower;
+  } catch  (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+}
 
 module.exports = {
   getallUsers,
@@ -804,5 +846,7 @@ module.exports = {
   putPKAssetsImages,
   updateAnnotationsCorrect,
   getGameUser,
-  gamesPlayed
+  gamesPlayed,
+  scanAllGamesType,
+  scanAllGamesLowerThan
 };
