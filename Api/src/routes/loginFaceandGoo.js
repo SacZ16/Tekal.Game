@@ -11,9 +11,9 @@ router.get('/', async (req, res) => {
 })
 router.post('/', async (req, res) => {
     const { email, name } = req.body
-    console.log(email)
     async function run() {
         const user = await queryAllInfoUser(email)
+        console.log(user, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         if (!user.Items.length) {
             await putUserLogin({
                 "PK": email,

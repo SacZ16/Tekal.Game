@@ -17,7 +17,7 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={LoginPage} /> {/* Borrar */}
         <Route exact path='/register' component={RegisterWithEmail} /> {/* Borrar */}
-        <Route exact path='/form' component={FormData} /> {/* Borrar */}
+        <Route exact path='/forma' component={FormData} /> {/* Borrar */}
         <Route exact path='/game' component={Game} />
         <Route exact path='/close' component={FinalGame} />
         <Route exact path='/preclose' component={PreFinalGame} />

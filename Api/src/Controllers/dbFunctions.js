@@ -6,8 +6,8 @@ const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
 
-const TABLE_USER = "HENRY-dev-USER";
-// const TABLE_USER = "USER";
+// const TABLE_USER = "HENRY-dev-USER";
+const TABLE_USER = "USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
@@ -93,6 +93,8 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
+  console.log(email)
+  console.log(country)
   try {
     var infoUser = `INFO#${email}`;
 
@@ -142,8 +144,10 @@ const queryAllInfoUser = async (userId) => {
       },
     };
 
-    const queryUserInfo = await connectionDynamo.query(params).promise();
+    let queryUserInfo = await connectionDynamo.query(params).promise();
     // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+
+    // queryUserInfo.Items[0].password = ''
     return queryUserInfo;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
