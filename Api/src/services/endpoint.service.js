@@ -7,7 +7,7 @@ function endpoint(url){   // data memento
             asset += string2[i];
         }
         else {
-            return asset.slice(29);
+            return asset/*.slice(29);*/
         }
     }
 }

@@ -8,13 +8,16 @@ async function loadGameInfo(array){
     let email = array[0];
     let score = array[1];
     let date = array[3].date
+    //console.log(date)
     for (let i = 2; i < array.length; i++) {
         var object = array[i];
+        let category = array[i].category
         object.pos= i+1;
         answers.push(object.answer);
         let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint(object.url);
-        presentations.push(pkAssetsTarget);
+        presentations.push({ id:pkAssetsTarget, category: category });
     }
+    console.log(presentations)
     let data = {
         email: email,
         score: score,
@@ -22,7 +25,7 @@ async function loadGameInfo(array){
         presentation: presentations,
         emotion: emotion,
         date: date,
-        type: info[2].type
+        type: array[2].type
     }
     let games = await putUserGameItems(data);
     return games;
