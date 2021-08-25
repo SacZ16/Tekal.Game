@@ -3,7 +3,7 @@ const { notSeen } = require('./compareArray.service');
 
 
 
-async function assetNotSeen(email,asset) {
+async function assetNotSeen(email,asset, limit) {
     try {
         const viewedAssets = await getSessions(email);
         if(viewedAssets.Items.length > 0){
@@ -12,15 +12,15 @@ async function assetNotSeen(email,asset) {
             const setAssets = assetsLessViews.Items.map(v => v.PK);
 
             let array = [];
-            let arrayAssets = array.concat(notSeen(setAssets,[...PKviewed],160));
+            let arrayAssets = array.concat(notSeen(setAssets,[...PKviewed],limit));
             if(assetsLessViews.LastEvaluatedKey){
                 let LastEvaluatedKeyPK = assetsLessViews.LastEvaluatedKey.PK;
                 let LastEvaluatedKeyViews = assetsLessViews.LastEvaluatedKey.views;
     
-                while(arrayAssets.length < 160){
+                while(arrayAssets.length < limit){
                     let assetsLessViewsNext = await orderNextAsset(1000,LastEvaluatedKeyPK, LastEvaluatedKeyViews,asset);
                     let array2 = assetsLessViewsNext.Items.map(v => v.PK);
-                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],160));
+                    let arrayChunk = arrayAssets.concat(notSeen(array2,[...PKviewed],limit));
                     arrayAssets = arrayChunk;
                     LastEvaluatedKeyPK = videosLessViewsNext.LastEvaluatedKey.PK;
                     LastEvaluatedKeyViews = videosLessViewsNext.LastEvaluatedKey.views;

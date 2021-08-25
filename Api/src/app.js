@@ -16,6 +16,7 @@ const assetsImages = require("./routes/loadingImages");
 const averageScore = require("./routes/averageScore");
 const assets = require ('./routes/loadingAssets');
 const globalScore = require("./routes/scoreGlobal");
+const longTerm = require("./routes/longTermVideo");
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -72,6 +73,7 @@ server.use('/assets', assets);
 server.use('/loadingImages', assetsImages);
 server.use('/averageScore', averageScore);
 server.use('/globalScore', globalScore);
+server.use('/longTerm', longTerm);
 
 
 module.exports = server;

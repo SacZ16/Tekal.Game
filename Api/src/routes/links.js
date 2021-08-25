@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     let { email } = req.body;
     let { mode } =req.body;
     let templateChoosen = picker();
-    let assetsFromDb = await assetNotSeen(email,mode);
+    let assetsFromDb = await assetNotSeen(email,mode, 160);
     const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
     if(mode === 'image'){
         const assets = await getAssetsImages(itemsFromDb);//transforma en link

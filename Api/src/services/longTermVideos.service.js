@@ -23,10 +23,9 @@ async function longTerm(email, type){
         }}) 
         let lastPresentations = lastGame.presentations;
         let lastFillersSeen = [];
-        lastPresentations.forEach(i => {if(i.category === "filler"){
+        lastPresentations.forEach(i => {if(i.category === "FILLER"){
             lastFillersSeen.push(i.id);
         }})
-        console.log(lastFillersSeen);
         return lastFillersSeen;
     }
     catch(err){
@@ -34,4 +33,4 @@ async function longTerm(email, type){
     }
 }
 
-longTerm("payerasangel@gmail.com","image")
+module.exports = { longTerm }

@@ -233,7 +233,7 @@ const putUserGameItems = async (data) => {
         playedAt: data.date,
         presentations: data.presentation,
         answers: data.answer,
-        score: data.score,
+        score: parseInt(data.score),
         emotion: data.emotion,
         type: data.type
       },
