@@ -779,6 +779,28 @@ const lowerScore = async (type,score) => {
   }
 };
 
+const Scores = async (type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        }
+      },
+      ScanIndexForward: false,
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+// Scores("video")
 //devuelve todos los games
 const scanAllGamesType = async (type) => {
   try {
@@ -848,5 +870,7 @@ module.exports = {
   getGameUser,
   gamesPlayed,
   scanAllGamesType,
-  scanAllGamesLowerThan
+  scanAllGamesLowerThan,
+  lowerScore,
+  Scores
 };
