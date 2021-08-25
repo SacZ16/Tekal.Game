@@ -44,7 +44,7 @@ export default{
     etnia:'Etnia',
     continuaGoogle: 'Continúa con Google',
     continuaFacebook:'Continúa con Facebook',
-    olvidasteContrasena:'Olvidaste tu constraseña',
+    olvidasteContrasena:'¿Olvidaste tu constraseña?',
     o:'O',
     noDecir:'Prefiero no decir',
     hombre:'Masculino',
