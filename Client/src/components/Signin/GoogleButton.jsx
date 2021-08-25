@@ -13,6 +13,7 @@ import es from "../../language/esp.js"
 const GoogleButton = () => {
 
     const responseGoogle = (response) => {
+        console.log(response)
         let obj = {
             email: response.profileObj.email,
             name: response.profileObj.givenName

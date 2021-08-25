@@ -16,6 +16,8 @@ import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import Loading from '../Loading/Loading';
+import FormData from '../FormData/formularyData';
+
 //-----------------
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -106,6 +108,7 @@ const Home = () => {
         }
     }
 
+    console.log(cookies.get('userInfo'))
     if (cookies.get('userInfo') && !checker) {
         setStartGame(true)
         setLogin(false)

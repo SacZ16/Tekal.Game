@@ -46,7 +46,7 @@ const sedEmail = async (email) =>{
         service: 'gmail',
         auth: {
             type:'OAUTH2',
-            user:'goyeliseo1@gmail.com',
+            user:'memorygame@tekal.ai',
             clientId:CLIENT_ID,
             clientSecret:CLIENT_SECRET,
             refresh_token:REFRESH_TOKEN,
@@ -55,7 +55,7 @@ const sedEmail = async (email) =>{
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <goyeliseo1@gmail.com>', // sender address
+        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/verificationemail?${tokensendEmail}`, // plain text body
@@ -73,7 +73,7 @@ const sendEmailForPassword = async (email) =>{
         service: 'gmail',
         auth: {
             type:'OAUTH2',
-            user:'goyeliseo1@gmail.com',
+            user:'memorygame@tekal.ai',
             clientId:CLIENT_ID,
             clientSecret:CLIENT_SECRET,
             refresh_token:REFRESH_TOKEN,
@@ -82,7 +82,7 @@ const sendEmailForPassword = async (email) =>{
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <goyeliseo1@gmail.com>', // sender address
+        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body

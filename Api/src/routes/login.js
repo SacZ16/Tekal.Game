@@ -13,7 +13,8 @@ res.json(await getallUsers())
 router.post('/', async (req, res) => {
     const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(req.body.email)}
 else{return {}}}
-    const runUser= await user()
+    console.log(await user())
+    let runUser= await user()
     console.log(runUser)
     if (!runUser.Items.length){
         return res.json({ error: 'Email no register', status:'400' })
@@ -21,6 +22,8 @@ else{return {}}}
     else {const validPassword = await bcrypt.compare(req.body.password, runUser.Items[0].password);
     if (!validPassword) return res.json({ error: 'error', status:'400' })
     else{
+        runUser.Items[0].password = ''
+        console.log(runUser.Items)
         res.json(runUser.Items)
     }}
 })
