@@ -10,8 +10,8 @@ const {
 
 
 AWS.config.update({
-    accessKeyId:'',
-    secretAccessKey:''
+    accessKeyId:'AKIA27M5RUA5H5L2UVOJ',
+    secretAccessKey:'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'
 })
 const connectionDynamo= new AWS.DynamoDB.DocumentClient();
 const dynamodb = new AWS.DynamoDB();

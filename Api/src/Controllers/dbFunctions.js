@@ -802,5 +802,6 @@ module.exports = {
   getSessions,
   putPKAssetsImages,
   updateAnnotationsCorrect,
-  getGameUser
+  getGameUser,
+  gamesPlayed
 };
