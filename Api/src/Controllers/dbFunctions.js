@@ -254,15 +254,16 @@ const putUserGameItems = async (data) => {
       Item: {
         PK: data.email,
         SK: userSession,
-        playedAt: new Date().toString(),
+        playedAt: data.date,
         presentations: data.presentation,
         answers: data.answer,
-        score: data.score.toString(),
+        score: parseInt(data.score),
         emotion: data.emotion,
-        type: data.type
+        type: data.type,
+        longTerm: data.longTerm
       },
     };
-    console.log(params);
+    // console.log(params);
     const gameAdded = await connectionDynamo.put(params).promise();
     console.log("Added Session:", JSON.stringify(gameAdded, null, 2));
     return gameAdded;
@@ -595,6 +596,76 @@ const getGameUser = async (email) => {
   }
 };
 
+const gamesPlayed = async (email) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      KeyConditionExpression: "#PK = :PK AND begins_with(#SK, :SK)",
+      ExpressionAttributeNames: {
+        "#PK": "PK",
+        "#SK": "SK",
+      },
+      ExpressionAttributeValues: {
+        ":PK": email,
+        ":SK": "GAME#"
+      },
+    };
+
+    const gamesPlayed = await connectionDynamo.query(params).promise();
+    //console.log("Query description JSON:", JSON.stringify(gamesPlayed, null, 2));
+    return gamesPlayed;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
+//devuelve todos los games
+const scanAllGamesType = async (type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      FilterExpression: "begins_with(#info, :info)",
+      ExpressionAttributeNames: {
+        "#info": "SK"
+      },
+      ExpressionAttributeValues: {
+        ":info": "GAME#"
+      },
+    };
+    const queryUserInfo = await connectionDynamo.scan(params).promise();
+    const items = queryUserInfo.Items;
+    const gamesType = [];
+    items.forEach(u => {
+      if (u.type === type) {
+        gamesType.push(u);
+      }
+    })
+    const cantGamesType = gamesType.length;
+    console.log(cantGamesType);
+    return gamesType;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+}
+
+//devuelve la cantidad de games menores a tal valor
+const scanAllGamesLowerThan = async (value, type) => {
+  try {
+    const games = await scanAllGamesType(type);
+    const gamesLower = [];
+    games.forEach(u => {
+      if (u.score < value) {
+        gamesLower.push(u);
+      }
+    })
+    const cantGamesLower = gamesLower.length;
+    console.log(cantGamesLower);
+    return cantGamesLower;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+}
+
 //getGameUser("sofia@gmail.com")
 module.exports = {
   getallUsers,
@@ -619,5 +690,8 @@ module.exports = {
   getSessions,
   putPKAssetsImages,
   updateAnnotationsCorrect,
-  getGameUser
+  getGameUser,
+  gamesPlayed,
+  scanAllGamesLowerThan,
+  scanAllGamesType
 };

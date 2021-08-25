@@ -10,12 +10,14 @@ const datauser = require('./routes/datauser');
 const links = require('./routes/links');
 const info = require('./routes/assetsVideoInfo');
 const game = require('./routes/userGameInfo');
-const verificationemail = require ('./routes/verificationEmail');
-const VerificationChangePassword = require ('./routes/VerificationChangePassword');
+const verificationemail = require('./routes/verificationEmail');
+const VerificationChangePassword = require('./routes/VerificationChangePassword');
 const changepassword = require('./routes/changePassword');
 const assetsImages = require("./routes/loadingImages")
 const averageScore = require("./routes/averageScore")
-const assets = require ('./routes/loadingAssets');
+const assets = require('./routes/loadingAssets');
+const longTerm = require("./routes/longTermVideo");
+const globalScore = require("./routes/scoreGlobal");
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -52,6 +54,7 @@ server.use('/changepassword', changepassword);
 server.use('/assets', assets);
 server.use('/loadingImages', assetsImages)
 server.use('/averageScore', averageScore)
-
+server.use('/longTerm', longTerm);
+server.use('/globalScore', globalScore);
 
 module.exports = server;
