@@ -16,9 +16,15 @@ const { loadEndpoints } = require('../services/assets.service');
 
 router.post('/', async (req, res) => {
     let info = req.body;
+    if(!Array.isArray(info)){
+        return res.sendStatus(400)
+    }
+    if(Array.isArray(info) && !info.length){
+        return res.sendStatus(400)
+    }
     try {
         loadEndpoints(info);
-        res.send("addedAsset");
+        res.status(200).send("addedAsset");
     }
     catch (error) {
         res.status(400).send(error);

@@ -7,7 +7,7 @@ async function loadGameInfo(array){
     let emotion = array[2].mood;
     let email = array[0];
     let score = array[1];
-    let date = array[3].date
+    let date = array[2].date
     //console.log(date)
     for (let i = 2; i < array.length; i++) {
         var object = array[i];

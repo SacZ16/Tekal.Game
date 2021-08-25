@@ -12,15 +12,19 @@ const { loadGameInfo } = require('../services/gameInfo.service');
  *       200:
  *         description: Carga la DB con la info del game.
  */
+
+
+//
+
 router.post('/', async (req, res) => {
     let info = req.body;
-    try {
+    if(info.length){
         let games = await loadGameInfo(info);
-        res.send(games);
-    }
-    catch(error) {
+        return res.status(200).send(games);
+    } else{
         res.status(400).send(error);
+        }
     }
-})
+);
 
 module.exports = router;

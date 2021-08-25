@@ -22,15 +22,15 @@ const router = Router();
  *                   example: 10                        
  */
 router.post('/', async (req,res) => {
-    try{
         let {email} =req.body;
         const games =await getGameUser(email);
+        if(games.Items.length){
         const score =games.Items.map(o => parseInt(o.score));   
         const averageScore = score.reduce((a,b)=> a+b) / score.length;
-        res.status(200).json({ averageScore:averageScore });
-    }catch(err){
-        res.send(err);
-    }
+        return res.status(200).json({ averageScore:averageScore });
+        } else {
+            res.sendStatus(400)
+        }
 })
 
 module.exports = router;
