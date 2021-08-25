@@ -21,10 +21,35 @@ const globalScore = require("./routes/scoreGlobal");
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 
 
 const server = express();
+
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Express API for JSONPlaceholder',
+        version: '1.0.0',
+    },
+    servers: [
+        {
+            url: 'http://localhost:3001',
+            description: 'Development server',
+        },
+    ],
+};
+
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./src/routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(options);
+
 
 
 const corsOptions = {
@@ -56,5 +81,7 @@ server.use('/loadingImages', assetsImages)
 server.use('/averageScore', averageScore)
 server.use('/longTerm', longTerm);
 server.use('/globalScore', globalScore);
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 module.exports = server;

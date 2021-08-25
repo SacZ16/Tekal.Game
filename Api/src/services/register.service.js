@@ -7,7 +7,7 @@ const jwt = require ('jsonwebtoken')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {
-    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,REFRESH_TOKEN 
+    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,REFRESH_TOKEN , EMAIL_TEKAL
 } = process.env;
 
 const oAuth2Client= new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL);
@@ -73,7 +73,7 @@ const sendEmailForPassword = async (email) =>{
         service: 'gmail',
         auth: {
             type:'OAUTH2',
-            user:'goyeliseo1@gmail.com',
+            user:EMAIL_TEKAL,
             clientId:CLIENT_ID,
             clientSecret:CLIENT_SECRET,
             refresh_token:REFRESH_TOKEN,
@@ -82,7 +82,7 @@ const sendEmailForPassword = async (email) =>{
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <goyeliseo1@gmail.com>', // sender address
+        from: `Pagina Web NodeMailer <${EMAIL_TEKAL}>`, // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body
