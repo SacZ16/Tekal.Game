@@ -9,6 +9,12 @@ import Swal from 'sweetalert2'
 import getCity from '../geoLocalitation/geoLocalitation'
 import { newCookie } from '../controllers/dbFunctions';
 
+//Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+
 const RegisterWithEmail = () => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [passwordcopia, setPasswordcopia] = useState('')
@@ -103,43 +109,54 @@ const RegisterWithEmail = () => {
         })
     }
     var a = cookiies.get('prueba')
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
     return (
         <>
             {err && <h5 style={{ color: 'red' }}>{err}</h5>}
             <div class="row" onChange={handleInputChange}>
                 <div class="column" >
-                    <p class="dddd">Name*</p>
+                    <p class="dddd">{<Translate content="nombre" component="span" />}*</p>
                     <input class="swal2-inputmh4" name='name' onChange={handleInputChange} />
-                    <p class="dddd">Date of birth</p>
+                    <p class="dddd">{<Translate content="nacimiento" component="span" />}</p>
                     <input class="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
-                    <p class="dddd">Country</p>
+                    <p class="dddd">{<Translate content="pais" component="span" />}</p>
                     <input class="swal2-inputmh4" value={country.country ? country.country : 'empty'} name='country' onChange={handleInputChange} />
-                    <p class="dddd">Password</p>
+                    <p class="dddd">{<Translate content="contrasena" component="span" />}</p>
                     <input id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
-                    <p class="dddd">Gender</p>
+                    <p class="dddd">{<Translate content="genero" component="span" />}</p>
                     <select class="swal2-inputmh4" name='gender' onChange={handleInputChange}>
-                        <option value='prefer-not-to-answer'> Prefer not to say </option>
-                        <option value='male'> Male </option>
-                        <option value='female'> Female </option>
-                        <option value='non-binary'> Non binary </option>
+                        <option value='prefer-not-to-answer'> Prefer not to say</option>
+                        <option value='male'>Male</option>
+                        <option value='female'>Female</option>
+                        <option value='non-binary'>Non binary</option>
                     </select>
-                    <GoogleButton />
                 </div>
                 <div class="column" >
-                    <p class="dddd" >Last Name</p>
+                    <p class="dddd" >{<Translate content="apellido" component="span" />}</p>
                     <input class="swal2-inputmh4" name='lastname' onChange={handleInputChange} />
-                    <p class="dddd">Email</p>
+                    <p class="dddd">{<Translate content="mail" component="span" />}</p>
                     <input id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange} />
-                    <p class="dddd">City/state</p>
+                    <p class="dddd">{<Translate content="ciudad" component="span" />}</p>
                     <input class="swal2-inputmh4" value={country.city ? country.city : 'empty'} name='city' onChange={handleInputChange} />
-                    <p className="dddd">Confirm Password</p>
+                    <p className="dddd">{<Translate content="confirmaContrasena" component="span" />}</p>
                     <input id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
-                    <p class="dddd">Ethnicity</p>
+                    <p class="dddd">{<Translate content="etnia" component="span" />}</p>
                     <input class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange} />
-                    <FacebookButton />
                 </div>
             </div>
-            <button className='buttonRegister' onClick={SendToBackEnd}> Register </button>
+            <button className='buttonRegister' onClick={SendToBackEnd}> {<Translate content="botonRegistro" component="span" />} </button>
+            <div className='container_buttons_register_form'>
+                    <GoogleButton/>
+                    <FacebookButton />
+                </div>
         </>
     )
 }

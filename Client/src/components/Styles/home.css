@@ -293,7 +293,7 @@ body{
     position: absolute;
     top:90%;
     left: 50%;
-    z-index: 20000;
+    z-index: 1001;
     text-decoration: none;
     text-align: center;
     -webkit-transform: translate(0, -50%);
@@ -518,6 +518,7 @@ body{
     vertical-align: middle;
     display: flex;
     margin-right: 20px;
+    margin-bottom: -2em;
 }
 
 .startGame:hover {
@@ -642,8 +643,9 @@ section::before{
 
 .btnOpenSessionMenu{
     height: 20px;
+    position: relative;
     margin-top:11%;
-    margin-left:10%;
+    left:25%;
     background-color: transparent;
     border-style: none;
     cursor: pointer;

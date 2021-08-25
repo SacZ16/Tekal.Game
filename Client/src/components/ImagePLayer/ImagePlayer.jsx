@@ -13,6 +13,12 @@ import cerebroLose from '../Styles/slideSeisEsp.png'
 import cerebroEnd from '../Styles/cerebrito_derecha.png'
 import Cookies from 'universal-cookie';
 
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+
 
 const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) => {
     const MySwal = withReactContent(Swal)
@@ -199,16 +205,16 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
             MySwal.fire({
                 toast: true,
                 html:
-                    <div >
-                        <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
-                        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
-                        </div>
-                    </div>,
-                timer: 3000,
+                    <div>
+                        <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
+                    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
+                    </div>
+                </div>,
+                timer: 4000,
                 showConfirmButton: false,
                 timerProgressBar: true,
-                width: 500
+                width: 600
             }).then(() => {
                 videosWithAnswers()
                 postData()
@@ -240,6 +246,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
         }
     }
 
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+  
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
     /* const a = performance.now()
     const b = performance.now()
     console.log(b - a) */
@@ -249,11 +263,11 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
             <div style={bcolor} className={style.fondo}></div>
             <div className={style.videofondo}></div>
             <div width="50%" height="50%" z-index='5' id='video'>
-                <div className={style.contenedordelvideo}>
+                <div className={style.contenedordelvideo} style={{top:'2%'}}>
                     <ProgressBar lives={lives.current} max={imageApi.length} progress={seeImages.current.length} />
                     <Timer ref={tiempo} />
-                    <div ref={imageTouch}>
-                        {recVideo[0] && <img src={recVideo[0].urlBlop} />}
+                    <div className={style.imgPlayer} ref={imageTouch}>
+                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}/>}
                     </div>
                 </div>
             </div>

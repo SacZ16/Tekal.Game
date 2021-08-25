@@ -90,7 +90,7 @@ export const Game = ({ history }) => {
 
   useEffect(() => {
     if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
-    if (cookies.get('sessionData')) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
+    //if (cookies.get('sessionData')) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
   }, [])
 
   // Verifica si esta logeado o no al terminar el juego

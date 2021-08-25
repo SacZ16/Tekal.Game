@@ -16,6 +16,12 @@ import withReactContent from 'sweetalert2-react-content'
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+
 const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
 
   const dispatch = useDispatch();
@@ -161,16 +167,16 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
       MySwal.fire({
         toast: true,
         html:
-          <div >
-            <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
+          <div>
+            <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+              <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
             </div>
           </div>,
-        timer: 3000,
+        timer: 4000,
         showConfirmButton: false,
         timerProgressBar: true,
-        width: 500
+        width: 600
       }).then(() => {
         checkLogin()
       })
@@ -219,15 +225,15 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
             toast: true,
             html:
               <div >
-                <h1 style={{ color: 'red', textAlign: 'center' }}>The Game has finished</h1>
+                <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
+                  <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroEnd} alt="cerebroLose" />
                 </div>
               </div>,
             timer: 3000,
             showConfirmButton: false,
             timerProgressBar: true,
-            width: 500
+            width: 600
           }).then(() => {
             checkLogin()
           })
@@ -237,7 +243,13 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
     progress.current = e.playedSeconds;
   }
 
+  const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
+  const lang = language;
+
+  counterpart.registerTranslations('en', en);
+  counterpart.registerTranslations('es', es);
+  counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
   return (
 
@@ -249,9 +261,8 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         (recVideo !== '') &&
         <div width="50%" height="50%" z-index='5' id='video' className={style.contenedordelvideo}>
           <ProgressBar lives={lives.current} max={videoApi.length} progress={seeVideos.current.length} />
-          <div ref={videoTouch} >
+          <div className={style.videoGame} ref={videoTouch} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}>
             <ReactPlayer className={style.video}
-              style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}
               z-index='5'
               url={recVideo[0] && recVideo[0].urlBlop}
               onProgress={(e) => onProgress(e)}

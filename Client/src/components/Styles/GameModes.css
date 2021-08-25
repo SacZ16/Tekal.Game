@@ -32,11 +32,14 @@
     background-color: #C94EBF;
     text-decoration: none;
     color: white;
-    padding: 1em 5em 1em 5em;
+    padding: 1em 2em 1em 2em;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     font-weight: bold;
+    margin-right: 1em;
+    margin-left: 1em;
+    cursor: pointer;
 }
 
 .game_mode p {
@@ -64,11 +67,13 @@
     background-color: #C94EBF;
     text-decoration: none;
     color: white;
-    padding: 1em 5em 1em 5em;
+    padding: 1em 2em 1em 2em;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     font-weight: bold;
+    margin-right: 1em;
+    margin-left: 1em;
 }
 
 .game_mode_gray p {
@@ -78,6 +83,5 @@
 }
 
 .game_mode:hover {
-    transform: scale(1.1);
     transition: all .4s ease-out;
 }

@@ -5,6 +5,12 @@ import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
 import Swal from 'sweetalert2'
 
+//Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+
 const RegisterCommonForm = ({ props, coloresprop }) => {
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
@@ -31,6 +37,14 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
             })
         }
     }
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
     
     return (
         <>
@@ -38,13 +52,15 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
                 <div className='form'>
                     {err && <h5 style={{ color: 'red' }}>{err}</h5>}
                     <form className='form2'>
-                        <input className='inputForm' type='text' placeholder='Email adress' onChange={(e) => setemail(e.target.value)} />
-                        <input className='inputForm' type='password' placeholder='Password' onChange={(e) => setpassword(e.target.value)} />
+                        <p>{<Translate content="mail" component="span" />}</p>
+                        <input className='inputForm' type='text' onChange={(e) => setemail(e.target.value)} />
+                        <p>{<Translate content="contrasena" component="span" />}</p>
+                        <input className='inputForm' type='password' onChange={(e) => setpassword(e.target.value)} />
                     </form>
                     <div className='form3'>
-                        <a className='forgotPassword' href='/forgotPassword'>Forgot password?</a>
-                        <button className='continue' onClick={() => checker(email, password)}> Continue </button>
-                        <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>OR<hr class='hr' width='40%' color='lightgrey'></hr></p>
+                        <a className='forgotPassword' href='/forgotPassword'><p>{<Translate content="olvidasteContrasena" component="a" />}</p></a>
+                        <button className='continue' onClick={() => checker(email, password)}> {<Translate content="continuar" component="span" />} </button>
+                        <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>{<Translate content="o" component="span" />}<hr class='hr' width='40%' color='lightgrey'></hr></p>
                         <div style={{ position: 'relative', width: '100%' }}>
                             <GoogleButton />
                             <FacebookButton />

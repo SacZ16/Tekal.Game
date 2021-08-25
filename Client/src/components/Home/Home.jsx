@@ -64,7 +64,7 @@ const Home = () => {
                 <div style={{ overflow: 'hidden' }}>
                     <RegisterCommonForm props={SendDataToBACK} style={{ posicion: 'absolute' }} />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</a>
+                        <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor:'pointer' }} onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</a>
                     </div>
                 </div>,
             showCloseButton: true,
@@ -79,7 +79,7 @@ const Home = () => {
                 <div style={{ overflow: 'hidden' }}>
                     <RegisterWithEmail style={{ posicion: 'absolute' }} />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }} onClick={prueba}>{<Translate content="botonLogin" component="span" />}</a>
+                        <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor:'pointer' }} onClick={prueba}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
                 </div>,
             showCloseButton: true,
@@ -232,7 +232,7 @@ const Home = () => {
                                 }}>{<Translate content="desloguear" component="span" />}</button> : null
                             }
                         </div>
-                        <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>Maximiliano</span></p>
+                        <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>{sessionUser}</span></p>
                         <div className='scores_mobile'>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
@@ -255,7 +255,7 @@ const Home = () => {
                     {startGame ?
                         <>
                             <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
-                            <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>Maximiliano</span></p>
+                            <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>{sessionUser}</span></p>
                             <div className='scores'>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="ultimoResultado" component="span" />}</h4>

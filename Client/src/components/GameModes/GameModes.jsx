@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom'
 import '../Styles/GameModes.css';
 import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter'; //estrellas
@@ -64,6 +63,13 @@ const GameModes = () => {
         window.location.href = ('/game')
     }
 
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
     return (
         <>
@@ -72,23 +78,23 @@ const GameModes = () => {
                     <div className='subContainer_game_modes'>
                         <div className='game_mode'>
                             <MovieCreationIcon style={{ fontSize: '7.5rem' }} />
-                            <p>Video short term</p>
-                            <a onClick={moodFunction} id='video'>Videos</a>
+                            <p>{<Translate content="videosCortoPlazo" component="p" />}</p>
+                            <a onClick={moodFunction} id="video">{<Translate content="seleccionar" component="a" id='video'/>}</a>
                         </div>
                         <div className='game_mode' >
                             <MovieFilterIcon style={{ fontSize: '7.5rem' }} />
-                            <p>Video long term</p>
-                            <a onClick={moodFunction} id='image'>Images</a>
+                            <p>{<Translate content="videosLargoPlazo" component="p" />}</p>
+                            <a onClick={moodFunction} id='video'>{<Translate content="seleccionar" component="a" />}</a>
                         </div>
                         <div className='game_mode'>
                             <ImageIcon style={{ fontSize: '7.5rem' }} />
-                            <p>Images short term</p>
-                            <a onClick={moodFunction}>Select</a>
+                            <p>{<Translate content="imagenesCortoPlazo" component="p" />}</p>
+                            <a onClick={moodFunction} id='image'>{<Translate content="seleccionar" component="a" id='image' />}</a>
                         </div>
                         <div className='game_mode'>
                             <BurstModeIcon style={{ fontSize: '7.5rem' }} />
-                            <p>Images long term</p>
-                            <a onClick={moodFunction}>Select</a>
+                            <p>{<Translate content="imagenesLargoPlazo" component="p" />}</p>
+                            <a onClick={moodFunction} id='image'>{<Translate content="seleccionar" component="a" />}</a>
                         </div>
                     </div>
                 </div>
@@ -97,26 +103,26 @@ const GameModes = () => {
                     <div className='subContainer_game_modes_unlock'>
                         <div className='game_mode'>
                             <MovieCreationIcon style={{ fontSize: '7.5rem' }} />
-                            <p>Video short term</p>
-                            <a onClick={playWithOutLogin}>Videos</a>
+                            <p>{<Translate content="videosCortoPlazo" component="p" />}</p>
+                            <a onClick={playWithOutLogin} id='video'>{<Translate content="seleccionar" component="a" />}</a>
                         </div>
                         <div className='game_mode_gray'>
                             <MovieFilterIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
-                            <p>Video long term</p>
-                            <a>Images</a>
-                            <p className='unlock'>Log in to unlock this mode</p>
+                            <p>{<Translate content="videosLargoPlazo" component="p" />}</p>
+                            <a>{<Translate content="seleccionar" component="a" />}</a>
+                            <p className='unlock'>{<Translate className='unlock'  content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                         <div className='game_mode_gray'>
                             <ImageIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
-                            <p>Images short term</p>
-                            <a>Select</a>
-                            <p className='unlock'>Log in to unlock this mode</p>
+                            <p>{<Translate content="imagenesCortoPlazo" component="p" />}</p>
+                            <a>{<Translate content="seleccionar" component="a" />}</a>
+                            <p className='unlock'>{<Translate className='unlock' content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                         <div className='game_mode_gray'>
                             <BurstModeIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
-                            <p>Images long term</p>
-                            <a >Select</a>
-                            <p className='unlock'>Log in to unlock this mode</p>
+                            <p>{<Translate content="imagenesLargoPlazo" component="p" />}</p>
+                            <a >{<Translate content="seleccionar" component="a" />}</a>
+                            <p className='unlock'>{<Translate className='unlock' content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                     </div>
                 </div>
