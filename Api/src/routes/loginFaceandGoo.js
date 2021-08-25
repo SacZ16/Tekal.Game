@@ -17,10 +17,15 @@ router.post('/', async (req, res) => {
             await putUserLogin({
                 "PK": req.body.email,
                 "SK": `INFO#${req.body.email}`,
-                "email": req.body.email})
-        return await queryAllInfoUser(req.body.email)
+                "email": req.body.email,
+                "name": req.body.name})
+        let newuser = await queryAllInfoUser(req.body.email)
+        newuser.check = true
+        return newuser
+
         }
         else {
+            user.check = false
             return user
         }
     }

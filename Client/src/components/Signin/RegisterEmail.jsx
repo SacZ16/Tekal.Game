@@ -7,6 +7,7 @@ import logoTekalAzul from '../Styles/tekallogoazul.png'
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
 import Cookie from 'universal-cookie'
+import getCity from '../geoLocalitation/geoLocalitation'
 import '../Styles/registerForm.css';
 {/* <div style={{ 'transition': 'all 0.5s ease-out' }} className='formRegister'>
                 <form className='formRegister2'>
@@ -76,7 +77,7 @@ const RegisterWithEmail = () => {
         fondoform: 'rgba(0, 0, 0, 0.904)',
         copyr: 'rgb(197, 197, 197)'
     })
-
+   
     const [input, setInput] = useState({
         email: "",
         password: "",
@@ -89,7 +90,9 @@ const RegisterWithEmail = () => {
         gender: "prefer-not-to-say",
         ethnicity: "",
     })
-
+    // setCountry(localitation)
+    const country= getCity()
+    console.log(country)
     //Estos van a estar seteando errores (osea cuando los inputs se rellenen mal estos estados van a tener algo adentro)
     /* const [errorEmail, setErrorEmail] = useState('');
     const [errorConfirmEmail, setErrorConfirmEmail] = useState('');
@@ -98,6 +101,7 @@ const RegisterWithEmail = () => {
 
 
     const SendToBackEnd = async (e) => {
+        
         e.preventDefault()
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
@@ -110,18 +114,18 @@ const RegisterWithEmail = () => {
         if (input.password !== input.confirmPass) {
             return;
         }
-        const user = {
-            email: input.email,
-            password: input.password,
-            test: input.email,
-            name: input.name,
-            lastname:input.lastname,
-            country:input.country,
-            age:input.age,
-            city: input.city,
-            gender: input.gender,
-            ethnicity: input.ethnicity,
-        }
+            const user = {
+                email: input.email,
+                password: input.password,
+                test: input.email,
+                name: input.name,
+                lastname:input.lastname,
+                country:country.country,
+                age:input.age,
+                city:country.city,
+                gender: input.gender,
+                ethnicity: input.ethnicity,
+            }
         console.log(user)
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
         if(localStorage.getItem('pruebaa')){
@@ -226,12 +230,12 @@ const RegisterWithEmail = () => {
         <>      
         <div class="row" onChange={handleInputChange}>
                     <div class="column" >
-                            <p class="dddd">Name</p>
+                            <p class="dddd">Name*</p>
                             <input class="swal2-inputmh4" name='name' onChange={handleInputChange}/>
                             <p class="dddd">Date of birth</p>
                             <input class="swal2-inputmh4" type='date' name='age' onChange={handleInputChange}/>
                             <p class="dddd">Country</p>
-                            <input class="swal2-inputmh4" name='country'onChange={handleInputChange}/>
+                            <input class="swal2-inputmh4" value={country.country?country.country:'empty'} name='country'onChange={handleInputChange}/>
                             <p class="dddd">Password</p>
                             <input style={colorpasswordb} id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
                             <p class="dddd">Gender</p>
@@ -249,7 +253,7 @@ const RegisterWithEmail = () => {
                             <p class="dddd">Email</p>
                             <input style={coloremailb} id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange}/>
                             <p class="dddd">City/state</p>
-                            <input class="swal2-inputmh4" name='city'  onChange={handleInputChange}/>
+                            <input class="swal2-inputmh4" value= {country.city?country.city:'empty'}name='city'  onChange={handleInputChange}/>
                             <p className="dddd">Confirm Password</p>
                             <input style={colorconfirmPassb} id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
                             <p class="dddd">Ethnicity</p>

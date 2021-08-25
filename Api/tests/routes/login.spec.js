@@ -15,7 +15,8 @@ describe('POST /login', () => {
         agent.post('/login')
             .send({email: emailTest, password: passwordTest})
             .then((res) => {
-                expect(res.body).to.be.an('array');
+                expect(res.body.length).to.be.equal(1);
+                expect(res.body[0]).to.be.an('object');
         })
     );
     xit('responds with not an array', () =>
