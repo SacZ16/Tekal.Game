@@ -56,6 +56,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     const finalImages = useRef([]); // Videos vistos con respuetsas
     // console.log(finalImages.current)
     const longTerm = useRef() // habilita a jugar el longTerm
+    const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
     //-------------
 
     const imageTouch = useRef()
@@ -144,7 +145,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                     videosWithAnswers()
                     sessionData()
                     checkLogin()
-                    postData()
                 })
             }, 3500)
         }
@@ -186,25 +186,17 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
         finalImages.current.unshift(email)
     }
 
-    const postData = async () => {
-        localStorage.setItem('results', JSON.stringify(finalImages.current))
-    }
-
     function sessionData() {
-        /*  let obj = Object.create({}, {
-             targetFound: { value: targetFound.current },
-             targetNotPress: { value: targetNotPress.current },
-             score: { value: score },
-             totalTargets: { value: target }
-         }); */
         cookies.set('sessionData', {
             score: score,
-            totalTargets: target
+            scoreVisual: scoreVisual,
+            videosRecognized: targetFound.current.points + vigilanceRecognized.current.length,
+            totalRepeats: target + vig
         })
         cookies.set('play', {
             play: true
         })
-        // dispatch(sessionInfo(obj));
+        localStorage.setItem('results', JSON.stringify(finalImages.current))
     }
 
     const handlerChange = () => {
@@ -224,7 +216,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 width: 500
             }).then(() => {
                 videosWithAnswers()
-                postData()
                 sessionData()
                 checkLogin()
             })

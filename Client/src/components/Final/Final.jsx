@@ -32,17 +32,20 @@ function Finalgame({ history }) {
     const [sessionData, setSessionData] = useState({
         score: 0,
         scoreVisual: 0,
-        totalTargets: 0
+        videosRecognized: 0,
+        totalRepeats: 0
     })
-    const { scoreVisual, totalTargets } = sessionData
+    const { scoreVisual, totalRepeats, videosRecognized } = sessionData
     const [globalScore, setGlobalScore] = useState()
-    console.log(scoreVisual)
     useEffect(() => {
         if (cookies.get('sessionData')) {
-            setSessionData({ ...sessionData, score: cookies.get('sessionData').score })
-            setSessionData({ ...sessionData, scoreVisual: cookies.get('sessionData').scoreVisual })
-            setSessionData({ ...sessionData, totalTargets: cookies.get('sessionData').totalTargets })
-            // const totalTargets = cookies.get('sessionData').totalTargets
+            setSessionData({
+                ...sessionData,
+                score: cookies.get('sessionData').score,
+                scoreVisual: cookies.get('sessionData').scoreVisual,
+                videosRecognized: cookies.get('sessionData').videosRecognized,
+                totalRepeats: cookies.get('sessionData').totalRepeats
+            })
         } else {
             history.push('/')
         }
@@ -74,7 +77,6 @@ function Finalgame({ history }) {
 
     const results = localStorage.getItem('results')
     const resultadoparaenviar = JSON.parse(results)
-    console.log(resultadoparaenviar)
     if (resultadoparaenviar) {
         resultadoparaenviar.shift()
         resultadoparaenviar.unshift(emailCokkie)
@@ -105,10 +107,11 @@ function Finalgame({ history }) {
     }
 
     useEffect(() => {
-        /* postDataa() */
+        postDataa()
     }, [])
 
     const postDataa = async () => {
+        console.log(resultadoparaenviar)
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
         await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
         localStorage.removeItem('results')
@@ -161,7 +164,7 @@ function Finalgame({ history }) {
                         <div className='containerResultFinalPage'>
                             <h1>{<Translate content="tituloResultadoLastScreen" component="span" />}</h1>
                             <h2 className="porcentaje">{scoreVisual === 0 ? scoreVisual.toFixed() : scoreVisual.toFixed(2)}%</h2>
-                            <p>{<Translate content="textoResultadoLastScreen" component="span" />}{scoreVisual}{<Translate content="textoResultadoLastScreen2" component="span" />}{totalTargets}{<Translate content="textoResultadoLastScreen3" component="span" />}</p>
+                            <p>{<Translate content="textoResultadoLastScreen" component="span" />}{videosRecognized}{<Translate content="textoResultadoLastScreen2" component="span" />}{totalRepeats}{<Translate content="textoResultadoLastScreen3" component="span" />}</p>
                         </div>
                         <button onClick={share} className='share'>{<Translate content="compartir" component="span" />}</button>
                     </div>

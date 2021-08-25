@@ -24,7 +24,7 @@ import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
 
-const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood }) => {
+const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood, mode }) => {
 
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal)
@@ -72,10 +72,9 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   const longTerm = useRef() // habilita a jugar el longTerm
 
-  const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current[0] && vigilanceRecognized.current[0].length) / (target + vig)) * 100
+  const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
 
   const handleKeyDown = (event) => {
-    console.log('vig', vigilanceRecognized.current)
     if (event.keyCode === 32 && !press.current) {
       answers.current.push(1);
       pressSeconds.current.push(progress.current);
@@ -169,8 +168,6 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   useEffect(() => {
     if (lives.current === 0) {
       play.current = false
-      videosWithAnswers()
-      sessionData();
       MySwal.fire({
         toast: true,
         html:
@@ -185,6 +182,9 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
         timerProgressBar: true,
         width: 500
       }).then(() => {
+        checkLongTerm()
+        videosWithAnswers()
+        sessionData()
         checkLogin()
       })
     }
@@ -203,34 +203,34 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
         longTerm: longTerm.current ? longTerm.current : false
       })
     })
-    finalVideos.current.unshift(score)
+    finalVideos.current.unshift(Number(scoreVisual.toFixed(2)))
     finalVideos.current.unshift(email)
   }
 
   function sessionData() {
-    let obj = Object.create({}, {
-      targetFound: { value: targetFound.current },
-      targetNotPress: { value: targetNotPress.current },
-      score: { value: score },
-      totalTargets: { value: target }
-    });
-    console.log('scoreVisual', scoreVisual)
     cookies.set('sessionData', {
       score: score,
       scoreVisual: scoreVisual,
-      totalTargets: target + vig
+      videosRecognized: targetFound.current.points + vigilanceRecognized.current.length,
+      totalRepeats: target + vig
     })
     cookies.set('play', {
       play: true
     })
     localStorage.setItem('results', JSON.stringify(finalVideos.current))
-    dispatch(sessionInfo(obj));
+  }
+
+  const checkLongTerm = () => {
+    if (mode.includes('-')) {
+      mode === 'video-lt' && localStorage.setItem('video-lt', 'played')
+      mode === 'image-lt' && localStorage.setItem('image-lt', 'played')
+    }
   }
 
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
-        localStorage.setItem('longTermActive', 'active')
+        checkLongTerm()
         longTerm.current = true
         setTimeout(() => {
           play.current = false

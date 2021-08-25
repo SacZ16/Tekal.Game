@@ -98,7 +98,7 @@ export const Game = ({ history }) => {
   }
 
   useEffect(() => {
-    if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
+    if (mode.includes('-') && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
     if (cookies.get('play')) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
   }, [])
 
@@ -164,8 +164,8 @@ export const Game = ({ history }) => {
       <div className={style.fondo3}>
         {
           !assetsBlop1 && !assetsToSeeBlop.current ? <Loading /> :
-            mode === 'video' || mode === 'video-lt' ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recVideos={recAssets} checkLogin={checkLogin} mood={mood} /> :
-              <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recImages={recAssets} checkLogin={checkLogin} mood={mood} />
+            mode === 'video' || mode === 'video-lt' ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recVideos={recAssets} checkLogin={checkLogin} mood={mood} mode={mode} /> :
+              <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recImages={recAssets} checkLogin={checkLogin} mood={mood} mode={mode} />
         }
       </div>
     </>

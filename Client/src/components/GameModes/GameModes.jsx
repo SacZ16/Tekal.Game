@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { withRouter } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react';
 import '../Styles/GameModes.css';
 import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter'; //estrellas
@@ -17,10 +16,19 @@ import Timer from 'react-compound-timer/build';
 
 const GameModes = () => {
 
-    const mode = localStorage.getItem('longTerm') // Toma el modeo de juego, para el temporizador
-    // const longTermActive = localStorage.getItem('longTermActive') // Habilita a jugar el longTerm
+    const [played, setPlayed] = useState()
+    console.log(played)
+    useEffect(() => {
+        const mode = localStorage.getItem('mode')
+        if (mode.includes('-')) {
+            const played = localStorage.getItem(`${mode}`)
+            setPlayed(played)
+        }
+    }, [])
+    const longTermActive = localStorage.getItem('longTermActive') // Habilita a jugar el longTerm
+    //----------------------------------------
     const [login, setLogin] = useState(false)
-    // const [longTerm, setLongTerm] = useState(0)
+
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
     const t = useRef()
@@ -68,9 +76,8 @@ const GameModes = () => {
     }
 
     const playWithOutLogin = (e) => {
-        if (e.target.id === 'video') localStorage.setItem('mode', e.target.id)
-        if (e.target.id === 'image') localStorage.setItem('mode', e.target.id)
-
+        cookies.remove('play')
+        localStorage.setItem('mode', e.target.id)
         window.location.href = ('/game')
     }
 
@@ -95,13 +102,19 @@ const GameModes = () => {
                         <button onClick={moodFunction} id='video-lt'>
                             <div className='game_mode' id='video-lt'>
                                 <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video-lt' />
-                                <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}</p>
+                                {played === 'video-lt' ? 'timer' :
+                                    longTermActive ? <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}</p> :
+                                        <p>Finish a short term first</p>
+                                }
                             </div>
                         </button>
                         <button onClick={moodFunction} id='image-lt'>
                             <div className='game_mode' id='image-lt'>
                                 <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image-lt' />
-                                <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />}</p>
+                                {
+                                    longTermActive ? <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />}</p> :
+                                        <p>Finish a short term first</p>
+                                }
                             </div>
                         </button>
                     </div>
