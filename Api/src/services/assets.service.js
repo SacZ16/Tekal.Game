@@ -1,19 +1,24 @@
 const { updateView, updateAnnotationsCorrect, putAssets, queryAllInfoUser } = require("../Controllers/dbFunctions");
-const { endpointNoMemento, endpoint } = require("./endpoint.service");
+const { endpointNoMemento, endpoint1 } = require("./endpoint.service");
 
 async function loadEndpoints(array){
     let email = array[0];
     let urls = [];
     const userInfo = await queryAllInfoUser(email);
-    const age = userInfo.Items[0].age;
-    const country = userInfo.Items[0].country;
+    let age = ''
+    let country = ''
+    if(userInfo.Items[0].age && userInfo.Items[0].country){
+        age = userInfo.Items[0].age;
+        country = userInfo.Items[0].country;
+    }
     for (let i = 2; i < array.length; i++) {
-        var object = info[i];
+        let mood = array[i].mood;
+        var object = array[i];
         object.age = age;
-        object.mood = object.mood;
+        object.mood = mood;
         object.country = country;
         object.pos = i - 2;
-        let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint(object.url);
+        let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint1(object.url);
         object.url = pkAssetsTarget;
         if (array[i].category === "target"){
             updateView(pkAssetsTarget);
