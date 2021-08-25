@@ -8,8 +8,8 @@
 }
 
 .subContainer_game_modes{
-    width: 80%;
-    height: 20rem;
+    width: 100%;
+    height: 15rem;
     color: white;
     display: flex;
     flex-direction: row;
@@ -19,24 +19,25 @@
 }
 
 .subContainer_game_modes_unlock{
-    width: 80%;
+    width: 100%;
     color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     text-align: center;
-    bottom: 25%;
 }
 
-.game_mode a {
-    background-color: #C94EBF;
+.game_mode {
     text-decoration: none;
     color: white;
-    padding: 1em 5em 1em 5em;
+    padding: 1em 2em 1em 2em;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     font-weight: bold;
+    width: max-content;
+    cursor: pointer;
+    height: 80%;
 }
 
 .game_mode p {
@@ -46,8 +47,10 @@
 }
 
 .game_mode:hover{
-    background-color: #c94ebf2d;
+    background-color: #c94ebf;
     border-radius: 15px;
+    transition: all .4s ease-out;
+    transform: scale(0.9);
 }
 
 .game_mode_gray{
@@ -59,12 +62,11 @@
     margin-top: 40px;
 }
 
-.game_mode_gray a {
+.game_mode_gray{
     cursor: default;
-    background-color: #C94EBF;
     text-decoration: none;
     color: white;
-    padding: 1em 5em 1em 5em;
+    padding: 1em 2em 1em 2em;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
@@ -73,11 +75,15 @@
 
 .game_mode_gray p {
     font-family: 'Montserrat', sans-serif;
-    padding-bottom: 1em;
     font-size: 20px;
 }
 
-.game_mode:hover {
-    transform: scale(1.1);
-    transition: all .4s ease-out;
+.game_mode_gray:hover{
+    transform: scale(0.9);
+    background-color: #c94ebf34;
+}
+
+.container_game_modes button {
+    background-color: transparent;
+    border-style: none;
 }

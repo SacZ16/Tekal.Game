@@ -1,17 +1,24 @@
-import React, {useState} from 'react';
-import FacebookLogin from 'react-facebook-login';
+import { useState } from 'react';
 import '../Styles/facebookButton.css'
 import axios from 'axios'
-import {SendDataGoogle} from '../controllers/dbFunctions'
-import jwt, { decode } from 'jsonwebtoken'
-import {
-    useLocation
-} from "react-router-dom";
-
-
-
+import jwt from 'jsonwebtoken'
+import { useLocation } from "react-router-dom";
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
 
 const Verification = () => {
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
     const [response, setResponse] = useState('')
     const postEmailVerification = async (obj) => {
         let responseBack = await axios.post(`${process.env.REACT_APP_API_URL}verification`, obj)
@@ -22,47 +29,49 @@ const Verification = () => {
     var token = useLocation().search.replace('?', '');
     try {
         let obj = jwt.verify(token, process.env.REACT_APP_SECRETWORD);
-        if(!response){
+        if (!response) {
             let res = postEmailVerification(obj)
             return (
                 <h1>
-                    Verificando...
+                    {<Translate content="verificando" component="span" />}
                 </h1>
-                );
+            );
         }
         console.log(response)
-        if(response.data === 'Ok') {
+        if (response.data === 'Ok') {
             return (
-            <h1>
-                Verificado
-            </h1>
+                <h1>
+                    {<Translate content="verifcado" component="span" />}
+                </h1>
             );
-        } else if(response.data === 'This email is not registered') {
+        } else if (response.data === 'This email is not registered') {
             return (
                 <h1>
-                    This email is not registered
+                    {<Translate content="emailNoRegistrado" component="span" />}
                 </h1>
-                );
-        } else if(response.data === 'Email already verified'){
+            );
+        } else if (response.data === 'Email already verified') {
             return (
                 <h1>
-                    Email already verified
+                    {<Translate content="emailVerificado" component="span" />}
                 </h1>
-                );
+            );
         } else {
             return (
                 <h1>
                     Ups!
                 </h1>
-                );
+            );
         }
 
-    } catch(err) {
+    } catch (err) {
         // err
         return (
-            <h1>
-                Error
-            </h1>
+            <div className='containerErrorRecover'>
+                <h1>
+                    Error
+                </h1>
+            </div>
         );
     }
 }
