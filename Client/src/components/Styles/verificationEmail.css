@@ -12,7 +12,7 @@
     flex-direction: column;
     width: 20%;
     margin-top: 5%;
-    background-color: red;/* #212429 */
+    background-color: #212429;/* #212429 */
     color: white;
     padding: 5em 5em 5em 5em;
     border-radius: 15px;
@@ -30,6 +30,27 @@
     font-family: 'Montserrat', sans-serif;
     height: 3em;
     border-radius: 10px;
-    border-style: white;
+    border-style: solid;
+    background-color: #474747;
+    border-color: white;
+    border-width: 1px;
+}
+
+.subcontainer_forgotPass button{
+    background-color: #C94EBF;
+    border-style: none;
+    border-radius: 10px;
+    height: 4em;
+    color: white;
+}
+
+.subcontainer_forgotPass p{
+    font-size: 20px;
+    margin-top: .7em;
+}
+
+.inputForgotPass::placeholder{
+    color: white;
+    text-align: center;
 
 }
