@@ -52,5 +52,7 @@ export default{
     noBinario:'Non binary',
     continuar:'Continue',
     juegoTerminado:'Game has finished!',
-    perdisteTodasLasVidas:'You lost all your lives, good luck next time!'
+    perdisteTodasLasVidas:'You lost all your lives, good luck next time!',
+    home:'Home',
+    enviar:'Submit',
 }

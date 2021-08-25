@@ -107,9 +107,9 @@ function Finalgame({ history }) {
                         <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
                         <div className='buttonRegister2'>
                             <Link to='/'>
-                                <button className='buttonRegister' >Home</button>
+                                <button className='buttonRegisterFinal' >{<Translate content="home" component="span" />}</button>
                             </Link>
-                            <button className='buttonRegister' onClick={again}>{<Translate content="intentarNuevamente" component="span" />}</button>
+                            <button className='buttonRegisterFinal' onClick={again}>{<Translate content="intentarNuevamente" component="span" />}</button>
                         </div>
                     </div>
 

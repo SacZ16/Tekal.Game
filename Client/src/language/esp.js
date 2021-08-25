@@ -52,5 +52,7 @@ export default{
     noBinario:'No binario',
     continuar:'Continuar',
     juegoTerminado:'El juego ha terminado!',
-    perdisteTodasLasVidas:'Perdiste todas tus vidas, buena suerte la próxima vez!'
+    perdisteTodasLasVidas:'Perdiste todas tus vidas, buena suerte la próxima vez!',
+    home:'Home',
+    enviar:'Enviar',
 }

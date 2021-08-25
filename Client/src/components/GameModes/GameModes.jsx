@@ -58,9 +58,12 @@ const GameModes = () => {
         }
     }
 
-    const playWithOutLogin = () => {
-        localStorage.setItem('mode', 'video')
+    const playWithOutLogin = (e) => {
+        if(e.target.id === 'video') localStorage.setItem('mode', e.target.id)
+        if(e.target.id === 'image') localStorage.setItem('mode', e.target.id)
+        
         window.location.href = ('/game')
+    
     }
 
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
@@ -76,52 +79,55 @@ const GameModes = () => {
             {login ?
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes'>
-                        <div className='game_mode'>
-                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} />
-                            <p>{<Translate content="videosCortoPlazo" component="p" />}</p>
-                            <a onClick={moodFunction} id="video">{<Translate content="seleccionar" component="a" id='video'/>}</a>
+                        <button onClick={moodFunction} id="video">
+                        <div className='game_mode' id="video">
+                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} id="video"/>
+                            <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video"/>}</p>
                         </div>
-                        <div className='game_mode' >
-                            <MovieFilterIcon style={{ fontSize: '7.5rem' }} />
-                            <p>{<Translate content="videosLargoPlazo" component="p" />}</p>
-                            <a onClick={moodFunction} id='video'>{<Translate content="seleccionar" component="a" />}</a>
+                        </button>
+                        <button onClick={moodFunction} id='image'>
+                        <div className='game_mode' id='image'>
+                            <ImageIcon style={{ fontSize: '7.5rem' }} id='image'/>
+                            <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image'/>}</p>
                         </div>
-                        <div className='game_mode'>
-                            <ImageIcon style={{ fontSize: '7.5rem' }} />
-                            <p>{<Translate content="imagenesCortoPlazo" component="p" />}</p>
-                            <a onClick={moodFunction} id='image'>{<Translate content="seleccionar" component="a" id='image' />}</a>
+                        </button>
+                        <button onClick={moodFunction} id='video'>
+                        <div className='game_mode' id='video'>
+                            <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video'/>
+                            <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video'/>}</p>
                         </div>
-                        <div className='game_mode'>
-                            <BurstModeIcon style={{ fontSize: '7.5rem' }} />
-                            <p>{<Translate content="imagenesLargoPlazo" component="p" />}</p>
-                            <a onClick={moodFunction} id='image'>{<Translate content="seleccionar" component="a" />}</a>
+                        </button>
+                        <button onClick={moodFunction} id='image'>
+                        <div className='game_mode' id='image'>
+                            <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image'/>
+                            <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image'/>}</p>
                         </div>
+                        </button>
                     </div>
                 </div>
                 :
                 <div className='container_game_modes'>
-                    <div className='subContainer_game_modes_unlock'>
-                        <div className='game_mode'>
-                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} />
-                            <p>{<Translate content="videosCortoPlazo" component="p" />}</p>
-                            <a onClick={playWithOutLogin} id='video'>{<Translate content="seleccionar" component="a" />}</a>
+                    <div className='subContainer_game_modes_unlock' >
+                        <button onClick={(e) => playWithOutLogin(e)} id='video'>
+                        <div className='game_mode' id='video'>
+                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} id='video'/>
+                            <p id='video'>{<Translate content="videosCortoPlazo" component="p" id='video'/>}</p>
                         </div>
+                        </button>
+                        <button onClick={(e) => playWithOutLogin(e)} id='image'>
+                        <div className='game_mode' id='image'>
+                            <ImageIcon style={{ fontSize: '7.5rem' }} id='image'/>
+                            <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image'/>}</p>
+                        </div>
+                        </button>
                         <div className='game_mode_gray'>
                             <MovieFilterIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
                             <p>{<Translate content="videosLargoPlazo" component="p" />}</p>
-                            <a>{<Translate content="seleccionar" component="a" />}</a>
                             <p className='unlock'>{<Translate className='unlock'  content="logeateParaDesbloquear" component="p" />}</p>
-                        </div>
-                        <div className='game_mode_gray'>
-                            <ImageIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
-                            <p>{<Translate content="imagenesCortoPlazo" component="p" />}</p>
-                            <a>{<Translate content="seleccionar" component="a" />}</a>
-                            <p className='unlock'>{<Translate className='unlock' content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                         <div className='game_mode_gray'>
                             <BurstModeIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
                             <p>{<Translate content="imagenesLargoPlazo" component="p" />}</p>
-                            <a >{<Translate content="seleccionar" component="a" />}</a>
                             <p className='unlock'>{<Translate className='unlock' content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                     </div>

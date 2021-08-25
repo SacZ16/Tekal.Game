@@ -55,10 +55,19 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.buttonRegister{
+.buttonRegisterFinal{
     width: 8em;
     height: 2.7em;
     font-size: 16px;
+    background-color: #C94EBF;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+    border-style: none;
+    border-radius: 10px;
+    width: max-content;
+    min-width: 13em;
+    cursor: pointer;
 }
 
 .containerResultFinalPage{
@@ -93,4 +102,5 @@
     border-radius: 10px;
     margin-top: 2em;
     cursor: pointer;
+    margin-left: 11%;
 }

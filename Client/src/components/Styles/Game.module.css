@@ -149,16 +149,18 @@
 }
 
 .imgPlayer{
-    background-color: transparent;
+    background-color: black;
     border-radius: 20px;
-    width: 100%;
+    width: 80%;
     height: 90%;
     text-align: center;
     margin-top: .5em;
+    margin-left: 0%;
 }
 
 .imgPlayer img{
-    width: 80%;
+    width: max-content;
+    max-width: 80%;
     height: 95%;
     border-radius: 20px;
 }
