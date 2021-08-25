@@ -235,7 +235,8 @@ const putUserGameItems = async (data) => {
         answers: data.answer,
         score: parseInt(data.score),
         emotion: data.emotion,
-        type: data.type
+        type: data.type,
+        longTerm: data.longTerm,
       },
     };
     console.log(params);

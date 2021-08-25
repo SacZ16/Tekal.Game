@@ -25,7 +25,8 @@ async function loadGameInfo(array){
         presentation: presentations,
         emotion: emotion,
         date: date,
-        type: array[2].type
+        type: array[2].type,
+        longTerm: array[2].longTerm
     }
     let games = await putUserGameItems(data);
     return games;

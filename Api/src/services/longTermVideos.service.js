@@ -4,7 +4,7 @@ async function longTerm(email, type){
     try{
         let games = await gamesPlayed(email);
         let gamesType = [];
-        games.Items.forEach(g => {if(g.type === type){
+        games.Items.forEach(g => {if(g.type === type && g.longTerm === true){
             gamesType.push(g);
         }});
         let dates = gamesType.map(g => g.playedAt);
