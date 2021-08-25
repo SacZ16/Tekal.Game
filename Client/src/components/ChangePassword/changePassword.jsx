@@ -5,6 +5,7 @@ import axios from 'axios'
 import {SendDataGoogle} from '../controllers/dbFunctions'
 import jwt, { decode } from 'jsonwebtoken'
 import {useLocation} from "react-router-dom";
+import '../Styles/passRecover.css';
 // Traducciones
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -37,16 +38,20 @@ const ChangePassword = () => {
         window.location.href='./'
         }
 
+        var avisoRecoverPass = '';
+        if(localStorage.getItem('idioma')==='es') avisoRecoverPass = "Máximo 15 caracteres. \n Al menos un número. \n Al menos una mayúscula. \n Al menos una minúscula. \n Sin espacios en blanco."
+        if(localStorage.getItem('idioma')==='en') avisoRecoverPass = "Maximum 15 characters. \n At least one number. \n At least one capital letter. \n At least one lower case letter. \n No blanks."
 
         return (
-            <div>
+            <div className='containerSuperPassRecover'>
+            <div className='containerPassRecover'>
                 <label htmlFor='Password'>{<Translate content="contrasena" component="span" />}</label>
                 <input name='Password' type='text' onChange={(e) => setpassword(e.target.value)} />
                 <label  htmlFor='RepeatPassword'> {<Translate content="confirmaContrasena" component="span" />}</label>
                 <input name='RepeatPassword' type='text' onChange={(e) => setconfirmpassword(e.target.value)}/>
                 <button onClick={()=>{
                     if (!passwordReject.test(password) && password.length >= 0){
-                        alert("Maximum 15 characters \n At least one capital number \n At least one capital letter \n At least one lower case letter \n No blanks")
+                        alert(avisoRecoverPass)
                         return;
                     }
                     if(password !== confirmpassword){
@@ -56,14 +61,17 @@ const ChangePassword = () => {
 
                 }}>{<Translate content="enviar" component="span" />}</button>
             </div>
+            </div>
         );
         
     } catch(err) {
         // err
         return (
+            <div className='containerErrorRecover'>
             <h1>
-                Error
+                Error 404
             </h1>
+            </div>
         );
     }
 }
