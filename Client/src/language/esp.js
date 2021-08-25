@@ -55,4 +55,8 @@ export default{
     perdisteTodasLasVidas:'Perdiste todas tus vidas, buena suerte la próxima vez!',
     home:'Home',
     enviar:'Enviar',
+    verificando:'Verificando',
+    verificado:'Verificado',
+    emailNoRegistrado:'Email no registrado',
+    emailVerificado:'Email verificado',
 }

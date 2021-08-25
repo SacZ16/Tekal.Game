@@ -4,14 +4,25 @@ import '../Styles/facebookButton.css'
 import axios from 'axios'
 import {SendDataGoogle} from '../controllers/dbFunctions'
 import jwt, { decode } from 'jsonwebtoken'
-import {
-    useLocation
-} from "react-router-dom";
-
+import {useLocation} from "react-router-dom";
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
 
 
 
 const Verification = () => {
+
+    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+
+    const lang = language;
+
+    counterpart.registerTranslations('en', en);
+    counterpart.registerTranslations('es', es);
+    counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
     const [response, setResponse] = useState('')
     const postEmailVerification = async (obj) => {
         let responseBack = await axios.post(`${process.env.REACT_APP_API_URL}verification`, obj)
@@ -26,7 +37,7 @@ const Verification = () => {
             let res = postEmailVerification(obj)
             return (
                 <h1>
-                    Verificando...
+                    {<Translate content="verificando" component="span" />}
                 </h1>
                 );
         }
@@ -34,19 +45,19 @@ const Verification = () => {
         if(response.data === 'Ok') {
             return (
             <h1>
-                Verificado
+                {<Translate content="verifcado" component="span" />}
             </h1>
             );
         } else if(response.data === 'This email is not registered') {
             return (
                 <h1>
-                    This email is not registered
+                    {<Translate content="emailNoRegistrado" component="span" />}
                 </h1>
                 );
         } else if(response.data === 'Email already verified'){
             return (
                 <h1>
-                    Email already verified
+                    {<Translate content="emailVerificado" component="span" />}
                 </h1>
                 );
         } else {
@@ -60,9 +71,11 @@ const Verification = () => {
     } catch(err) {
         // err
         return (
+            <div className='containerErrorRecover'>
             <h1>
                 Error
             </h1>
+            </div>
         );
     }
 }
