@@ -24,7 +24,7 @@ res.json(await getallUsers())
  *         schema:
  *           type: String
  *       - in: path
- *         name: Password
+ *          name: Password
  *         required: true
  *         description: Contraseña del usuario que se Registro.
  *         schema:

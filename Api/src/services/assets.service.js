@@ -7,6 +7,7 @@ async function loadEndpoints(array){
     const userInfo = await queryAllInfoUser(email);
     let age = ''
     let country = ''
+    var arrayAlgo=[];
     if(userInfo.Items[0].age && userInfo.Items[0].country){
         age = userInfo.Items[0].age;
         country = userInfo.Items[0].country;
@@ -35,8 +36,9 @@ async function loadEndpoints(array){
             urls.push(pkAssetsTarget);
             object.repeated = false;
         }
-        await putAssets(email, object);
+        arrayAlgo.push(putAssets(email, object));
     }
+    await Promise.all(arrayAlgo)
 }
 
 module.exports = { loadEndpoints }
