@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect, useRef } from 'react';
 import '../Styles/GameModes.css';
 import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import MovieFilterIcon from '@material-ui/icons/MovieFilter'; //estrellas
@@ -12,19 +13,31 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
+import Timer from 'react-compound-timer/build';
 
 const GameModes = () => {
 
+    const [played, setPlayed] = useState()
+    console.log(played)
+    useEffect(() => {
+        const mode = localStorage.getItem('mode')
+        if (mode.includes('-')) {
+            const played = localStorage.getItem(`${mode}`)
+            setPlayed(played)
+        }
+    }, [])
+    const longTermActive = localStorage.getItem('longTermActive') // Habilita a jugar el longTerm
+    //----------------------------------------
     const [login, setLogin] = useState(false)
+
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
-
+    const t = useRef()
     useEffect(() => {
         if (cookies.get('userInfo')) {
             setLogin(true)
         }
     }, [])
-
 
     const mood2 = (e) => {
         const currentDate = new Date();
@@ -36,11 +49,16 @@ const GameModes = () => {
     }
 
     const moodFunction = (e) => {
-        if (e.target.id === 'video') localStorage.setItem('mode', e.target.id)
-        if (e.target.id === 'image') localStorage.setItem('mode', e.target.id)
+        /*  if (e.target.id.includes('-')) {
+             if (e.target.id === mode) return null
+             else localStorage.setItem('longTerm', e.target.id)
+         } */
+        console.log(e.target.id)
+        localStorage.setItem('mode', e.target.id)
         const lastStorageDay = localStorage.getItem('date')
         const currentDate = new Date();
         const day = currentDate.getDay();
+        cookies.remove('play') // deja volver a jugar
         if (lastStorageDay != day) {
             MySwal.fire({
                 title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
@@ -59,9 +77,8 @@ const GameModes = () => {
     }
 
     const playWithOutLogin = (e) => {
-        if(e.target.id === 'video') localStorage.setItem('mode', e.target.id)
-        if(e.target.id === 'image') localStorage.setItem('mode', e.target.id)
-        
+        cookies.remove('play')
+        localStorage.setItem('mode', e.target.id)
         window.location.href = ('/game')
     
     }
@@ -80,28 +97,34 @@ const GameModes = () => {
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes'>
                         <button onClick={moodFunction} id="video">
-                        <div className='game_mode' id="video">
-                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} id="video"/>
-                            <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video"/>}</p>
-                        </div>
+                            <div className='game_mode' id="video">
+                                <MovieCreationIcon style={{ fontSize: '7.5rem' }} id="video" />
+                                <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>
+                            </div>
                         </button>
                         <button onClick={moodFunction} id='image'>
-                        <div className='game_mode' id='image'>
-                            <ImageIcon style={{ fontSize: '7.5rem' }} id='image'/>
-                            <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image'/>}</p>
-                        </div>
+                            <div className='game_mode' id='image'>
+                                <ImageIcon style={{ fontSize: '7.5rem' }} id='image' />
+                                <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>
+                            </div>
                         </button>
-                        <button onClick={moodFunction} id='video'>
-                        <div className='game_mode' id='video'>
-                            <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video'/>
-                            <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video'/>}</p>
-                        </div>
+                        <button onClick={moodFunction} id='video-lt'>
+                            <div className='game_mode' id='video-lt'>
+                                <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video-lt' />
+                                {played === 'video-lt' ? 'timer' :
+                                    longTermActive ? <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}</p> :
+                                        <p>Finish a short term first</p>
+                                }
+                            </div>
                         </button>
-                        <button onClick={moodFunction} id='image'>
-                        <div className='game_mode' id='image'>
-                            <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image'/>
-                            <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image'/>}</p>
-                        </div>
+                        <button onClick={moodFunction} id='image-lt'>
+                            <div className='game_mode' id='image-lt'>
+                                <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image-lt' />
+                                {
+                                    longTermActive ? <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />}</p> :
+                                        <p>Finish a short term first</p>
+                                }
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -109,21 +132,21 @@ const GameModes = () => {
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
                         <button onClick={(e) => playWithOutLogin(e)} id='video'>
-                        <div className='game_mode' id='video'>
-                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} id='video'/>
-                            <p id='video'>{<Translate content="videosCortoPlazo" component="p" id='video'/>}</p>
-                        </div>
+                            <div className='game_mode' id='video'>
+                                <MovieCreationIcon style={{ fontSize: '7.5rem' }} id='video' />
+                                <p id='video'>{<Translate content="videosCortoPlazo" component="p" id='video' />}</p>
+                            </div>
                         </button>
                         <button onClick={(e) => playWithOutLogin(e)} id='image'>
-                        <div className='game_mode' id='image'>
-                            <ImageIcon style={{ fontSize: '7.5rem' }} id='image'/>
-                            <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image'/>}</p>
-                        </div>
+                            <div className='game_mode' id='image'>
+                                <ImageIcon style={{ fontSize: '7.5rem' }} id='image' />
+                                <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>
+                            </div>
                         </button>
                         <div className='game_mode_gray'>
                             <MovieFilterIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />
                             <p>{<Translate content="videosLargoPlazo" component="p" />}</p>
-                            <p className='unlock'>{<Translate className='unlock'  content="logeateParaDesbloquear" component="p" />}</p>
+                            <p className='unlock'>{<Translate className='unlock' content="logeateParaDesbloquear" component="p" />}</p>
                         </div>
                         <div className='game_mode_gray'>
                             <BurstModeIcon style={{ fontSize: '7.5rem', color: 'lightgray' }} />

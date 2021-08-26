@@ -15,6 +15,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import moment from 'moment';
 
 // Traducciones
 import Translate from "react-translate-component";
@@ -22,7 +23,7 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
-const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
+const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood, mode }) => {
 
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal)
@@ -43,6 +44,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   const answers = useRef([]); // Respuesta del usuario ante cada video
 
   const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+
 
   const falsePositives = useRef([]); // videos que no son target_repeat
 
@@ -66,6 +68,10 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
 
   const videoTouch = useRef()
+
+  const longTerm = useRef() // habilita a jugar el longTerm
+
+  const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -127,7 +133,6 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
 
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
-
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
         // console.log(seeVideos.current[seeVideos.current.length - 2])
@@ -162,13 +167,11 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   useEffect(() => {
     if (lives.current === 0) {
       play.current = false
-      videosWithAnswers()
-      sessionData();
       MySwal.fire({
         toast: true,
         html:
-          <div>
-            <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
+          <div >
+            <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
             </div>
@@ -178,6 +181,9 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         timerProgressBar: true,
         width: 600
       }).then(() => {
+        checkLongTerm()
+        videosWithAnswers()
+        sessionData()
         checkLogin()
       })
     }
@@ -191,32 +197,40 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         seconds: pressSeconds.current[i],
         category: e[0][1].toUpperCase(),
         type: 'video',
-        date: `${new Date()}`,
-        mood: mood
+        date: `${moment().format()}`,
+        mood: mood,
+        longTerm: longTerm.current ? longTerm.current : false
       })
     })
-    finalVideos.current.unshift(score)
+    finalVideos.current.unshift(Number(scoreVisual.toFixed(2)))
     finalVideos.current.unshift(email)
   }
 
   function sessionData() {
-    let obj = Object.create({}, {
-      targetFound: { value: targetFound.current },
-      targetNotPress: { value: targetNotPress.current },
-      score: { value: score },
-      totalTargets: { value: target }
-    });
     cookies.set('sessionData', {
       score: score,
-      totalTargets: target
+      scoreVisual: scoreVisual,
+      videosRecognized: targetFound.current.points + vigilanceRecognized.current.length,
+      totalRepeats: target + vig
+    })
+    cookies.set('play', {
+      play: true
     })
     localStorage.setItem('results', JSON.stringify(finalVideos.current))
-    dispatch(sessionInfo(obj));
+  }
+
+  const checkLongTerm = () => {
+    if (mode.includes('-')) {
+      mode === 'video-lt' && localStorage.setItem('video-lt', 'played')
+      mode === 'image-lt' && localStorage.setItem('image-lt', 'played')
+    }
   }
 
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
+        checkLongTerm()
+        longTerm.current = true
         setTimeout(() => {
           play.current = false
           videosWithAnswers()
@@ -225,7 +239,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
             toast: true,
             html:
               <div >
-                <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
+                <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroEnd} alt="cerebroLose" />
                 </div>
@@ -240,7 +254,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         }, 500)
       }
     }
-    progress.current = e.playedSeconds;
+    progress.current = Number(e.playedSeconds.toFixed(4));
   }
 
   const [language, setLanguage] = useState(localStorage.getItem('idioma'));

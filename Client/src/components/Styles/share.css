@@ -1,0 +1,23 @@
+.containerShare {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerBtnShare {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerBtnShare > p {
+    color: red;
+}
+
+.btnClose {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #C94EBF;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

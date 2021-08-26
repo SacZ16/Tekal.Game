@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import FacebookLogin from 'react-facebook-login';
+import { useState } from 'react';
 import '../Styles/facebookButton.css'
 import axios from 'axios'
 import {SendDataGoogle} from '../controllers/dbFunctions'
@@ -10,8 +9,6 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
-
-
 
 const Verification = () => {
 
@@ -33,42 +30,42 @@ const Verification = () => {
     var token = useLocation().search.replace('?', '');
     try {
         let obj = jwt.verify(token, process.env.REACT_APP_SECRETWORD);
-        if(!response){
+        if (!response) {
             let res = postEmailVerification(obj)
             return (
                 <h1>
                     {<Translate content="verificando" component="span" />}
                 </h1>
-                );
+            );
         }
         console.log(response)
-        if(response.data === 'Ok') {
+        if (response.data === 'Ok') {
             return (
-            <h1>
-                {<Translate content="verifcado" component="span" />}
-            </h1>
+                <h1>
+                    {<Translate content="verifcado" component="span" />}
+                </h1>
             );
-        } else if(response.data === 'This email is not registered') {
+        } else if (response.data === 'This email is not registered') {
             return (
                 <h1>
                     {<Translate content="emailNoRegistrado" component="span" />}
                 </h1>
-                );
-        } else if(response.data === 'Email already verified'){
+            );
+        } else if (response.data === 'Email already verified') {
             return (
                 <h1>
                     {<Translate content="emailVerificado" component="span" />}
                 </h1>
-                );
+            );
         } else {
             return (
                 <h1>
                     Ups!
                 </h1>
-                );
+            );
         }
 
-    } catch(err) {
+    } catch (err) {
         // err
         return (
             <div className='containerErrorRecover'>

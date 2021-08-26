@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import '../Styles/verificationEmail.css';
 
@@ -9,7 +9,7 @@ import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
 const VerificationEmail = () => {
-    const [email, setEmail] = useState ('')
+    const [email, setEmail] = useState('')
     const [afterButton, setAfterButton] = useState('')
 
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));

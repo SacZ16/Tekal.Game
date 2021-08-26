@@ -7,7 +7,7 @@ const jwt = require ('jsonwebtoken')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {
-    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,REFRESH_TOKEN 
+    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,REFRESH_TOKEN , EMAIL_TEKAL
 } = process.env;
 
 const oAuth2Client= new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL);

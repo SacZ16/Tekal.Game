@@ -45,7 +45,6 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
     counterpart.registerTranslations('en', en);
     counterpart.registerTranslations('es', es);
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
-    
     return (
         <>
             <div className='containerLanding'>

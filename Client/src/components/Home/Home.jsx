@@ -142,7 +142,6 @@ const Home = () => {
         )
     }
 
-
     var lnks = Array.from(document.getElementsByTagName('a'));
 
     lnks.forEach(function (v) {
@@ -177,9 +176,7 @@ const Home = () => {
             html:
                 <div>
                     <GameModes />
-                </div>
-            ,
-            showCloseButton: true,
+                </div>,
             showConfirmButton: false
         })
     }
@@ -239,7 +236,7 @@ const Home = () => {
                         <div className='scores_mobile'>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
-                                <p>{sessionData.score ? sessionData.score : 0}%</p>
+                                <p>{sessionData.score /* ? sessionData.score : 0 */}%</p>
                             </div>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="promedioResultados" component="span" />}</h4>
@@ -262,7 +259,7 @@ const Home = () => {
                             <div className='scores'>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
-                                    <p>{sessionData.score ? sessionData.score : 0}%</p>
+                                    <p>{sessionData.score /* ? sessionData.score : 0 */}%</p>
                                 </div>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
@@ -270,7 +267,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className='buttonsHome'>
-                                <div className='startGame'><Link onClick={popUpGameMode}  style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
+                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>
                         </> : (null)}
                 </section>

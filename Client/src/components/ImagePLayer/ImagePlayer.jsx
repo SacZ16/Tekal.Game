@@ -12,6 +12,7 @@ import { sessionInfo } from '../../redux/action';
 import cerebroLose from '../Styles/slideSeisEsp.png'
 import cerebroEnd from '../Styles/cerebrito_derecha.png'
 import Cookies from 'universal-cookie';
+import moment from 'moment';
 
 // Traducciones
 import Translate from "react-translate-component";
@@ -20,7 +21,7 @@ import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
 
-const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) => {
+const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood }) => {
     const MySwal = withReactContent(Swal)
     const cookies = new Cookies();
     const dispatch = useDispatch();
@@ -53,6 +54,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     // console.log(score)
     const finalImages = useRef([]); // Videos vistos con respuetsas
     // console.log(finalImages.current)
+    const longTerm = useRef() // habilita a jugar el longTerm
+    const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
     //-------------
 
     const imageTouch = useRef()
@@ -61,14 +64,11 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     const [color, setColor] = useState('rgba(255, 255, 255, 0)'); // Cambia de color al apretar la barra espaciadora
     var bcolor = { 'background': `${color}` }
 
-    const a = useRef(0)
-    const b = useRef(0)
-    const c = useRef(b.current - a.current)
+    const time1 = useRef(0)
+    const time2 = useRef(0)
 
     const handleKeyDown = (event) => {
         if (event.keyCode === 32 && !press.current) {
-            b.current = performance.now()
-            console.log((b.current - a.current))
             handlerGame()
         }
     };
@@ -80,8 +80,10 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     };
 
     const handlerGame = () => {
+        time2.current = performance.now()
         answers.current.push(1);
-        pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
+        pressSeconds.current.push(Number(((time2.current - time1.current) / 1000).toFixed(4)))
+        // pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
         if (infoImages.current[1].includes('_')) {
             if (infoImages.current[1] === 'target_repeat') {
                 targetFound.current.points++;
@@ -120,6 +122,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     useEffect(() => {
         if (seeImages.current.length === imageApi.length) {
             setTimeout(() => {
+                localStorage.setItem('longTermActive')
+                longTerm.current = true
                 if (!press.current) {
                     prevAsset()
                 }
@@ -140,7 +144,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
                     videosWithAnswers()
                     sessionData()
                     checkLogin()
-                    postData()
                 })
             }, 3500)
         }
@@ -174,7 +177,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
                 seconds: pressSeconds.current[i],
                 category: e[0][1].toUpperCase(),
                 type: 'image',
-                date: `${new Date()}`,
+                date: `${moment().format()}`,
                 mood: mood
             })
         })
@@ -182,22 +185,17 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
         finalImages.current.unshift(email)
     }
 
-    const postData = async () => {
-        localStorage.setItem('results', JSON.stringify(finalImages.current))
-    }
-
     function sessionData() {
-        /*  let obj = Object.create({}, {
-             targetFound: { value: targetFound.current },
-             targetNotPress: { value: targetNotPress.current },
-             score: { value: score },
-             totalTargets: { value: target }
-         }); */
         cookies.set('sessionData', {
             score: score,
-            totalTargets: target
+            scoreVisual: scoreVisual,
+            videosRecognized: targetFound.current.points + vigilanceRecognized.current.length,
+            totalRepeats: target + vig
         })
-        // dispatch(sessionInfo(obj));
+        cookies.set('play', {
+            play: true
+        })
+        localStorage.setItem('results', JSON.stringify(finalImages.current))
     }
 
     const handlerChange = () => {
@@ -205,19 +203,18 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
             MySwal.fire({
                 toast: true,
                 html:
-                    <div>
-                        <h1 style={{ color: 'white', textAlign: 'center', fontFamily:'Montserrat, sans-serif', fontSize:'30px',marginBottom:'-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
-                    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
-                    </div>
-                </div>,
-                timer: 4000,
+                    <div >
+                        <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
+                        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+                        </div>
+                    </div>,
+                timer: 3000,
                 showConfirmButton: false,
                 timerProgressBar: true,
                 width: 600
             }).then(() => {
                 videosWithAnswers()
-                postData()
                 sessionData()
                 checkLogin()
             })
@@ -228,12 +225,11 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     }
 
     useEffect(() => {
-        a.current = performance.now()
-        console.log(a)
         start()
     }, [seeImages.current.length])
 
     const start = () => {
+        time1.current = performance.now()
         if (seeImages.current.length === 1) {
             timerChange.current = setTimeout(() => {
                 handlerChange()
@@ -249,25 +245,21 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, imageApi, mood }) =
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
-  
+
     counterpart.registerTranslations('en', en);
     counterpart.registerTranslations('es', es);
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
-
-    /* const a = performance.now()
-    const b = performance.now()
-    console.log(b - a) */
 
     return (
         <>
             <div style={bcolor} className={style.fondo}></div>
             <div className={style.videofondo}></div>
             <div width="50%" height="50%" z-index='5' id='video'>
-                <div className={style.contenedordelvideo} style={{top:'2%'}}>
+                <div className={style.contenedordelvideo} style={{ top: '2%' }}>
                     <ProgressBar lives={lives.current} max={imageApi.length} progress={seeImages.current.length} />
                     <Timer ref={tiempo} />
                     <div className={style.imgPlayer} ref={imageTouch}>
-                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}/>}
+                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }} />}
                     </div>
                 </div>
             </div>

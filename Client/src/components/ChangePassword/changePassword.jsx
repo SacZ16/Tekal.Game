@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import FacebookLogin from 'react-facebook-login';
+import React, { useState } from 'react';
 import '../Styles/facebookButton.css'
 import axios from 'axios'
 import {SendDataGoogle} from '../controllers/dbFunctions'
 import jwt, { decode } from 'jsonwebtoken'
 import {useLocation} from "react-router-dom";
+
 import '../Styles/passRecover.css';
 // Traducciones
 import Translate from "react-translate-component";
@@ -13,12 +13,11 @@ import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
 const ChangePassword = () => {
-    const [response, setResponse] = useState('')
     const [password, setpassword] = useState('')
     const [confirmpassword, setconfirmpassword] = useState('')
 
     const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-       
+  
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
@@ -30,12 +29,13 @@ const ChangePassword = () => {
     var token = useLocation().search.replace('?', '');
     try {
         let obj = jwt.verify(token, process.env.REACT_APP_SECRETWORD);
-        async function postNewPassword(){
-            var emailandPasswor={
-                email:obj.email,
-                password: password}
-        await axios.post(`${process.env.REACT_APP_API_URL}changepassword`, emailandPasswor)
-        window.location.href='./'
+        async function postNewPassword() {
+            var emailandPasswor = {
+                email: obj.email,
+                password: password
+            }
+            await axios.post(`${process.env.REACT_APP_API_URL}changepassword`, emailandPasswor)
+            window.location.href = './'
         }
 
         var avisoRecoverPass = '';
@@ -63,8 +63,8 @@ const ChangePassword = () => {
             </div>
             </div>
         );
-        
-    } catch(err) {
+
+    } catch (err) {
         // err
         return (
             <div className='containerErrorRecover'>
