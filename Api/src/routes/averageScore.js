@@ -25,7 +25,7 @@ const jwt = require ('jsonwebtoken');
 router.post('/', async (req,res) => {
     try{
         let {email} =req.body;
-        var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+        var tokensendEmail =email;
         const games =await getGameUser(tokensendEmail);
         const score =games.Items.map(o => parseInt(o.score));   
         // USUARIO NO JUGO               NO EXISTE

@@ -9,7 +9,7 @@ const jwt = require ('jsonwebtoken');
 router.post('/', async (req, res) => {
     let { email } = req.body;
     let { mode } = req.body;
-    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+    var tokensendEmail = email;
     let templateChoosen = picker();
     let assetsFromDb = await assetNotSeen(tokensendEmail, mode, 160);
     const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)

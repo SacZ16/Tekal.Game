@@ -10,9 +10,9 @@ router.post('/', async (req, res) => {
     if (cantTotal > 0) {
         const gamesLower = await scanAllGamesLowerThan(score, type);
         const betterThan = (gamesLower * 100) / cantTotal;
-        res.send({ betterThan: betterThan });
+        res.send({ betterThan: betterThan, type });
     } else {
-        res.send({ betterThan: 100 })
+        res.send({ betterThan: 100, type })
     }
 })
 

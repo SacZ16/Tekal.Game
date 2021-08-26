@@ -7,8 +7,7 @@ async function loadGameInfo(array) {
     let answers = [];
     let presentations = [];
     let emotion = array[2].mood;
-    let email = array[0];
-    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+    var tokensendEmail = array[0];
     let score = array[1];
     let date = array[2].date;
     for (let i = 2; i < array.length; i++) {

@@ -85,9 +85,9 @@ const GameModes = ({ averageScore }) => {
                 title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
                 html:
                     <div className='mood_container' style={{ borderStyle: 'none' }}>
-                        <span id='fine' onClick={mood2}>😁</span>
-                        <span id='normal' onClick={mood2}>😐</span>
                         <span id='bad' onClick={mood2}>☹️</span>
+                        <span id='normal' onClick={mood2}>😐</span>
+                        <span id='fine' onClick={mood2}>😁</span>
                     </div>,
                 showConfirmButton: false
             })
