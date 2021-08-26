@@ -161,7 +161,7 @@ export const Game = ({ history }) => {
   }, [assetsBlop2]);
 
   return (
-    < >
+    <>
       <div className={style.fondo3}>
         {
           !assetsBlop1 && !assetsToSeeBlop.current ? <Loading /> :
