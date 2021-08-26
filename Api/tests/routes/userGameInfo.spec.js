@@ -5,7 +5,7 @@ const agent = session(server)
 
 
 
-let testeo = ['pruebass2@live.com', 40, {
+let testeo = ['payerasangel@gmail.com', 40, {
     answer: 1,
     category: "VIG",
     date: "2021-08-24T22:11:16-03:00",
@@ -26,7 +26,6 @@ xdescribe('POST gameInfo', () => {
         agent.post('/gameInfo')
             .send(testeo)
             .then((res) => {
-                console.log(res.status)
                 expect(res.status).to.equal(200)
             })
     )
