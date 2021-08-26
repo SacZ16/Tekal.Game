@@ -14,19 +14,23 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 import Timer from 'react-compound-timer/build';
+import Countdown from 'react-countdown';
 
 const GameModes = () => {
-
-    const [played, setPlayed] = useState()
-    console.log(played)
+    const [resetLongTerm, setResetLongTerm] = useState()
+    const mode = localStorage.getItem('mode')
+    const longTermActive = localStorage.getItem('longTermActive') // Habilita a jugar el longTerm
+    console.log(Date.now())
     useEffect(() => {
-        const mode = localStorage.getItem('mode')
         if (mode.includes('-')) {
-            const played = localStorage.getItem(`${mode}`)
-            setPlayed(played)
+            const playedLongTerm = Number(localStorage.getItem('playedDate'))
+            setResetLongTerm(playedLongTerm)
         }
     }, [])
-    const longTermActive = localStorage.getItem('longTermActive') // Habilita a jugar el longTerm
+    const reset = () => {
+        localStorage.removeItem('playedDate')
+        setResetLongTerm('')
+    }
     //----------------------------------------
     const [login, setLogin] = useState(false)
 
@@ -95,39 +99,40 @@ const GameModes = () => {
         <>
             {login ?
                 <div className='container_game_modes'>
-                    <div className='subContainer_game_modes'>
-                        <button onClick={moodFunction} id="video">
-                            <div className='game_mode' id="video">
-                                <MovieCreationIcon style={{ fontSize: '7.5rem' }} id="video" />
-                                <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>
-                            </div>
-                        </button>
-                        <button onClick={moodFunction} id='image'>
-                            <div className='game_mode' id='image'>
-                                <ImageIcon style={{ fontSize: '7.5rem' }} id='image' />
-                                <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>
-                            </div>
-                        </button>
-                        <button onClick={moodFunction} id='video-lt'>
-                            <div className='game_mode' id='video-lt'>
-                                <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video-lt' />
-                                {played === 'video-lt' ? 'timer' :
-                                    longTermActive ? <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}</p> :
-                                        <p>Finish a short term first</p>
-                                }
-                            </div>
-                        </button>
-                        <button onClick={moodFunction} id='image-lt'>
-                            <div className='game_mode' id='image-lt'>
-                                <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image-lt' />
-                                {
-                                    longTermActive ? <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />}</p> :
-                                        <p>Finish a short term first</p>
-                                }
-                            </div>
-                        </button>
-                    </div>
+                <div className='subContainer_game_modes'>
+                    <button onClick={moodFunction} id="video">
+                        <div className='game_mode' id="video">
+                            <MovieCreationIcon style={{ fontSize: '7.5rem' }} id="video" />
+                            <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>
+                        </div>
+                    </button>
+                    <button onClick={moodFunction} id='image'>
+                        <div className='game_mode' id='image'>
+                            <ImageIcon style={{ fontSize: '7.5rem' }} id='image' />
+                            <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>
+                        </div>
+                    </button>
+                    <button onClick={moodFunction} id='video-lt'>
+                        <div className='game_mode' id='video-lt'>
+                            <MovieFilterIcon style={{ fontSize: '7.5rem' }} id='video-lt' />
+                            {mode === 'video-lt' && resetLongTerm ?
+                                <p><Countdown date={resetLongTerm + 86400000} onComplete={reset}  /></p> :
+                                longTermActive ? <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}</p> :
+                                    <p>Finish a short term first</p>
+                            }
+                        </div>
+                    </button>
+                    <button onClick={moodFunction} id='image-lt'>
+                        <div className='game_mode' id='image-lt'>
+                            <BurstModeIcon style={{ fontSize: '7.5rem' }} id='image-lt' />
+                            {mode === 'image-lt' && resetLongTerm ? <p><Countdown date={resetLongTerm + 5000} onComplete={reset} /></p> :
+                                longTermActive ? <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />}</p> :
+                                    <p>Finish a short term first</p>
+                            }
+                        </div>
+                    </button>
                 </div>
+            </div>
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >

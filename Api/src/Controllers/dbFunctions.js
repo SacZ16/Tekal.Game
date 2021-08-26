@@ -6,8 +6,8 @@ const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
 
-// const TABLE_USER = "HENRY-dev-USER";
-const TABLE_USER = "USER";
+const TABLE_USER = "HENRY-dev-USER";
+// const TABLE_USER = "USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
@@ -284,7 +284,7 @@ const updateEmailVerification = async (userId) => {
     const infoUser = `INFO#${userId}`;
 
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,
@@ -317,7 +317,7 @@ const updatePassword = async (userId, pass) => {
   try {
     const infoUser = `INFO#${userId}`;
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,

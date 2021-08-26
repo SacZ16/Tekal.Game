@@ -1,42 +1,30 @@
 const { Router } = require('express');
 const router = Router();
-const { putAssets, updateView, queryAllInfoUser, updateAnnotationsCorrect } = require('../Controllers/dbFunctions');
-const {endpoint, endpointNoMemento} = require('../services/endpoint.service');
+const { loadEndpoints } = require('../services/assets.service');
+
+
+/**
+ * @swagger
+ * /videoInfo:
+ *   post:
+ *     summary: Recibe un array en donde la posicion [0] es el email, en la posicion[1] es el score, y las siguientes posiciones son objetos con info de las url vistas en el juego 
+ *     description: Realiza una busqueda en la Db utilizando el email, donde se trae la metadata del determinado usuario. Y luego con esta info mas la info recibida por body, realizando otras funciones, llena los datos que corresponden a cada SESSION# asset.
+ *     responses:
+ *       200:
+ *         description: Carga la DB con la info del asset.
+ */
 
 router.post('/', async (req, res) => {
     let info = req.body;
-    let email = info[0];
-    let urls = [];
+    if(!Array.isArray(info)){
+        return res.sendStatus(400)
+    }
+    if(Array.isArray(info) && !info.length){
+        return res.sendStatus(400)
+    }
     try {
-        const userInfo = await queryAllInfoUser(email);
-        const age = userInfo.Items[0].age;
-        const country = userInfo.Items[0].country;
-        for (let i = 2; i < info.length; i++) {
-            var object = info[i];
-            object.age = age;
-            object.mood = object.mood;
-            object.country = country;
-            object.pos = i - 2;
-            let pkAssetsTarget = info[i].type === "image"? endpointNoMemento(info[i].url) : endpoint(info[i].url);
-            object.url = pkAssetsTarget;
-            if (info[i].category === "target"){
-                updateView(pkAssetsTarget);
-            }
-            if (info[i].category === "target_repeat" && info[i].answer == 1){
-                updateAnnotationsCorrect(pkAssetsTarget);
-            }
-            if (urls.includes(pkAssetsTarget)) {
-                let index = urls.indexOf(pkAssetsTarget) + 1;
-                object.repeated = true;
-                object.pos_1st = object.pos - index;
-                object.lag = object.pos - object.pos_1st;
-            } else {
-                urls.push(pkAssetsTarget);
-                object.repeated = false;
-            }
-            await putAssets(email, object);
-        }
-        res.send("addedAsset");
+        loadEndpoints(info);
+        res.status(200).send("addedAsset");
     }
     catch (error) {
         res.status(400).send(error);

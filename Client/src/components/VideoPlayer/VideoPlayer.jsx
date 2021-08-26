@@ -55,7 +55,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   const finalVideos = useRef([]); // Videos vistos con respuetsas
 
-  const lives = useRef(3); // Vidas del usuario 
+  const lives = useRef(20); // Vidas del usuario 
 
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
