@@ -13,6 +13,18 @@
     justify-content: center;
     align-items: center;
 }
+
+.form2 p {
+    color: white;
+    padding: 0px;
+    text-align: left;
+    margin-right: auto;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
 .form3 {
     display: flex;
     width: 100%;

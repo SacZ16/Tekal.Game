@@ -36,13 +36,23 @@ export const Game = ({ history }) => {
   /* Trae los activos de la API */
   useEffect(() => {
     if (!assetsApi) {
-      axios.post('http://localhost:3001/links', {
-        email: emailCokkie,
-        mode: mode
-      })
-        .then(res => {
-          setAssetsApi(res.data)
+      if (mode === 'video' || mode === 'image') {
+        axios.post('http://localhost:3001/links', {
+          email: emailCokkie,
+          mode: mode
         })
+          .then(res => {
+            setAssetsApi(res.data)
+          })
+      } else {
+        axios.post('http://localhost:3001/longTerm', {
+          email: emailCokkie,
+          mode: mode.slice(0, -3)
+        })
+          .then(res => {
+            setAssetsApi(res.data)
+          })
+      }
     }
     if (assetsApi) {
       var arr1 = assetsApi[2].slice(0, 10).map(async (url) => {
@@ -88,8 +98,8 @@ export const Game = ({ history }) => {
   }
 
   useEffect(() => {
-    if (mode !== 'video' && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
-    // if (score) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
+    if (mode.includes('-') && !cookies.get('userInfo')) history.push('/') // deja jugar solo al de videos si no estas logeado
+    if (cookies.get('play')) history.push('/') // para que el usuario no vuelva a jugar cuando llegue al componente final
   }, [])
 
   // Verifica si esta logeado o no al terminar el juego
@@ -105,11 +115,11 @@ export const Game = ({ history }) => {
 
   // Elige el video/imagen que el usuario va a ver
 
-  function recVideos() {
+  function recAssets() {
     if (assetsApi) {
       if (tope.current >= assetsApi[2].length) return null
       else {
-        viewVideos();
+        viewAssets();
         dispatch(recVideo(assetsToSeeBlop.current[tope.current]));
         tope.current++;
       }
@@ -118,7 +128,7 @@ export const Game = ({ history }) => {
 
   // Guarda los videos que el usuario ve
 
-  function viewVideos() {
+  function viewAssets() {
     dispatch(seenVideos(assetsApi[2], tope.current))
   }
 
@@ -132,7 +142,7 @@ export const Game = ({ history }) => {
         return arr
       })
       assetsToSeeBlop.current = blop
-      recVideos();
+      recAssets();
     }
   }, [assetsBlop1]);
 
@@ -154,8 +164,8 @@ export const Game = ({ history }) => {
       <div className={style.fondo3}>
         {
           !assetsBlop1 && !assetsToSeeBlop.current ? <Loading /> :
-            mode === 'video' ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recVideos={recVideos} checkLogin={checkLogin} mood={mood} /> :
-              <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} email={emailCokkie} recImages={recVideos} checkLogin={checkLogin} mood={mood} />
+            mode === 'video' || mode === 'video-lt' ? <VideoPlayer className={style.video} videoApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recVideos={recAssets} checkLogin={checkLogin} mood={mood} mode={mode} /> :
+              <ImagePlayer className={style.video} imageApi={assetsApi[2]} target={assetsApi[0]} vig={assetsApi[1]} email={emailCokkie} recImages={recAssets} checkLogin={checkLogin} mood={mood} mode={mode} />
         }
       </div>
     </>

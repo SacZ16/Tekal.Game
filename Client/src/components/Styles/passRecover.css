@@ -1,0 +1,67 @@
+.containerSuperPassRecover{
+    background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: -webkit-center;
+}
+
+.containerPassRecover{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin-top: 5%;
+    background-color: #212429;/* #212429 */
+    color: white;
+    padding: 5em 5em 5em 5em;
+    border-radius: 15px;
+    text-align: justify;
+}
+
+.containerPassRecover button{
+    background-color: #C94EBF;
+    border-style: none;
+    border-radius: 10px;
+    height: 4em;
+    color: white;
+}
+
+.containerPassRecover span{
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-align: left;
+}
+
+.containerPassRecover input{
+    margin-bottom: 3em;
+    margin-top: 3em;
+    font-family: 'Montserrat', sans-serif;
+    height: 3em;
+    border-radius: 10px;
+    border-style: solid;
+    background-color: #474747;
+    border-color: white;
+    border-width: 1px;
+}
+
+.containerPassRecover label{
+    margin-bottom: 0px;
+}
+
+.containerErrorRecover{
+    background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: -webkit-center;
+}
+
+.containerErrorRecover h1{
+    color: white;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5em;
+    margin-top: 20%;
+
+}

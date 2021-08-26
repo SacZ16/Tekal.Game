@@ -16,14 +16,46 @@ const changepassword = require('./routes/changePassword');
 const assetsImages = require("./routes/loadingImages")
 const averageScore = require("./routes/averageScore")
 const assets = require('./routes/loadingAssets');
+<<<<<<< HEAD
+=======
+const longTerm = require("./routes/longTermVideo");
+const globalScore = require("./routes/scoreGlobal");
+>>>>>>> f8421feb5f9281477a4fc35e1bb520206bfa543c
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+<<<<<<< HEAD
+=======
+
+>>>>>>> f8421feb5f9281477a4fc35e1bb520206bfa543c
 
 
 const server = express();
+
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Express API for JSONPlaceholder',
+        version: '1.0.0',
+    },
+    servers: [
+        {
+            url: 'http://localhost:3001',
+            description: 'Development server',
+        },
+    ],
+};
+
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./src/routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(options);
+
 
 
 const swaggerDefinition = {
@@ -77,6 +109,11 @@ server.use('/changepassword', changepassword);
 server.use('/assets', assets);
 server.use('/loadingImages', assetsImages)
 server.use('/averageScore', averageScore)
+<<<<<<< HEAD
+=======
+server.use('/longTerm', longTerm);
+server.use('/globalScore', globalScore);
+>>>>>>> f8421feb5f9281477a4fc35e1bb520206bfa543c
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 

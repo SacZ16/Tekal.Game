@@ -69,16 +69,17 @@
     z-index: 5;
 }
 .delimitador{
-    width:560px;
+    width:1000px;
     margin:auto;
 }
 .contedorvideo{
     height:0px;
     width:100%;
-    max-width:560px; 
+    max-width:1000px; 
     background:white ;
     padding-top:56.25%; 
     position:relative;
+    object-fit: fill;
 }
 .contenedordelvideo{
     background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
@@ -89,6 +90,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    object-fit: fill;
 }
 .vidasgame{
     color: red; 
@@ -98,16 +100,24 @@
     font-size: 4vh
 }
 .video{
-    min-width: 87%;
-    margin-left: 1.7%;
+    width: 95% !important;
     margin-top: 11px;
     min-height: 83vh;
-    color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
     background: black;
-    border-radius: 20px;
     z-index: 5;
     overflow: hidden;
+    object-fit: fill;
 }
+
+.videoGame{
+    margin-top: 1em;
+    text-align: -webkit-center;
+    width: 95%;
+    background-color: black;
+    border-radius: 20px;
+}
+
 .fondo3{
     overflow:hidden;
     width: 100%;
@@ -136,6 +146,23 @@
     display: flex;
     justify-content:space-between;
     align-items:center;
+}
+
+.imgPlayer{
+    background-color: black;
+    border-radius: 20px;
+    width: 80%;
+    height: 90%;
+    text-align: center;
+    margin-top: .5em;
+    margin-left: 0%;
+}
+
+.imgPlayer img{
+    width: max-content;
+    max-width: 80%;
+    height: 95%;
+    border-radius: 20px;
 }
 
 @media (min-width: 1920px) {

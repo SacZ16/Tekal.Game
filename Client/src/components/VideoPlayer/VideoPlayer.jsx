@@ -14,11 +14,20 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+import moment from 'moment';
 
-const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) => {
+// Traducciones
+import Translate from "react-translate-component";
+import counterpart from "counterpart";
+import en from "../../language/eng.js";
+import es from "../../language/esp.js"
+
+const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood, mode }) => {
 
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal)
+  const cookies = new Cookies();
 
   const { recVideo, user } = useSelector(state => state); // Traidos del Obj Reducer.
 
@@ -35,6 +44,7 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   const answers = useRef([]); // Respuesta del usuario ante cada video
 
   const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
+
 
   const falsePositives = useRef([]); // videos que no son target_repeat
 
@@ -58,6 +68,10 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   const pressSeconds = useRef([]); // segundos al apretar la barra espaciadora
 
   const videoTouch = useRef()
+
+  const longTerm = useRef() // habilita a jugar el longTerm
+
+  const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -119,7 +133,6 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
 
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
-
     if (!press.current) {
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
         // console.log(seeVideos.current[seeVideos.current.length - 2])
@@ -154,23 +167,23 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
   useEffect(() => {
     if (lives.current === 0) {
       play.current = false
-      videosWithAnswers()
-      sessionData();
       MySwal.fire({
         toast: true,
         html:
           <div >
-            <h1 style={{ color: 'red', textAlign: 'center' }}>Lost all your lives, good luck next time</h1>
+            <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+              <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
             </div>
           </div>,
-        timer: 3000,
+        timer: 4000,
         showConfirmButton: false,
         timerProgressBar: true,
-        width: 500
+        width: 600
       }).then(() => {
-        postData()
+        checkLongTerm()
+        videosWithAnswers()
+        sessionData()
         checkLogin()
       })
     }
@@ -184,33 +197,40 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         seconds: pressSeconds.current[i],
         category: e[0][1].toUpperCase(),
         type: 'video',
-        date: `${new Date()}`,
-        mood: mood
+        date: `${moment().format()}`,
+        mood: mood,
+        longTerm: longTerm.current ? longTerm.current : false
       })
     })
-    finalVideos.current.unshift(score)
+    finalVideos.current.unshift(Number(scoreVisual.toFixed(2)))
     finalVideos.current.unshift(email)
-  }
-  console.log(new Date().getDay())
-  const postData = async () => {
-    localStorage.setItem('results', JSON.stringify(finalVideos.current))
   }
 
   function sessionData() {
-    let obj = Object.create({}, {
-      targetFound: { value: targetFound.current },
-      targetNotPress: { value: targetNotPress.current },
-      score: { value: score },
-      /* lives: { value: lives.current }, */
-      /* targetVideos: { value: target.length } */
-    });
-    dispatch(sessionInfo(obj));
-    localStorage.setItem('score', score)
+    cookies.set('sessionData', {
+      score: score,
+      scoreVisual: scoreVisual,
+      videosRecognized: targetFound.current.points + vigilanceRecognized.current.length,
+      totalRepeats: target + vig
+    })
+    cookies.set('play', {
+      play: true
+    })
+    localStorage.setItem('results', JSON.stringify(finalVideos.current))
+  }
+
+  const checkLongTerm = () => {
+    if (mode.includes('-')) {
+      mode === 'video-lt' && localStorage.setItem('video-lt', 'played')
+      mode === 'image-lt' && localStorage.setItem('image-lt', 'played')
+    }
   }
 
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
+        checkLongTerm()
+        longTerm.current = true
         setTimeout(() => {
           play.current = false
           videosWithAnswers()
@@ -219,26 +239,31 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
             toast: true,
             html:
               <div >
-                <h1 style={{ color: 'red', textAlign: 'center' }}>The Game has finished</h1>
+                <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
+                  <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroEnd} alt="cerebroLose" />
                 </div>
               </div>,
             timer: 3000,
             showConfirmButton: false,
             timerProgressBar: true,
-            width: 500
+            width: 600
           }).then(() => {
-            postData()
             checkLogin()
           })
         }, 500)
       }
     }
-    progress.current = e.playedSeconds;
+    progress.current = Number(e.playedSeconds.toFixed(4));
   }
 
+  const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
+  const lang = language;
+
+  counterpart.registerTranslations('en', en);
+  counterpart.registerTranslations('es', es);
+  counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
   return (
 
@@ -250,9 +275,8 @@ const VideoPlayer = ({ videoApi, target, recVideos, checkLogin, email, mood }) =
         (recVideo !== '') &&
         <div width="50%" height="50%" z-index='5' id='video' className={style.contenedordelvideo}>
           <ProgressBar lives={lives.current} max={videoApi.length} progress={seeVideos.current.length} />
-          <div ref={videoTouch} >
+          <div className={style.videoGame} ref={videoTouch} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}>
             <ReactPlayer className={style.video}
-              style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }}
               z-index='5'
               url={recVideo[0] && recVideo[0].urlBlop}
               onProgress={(e) => onProgress(e)}

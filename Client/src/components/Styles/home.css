@@ -5,6 +5,16 @@ body {
     cursor: default;
 }
 
+img{
+    user-select:none;
+    pointer-events: none;
+}
+
+.Header-lang{
+    position: absolute;
+}
+
+
 .logoTekal{
     position: absolute;
     width: 55px;
@@ -94,6 +104,28 @@ overflow: hidden;
     padding: 10px;
     color: #FFFF;
      }
+
+    .Header-lang{
+        font-family:'Montserrat', sans-serif; 
+        background-color: transparent;
+        border-style: solid;
+        border-color: white;
+        border-width: 1px;
+        font-size: 20px;
+        color: white;
+        padding: 5px;
+        border-radius: 10px;
+        position:fixed;
+        right: 1.5%;
+        bottom: 5%;
+        z-index: 5000000;
+    }
+
+    .Header-lang option { 
+        background-color: #212429;
+        color: white;
+    }
+
 .swal2-inputmh4{
     position: unset;
     box-sizing: border-box;
@@ -109,6 +141,37 @@ overflow: hidden;
     color: white;
     font-size: 1.125em;
 }
+
+.swal2-container.swal2-center>.swal2-popup{
+    background-color:#212429;
+    border-radius: 15px;
+    padding: 30px;
+    width: 50%;
+    margin-top: -55px;
+}
+
+.mood_container h3{
+    color: white;
+    margin-top: -10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+}
+
+.mood_container span{
+    font-size: 80px;
+    filter: grayscale(100);
+}
+
+#fine:hover {
+    filter: grayscale(0);
+}
+#normal:hover {
+    filter: grayscale(0);
+}
+#bad:hover {
+    filter: grayscale(0);
+}
+
 
 .tutorialHome:hover{
     border-style: solid;
@@ -230,7 +293,7 @@ body{
     position: absolute;
     top:90%;
     left: 50%;
-    z-index: 20000;
+    z-index: 1001;
     text-decoration: none;
     text-align: center;
     -webkit-transform: translate(0, -50%);
@@ -455,6 +518,7 @@ body{
     vertical-align: middle;
     display: flex;
     margin-right: 20px;
+    margin-bottom: -2em;
 }
 
 .startGame:hover {
@@ -579,8 +643,9 @@ section::before{
 
 .btnOpenSessionMenu{
     height: 20px;
+    position: relative;
     margin-top:11%;
-    margin-left:10%;
+    left:25%;
     background-color: transparent;
     border-style: none;
     cursor: pointer;

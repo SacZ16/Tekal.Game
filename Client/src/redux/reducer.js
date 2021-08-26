@@ -48,6 +48,7 @@ export default function reducer(state = initialState, { type, payload }) {
                     ...state.user,
                     currentGame: {
                         ...state.user.currentGame,
+                        totalTargets: payload.totalTargets,
                         targetFound: payload.targetFound,
                         targetNotPress: payload.targetNotPress,
                         score: payload.score,
