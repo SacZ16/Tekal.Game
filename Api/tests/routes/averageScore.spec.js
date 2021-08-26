@@ -2,18 +2,24 @@ const { expect } = require('chai');
 const session = require('supertest-session');
 const server = require('../../src/app.js');
 const agent = session(server)
+const jwt = require ('jsonwebtoken')
 
+let email = 'prueba@live.com'
+var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
 //Se debera tener un usuario registrado y se espera que tenga partidas jugadas.
-
-let emailTest = 'payerasangel@gmail.com'
+console.log(tokensendEmail)
+let contraseña = 'Prueba*123'
 let emailErrorTest = 'ESTONOEssXISTE@GMAIL.COM'
 
-xdescribe('POST /averageScore', () => {
+
+
+describe('POST /averageScore', () => {
     it('responds with "200"', () => 
         agent.post('/averageScore')
-            .send({email: emailTest})
+            .send({email: tokensendEmail})
             .then((res) => {
-                expect(res.body.averageScore).not.to.equal(0)
+                console.log(res.body)
+                // expect(res.body.averageScore).not.to.equal(0)
             })
     )
     it('responds with "400"', () => 

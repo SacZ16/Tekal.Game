@@ -2,10 +2,12 @@ const { expect } = require('chai');
 const session = require('supertest-session');
 const server = require('../../src/app.js');
 const agent = session(server)
+const jwt = require ('jsonwebtoken')
+let email = 'prueba@live.com'
+var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+console.log(tokensendEmail)
 
-
-
-let testeo = ['pruebass2@live.com', 40, {
+let testeo = [tokensendEmail, 40, {
     answer: 1,
     category: "VIG",
     date: "2021-08-24T22:11:16-03:00",
@@ -17,7 +19,6 @@ let testeo = ['pruebass2@live.com', 40, {
 }]
 
 let testRoto = {}
-
 
 
 
@@ -37,3 +38,7 @@ xdescribe('POST /videoInfo', () => {
             })
     )
 });
+
+
+
+////Deprecado
