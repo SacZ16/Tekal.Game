@@ -2,7 +2,6 @@ const { getSessions, queryPK, orderAsset, orderNextAsset } = require('../Control
 const { notSeen } = require('./compareArray.service')
 
 
-
 async function assetNotSeen(email, asset, limit) {
     try {
         const viewedAssets = await getSessions(email);
