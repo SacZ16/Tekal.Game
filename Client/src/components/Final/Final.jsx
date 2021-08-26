@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import '../Styles/share.css'
@@ -8,19 +8,15 @@ import { resetReducer } from '../../redux/action'
 import axios from 'axios';
 import Cookie from 'universal-cookie'
 import logoTekal from '../Styles/tekalLogo.png';
-
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-
+// Componentes
+import Share from '../Share/Share'
 // Traducciones
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
-import Share from '../Share/Share'
-
-import cerebroEnd from '../Styles/cerebrito_derecha.png'
-
 
 function Finalgame({ history }) {
     const MySwal = withReactContent(Swal)
@@ -46,6 +42,7 @@ function Finalgame({ history }) {
                 videosRecognized: cookies.get('sessionData').videosRecognized,
                 totalRepeats: cookies.get('sessionData').totalRepeats
             })
+            localStorage.setItem('lastScore', Number(cookies.get('sessionData').scoreVisual.toFixed(2)))
         } else {
             history.push('/')
         }
@@ -101,13 +98,14 @@ function Finalgame({ history }) {
     };
 
     const again = () => {
+        cookies.remove('sessionData')
         cookies.remove('play')
         dispatch(resetReducer())
         history.push('/game')
     }
 
     useEffect(() => {
-        postDataa()
+        /* postDataa() */
     }, [])
 
     const postDataa = async () => {
@@ -119,7 +117,7 @@ function Finalgame({ history }) {
 
     /* Cambio de idioma */
 
-    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+    const [language, _setLanguage] = useState(localStorage.getItem('idioma'));
     const lang = language;
 
     counterpart.registerTranslations('en', en);
@@ -147,7 +145,11 @@ function Finalgame({ history }) {
 
                 <div className='containerDataFinalPage'>
                     <div className='finalPageColumnLeft'>
-                        <h1 className='yourscore'>{<Translate content="tituloLastScreen" component="span" />}{globalScore}%{<Translate content="tituloLastScreen2" component="span" />}</h1>
+                        <h1 className='yourscore'>
+                            {<Translate content="tituloLastScreen" component="span" />}{globalScore}%
+                            {<Translate content="tituloLastScreen2" component="span" />}
+                            {mode === 'image' ? < Translate content="resultImage" component="span" /> : < Translate content="resultVideo" component="span" />}
+                        </h1>
                         <div className="grafico">
                             <Line data={data} options={opciones} config={config} />
                         </div>

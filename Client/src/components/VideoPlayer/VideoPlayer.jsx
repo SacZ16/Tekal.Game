@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
-import { sessionInfo } from '../../redux/action';
 // Componentes
 import ReactPlayer from 'react-player/lazy';
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -13,7 +12,6 @@ import cerebroEnd from '../Styles/cerebrito_derecha.png'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-import axios from 'axios';
 import Cookies from 'universal-cookie';
 import moment from 'moment';
 
@@ -166,6 +164,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
+    console.log('asas')
     if (lives.current === 0) {
       play.current = false
       MySwal.fire({
@@ -188,7 +187,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
         checkLogin()
       })
     }
-  }, [seeVideos.current.length, lives.current]);
+  }, [lives.current]);
 
   // Guarda los datos de la sesion en el reducer
   function videosWithAnswers() {
@@ -222,8 +221,8 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   const checkLongTerm = () => {
     if (mode.includes('-')) {
-      mode === 'video-lt' && localStorage.setItem('video-lt', 'played')
-      mode === 'image-lt' && localStorage.setItem('image-lt', 'played')
+      mode === 'video-lt' && localStorage.setItem('video-lt', 'video-lt')
+      localStorage.setItem('playedDateVideo', Date.now())
     }
   }
 
@@ -231,16 +230,15 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
         checkLongTerm()
+        localStorage.setItem('longTermVideoActive', 'longTermVideoActive')
         longTerm.current = true
         setTimeout(() => {
           play.current = false
-          videosWithAnswers()
-          sessionData()
           MySwal.fire({
             toast: true,
             html:
               <div >
-                <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
+                <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
                 </div>
@@ -250,6 +248,8 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
             timerProgressBar: true,
             width: 500
           }).then(() => {
+            videosWithAnswers()
+            sessionData()
             checkLogin()
           })
         }, 500)

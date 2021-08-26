@@ -9,6 +9,7 @@ import slide5 from '../Styles/slideCincoEsp.png'
 import slide6 from '../Styles/slideSeisEsp.png'
 import slide7 from '../Styles/slideSieteEsp.png'
 import slide8 from '../Styles/slideOchoEsp.png'
+import Cookie from 'universal-cookie'
 
 const colors = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8,];
 
@@ -21,6 +22,8 @@ const textEnglishFirstLine = ['When the game starts, you will see a sequence of 
 const delay = 8500;
 
 function Slideshow() {
+  const cookies = new Cookie();
+
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
 
@@ -45,64 +48,75 @@ function Slideshow() {
       resetTimeout();
     };
   }, [index]);
+  const mode = localStorage.getItem('mode')
+  const playWithOutLogin = () => {
+    if (!mode) {
+      window.location.href = ('/')
+    } else {
+      cookies.remove('play')
+      window.location.href = ('/game')
+    }
+  }
 
   return (
-    <div className="slideshow">
-      <div className='tutorial_container'>
-        <p className='tekalLogo_tutorial'>TEKAL</p>
-        <div className="container_lang_change">
-          <button onClick={() => setIdioma('Castellano')}>Es</button>
-          <button onClick={() => setIdioma('English')}>En</button>
-        </div>
-        <div className='tutorial_buttons'>
-          <button className='left_btn_tutorial' style={index > 0 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index > 0 ? () => { setIndex(index - 1) } : null}>&#x276e;</button>
-          {index < 7 ? <button className='right_btn_tutorial' style={index < 7 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index < 7 ? () => { setIndex(index + 1) } : null}>&#x276f;</button>
-            : <Link to='/game'><button style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'white', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>Start</button></Link>}
-        </div>
-        <div
-          className="slideshowSlider"
-          style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-        >
-          {imagenes.map((imagen, index) => (
-            <div
-              className="slide"
-              key={index}
-              style={{
-                backgroundImage: `url(${imagen})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                alignContent: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              {idioma === 'Castellano' ?
-
-                <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <p style={index === 5 ? { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textoCastellanoPrimera[index]}</p>
-                  {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[in,ex]}</p> */}
-                </div>
-                :
-                <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <p style={index === 5 ? { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textEnglishFirstLine[index]}</p>
-                </div>
-              }
-            </div>
-          ))
-          }
-        </div>
-      </div>
-
-      <div className="slideshowDots">
-        {colors.map((_, idx) => (
+    <div className='slideContainer'>
+      <div className="slideshow">
+        <div className='tutorial_container'>
+          <p className='tekalLogo_tutorial'>TEKAL</p>
+          <div className="container_lang_change">
+            <button onClick={() => setIdioma('Castellano')}>Es</button>
+            <button onClick={() => setIdioma('English')}>En</button>
+          </div>
+          <div className='tutorial_buttons'>
+            <button className='left_btn_tutorial' style={index > 0 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index > 0 ? () => { setIndex(index - 1) } : null}>&#x276e;</button>
+            {index < 7 ? <button className='right_btn_tutorial' style={index < 7 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index < 7 ? () => { setIndex(index + 1) } : null}>&#x276f;</button>
+              : <Link onClick={playWithOutLogin}><button style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'white', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>{!mode ? 'Return' : 'Start'}</button></Link>}
+          </div>
           <div
-            key={idx}
-            className={`slideshowDot${index === idx ? " active" : ""}`}
-            onClick={() => {
-              setIndex(idx);
-            }}
-          ></div>
-        ))}
+            className="slideshowSlider"
+            style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+          >
+            {imagenes.map((imagen, index) => (
+              <div
+                className="slide"
+                key={index}
+                style={{
+                  backgroundImage: `url(${imagen})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                {idioma === 'Castellano' ?
+
+                  <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <p style={index === 5 ? { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textoCastellanoPrimera[index]}</p>
+                    {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[in,ex]}</p> */}
+                  </div>
+                  :
+                  <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <p style={index === 5 ? { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textEnglishFirstLine[index]}</p>
+                  </div>
+                }
+              </div>
+            ))
+            }
+          </div>
+        </div>
+
+        <div className="slideshowDots">
+          {colors.map((_, idx) => (
+            <div
+              key={idx}
+              className={`slideshowDot${index === idx ? " active" : ""}`}
+              onClick={() => {
+                setIndex(idx);
+              }}
+            ></div>
+          ))}
+        </div>
       </div>
     </div>
   );

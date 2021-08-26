@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
@@ -7,18 +7,18 @@ import cerebritoHomeResults from '../Styles/prefinalmascota.png'
 import cerebroPerfil from '../Styles/cerebritoPerfil.png'
 import Cookie from 'universal-cookie'
 import '../Styles/home.css';
-import RegisterCommonForm from '../Signin/LoginCommonForm';
-import RegisterWithEmail from '../Signin/RegisterEmail';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
-import Loading from '../Loading/Loading';
-//-----------------
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+// Componentes
+import RegisterCommonForm from '../Signin/LoginCommonForm';
+import RegisterWithEmail from '../Signin/RegisterEmail';
+import Loading from '../Loading/Loading';
 import GameModes from '../GameModes/GameModes';
 // Traducciones
 import Translate from "react-translate-component";
@@ -28,20 +28,8 @@ import es from "../../language/esp.js"
 
 const Home = () => {
     const MySwal = withReactContent(Swal)
-    const score = localStorage.getItem('score')
-    const mood = localStorage.getItem('mood')
     const cookies = new Cookie();
-
-    const [sessionData, setSessionData] = useState({})
-
-
-    useEffect(() => {
-        if (cookies.get('sessionData')) {
-            setSessionData({ ...sessionData, score: cookies.get('sessionData').score })
-        }
-    }, [])
-
-
+    const sessionData = localStorage.getItem('lastScore')
 
     var emailCokkie;
 
@@ -129,10 +117,13 @@ const Home = () => {
                             <button className='btnOpenSessionMenu' onClick={() => { setShow(!show) }}>&#9660;</button>
                         </div>
                         {show ?
-                            <button className='btnLogOut' onClick={() => {
-                                cookies.remove('userInfo')
-                                window.location.href = ('')
-                            }}>{<Translate content="desloguear" component="span" />}</button> : (null)
+                            <div>
+                                <button className='btnLogOut' onClick={() => window.location.href = ('/tutorial')}>Tutorial</button>
+                                <button className='btnLogOut' onClick={() => {
+                                    cookies.remove('userInfo')
+                                    window.location.href = ('')
+                                }}>{<Translate content="desloguear" component="span" />}</button>
+                            </div> : (null)
                         }
                     </div> : (null)}
             </div>
@@ -172,7 +163,7 @@ const Home = () => {
         MySwal.fire({
             html:
                 <div>
-                    <GameModes />
+                    <GameModes averageScore={averageScore} />
                 </div>,
             showConfirmButton: false
         })
@@ -217,7 +208,7 @@ const Home = () => {
             }
 
             {/* Logeado Mobile */}
-            {startGame ?
+            {!averageScore && startGame && sessionOn ? <Loading /> : startGame ?
                 <div className="pantallaMovilScore">
                     <div className="contenedorTextoMovilScore">
                         <div>
@@ -233,7 +224,7 @@ const Home = () => {
                         <div className='scores_mobile'>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
-                                <p>{sessionData.score /* ? sessionData.score : 0 */}%</p>
+                                <p>{sessionData === 0 || !sessionData ? 0 : sessionData}%</p>
                             </div>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="promedioResultados" component="span" />}</h4>
@@ -249,14 +240,14 @@ const Home = () => {
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
                     {/* Home Logeado */}
-                    {startGame ?
+                    {!averageScore && startGame && sessionOn ? <Loading /> : startGame ?
                         <>
                             <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
                             <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>Maximiliano</span></p>
                             <div className='scores'>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
-                                    <p>{sessionData.score /* ? sessionData.score : 0 */}%</p>
+                                    <p>{sessionData === 0 || !sessionData ? 0 : sessionData}%</p>
                                 </div>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>

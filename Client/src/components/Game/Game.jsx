@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { recVideo, seenVideos } from '../../redux/action';
 import { withRouter } from 'react-router';
 
@@ -16,7 +16,6 @@ import style from '../Styles/Game.module.css'
 export const Game = ({ history }) => {
 
   const dispatch = useDispatch();
-  // const { score } = useSelector(state => state.user.currentGame)
   const tope = useRef(0) // Determina posicion del video/imagen
   const mood = localStorage.getItem('mood') // Toma el estado de animo 
   const mode = localStorage.getItem('mode') // Toma el modo de juego

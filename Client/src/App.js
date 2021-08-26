@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import LoginPage from './components/Login/LoginCommon'
 import FormData from './components/FormData/formularyData';
 import RegisterWithEmail from './components/Signin/RegisterEmail';
@@ -9,6 +9,7 @@ import PreFinalGame from './components/Prefinal/Prefinal';
 import VerificationEmail from './components/Login/VerificationEmail';
 import Verification from './components/Verification/sendEmailVerification';
 import ChangePassword from './components/ChangePassword/changePassword'
+import Slideshow from './components/Tutorial/Tutorial';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path='/forgotPassword' component={VerificationEmail} />
         <Route exact path='/verificationemail' component={Verification} />
         <Route exact path='/passwordchange' component={ChangePassword} />
+        <Route exact path='/tutorial' component={Slideshow} />
       </Switch>
     </>
   );
