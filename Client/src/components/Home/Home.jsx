@@ -13,7 +13,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
-import Loading from '../Loading/Loading';
 import FormData from '../FormData/formularyData';
 
 import MenuIcon from '@material-ui/icons/Menu';
