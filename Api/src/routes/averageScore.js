@@ -2,7 +2,7 @@
 const { Router } = require('express');
 const { getGameUser } = require('../Controllers/dbFunctions');
 const router = Router();
-
+const jwt = require ('jsonwebtoken');
 
 /**
  * @swagger
@@ -25,7 +25,8 @@ const router = Router();
 router.post('/', async (req,res) => {
     try{
         let {email} =req.body;
-        const games =await getGameUser(email);
+        var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+        const games =await getGameUser(tokensendEmail);
         const score =games.Items.map(o => parseInt(o.score));   
         // USUARIO NO JUGO               NO EXISTE
         if(!score.length){

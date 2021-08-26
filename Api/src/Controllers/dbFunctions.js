@@ -1,14 +1,11 @@
-const { Router, response } = require("express");
 const axios = require("axios").default;
 const AWS = require("aws-sdk");
-const { endpoint } = require("../services/endpoint.service");
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
 const jwt = require ('jsonwebtoken')
 
 const TABLE_USER = "HENRY-dev-USER";
-// const TABLE_USER = "USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
@@ -187,37 +184,13 @@ const createAssetsTable = () => {
   });
 };
 
-/* const putAssets = async (info) => {
-    try{
-        let params = {
-            TableName: TABLE_ASSETS,
-            Item:{
-                "PK": info.assetId,
-                "SK": `SESSION#${info.assetId}#${info.sessionCharacteristics.role}#${date}`,
-                "userId":  info.userId,
-                "userMetadata": info.userMetadata,
-                "date": info.date,
-                "fileType": info.fileType,
-                "sessionCharacteristics": info.sessionCharacteristics, 
-            }
-        };
-        
-        const video = await docClient.put(params).promise();
-        console.log("Added video");
-        return video;
-    }
-    catch(error){
-        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
-    }
-} */
-
 const putAssets = async (email, info) => {
   try {
     let params = {
       TableName: TABLE_ASSETS,
       Item: {
         PK: info.url,
-        SK: `SESSION#${email}#${info.url}#${info.category}#${ULID.ulid()}`,
+        SK: `SESSION#${email}#${info.category}#${ULID.ulid()}`,
         date: info.date,
         fileType: info.type,
         pivot: "OK",
