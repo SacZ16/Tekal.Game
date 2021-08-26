@@ -136,10 +136,10 @@ const GameModes = () => {
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
-                        <button onClick={(e) => playWithOutLogin(e)} id='video'>
-                            <div className='game_mode' id='video'>
-                                <MovieCreationIcon style={{ fontSize: '7.5rem' }} id='video' />
-                                <p id='video'>{<Translate content="videosCortoPlazo" component="p" id='video' />}</p>
+                        <button onClick={(e) => console.log(e.target.id)} id='video'>
+                            <div className='game_mode'>
+                                <MovieCreationIcon style={{ fontSize: '7.5rem' }}/>
+                                <p>{<Translate content="videosCortoPlazo" component="p"/>}</p>
                             </div>
                         </button>
                         <button onClick={(e) => playWithOutLogin(e)} id='image'>
