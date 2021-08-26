@@ -2,7 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const {google}= require ('googleapis')
-const {newUser,getallUsers,putUserLogin,queryAllInfoUser,updateEmailVerification }= require ('../Controllers/dbFunctions.js')
+const {putUserLogin,queryAllInfoUser,updateEmailVerification }= require ('../Controllers/dbFunctions.js')
 const jwt = require ('jsonwebtoken')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
@@ -14,15 +14,17 @@ const oAuth2Client= new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL)
 
 
 const registerUser = async (datos) =>{
+    var email= datos.email
+    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
     try{
-        const infoUser = `INFO#${datos.email}`;
+        const infoUser = `INFO#${tokensendEmail}`;
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(datos.password, salt);
 
         const Item= {
-            "PK": datos.email,
+            "PK": tokensendEmail,
             "SK": infoUser,
-            "email":  datos.email,
+            "email":  tokensendEmail,
             "password": password,
             "VerificationEmail": false,
         }
@@ -46,7 +48,7 @@ const sedEmail = async (email) =>{
         service: 'gmail',
         auth: {
             type:'OAUTH2',
-            user:'goyeliseo1@gmail.com',
+            user:'memorygame@tekal.ai',
             clientId:CLIENT_ID,
             clientSecret:CLIENT_SECRET,
             refresh_token:REFRESH_TOKEN,
@@ -55,7 +57,7 @@ const sedEmail = async (email) =>{
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <goyeliseo1@gmail.com>', // sender address
+        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/verificationemail?${tokensendEmail}`, // plain text body
@@ -73,7 +75,7 @@ const sendEmailForPassword = async (email) =>{
         service: 'gmail',
         auth: {
             type:'OAUTH2',
-            user:EMAIL_TEKAL,
+            user:'memorygame@tekal.ai',
             clientId:CLIENT_ID,
             clientSecret:CLIENT_SECRET,
             refresh_token:REFRESH_TOKEN,
@@ -82,7 +84,7 @@ const sendEmailForPassword = async (email) =>{
     });
 
     await transporter.sendMail({
-        from: `Pagina Web NodeMailer <${EMAIL_TEKAL}>`, // sender address
+        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body

@@ -36,6 +36,7 @@ export const Game = ({ history }) => {
   useEffect(() => {
     if (!assetsApi) {
       if (mode === 'video' || mode === 'image') {
+        console.log(mode)
         axios.post('http://localhost:3001/links', {
           email: emailCokkie,
           mode: mode

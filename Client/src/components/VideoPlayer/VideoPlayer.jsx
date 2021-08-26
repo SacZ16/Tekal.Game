@@ -21,7 +21,6 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
-
 const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood, mode }) => {
 
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   const finalVideos = useRef([]); // Videos vistos con respuetsas
 
-  const lives = useRef(3); // Vidas del usuario 
+  const lives = useRef(20); // Vidas del usuario 
 
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
@@ -173,13 +172,13 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
           <div >
             <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img style={{ width: '60vh', height: '35vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
+              <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
             </div>
           </div>,
-        timer: 3000,
+        timer: 4000,
         showConfirmButton: false,
         timerProgressBar: true,
-        width: 500
+        width: 600
       }).then(() => {
         checkLongTerm()
         videosWithAnswers()
@@ -240,13 +239,13 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
               <div >
                 <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
+                  <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroEnd} alt="cerebroLose" />
                 </div>
               </div>,
             timer: 3000,
             showConfirmButton: false,
             timerProgressBar: true,
-            width: 500
+            width: 600
           }).then(() => {
             videosWithAnswers()
             sessionData()

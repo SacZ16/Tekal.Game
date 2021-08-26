@@ -3,7 +3,15 @@ const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
 const { registerUser, sedEmail } = require('../services/register.service.js')
+const jwt = require ('jsonwebtoken')
 const { newUser, getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
+
+router.get('/', (req, res) => {
+    getallUsers()
+    // getUser()
+    // newUser()
+    res.json('Estas en Test User')
+})
 
 /**
  * @swagger
@@ -72,13 +80,6 @@ const { newUser, getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = req
  *                   type: object
  *                     
  */
-
-router.get('/', (req, res) => {
-    getallUsers()
-    // getUser()
-    // newUser()
-    res.json('Estas en Test User')
-})
 
 router.post('/', async (req, res) => {
 

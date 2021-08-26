@@ -1,15 +1,17 @@
 const { Router } = require('express');
 const router = Router();
-const { getAssets, getListElements, getAssetsVideo, getAssetsImages } = require('../services/csv.service.js');
+const { getAssets, getAssetsImages } = require('../services/csv.service.js');
 const { templateFiller } = require('../services/templates.service.js');
 const { assetNotSeen } = require('../services/notViewedVideos.service');
 const { picker } = require('../services/templatePicker.service');
+const jwt = require ('jsonwebtoken');
 
 router.post('/', async (req, res) => {
     let { email } = req.body;
     let { mode } = req.body;
+    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
     let templateChoosen = picker();
-    let assetsFromDb = await assetNotSeen(email, mode, 160);
+    let assetsFromDb = await assetNotSeen(tokensendEmail, mode, 160);
     const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK)
     if (mode === 'image') {
         const assets = await getAssetsImages(itemsFromDb);//transforma en link
@@ -19,7 +21,7 @@ router.post('/', async (req, res) => {
     } else {
         const assets = await getAssets(itemsFromDb);//transforma en link
         let template = templateFiller(templateChoosen, assets);
-        res.send(template)
+        res.send(template);
     }
 
 })

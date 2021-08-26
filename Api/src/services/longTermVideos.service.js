@@ -1,8 +1,9 @@
 const { gamesPlayed } = require("../Controllers/dbFunctions");
 const moment = require("moment")
 async function longTerm(email, type) {
+    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
     try {
-        let games = await gamesPlayed(email);
+        let games = await gamesPlayed(tokensendEmail);
         let gamesType = [];
         games.Items.forEach(g => {
             if (g.type === type && g.longTerm === true) {

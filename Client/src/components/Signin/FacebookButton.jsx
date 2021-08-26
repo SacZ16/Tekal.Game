@@ -18,7 +18,6 @@ const FacebookButton = () => {
         }
         SendDataGoogle(obj)
     }
-
     if (localStorage.getItem('idioma') === 'es') {
         var continua = 'Continúa con Facebook'
     }

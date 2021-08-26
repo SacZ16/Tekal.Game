@@ -25,7 +25,6 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
 
-
 const server = express();
 
 const swaggerDefinition = {
@@ -57,10 +56,12 @@ const corsOptions = {
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
+
 server.use(cors(corsOptions));
 server.use(bodyparser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyparser.json({ limit: '50mb' }));
 server.use(morgan('dev'));
+
 
 server.use('/', routes);
 server.use('/country', countries);

@@ -10,10 +10,11 @@ router.post('/', async (req, res) => {
     let { email } = req.body;
     let { mode } = req.body;
     try {
+        if(!email || !mode){
+            return res.send([])
+        }
         let fillerLastGame = await longTerm(email, mode);
-        console.log("lastGame", fillerLastGame);
         let template = picker();
-        console.log(template);
         let cantNoTargets = template[2];
         let assetsFromDb = await assetNotSeen(email, mode, cantNoTargets);
         const itemsFromDb = assetsFromDb.map(v => v.Items[0].PK);

@@ -2,6 +2,11 @@ const { Router } = require('express');
 const router = Router();
 const bcrypt = require('bcrypt');
 const { getallUsers, queryAllInfoUser } = require('../Controllers/dbFunctions.js')
+const jwt = require ('jsonwebtoken')
+
+router.get('/', async (req, res) => {
+res.json(await getallUsers())
+})
 
 /**
  * @swagger
@@ -72,32 +77,29 @@ const { getallUsers, queryAllInfoUser } = require('../Controllers/dbFunctions.js
  *                     example: false
  */
 
+router.post('/', async (req, res) => {
+    var email=req.body.email
+    var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+    const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(tokensendEmail)}
+else{return {}}}
+    console.log(await user())
+    let runUser= await user()
+    console.log(runUser)
+    if (!runUser.Items.length){
+        return res.json({ error: 'Email no register', status:'400' })
+    }
+    else {const validPassword = await bcrypt.compare(req.body.password, runUser.Items[0].password);
+    if (!validPassword) return res.json({ error: 'error', status:'400' })
+    else{
+        runUser.Items[0].password = ''
+        console.log(runUser.Items)
+        res.json(runUser.Items)
+    }}
+})
 
- router.get('/', async (req, res) => {
-    res.json(await getallUsers())
-    })
-    
-    router.post('/', async (req, res) => {
-        const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(req.body.email)}
-    else{return {}}}
-        console.log(await user())
-        let runUser= await user()
-        console.log(runUser)
-        if (!runUser.Items.length){
-            return res.json({ error: 'Email no register', status:'400' })
-        }
-        else {const validPassword = await bcrypt.compare(req.body.password, runUser.Items[0].password);
-        if (!validPassword) return res.json({ error: 'error', status:'400' })
-        else{
-            runUser.Items[0].password = ''
-            console.log(runUser.Items)
-            res.json(runUser.Items)
-        }}
-    })
-    
-    module.exports = router;
-    
-    // recibir la ruta
-    // recibir el payload
-    // comprobar el payload
-    // responder
+module.exports = router;
+
+// recibir la ruta
+// recibir el payload
+// comprobar el payload
+// responder

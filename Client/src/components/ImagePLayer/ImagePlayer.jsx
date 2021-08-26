@@ -210,7 +210,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 timer: 3000,
                 showConfirmButton: false,
                 timerProgressBar: true,
-                width: 500
+                width: 600
             }).then(() => {
                 checkLongTerm()
                 videosWithAnswers()

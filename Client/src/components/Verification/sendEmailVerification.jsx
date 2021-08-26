@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import '../Styles/facebookButton.css'
 import axios from 'axios'
-import jwt from 'jsonwebtoken'
-import { useLocation } from "react-router-dom";
+import {SendDataGoogle} from '../controllers/dbFunctions'
+import jwt, { decode } from 'jsonwebtoken'
+import {useLocation} from "react-router-dom";
 // Traducciones
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -68,9 +69,9 @@ const Verification = () => {
         // err
         return (
             <div className='containerErrorRecover'>
-                <h1>
-                    Error
-                </h1>
+            <h1>
+                Error
+            </h1>
             </div>
         );
     }

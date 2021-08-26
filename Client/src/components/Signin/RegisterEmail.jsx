@@ -155,9 +155,9 @@ const RegisterWithEmail = () => {
             </div>
             <button className='buttonRegister' onClick={SendToBackEnd}> {<Translate content="botonRegistro" component="span" />} </button>
             <div className='container_buttons_register_form'>
-                <GoogleButton />
-                <FacebookButton />
-            </div>
+                    <GoogleButton/>
+                    <FacebookButton />
+                </div>
         </>
     )
 }

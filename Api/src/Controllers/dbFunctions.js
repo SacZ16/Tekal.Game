@@ -1,13 +1,11 @@
-const { Router, response } = require("express");
 const axios = require("axios").default;
 const AWS = require("aws-sdk");
-const { endpoint } = require("../services/endpoint.service");
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
+const jwt = require ('jsonwebtoken')
 
 const TABLE_USER = "HENRY-dev-USER";
-// const TABLE_USER = "USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
 
 async function getallUsers() {
@@ -93,13 +91,14 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
+  var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
   try {
-    var infoUser = `INFO#${email}`;
+    var infoUser = `INFO#${tokensendEmail}`;
 
     let params = {
       TableName: TABLE_USER,
       Key: {
-        "PK": email,
+        "PK": tokensendEmail,
         "SK": infoUser,
       },
       UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",
@@ -142,8 +141,10 @@ const queryAllInfoUser = async (userId) => {
       },
     };
 
-    const queryUserInfo = await connectionDynamo.query(params).promise();
+    let queryUserInfo = await connectionDynamo.query(params).promise();
     // console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+
+    // queryUserInfo.Items[0].password = ''
     return queryUserInfo;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
@@ -183,37 +184,13 @@ const createAssetsTable = () => {
   });
 };
 
-/* const putAssets = async (info) => {
-    try{
-        let params = {
-            TableName: TABLE_ASSETS,
-            Item:{
-                "PK": info.assetId,
-                "SK": `SESSION#${info.assetId}#${info.sessionCharacteristics.role}#${date}`,
-                "userId":  info.userId,
-                "userMetadata": info.userMetadata,
-                "date": info.date,
-                "fileType": info.fileType,
-                "sessionCharacteristics": info.sessionCharacteristics, 
-            }
-        };
-        
-        const video = await docClient.put(params).promise();
-        console.log("Added video");
-        return video;
-    }
-    catch(error){
-        console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
-    }
-} */
-
 const putAssets = async (email, info) => {
   try {
     let params = {
       TableName: TABLE_ASSETS,
       Item: {
         PK: info.url,
-        SK: `SESSION#${email}#${info.url}#${info.category}#${ULID.ulid()}`,
+        SK: `SESSION#${email}#${info.category}#${ULID.ulid()}`,
         date: info.date,
         fileType: info.type,
         pivot: "OK",
@@ -280,7 +257,7 @@ const updateEmailVerification = async (userId) => {
     const infoUser = `INFO#${userId}`;
 
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,
@@ -313,7 +290,7 @@ const updatePassword = async (userId, pass) => {
   try {
     const infoUser = `INFO#${userId}`;
     let params = {
-      TableName: "USER",
+      TableName: TABLE_USER,
       Key: {
         PK: userId,
         SK: infoUser,

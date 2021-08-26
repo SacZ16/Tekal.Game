@@ -21,20 +21,20 @@ const VerificationEmail = () => {
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
     var messageErrorPass = ''
-    var messageOkPass = ''
-    var placeholderEmail = ''
-    if (localStorage.getItem('idioma') === 'en') messageErrorPass = 'Enter a valid email';
-    if (localStorage.getItem('idioma') === 'es') messageErrorPass = 'Ingresá un email válido';
-    if (localStorage.getItem('idioma') === 'es') messageOkPass = 'Te enviamos un correo de verificación';
-    if (localStorage.getItem('idioma') === 'en') messageOkPass = 'We sent you a verification email';
-    if (localStorage.getItem('idioma') === 'es') placeholderEmail = 'Correo electrónico';
-    if (localStorage.getItem('idioma') === 'en') placeholderEmail = 'Email';
+    var messageOkPass =''
+    var placeholderEmail =''
+    if(localStorage.getItem('idioma') === 'en') messageErrorPass = 'Enter a valid email';
+    if(localStorage.getItem('idioma') === 'es') messageErrorPass = 'Ingresá un email válido';
+    if(localStorage.getItem('idioma') === 'es') messageOkPass = 'Te enviamos un correo de verificación';
+    if(localStorage.getItem('idioma') === 'en') messageOkPass = 'We sent you a verification email';
+    if(localStorage.getItem('idioma') === 'es') placeholderEmail = 'Correo electrónico';
+    if(localStorage.getItem('idioma') === 'en') placeholderEmail = 'Email';
 
     const emailToBack = async () => {
         setAfterButton('')
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
-        if (!emailReject.test(email)) {
-            alert(messageErrorPass)
+        if(!emailReject.test(email)) {
+            alert(messageErrorPass) 
             return
         }
         let user = {
@@ -45,13 +45,13 @@ const VerificationEmail = () => {
         setAfterButton(messageOkPass)
     }
 
-    return (
+    return(
         <div className='forgotPassContainer'>
             <div className='subcontainer_forgotPass'>
-                <label htmlFor='Email'> {<Translate content="olvidasteContrasena" component="span" />}</label>
-                <input className='inputForgotPass' name='Email' placeholder={placeholderEmail} onChange={(e) => setEmail(e.target.value)} />
-                <button onClick={emailToBack}>{<Translate content="enviar" component="p" />}</button>
-                <h3> {afterButton} </h3>
+            <label htmlFor='Email'> {<Translate content="olvidasteContrasena" component="span" />}</label>
+            <input className='inputForgotPass' name='Email' placeholder={placeholderEmail} onChange={(e) => setEmail(e.target.value)}/>
+            <button  onClick={emailToBack}>{<Translate content="enviar" component="p" />}</button>
+            <h3> {afterButton} </h3>
             </div>
         </div>
     )
