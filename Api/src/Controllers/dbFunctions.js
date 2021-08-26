@@ -5,6 +5,7 @@ const { endpoint } = require("../services/endpoint.service");
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
+const jwt = require ('jsonwebtoken')
 
 const TABLE_USER = "HENRY-dev-USER";
 // const TABLE_USER = "USER";
@@ -93,15 +94,14 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
-  console.log(email)
-  console.log(country)
+  var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
   try {
-    var infoUser = `INFO#${email}`;
+    var infoUser = `INFO#${tokensendEmail}`;
 
     let params = {
       TableName: TABLE_USER,
       Key: {
-        "PK": email,
+        "PK": tokensendEmail,
         "SK": infoUser,
       },
       UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",

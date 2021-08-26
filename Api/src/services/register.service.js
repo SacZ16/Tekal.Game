@@ -14,15 +14,17 @@ const oAuth2Client= new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL)
 
 
 const registerUser = async (datos) =>{
+    var email= datos.email
+    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
     try{
-        const infoUser = `INFO#${datos.email}`;
+        const infoUser = `INFO#${tokensendEmail}`;
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(datos.password, salt);
 
         const Item= {
-            "PK": datos.email,
+            "PK": tokensendEmail,
             "SK": infoUser,
-            "email":  datos.email,
+            "email":  tokensendEmail,
             "password": password,
             "VerificationEmail": false,
         }

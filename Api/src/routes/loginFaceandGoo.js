@@ -3,6 +3,7 @@ const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
 const {putUserLogin, queryAllInfoUser } = require('../Controllers/dbFunctions.js')
+const jwt = require ('jsonwebtoken')
 
 /**
  * @swagger
@@ -57,16 +58,16 @@ const {putUserLogin, queryAllInfoUser } = require('../Controllers/dbFunctions.js
 router.post('/', async (req, res) => {
     const { email, name } = req.body
     async function run() {
-        const user = await queryAllInfoUser(email)
-        console.log(user, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+        const user = await queryAllInfoUser(tokensendEmail)
         if (!user.Items.length) {
             await putUserLogin({
-                "PK": email,
-                "SK": `INFO#${email}`,
-                "email": email,
+                "PK": tokensendEmail,
+                "SK": `INFO#${tokensendEmail}`,
+                "email": tokensendEmail,
                 "name": name
             })
-            return await queryAllInfoUser(email)
+            return await queryAllInfoUser(tokensendEmail)
         }
         else {
             return user
