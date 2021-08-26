@@ -105,7 +105,7 @@ function Finalgame({ history }) {
     }
 
     useEffect(() => {
-        /* postDataa() */
+        postDataa()
     }, [])
 
     const postDataa = async () => {

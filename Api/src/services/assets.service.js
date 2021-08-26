@@ -1,12 +1,11 @@
 const { updateView, updateAnnotationsCorrect, putAssets, queryAllInfoUser } = require("../Controllers/dbFunctions");
 const { endpointNoMemento, endpoint1 } = require("./endpoint.service");
+const jwt = require ('jsonwebtoken')
 
 async function loadEndpoints(array){
-    var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
-    const user = await queryAllInfoUser(tokensendEmail)
-    let email = array[0];
+    var tokensendEmail= array[0];
     let urls = [];
-    const userInfo = await queryAllInfoUser(email);
+    const userInfo = await queryAllInfoUser(tokensendEmail);
     let age = ''
     let country = ''
     var arrayAlgo=[];
@@ -38,7 +37,7 @@ async function loadEndpoints(array){
             urls.push(pkAssetsTarget);
             object.repeated = false;
         }
-        arrayAlgo.push(putAssets(email, object));
+        arrayAlgo.push(putAssets(tokensendEmail, object));
     }
     await Promise.all(arrayAlgo)
 }

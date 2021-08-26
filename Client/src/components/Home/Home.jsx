@@ -13,7 +13,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
-import Loading from '../Loading/Loading';
 import FormData from '../FormData/formularyData';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -212,7 +211,7 @@ const Home = () => {
             }
 
             {/* Logeado Mobile */}
-            {!averageScore && startGame && sessionOn ? <Loading /> : startGame ?
+            {startGame ?
                 <div className="pantallaMovilScore">
                     <div className="contenedorTextoMovilScore">
                         <div>
@@ -244,7 +243,7 @@ const Home = () => {
                 <section>
                     <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
                     {/* Home Logeado */}
-                    {!averageScore && startGame && sessionOn ? <Loading /> : startGame ?
+                    {startGame ?
                         <>
                             <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
                             <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>{sessionUser}</span></p>

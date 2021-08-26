@@ -85,9 +85,9 @@ const GameModes = ({ averageScore }) => {
                 title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
                 html:
                     <div className='mood_container' style={{ borderStyle: 'none' }}>
-                        <span id='fine' onClick={mood2}>😁</span>
-                        <span id='normal' onClick={mood2}>😐</span>
                         <span id='bad' onClick={mood2}>☹️</span>
+                        <span id='normal' onClick={mood2}>😐</span>
+                        <span id='fine' onClick={mood2}>😁</span>
                     </div>,
                 showConfirmButton: false
             })
@@ -151,14 +151,13 @@ const GameModes = ({ averageScore }) => {
                         </button>
                     </div>
                 </div>
-            </div>
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
-                        <button onClick={(e) => console.log(e.target.id)} id='video'>
-                            <div className='game_mode'>
-                                <MovieCreationIcon style={{ fontSize: '7.5rem' }}/>
-                                <p>{<Translate content="videosCortoPlazo" component="p"/>}</p>
+                        <button onClick={(e) => playWithOutLogin(e)} id='video'>
+                            <div className='game_mode' id='video'>
+                                <MovieCreationIcon style={{ fontSize: '7.5rem' }} id='video' />
+                                <p id='video'>{<Translate content="videosCortoPlazo" component="p" id='video' />}</p>
                             </div>
                         </button>
                         <button onClick={(e) => playWithOutLogin(e)} id='image'>
