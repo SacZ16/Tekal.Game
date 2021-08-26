@@ -2,7 +2,9 @@ const { expect } = require('chai');
 const session = require('supertest-session');
 const server = require('../../src/app.js');
 const agent = session(server)
-                     //0            1    2 
+
+
+
 let testeo = ['pruebass2@live.com', 40, {
     answer: 1,
     category: "VIG",

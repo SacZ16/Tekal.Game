@@ -80,6 +80,10 @@ const {sendEmailForPassword} = require('../services/register.service')
  *               example: 'Email not registered'
  *                     
  */
+
+
+
+
 router.post('/', async (req,res) => {
     let email = req.body.email
     let response = await queryAllInfoUser(email)

@@ -12,6 +12,9 @@ function endpoint(url){   // data memento
     }
 }
 
+
+
+
 function endpointNoMemento(url){ 
     let string2 = url.slice(78);
     var asset = "";

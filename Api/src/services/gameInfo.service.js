@@ -1,6 +1,10 @@
 const { putUserGameItems } = require("../Controllers/dbFunctions");
 const { endpointNoMemento, endpoint, endpoint1 } = require("./endpoint.service");
 
+
+
+
+
 async function loadGameInfo(array) {
     let answers = [];
     let presentations = [];

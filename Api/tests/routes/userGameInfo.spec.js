@@ -21,8 +21,12 @@ let errortest = []
 
 
 
+
+
+
+
 xdescribe('POST gameInfo', () => {
-    it('responds with 200', () => 
+    xit('responds with 200', () => 
         agent.post('/gameInfo')
             .send(testeo)
             .then((res) => {
