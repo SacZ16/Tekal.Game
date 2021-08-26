@@ -17,8 +17,7 @@ const ChangePassword = () => {
     const [confirmpassword, setconfirmpassword] = useState('')
 
     const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-  
-    const [language, setLanguage] = useState(localStorage.getItem('idioma'));
+    const [language, _setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
 

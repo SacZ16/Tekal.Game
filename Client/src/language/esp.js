@@ -18,7 +18,7 @@ export default {
     desloguear: 'Cerrar sesión',
     intentarNuevamente: 'Jugar de nuevo',
     tituloLastScreen: 'Estas en el top ',
-    tituloLastScreen2: ' de las personas de tu edad con la mejor memoria visual!',
+    tituloLastScreen2: ' de las personas con mejor memoria visual! que jugaron al juego de ',
     textoLastScreen: 'Si sigues practicando, mejorarás tu memoria visual. ¿Seguimos?',
     tituloResultadoLastScreen: 'Tu puntaje',
     textoResultadoLastScreen: 'Identificaste ',
@@ -58,4 +58,8 @@ export default {
     perdisteTodasLasVidas: 'Perdiste todas tus vidas, buena suerte la próxima vez!',
     home: 'Home',
     enviar: 'Enviar',
+    esperaParaJugar: 'Espera para volver a jugar',
+    completaShortTerm: 'Completa el de corto plazo primero',
+    resultImage: 'imagenes',
+    resultVideo: 'videos'
 }

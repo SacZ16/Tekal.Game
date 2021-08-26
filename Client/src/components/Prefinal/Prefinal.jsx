@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom'
 import '../Styles/prefinal.css';
 import logoTekal from '../Styles/tekalLogo.png';
 import RegisterCommonForm from '../Signin/LoginCommonForm';
@@ -9,7 +9,6 @@ import withReactContent from 'sweetalert2-react-content'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import RegisterWithEmail from '../Signin/RegisterEmail';
 import fondomascota from '../Styles/prefinalmascota.png'
-import Loading from '../Loading/Loading';
 // Traducciones
 import Translate from "react-translate-component";
 import counterpart from "counterpart";

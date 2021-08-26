@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import imagesPrueba from '../../assets/img/imagesPrueba';
+import { useEffect, useRef, useState } from 'react';
 import Timer from 'react-compound-timer';
 import style from '../Styles/Game.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +6,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { withRouter } from 'react-router';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { sessionInfo } from '../../redux/action';
 
 import cerebroLose from '../Styles/slideSeisEsp.png'
 import cerebroEnd from '../Styles/cerebrito_derecha.png'
@@ -20,8 +18,7 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
-
-const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood }) => {
+const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood, mode }) => {
     const MySwal = withReactContent(Swal)
     const cookies = new Cookies();
     const dispatch = useDispatch();
@@ -122,7 +119,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     useEffect(() => {
         if (seeImages.current.length === imageApi.length) {
             setTimeout(() => {
-                localStorage.setItem('longTermActive')
+                localStorage.setItem('longTermImageActive', 'longTermImageActive')
                 longTerm.current = true
                 if (!press.current) {
                     prevAsset()
@@ -131,7 +128,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                     toast: true,
                     html:
                         <div >
-                            <h1 style={{ color: 'red', textAlign: 'center' }}>The Game has finished</h1>
+                            <h1 style={{ color: 'red', textAlign: 'center' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <img style={{ width: '40vh', height: '25vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
                             </div>
@@ -141,6 +138,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                     timerProgressBar: true,
                     width: 500
                 }).then(() => {
+                    checkLongTerm()
                     videosWithAnswers()
                     sessionData()
                     checkLogin()
@@ -214,6 +212,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 timerProgressBar: true,
                 width: 600
             }).then(() => {
+                checkLongTerm()
                 videosWithAnswers()
                 sessionData()
                 checkLogin()
@@ -249,6 +248,13 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     counterpart.registerTranslations('en', en);
     counterpart.registerTranslations('es', es);
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
+
+    const checkLongTerm = () => {
+        if (mode.includes('-')) {
+            mode === 'image-lt' && localStorage.setItem('image-lt', 'image-lt')
+            localStorage.setItem('playedDateImage', Date.now())
+        }
+    }
 
     return (
         <>
