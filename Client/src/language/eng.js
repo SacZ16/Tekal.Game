@@ -19,7 +19,7 @@ export default {
     desloguear: 'Log out',
     intentarNuevamente: 'Try again',
     tituloLastScreen: 'You re in the top ',
-    tituloLastScreen2: ' of people your age with the best visual memory!',
+    tituloLastScreen2: ' of people with best visual memory! who played with ',
     textoLastScreen: `If you keep practicing, you'll improve your visual memory. Do you want to try again?`,
     tituloResultadoLastScreen: 'Your score',
     textoResultadoLastScreen: 'You identified ',
@@ -59,4 +59,8 @@ export default {
     perdisteTodasLasVidas: 'You lost all your lives, good luck next time!',
     home: 'Home',
     enviar: 'Submit',
+    esperaParaJugar: 'Wait to play again',
+    completaShortTerm: 'Complete a short term first',
+    resultImage: 'images',
+    resultVideo: 'videos'
 }
