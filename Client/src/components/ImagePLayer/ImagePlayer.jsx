@@ -45,7 +45,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     // console.log('Falsos Positivos', falsePositives.current)
     const vigilanceRecognized = useRef([])
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
-    const lives = useRef(3); // Vidas del usuario 
+    const lives = useRef(7); // Vidas del usuario 
     // console.log(lives.current)
     const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
     // console.log(score)
