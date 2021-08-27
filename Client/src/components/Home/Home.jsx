@@ -139,7 +139,7 @@ const Home = () => {
 
     const CurrentSession = () => {
         return (
-            <div >
+            <div>
                 {sessionOn ?
                     <div className='sessionBox'>
                         <div className='boxDisplay'>
@@ -148,7 +148,6 @@ const Home = () => {
 
                             <div className='textBox'>
                                 <p className='sessionName'>{sessionUser}</p>
-                                <p className='sessionStatus'>{<Translate content="estadoSesion" component="span" />}</p>
                             </div>
                             <button className='btnOpenSessionMenu' onClick={() => { setShow(!show) }}>&#9660;</button>
                         </div>

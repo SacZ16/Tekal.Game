@@ -14,11 +14,6 @@ img{
     pointer-events: none;
 }
 
-.Header-lang{
-    position: absolute;
-}
-
-
 .logoTekal{
     position: absolute;
     width: 55px;
@@ -124,16 +119,16 @@ overflow: hidden;
     .Header-lang{
         font-family:'Montserrat', sans-serif; 
         background-color: transparent;
-        border-style: solid;
+        border-style: none;
         border-color: white;
         border-width: 1px;
-        font-size: 20px;
+        font-size: 15px;
         color: white;
-        padding: 5px;
-        border-radius: 10px;
-        position:fixed;
-        right: 1.5%;
-        bottom: 5%;
+        padding: 1px;
+        border-radius: 5px;
+        position:absolute;
+        right: 2.4%;
+        top: 1%;
         z-index: 5000000;
     }
 
@@ -632,9 +627,9 @@ section::before{
     width: 12em;
     position: absolute;
     right: 0;
-    margin-right:30px;
+    margin-right:2.4%;
     height: 60px;
-    margin-top:30px;
+    margin-top:3%;
     border-radius:5px;
     border-color:white;
     border-style:solid;
@@ -662,7 +657,7 @@ section::before{
     height: 20px;
     position: relative;
     margin-top:11%;
-    left:25%;
+    left:22%;
     background-color: transparent;
     border-style: none;
     cursor: pointer;
@@ -683,9 +678,11 @@ section::before{
 }
 
 .sessionName{
-    margin-bottom:-5px;
+    position: relative;
+    top: 5%;
     color: white;
     text-transform: capitalize;
+    font-size:15px!important
 }
 
 .btnLogOut{

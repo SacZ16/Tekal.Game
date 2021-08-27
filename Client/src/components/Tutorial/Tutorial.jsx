@@ -85,10 +85,9 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
       <Link onClick={playWithOutLogin}><button style={{ backgroundColor:'transparent' ,fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "none", position: 'absolute',bottom:'5%', right:'5%' }}>{mode ? <Translate content="saltar" component="span" />:null}</button></Link>
       <div className="slideshow">
         <div className='tutorial_container'>
-          <p className='tekalLogo_tutorial'>TEKAL</p>
           <div className="container_lang_change">
-            <button onClick={() => setIdioma('Castellano')}>Es</button>
-            <button onClick={() => setIdioma('English')}>En</button>
+            <button style={{display:'none'}} onClick={() => setIdioma('Castellano')}>Es</button>
+            <button style={{display:'none'}} onClick={() => setIdioma('English')}>En</button>
           </div>
           <div className='tutorial_buttons'>
             <button className='left_btn_tutorial' style={index > 0 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index > 0 ? () => { setIndex(index - 1) } : null}>&#x276e;</button>
@@ -115,12 +114,12 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
                 {idioma === 'Castellano' ?
 
                   <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textoCastellanoPrimera[index]}</p>
+                    <p className='text_tutorial' style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', paddingRight:'20px', paddingLeft:'20px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' }}>{textoCastellanoPrimera[index]}</p>
                     {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[in,ex]}</p> */}
                   </div>
                   :
                   <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textEnglishFirstLine[index]}</p>
+                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' }}>{textEnglishFirstLine[index]}</p>
                   </div>
                 }
               </div>
