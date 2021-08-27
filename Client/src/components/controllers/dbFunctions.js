@@ -11,7 +11,7 @@ export const newCookie = (info) => {
         window.location.href = './preclose'
     }
     if (!localStorage.getItem('pruebaa')) {
-        window.location.href = './login'
+        window.location.href = './'
     }
 }
 export const SendDataToBACK = async (email, password) => {

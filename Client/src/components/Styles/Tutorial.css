@@ -1,6 +1,12 @@
 /* Slideshow */
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
+.homeIcon{
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+
 .slideContainer{
   background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
    width: 100%;
