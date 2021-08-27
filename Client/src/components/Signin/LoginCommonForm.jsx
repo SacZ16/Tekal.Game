@@ -38,6 +38,7 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
         }
     }
 
+
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
@@ -58,7 +59,7 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
                     </form>
                     <div className='form3'>
                         <a className='forgotPassword' href='/forgotPassword'><p>{<Translate content="olvidasteContrasena" component="a" />}</p></a>
-                        <button className='continue' onClick={() => checker(email, password)}> {<Translate content="continuar" component="span" />} </button>
+                        <button className='continue' onClick={() => {checker(email, password)}}> {<Translate content="continuar" component="span" />} </button>
                         <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>{<Translate content="o" component="span" />}<hr class='hr' width='40%' color='lightgrey'></hr></p>
                         <div style={{ position: 'relative', width: '100%' }}>
                             <GoogleButton />

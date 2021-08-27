@@ -15,11 +15,13 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
+import Loading from '../Loading/Loading';
 
 const RegisterWithEmail = () => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [passwordcopia, setPasswordcopia] = useState('')
     const [err, setErr] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [input, setInput] = useState({
         email: "",
@@ -57,6 +59,7 @@ const RegisterWithEmail = () => {
 
     const SendToBackEnd = async (e) => {
         e.preventDefault()
+        setLoading(!loading)
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
             return;
@@ -111,6 +114,12 @@ const RegisterWithEmail = () => {
     }
     var a = cookiies.get('prueba')
 
+    const LoadingForm = () => {
+        return(
+        <img alt='Loading...' style={{ height: '80px', width: '80px' }} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' />
+        )
+    }
+
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
@@ -121,6 +130,7 @@ const RegisterWithEmail = () => {
 
     return (
         <>
+        {!loading? null : <div style={{position:'absolute', width:'100%', left:'43%', top:'40%'}}><LoadingForm/></div>}
             {err && <h5 style={{ color: 'red' }}>{err}</h5>}
             <div class="row" onChange={handleInputChange}>
                 <div class="column" >
