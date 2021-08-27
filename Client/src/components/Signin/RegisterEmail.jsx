@@ -16,10 +16,11 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 
-const RegisterWithEmail = () => {
+const RegisterWithEmail = ({ setRes }) => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [passwordcopia, setPasswordcopia] = useState('')
     const [err, setErr] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [input, setInput] = useState({
         email: "",
@@ -57,16 +58,24 @@ const RegisterWithEmail = () => {
 
     const SendToBackEnd = async (e) => {
         e.preventDefault()
+        setLoading(!loading)
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
-            return;
+            setErr('Verify all fields')
+            return
         }
         const passwordReject = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
         if (!passwordReject.test(input.password) && input.password.length >= 0) {
-            return;
+            setErr('Verify all fields')
+            return
         }
         if (input.password !== input.confirmPass) {
-            return;
+            setErr('Verify all fields')
+            return
+        }
+        if (!input.age.length) {
+            setErr('Verify all fields')
+            return
         }
         const user = {
             email: input.email,
@@ -84,8 +93,8 @@ const RegisterWithEmail = () => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
         if (localStorage.getItem('pruebaa')) {
             if (response.data.status) {
+                setLoading(!loading)
                 alert()
-
                 window.location.href = './preclose'
             }
             else { setErr('The email was already used') }
@@ -93,6 +102,7 @@ const RegisterWithEmail = () => {
         }
         if (!localStorage.getItem('pruebaa')) {
             if (response.data.status) {
+                setLoading(!loading)
                 alert()
                 user.password = ''
                 newCookie([user])
@@ -111,6 +121,13 @@ const RegisterWithEmail = () => {
     }
     var a = cookiies.get('prueba')
 
+    const LoadingForm = () => {
+        return (
+            <img alt='Loading...' style={{ height: '80px', width: '80px' }} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' />
+        )
+    }
+
+
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
@@ -121,18 +138,19 @@ const RegisterWithEmail = () => {
 
     return (
         <>
-            {err && <h5 style={{ color: 'red' }}>{err}</h5>}
+            {!loading ? null : <div style={{ position: 'absolute', width: '100%', left: '43%', top: '40%' }}><LoadingForm /></div>}
+            {err && <h5 style={{ color: 'yellow', position: 'absolute', zIndex: '1000', top: '9em', left: '42%' }}>{err}</h5>}
             <div class="row" onChange={handleInputChange}>
                 <div class="column" >
                     <p class="dddd">{<Translate content="nombre" component="span" />}*</p>
                     <input class="swal2-inputmh4" name='name' onChange={handleInputChange} />
-                    <p class="dddd">{<Translate content="nacimiento" component="span" />}</p>
+                    <p class="dddd">{<Translate content="nacimiento" component="span" />}*</p>
                     <input class="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="pais" component="span" />}</p>
                     <input class="swal2-inputmh4" value={country.country ? country.country : 'empty'} name='country' onChange={handleInputChange} />
-                    <p class="dddd">{<Translate content="contrasena" component="span" />}</p>
+                    <p class="dddd">{<Translate content="contrasena" component="span" />}*</p>
                     <input id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
-                    <p class="dddd">{<Translate content="genero" component="span" />}</p>
+                    <p class="dddd">{<Translate content="genero" component="span" />}*</p>
                     <select class="swal2-inputmh4" name='gender' onChange={handleInputChange}>
                         <option value='prefer-not-to-answer'> Prefer not to say</option>
                         <option value='male'>Male</option>
@@ -141,13 +159,13 @@ const RegisterWithEmail = () => {
                     </select>
                 </div>
                 <div class="column" >
-                    <p class="dddd" >{<Translate content="apellido" component="span" />}</p>
+                    <p class="dddd" >{<Translate content="apellido" component="span" />}*</p>
                     <input class="swal2-inputmh4" name='lastname' onChange={handleInputChange} />
-                    <p class="dddd">{<Translate content="mail" component="span" />}</p>
+                    <p className="dddd">{<Translate content="mail" component="span" />}*</p>
                     <input id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange} />
-                    <p class="dddd">{<Translate content="ciudad" component="span" />}</p>
+                    <p className="dddd">{<Translate content="ciudad" component="span" />}</p>
                     <input class="swal2-inputmh4" value={country.city ? country.city : 'empty'} name='city' onChange={handleInputChange} />
-                    <p className="dddd">{<Translate content="confirmaContrasena" component="span" />}</p>
+                    <p className="dddd">{<Translate content="confirmaContrasena" component="span" />}*</p>
                     <input id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="etnia" component="span" />}</p>
                     <input class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange} />
@@ -155,9 +173,9 @@ const RegisterWithEmail = () => {
             </div>
             <button className='buttonRegister' onClick={SendToBackEnd}> {<Translate content="botonRegistro" component="span" />} </button>
             <div className='container_buttons_register_form'>
-                    <GoogleButton/>
-                    <FacebookButton />
-                </div>
+                <GoogleButton />
+                <FacebookButton />
+            </div>
         </>
     )
 }

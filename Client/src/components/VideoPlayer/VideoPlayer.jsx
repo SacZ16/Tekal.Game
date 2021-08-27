@@ -23,7 +23,6 @@ import es from "../../language/esp.js"
 
 const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood, mode }) => {
 
-  const dispatch = useDispatch();
   const MySwal = withReactContent(Swal)
   const cookies = new Cookies();
 
@@ -172,7 +171,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
           <div >
             <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px', marginBottom: '-15%' }}>{<Translate content="perdisteTodasLasVidas" component="span" />}</h1>
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroLose} alt="cerebroLose" />
+              <img style={{ width: '100vh', height: '60vh', margin: '0' }} src={cerebroLose} alt="cerebroLose" />
             </div>
           </div>,
         timer: 4000,
@@ -216,11 +215,11 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       play: true
     })
     localStorage.setItem('results', JSON.stringify(finalVideos.current))
-    localStorage.setItem('pruebaa','pruebaa')
+    localStorage.setItem('pruebaa', 'pruebaa')
   }
 
   const checkLongTerm = () => {
-    if (mode.includes('-')) {
+    if (!localStorage.getItem('playedDateVideo') && !localStorage.getItem('longTermToPlay')) {
       mode === 'video-lt' && localStorage.setItem('video-lt', 'video-lt')
       localStorage.setItem('playedDateVideo', Date.now())
     }
@@ -229,7 +228,6 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   const onProgress = (e) => {
     if (seeVideos.current.length === videoApi.length) {
       if (e.playedSeconds === e.loadedSeconds) {
-        checkLongTerm()
         localStorage.setItem('longTermVideoActive', 'longTermVideoActive')
         longTerm.current = true
         setTimeout(() => {
@@ -240,7 +238,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
               <div >
                 <h1 style={{ color: 'white', textAlign: 'center', fontFamily: 'Montserrat, sans-serif', fontSize: '30px' }}>{<Translate content="juegoTerminado" component="span" />}</h1>
                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img style={{ width: '100vh', height: '60vh', margin: '0'}} src={cerebroEnd} alt="cerebroLose" />
+                  <img style={{ width: '100vh', height: '60vh', margin: '0' }} src={cerebroEnd} alt="cerebroLose" />
                 </div>
               </div>,
             timer: 3000,
@@ -248,6 +246,8 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
             timerProgressBar: true,
             width: 600
           }).then(() => {
+            checkLongTerm()
+            removeLongTerm()
             videosWithAnswers()
             sessionData()
             checkLogin()
@@ -256,6 +256,10 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       }
     }
     progress.current = Number(e.playedSeconds.toFixed(4));
+  }
+
+  const removeLongTerm = () => {
+    if (mode.includes('-')) localStorage.removeItem('longTermToPlay')
   }
 
   const [language, setLanguage] = useState(localStorage.getItem('idioma'));

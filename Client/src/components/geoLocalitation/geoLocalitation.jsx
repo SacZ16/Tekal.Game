@@ -10,8 +10,7 @@ const GeoLocalitation = () => {
                 var longitude = position.coords.longitude;
                 const response = await axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=un`)
                 let filterResponse = await response.data
-                console.log(filterResponse)
-                setlocalitation({ city: filterResponse.city, country: filterResponse.countryName })
+                setlocalitation({ city: filterResponse.locality, country: filterResponse.countryName })
                 return
             });
         }

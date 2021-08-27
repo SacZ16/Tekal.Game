@@ -26,6 +26,7 @@ const GameModes = ({ averageScore }) => {
         setResetLongTermImage(Number(playedLongTermImage))
     }, [])
     const resetVid = () => {
+        localStorage.setItem('longTermToPlay', 'longTermToPlay')
         localStorage.removeItem('playedDateVideo')
         setResetLongTermVideo('')
     }
@@ -35,7 +36,7 @@ const GameModes = ({ averageScore }) => {
     }
     //----------------------------------------
     const [login, setLogin] = useState(false)
-
+    console.log(Date.now())
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
 
@@ -50,7 +51,7 @@ const GameModes = ({ averageScore }) => {
         const day = currentDate.getDay();
         localStorage.setItem('mood', e.target.id)
         localStorage.setItem('date', day)
-        if (averageScore === undefined||averageScore == 0) {
+        if (averageScore === undefined || averageScore == 0) {
             window.location.href = ('/tutorial')
         } else {
             window.location.href = ('/game')
@@ -92,7 +93,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined|| averageScore== 0) {
+            if (averageScore === undefined || averageScore == 0) {
                 window.location.href = ('/tutorial')
             } else {
                 window.location.href = ('/game')
@@ -101,7 +102,7 @@ const GameModes = ({ averageScore }) => {
     }
 
     const playWithOutLogin = (e) => {
-        if (averageScore === undefined|| averageScore== 0) {
+        if (averageScore === undefined || averageScore == 0) {
             cookies.remove('play')
             localStorage.setItem('mode', e.target.id)
             window.location.href = ('/tutorial')
@@ -135,9 +136,10 @@ const GameModes = ({ averageScore }) => {
                             <div className='game_mode' id='video-lt'>
                                 <MovieFilterIcon style={{ fontSize: '5.5rem' }} id='video-lt' />
                                 {modeVideoLT === 'video-lt' && resetLongTermVideo ?
-                                    <p>{<Translate content="esperaParaJugar" id='video-lt' />}<Countdown date={resetLongTermVideo + 86400000} onComplete={resetVid} renderer={renderer} /></p> :
-                                    longTermVideoActive ? <p id='video'>{<Translate content="videosLargoPlazo" component="p" id='video-lt' />}<p className='descrip_game_mode'>{<Translate content="longTermVideo" component="span" />}</p></p> :
-                                        <p>{<Translate content="completaShortTerm" id='video-lt' />}</p>
+                                    <p className='descrip_game_mode'>{<Translate content="esperaParaJugar" id='video-lt' />}<Countdown date={resetLongTermVideo + 86400000} onComplete={resetVid} renderer={renderer} /></p> :
+                                    longTermVideoActive ? <><p id='video-lt' className='descrip_game_mode'>{<Translate content="videosLargoPlazo" component="span" id='video-lt' />}</p>
+                                        <p>{<Translate content="longTermVideo" component="span" />}</p></> :
+                                        <p>{<Translate content="completaShortTermVid" id='video-lt' />}</p>
                                 }
                             </div>
                         </button>
@@ -145,10 +147,11 @@ const GameModes = ({ averageScore }) => {
                             <div className='game_mode' id='image-lt'>
                                 <BurstModeIcon style={{ fontSize: '5.5rem' }} id='image-lt' />
                                 {modeImageLT === 'image-lt' && resetLongTermImage ?
-                                    <p>{<Translate content="esperaParaJugar" id='image-lt' />}<Countdown date={resetLongTermImage + 86400000} onComplete={resetImg} renderer={renderer} /></p> :
-                                    longTermImageActive ? <p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image-lt' />} </p>  :
-                                    <><p id='image'>{<Translate content="imagenesLargoPlazo" component="p" id='image' />}</p>
-                                    <p className='descrip_game_mode'>{<Translate content="longTermImages" component="span" />}</p></>
+                                    <p className='descrip_game_mode'>{<Translate content="esperaParaJugar" id='image-lt' />}<Countdown date={resetLongTermImage + 86400000} onComplete={resetImg} renderer={renderer} /></p> :
+                                    longTermImageActive ? <><p id='image-lt' className='descrip_game_mode'>{<Translate content="imagenesLargoPlazo" component="span" id='image-lt' />}</p>
+                                        <p>{<Translate content="longTermImages" component="span" />}</p></> :
+                                        <p>{<Translate content="completaShortTermImg" id='image-lt' />}</p>
+
                                 }
                             </div>
                         </button>
@@ -157,7 +160,7 @@ const GameModes = ({ averageScore }) => {
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
-                    <button onClick={(e) => playWithOutLogin(e)} id="video">
+                        <button onClick={(e) => playWithOutLogin(e)} id="video">
                             <div className='game_mode' id="video">
                                 <MovieCreationIcon style={{ fontSize: '5.5rem' }} id="video" />
                                 <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>

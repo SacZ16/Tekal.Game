@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import logoTekal from '../Styles/tekalLogo.png';
 import stars from '../Styles/images/stars.png';
 import brainBottomLeft from '../Styles/images/brainBottomLeft.png';
@@ -33,71 +33,90 @@ const Home = () => {
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
     const sessionData = localStorage.getItem('lastScore')
+    const [hideA, setHideA] = useState(false)
 
-    var emailCokkie;
 
+    let emailCokkie;
+    let sessionUser = "";
 
     if (cookies.get('userInfo')) {
-        console.log(cookies.get('userInfo'))
-        if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
-        else { emailCokkie = cookies.get('userInfo').Items[0].email }
+        if (!cookies.get('userInfo').Items) {
+            emailCokkie = cookies.get('userInfo')[0].email
+            sessionUser = cookies.get('userInfo')[0].name
+        } else {
+            emailCokkie = cookies.get('userInfo').Items[0].email
+            sessionUser = cookies.get('userInfo').Items[0].name
+        }
     }
-
     const [offset, setOffset] = useState()
     const handleScroll = () => {
         setOffset(window.pageYOffset)
     }
     if (localStorage.getItem('pruebaa')) { localStorage.removeItem('pruebaa') }
+    if (localStorage.getItem('loginButtona')) { localStorage.removeItem('loginButtona') }
     window.addEventListener('scroll', handleScroll)
-    const prueba = () => {
+    const loginButton = () => {
+        setHideA(true)
         MySwal.fire({
             title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonLogin" component="span" />}</p>,
             html:
                 <div style={{ overflow: 'hidden' }}>
                     <RegisterCommonForm props={SendDataToBACK} style={{ posicion: 'absolute' }} />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor:'pointer' }} onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</a>
+                        <a className='signUpText'>{<Translate content="noTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor: 'pointer' }} onClick={registerButton}>{<Translate content="botonRegistro" component="span" />}</a>
                     </div>
                 </div>,
             showCloseButton: true,
             confirmButtonText: login,
             showConfirmButton: false
+        }).then(() => {
+            setHideA(false)
         })
     }
-    const pruebare = () => {
+    const registerButton = () => {
+        setHideA(true)
         MySwal.fire({
-            title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
+            title: <p style={{ color: 'white', fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
             html:
-                <div style={{ overflow: 'hidden' }}>
-                    <RegisterWithEmail/>
+                <div style={{ overflow: 'hidden', paddingTop: '2em' }}>
+                    <RegisterWithEmail />
                     <div style={{ display: 'flex' }}>
-                        <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor:'pointer' }} onClick={prueba}>{<Translate content="botonLogin" component="span" />}</a>
+                        <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor: 'pointer' }} onClick={loginButton}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
                 </div>,
             showCloseButton: true,
             showConfirmButton: false
+        }).then(() => {
+            setHideA(false)
         })
     }
-
-    //Formulario de informacion extra para google y facebook
-    if(cookies.get('userInfo')){
-        const popUpFormDataExtra = () => {
+    const display = useRef()
+    const popUpFormDataExtra = () => {
         MySwal.fire({
             html:
-                <div className='popUpContainerExtraData' style={{ overflow: 'hidden'}}>
-                <FormData/>
+                <div className='popUpContainerExtraData' style={{ overflow: 'hidden' }}>
+                    <FormData />
                 </div>,
             showConfirmButton: false,
             allowOutsideClick: false
         })
     }
-        if(cookies.get('userInfo').Items)
-        if(!cookies.get('userInfo').Items[0].country || !cookies.get('userInfo').Items[0].age ){
+
+    //Formulario de informacion extra para google y facebook
+    useEffect(async () => {
+        console.log(emailCokkie)
+        const res = await axios.post('http://localhost:3001/age', {
+            email: emailCokkie
+        })
+        console.log(res.data)
+        if (res.data.length === 0) {
             popUpFormDataExtra()
-            var display = 'none'
+            display.current = 'none'
         }
-    }
-    
+    }, [])
+
+
+
     //-----------
 
     const [show, setShow] = useState(false)
@@ -107,24 +126,13 @@ const Home = () => {
     const [checker, setchecker] = useState(false)
     const [showMobileLogOut, setShowMobileLogOut] = useState(false)
 
-    let sessionUser = "";
-
-    if (cookies.get('userInfo')) {
-        if (cookies.get('userInfo').Items) {
-            sessionUser = cookies.get('userInfo').Items[0].name
-        } else {
-            sessionUser = cookies.get('userInfo')[0].name
-        }
-    }
-
-    console.log(cookies.get('userInfo'))
     if (cookies.get('userInfo') && !checker) {
         setStartGame(true)
         setLogin(false)
         setSessionOn(true)
         setchecker(true)
     }
-    function tutorialboton(){
+    function tutorialbutton() {
         window.location.href = ('/tutorial')
         localStorage.removeItem('mode')
     }
@@ -146,9 +154,11 @@ const Home = () => {
                         </div>
                         {show ?
                             <div>
-                                <button className='btnLogOut' onClick={() => tutorialboton()}>Tutorial</button>
+                                <button className='btnLogOut' onClick={() => tutorialbutton()}>Tutorial</button>
                                 <button className='btnLogOut' onClick={() => {
                                     cookies.remove('userInfo')
+                                    cookies.remove('alexis')
+
                                     window.location.href = ('')
                                 }}>{<Translate content="desloguear" component="span" />}</button>
                             </div> : (null)
@@ -178,12 +188,11 @@ const Home = () => {
     }
 
     const [averageScore, setAverageScore] = useState()
-console.log('averg')
-console.log(averageScore)
+
     useEffect(async () => {
         const res = await axios.post('http://localhost:3001/averageScore', {
             email: emailCokkie,
-            // mode: mode
+            scoreFront: sessionData
         })
         setAverageScore(res.data.averageScore)
     }, [])
@@ -229,7 +238,7 @@ console.log(averageScore)
             {/* No logeado mobile */}
             {login ?
                 <div className="pantallamovil">
-                <img className='logo_mobile_cerebro' src={imgMobile} alt='img_mobile' />
+                    <img className='logo_mobile_cerebro' src={imgMobile} alt='img_mobile' />
                     <div className="contenedortextomovil">
                         <p className='subtitlemovil'>{<Translate content="titleLandingSecondPage" component="span" />}</p>
                         <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
@@ -258,7 +267,7 @@ console.log(averageScore)
                             </div>
                             <div className='column_scores_mobile'>
                                 <h4>{<Translate content="promedioResultados" component="span" />}</h4>
-                                <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
+                                <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
                             </div>
                         </div>
                         <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
@@ -281,11 +290,11 @@ console.log(averageScore)
                                 </div>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
-                                    <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
+                                    <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
                                 </div>
                             </div>
-                            <div className='buttonsHome' style={{display:`${display}` }}>
-                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif'}} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
+                            <div className='buttonsHome' style={{ display: `${display && display.current}` }}>
+                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>
                         </> : (null)}
                 </section>
@@ -299,11 +308,11 @@ console.log(averageScore)
                         <p className='textHome' style={{ opacity: (100 + offset * -0.15) + '%', bottom: (50 + offset * -0.1) + '%' }}>{<Translate content="tituloLandingPage" component="span" />}<span className='memory_style'>{<Translate content="memoria" component="span" />}</span>?</p>
                         <p className='sub_textHome' style={{ opacity: (100 + offset * -9) + '%', bottom: (45 + offset * -0.1) + '%' }}>{<Translate content="subtituloLandingPage" component="span" />}</p>
                         <div className='container_buttons_home'>
-                            <button className='registerHome' onClick={pruebare}>{<Translate content="botonRegistro" component="span" />}</button>
-                            <button className='loginHome' onClick={prueba}>{<Translate content="botonLogin" component="span" />}</button>
+                            <button className='registerHome' onClick={registerButton}>{<Translate content="botonRegistro" component="span" />}</button>
+                            <button className='loginHome' onClick={loginButton}>{<Translate content="botonLogin" component="span" />}</button>
                         </div>
 
-                        <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }}><span></span></a>
+                        <a href='#second_screen' className='button_scroll' style={{ opacity: (100 + offset * -5) + '%' }} hidden={hideA ? true : false}><span></span></a>
                         <img className='brainsBottom' src={brainBottomLeft} alt="brainsBackground" id='brainsBottomLeft' style={{ left: (-1 + offset * -0.1) + '%', bottom: (-7) }} />
                         <img className='brainsBottom' src={brainBottomRight} alt="brainsBackground" id='brainsBottomRight' style={{ right: (0 + offset * -0.1) + '%' }} />
 

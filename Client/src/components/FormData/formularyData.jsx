@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Cookie from 'universal-cookie'
 import getCity from '../geoLocalitation/geoLocalitation'
@@ -28,7 +28,7 @@ const FormData = () => {
     let emailCokkie = ''
     if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
     else { emailCokkie = cookies.get('userInfo').Items[0].email }
-  
+
 
     const handleInputChange = function (e) {
         setInput({
@@ -36,7 +36,7 @@ const FormData = () => {
             [e.target.name]: e.target.value
         })
     }
-    
+
     const SendToBackEnd = async () => {
         const user = {
             email: emailCokkie,
@@ -50,17 +50,22 @@ const FormData = () => {
         }
         console.log(user)
         let response = await axios.post(`${process.env.REACT_APP_API_URL}addinfo`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
-        if (response.data === 'campos incompletos'){
-            alert('Completa los campos')
+        if (response.data === 'campos incompletos') {
+            setErr('Completa los campos')
         }
-        else{
-            cookies.remove('userInfo')
-            window.location.href = ('')
+        else {
+
+            if (localStorage.getItem('results')) {
+                window.location.href = ('/close')
+            } else {
+                // cookies.remove('userInfo')
+                window.location.href = ('')
+            }
         }
     }
 
-     // Traducciones
-     if (!localStorage.getItem('idioma')) {
+    // Traducciones
+    if (!localStorage.getItem('idioma')) {
         localStorage.setItem('idioma', 'es')
     }
 
