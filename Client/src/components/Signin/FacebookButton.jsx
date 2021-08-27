@@ -12,10 +12,14 @@ const FacebookButton = () => {
     }
 
     if (profile.email) {
+        
+        var profileNameTotal=profile.name.split(' ')
         let obj = {
             email: profile.email,
-            name: profile.name.split(' ')[0]
+            name: profileNameTotal[0],
+            lastname:profileNameTotal[(profileNameTotal.length)-1]
         }
+        
         SendDataGoogle(obj)
     }
     if (localStorage.getItem('idioma') === 'es') {

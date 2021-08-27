@@ -41,7 +41,8 @@ export const SendDataToBACK = async (email, password) => {
 export const SendDataGoogle = async (obj) => {
     const objPost = {
         email: obj.email,
-        name: obj.name
+        name: obj.name,
+        lastname: obj.lastname
     }
     const status = await axios({
         url: 'http://localhost:3001/logingoogle',
