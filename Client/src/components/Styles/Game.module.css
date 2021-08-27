@@ -101,7 +101,6 @@
 }
 .video{
     width: 95% !important;
-    margin-top: 11px;
     min-height: 83vh;
     border-color: rgb(0, 0, 0);
     background: black;
@@ -116,6 +115,7 @@
     width: 95%;
     background-color: black;
     border-radius: 20px;
+    
 }
 
 .fondo3{
@@ -414,7 +414,6 @@
     .video{
         max-width: 87%;
     margin-left: 1.7%;
-    margin-top: 11px;
     min-height: 83vh;
     color: rgb(0, 0, 0);
     background: black;
