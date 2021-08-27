@@ -82,9 +82,8 @@ router.post('/', async (req, res) => {
     var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
     const user =async ()=>{if(req.body.email.length>0){return await queryAllInfoUser(tokensendEmail)}
 else{return {}}}
-    console.log(await user())
+    // console.log(await user(),'AAAAAAAAAAAAAAAAAAAAAAA');
     let runUser= await user()
-    console.log(runUser)
     if (!runUser.Items.length){
         return res.json({ error: 'Email no register', status:'400' })
     }
@@ -92,7 +91,7 @@ else{return {}}}
     if (!validPassword) return res.json({ error: 'error', status:'400' })
     else{
         runUser.Items[0].password = ''
-        console.log(runUser.Items)
+        // console.log(runUser, 'BBBBBBBBBBBBBBBBBBBBBBBBB')
         res.json(runUser.Items)
     }}
 })
