@@ -103,6 +103,10 @@ const Home = () => {
         setSessionOn(true)
         setchecker(true)
     }
+    function tutorialboton(){
+        window.location.href = ('/tutorial')
+        localStorage.removeItem('mode')
+    }
 
     const CurrentSession = () => {
         return (
@@ -121,7 +125,7 @@ const Home = () => {
                         </div>
                         {show ?
                             <div>
-                                <button className='btnLogOut' onClick={() => window.location.href = ('/tutorial')}>Tutorial</button>
+                                <button className='btnLogOut' onClick={() => tutorialboton()}>Tutorial</button>
                                 <button className='btnLogOut' onClick={() => {
                                     cookies.remove('userInfo')
                                     window.location.href = ('')

@@ -216,6 +216,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       play: true
     })
     localStorage.setItem('results', JSON.stringify(finalVideos.current))
+    localStorage.setItem('pruebaa','pruebaa')
   }
 
   const checkLongTerm = () => {

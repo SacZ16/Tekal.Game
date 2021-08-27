@@ -7,7 +7,7 @@ const jwt = require ('jsonwebtoken')
 let email = 'prueba@live.com'
 var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
 
-let testeo = [tokensendEmail, 40, {
+let testeo = [tokensendEmail, 90, {
     answer: 1,
     category: "VIG",
     date: "2021-08-24T22:11:16-03:00",

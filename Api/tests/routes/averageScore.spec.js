@@ -7,13 +7,13 @@ const jwt = require ('jsonwebtoken')
 let email = 'prueba@live.com'
 var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
 //Se debera tener un usuario registrado y se espera que tenga partidas jugadas.
-console.log(tokensendEmail)
+console.log(tokensendEmail, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 let contraseña = 'Prueba*123'
 let emailErrorTest = 'ESTONOEssXISTE@GMAIL.COM'
 
 
 
-describe('POST /averageScore', () => {
+xdescribe('POST /averageScore', () => {
     it('responds with "200"', () => 
         agent.post('/averageScore')
             .send({email: tokensendEmail})

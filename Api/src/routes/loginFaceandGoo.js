@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
     const { email, name } = req.body
     async function run() {
         var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
-        const user = await queryAllInfoUser(tokensendEmail)
+        let user = await queryAllInfoUser(tokensendEmail)
         if (!user.Items.length) {
             await putUserLogin({
                 "PK": tokensendEmail,
@@ -67,9 +67,13 @@ router.post('/', async (req, res) => {
                 "email": tokensendEmail,
                 "name": name
             })
-            return await queryAllInfoUser(tokensendEmail)
+            let newuser = await queryAllInfoUser(req.body.email)
+            newuser.check = true
+            return newuser
+    
         }
         else {
+            user.check = false
             return user
         }
     }
