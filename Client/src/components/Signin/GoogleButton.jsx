@@ -16,9 +16,10 @@ const GoogleButton = () => {
         console.log(response)
         let obj = {
             email: response.profileObj.email,
-            name: response.profileObj.givenName
+            name: response.profileObj.givenName,
+            lastname:response.profileObj.familyName
         }
-        SendDataGoogle(obj)
+         SendDataGoogle(obj)
     }
 
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));

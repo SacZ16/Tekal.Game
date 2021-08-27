@@ -20,6 +20,8 @@ import Loading from '../Loading/Loading';
 const RegisterWithEmail = ({ setRes }) => {
     const cookiies = new Cookie(); //no borrar - estilo css
     const [passwordcopia, setPasswordcopia] = useState('')
+    const [countrytext, setcountrytext] = useState('')
+    const [citytext, setscitytext] = useState('')
     const [err, setErr] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -32,7 +34,7 @@ const RegisterWithEmail = ({ setRes }) => {
         country: "",
         age: "",
         city: "",
-        gender: "prefer-not-to-say",
+        gender: "",
         ethnicity: "",
     })
 
@@ -59,6 +61,7 @@ const RegisterWithEmail = ({ setRes }) => {
 
     const SendToBackEnd = async (e) => {
         e.preventDefault()
+        console.log(input)
         setLoading(!loading)
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
@@ -74,6 +77,10 @@ const RegisterWithEmail = ({ setRes }) => {
             setErr('Verify all fields')
             return
         }
+        if (!input.gender.length) {
+            setErr('Verify all fields')
+            return
+        }
         if (!input.age.length) {
             setErr('Verify all fields')
             return
@@ -84,9 +91,9 @@ const RegisterWithEmail = ({ setRes }) => {
             test: input.email,
             name: input.name,
             lastname: input.lastname,
-            country: country.country,
+            country: countrytext,
             age: input.age,
-            city: country.city,
+            city: citytext,
             gender: input.gender,
             ethnicity: input.ethnicity,
         }
@@ -137,6 +144,32 @@ const RegisterWithEmail = ({ setRes }) => {
     counterpart.registerTranslations('es', es);
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
+    var preferNotToSay = ''
+    var male = ''
+    var female = ''
+    var nonBinary = ''
+
+    if(localStorage.getItem('idioma') === 'en'){
+        var idioma = true
+    }
+    if(localStorage.getItem('idioma') === 'es'){
+        idioma = false
+    }
+    
+    if(idioma) {
+        preferNotToSay = 'Prefer not to say'
+        male = 'Male'
+        female = 'Female'
+        nonBinary = 'Non binary'
+    }
+
+    if(!idioma) {
+        preferNotToSay = 'Prefiero no decir'
+        male = 'Masculino'
+        female = 'Femenino'
+        nonBinary = 'No binario'
+    }
+
     return (
         <>
             {!loading ? null : <div style={{ position: 'absolute', width: '100%', left: '43%', top: '40%' }}><LoadingForm /></div>}
@@ -148,15 +181,16 @@ const RegisterWithEmail = ({ setRes }) => {
                     <p class="dddd">{<Translate content="nacimiento" component="span" />}*</p>
                     <input class="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="pais" component="span" />}</p>
-                    <input class="swal2-inputmh4" value={country.country ? country.country : 'empty'} name='country' onChange={handleInputChange} />
+                    <input className="swal2-inputmh4" value={country.city ? country.country : countrytext} name='city' onChange={(e) => setcountrytext(e.target.value)} />
                     <p class="dddd">{<Translate content="contrasena" component="span" />}*</p>
                     <input id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="genero" component="span" />}*</p>
                     <select class="swal2-inputmh4" name='gender' onChange={handleInputChange}>
-                        <option value='prefer-not-to-answer'> Prefer not to say</option>
-                        <option value='male'>Male</option>
-                        <option value='female'>Female</option>
-                        <option value='non-binary'>Non binary</option>
+                        <option value='' hidden selected>{''}</option>
+                        <option value='prefer-not-to-answer'>{preferNotToSay}</option>
+                        <option value='male'>{male}</option>
+                        <option value='female'>{female}</option>
+                        <option value='non-binary'>{nonBinary}</option>
                     </select>
                 </div>
                 <div class="column" >
@@ -165,7 +199,7 @@ const RegisterWithEmail = ({ setRes }) => {
                     <p className="dddd">{<Translate content="mail" component="span" />}*</p>
                     <input id='email' class="swal2-inputmh4" name='email' onChange={handleInputChange} />
                     <p className="dddd">{<Translate content="ciudad" component="span" />}</p>
-                    <input class="swal2-inputmh4" value={country.city ? country.city : 'empty'} name='city' onChange={handleInputChange} />
+                    <input className="swal2-inputmh4" value={country.city ? country.city : citytext} name='city' onChange={(e) => setscitytext(e.target.value)} />
                     <p className="dddd">{<Translate content="confirmaContrasena" component="span" />}*</p>
                     <input id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="etnia" component="span" />}</p>
