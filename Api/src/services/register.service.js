@@ -1,58 +1,59 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const {google}= require ('googleapis')
-const {putUserLogin,queryAllInfoUser,updateEmailVerification }= require ('../Controllers/dbFunctions.js')
-const jwt = require ('jsonwebtoken');
+const { google } = require('googleapis')
+const { putUserLogin, queryAllInfoUser, updateEmailVerification } = require('../Controllers/dbFunctions.js')
+const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {
-    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL,REFRESH_TOKEN , EMAIL_TEKAL
+    CLIENT_ID, CLIENT_SECRET, REDIRECT_URL, REFRESH_TOKEN, EMAIL_TEKAL
 } = process.env;
 
-const oAuth2Client= new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL);
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 
-const registerUser = async (datos) =>{
-    var email= datos.email
-    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
-    try{
+const registerUser = async (datos) => {
+    var email = datos.email
+    var tokensendEmail = jwt.sign({ email: email, iat: 25 }, 'prueba');
+    try {
         const infoUser = `INFO#${tokensendEmail}`;
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(datos.password, salt);
 
-        const Item= {
+        const Item = {
             "PK": tokensendEmail,
             "SK": infoUser,
-            "email":  tokensendEmail,
+            "email": tokensendEmail,
             "password": password,
             "VerificationEmail": false,
         }
         const response = await putUserLogin(Item)
         return response;
-    }catch(error){
+
+    } catch (error) {
         console.error(error);
         // manejenen el error como se les de la gana, pero manejenlo
     }
 }
 
 
-const sedEmail = async (email) =>{
+const sedEmail = async (email) => {
     var tokensendEmail = jwt.sign({ email: email }, 'prueba');
-    await oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+    await oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-    const algo= await oAuth2Client.getAccessToken()
-    console.log( algo.token)
+    const algo = await oAuth2Client.getAccessToken()
+    console.log(algo.token)
 
-    const transporter= nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            type:'OAUTH2',
-            user:'memorygame@tekal.ai',
-            clientId:CLIENT_ID,
-            clientSecret:CLIENT_SECRET,
-            refresh_token:REFRESH_TOKEN,
+            type: 'OAUTH2',
+            user: 'memorygame@tekal.ai',
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
+            refresh_token: REFRESH_TOKEN,
             accessToken: algo.token,
         }
     });
@@ -62,24 +63,24 @@ const sedEmail = async (email) =>{
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/verificationemail?${tokensendEmail}`, // plain text body
-});
+    });
 
 }
-const sendEmailForPassword = async (email) =>{
+const sendEmailForPassword = async (email) => {
     var tokensendEmail = jwt.sign({ email: email }, 'prueba');
-    await oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+    await oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-    const algo= await oAuth2Client.getAccessToken()
-    console.log( algo.token)
+    const algo = await oAuth2Client.getAccessToken()
+    console.log(algo.token)
 
-    const transporter= nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            type:'OAUTH2',
-            user:'memorygame@tekal.ai',
-            clientId:CLIENT_ID,
-            clientSecret:CLIENT_SECRET,
-            refresh_token:REFRESH_TOKEN,
+            type: 'OAUTH2',
+            user: 'memorygame@tekal.ai',
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
+            refresh_token: REFRESH_TOKEN,
             accessToken: algo.token,
         }
     });
@@ -89,14 +90,14 @@ const sendEmailForPassword = async (email) =>{
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body
-});
+    });
 }
 
 const verificationEmail = async (email) => {
-    var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+    var tokensendEmail = jwt.sign({ email: email, iat: 25 }, 'prueba');
     let infoUser = await queryAllInfoUser(tokensendEmail);
-    if(infoUser.Items.length){
-        if(!infoUser.Items[0].VerificationEmail){
+    if (infoUser.Items.length) {
+        if (!infoUser.Items[0].VerificationEmail) {
             await updateEmailVerification(tokensendEmail)
             return ('Ok');
         } else {
@@ -104,11 +105,11 @@ const verificationEmail = async (email) => {
         }
     } else {
         return ('Error')
-    } 
-    
+    }
+
 }
 
 
 
 
-module.exports = {registerUser,sedEmail,verificationEmail,sendEmailForPassword}
+module.exports = { registerUser, sedEmail, verificationEmail, sendEmailForPassword }
