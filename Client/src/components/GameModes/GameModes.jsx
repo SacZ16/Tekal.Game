@@ -101,16 +101,24 @@ const GameModes = ({ averageScore }) => {
         }
     }
 
-    const playWithOutLogin = (e) => {
+    const playWithOutLogin = () => {
         if (averageScore === undefined || averageScore == 0) {
             cookies.remove('play')
-            localStorage.setItem('mode', e.target.id)
+            localStorage.setItem('mode', 'video')
             window.location.href = ('/tutorial')
         }
     }
 
     const renderer = ({ hours, minutes, seconds }) => {
         return <p style={{ fontSize: '1rem' }} >{hours}:{minutes}:{seconds}</p>;
+    }
+
+    const playWithOutLogin2 = () => {
+        if (averageScore === undefined || averageScore == 0) {
+            cookies.remove('play')
+            localStorage.setItem('mode', 'image')
+            window.location.href = ('/tutorial')
+        }
     }
 
     return (
@@ -160,14 +168,14 @@ const GameModes = ({ averageScore }) => {
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
-                        <button onClick={(e) => playWithOutLogin(e)} id="video">
+                        <button onClick={playWithOutLogin} id="video">
                             <div className='game_mode' id="video">
                                 <MovieCreationIcon style={{ fontSize: '5.5rem' }} id="video" />
                                 <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>
                                 <p className='descrip_game_mode'>{<Translate content="shortTermVideo" component="span" />}</p>
                             </div>
                         </button>
-                        <button onClick={(e) => playWithOutLogin(e)} id='image'>
+                        <button onClick={playWithOutLogin2} id='image'>
                             <div className='game_mode' id='image'>
                                 <ImageIcon style={{ fontSize: '5.5rem' }} id='image' />
                                 <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>
