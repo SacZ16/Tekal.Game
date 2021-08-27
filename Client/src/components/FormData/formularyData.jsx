@@ -25,7 +25,7 @@ const FormData = () => {
         country: "",
         age: "",
         city: "",
-        gender: "prefer-not-to-say",
+        gender: "",
         ethnicity: "",
     })
     let emailCokkie = ''
@@ -50,8 +50,10 @@ const FormData = () => {
             ethnicity: input.ethnicity,
         }
         console.log(user)
-
-        let response = await axios.post(`${process.env.REACT_APP_API_URL}addinfo`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+        if (!input.gender.length) {
+            setErr('Completa los campos')
+        }
+        else {var response = await axios.post(`${process.env.REACT_APP_API_URL}addinfo`, user)} ///Eliseo PONE LA RUTA DE BACK ACA XD
         if (response.data === 'campos incompletos') {
             setErr('Completa los campos')
         }
@@ -99,6 +101,7 @@ const FormData = () => {
                     <input className="swal2-inputmh4" value={country.city ? country.country : countrytext} name='city' onChange={(e) => setcountrytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="genero" component="span" />}</p>
                     <select className="swal2-inputmh4" name='gender' onChange={handleInputChange}>
+                        <option value='' hidden selected>{''}</option>
                         <option value='prefer-not-to-answer'> Prefer not to say</option>
                         <option value='male'>Male</option>
                         <option value='female'>Female</option>

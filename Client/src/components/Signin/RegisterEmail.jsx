@@ -34,7 +34,7 @@ const RegisterWithEmail = ({ setRes }) => {
         country: "",
         age: "",
         city: "",
-        gender: "prefer-not-to-say",
+        gender: "",
         ethnicity: "",
     })
 
@@ -61,6 +61,7 @@ const RegisterWithEmail = ({ setRes }) => {
 
     const SendToBackEnd = async (e) => {
         e.preventDefault()
+        console.log(input)
         setLoading(!loading)
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
@@ -73,6 +74,10 @@ const RegisterWithEmail = ({ setRes }) => {
             return
         }
         if (input.password !== input.confirmPass) {
+            setErr('Verify all fields')
+            return
+        }
+        if (!input.gender.length) {
             setErr('Verify all fields')
             return
         }
@@ -181,6 +186,7 @@ const RegisterWithEmail = ({ setRes }) => {
                     <input id='pass' class="swal2-inputmh4" name='password' type='password' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="genero" component="span" />}*</p>
                     <select class="swal2-inputmh4" name='gender' onChange={handleInputChange}>
+                        <option value='' hidden selected>{''}</option>
                         <option value='prefer-not-to-answer'>{preferNotToSay}</option>
                         <option value='male'>{male}</option>
                         <option value='female'>{female}</option>
