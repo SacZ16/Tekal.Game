@@ -52,7 +52,7 @@ const swaggerDocs = swaggerJsDoc(options);
 
 
 const corsOptions = {
-    origin: 'http://192.168.1.2:3000',
+    origin: 'http://localhost:3000',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
