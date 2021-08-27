@@ -97,10 +97,10 @@ router.post('/', async (req,res) => {
     let response = await verificationEmail(email)
     console.log(response)
     if(response === 'Error' || response === undefined){
-        res.send('This email is not registered')
+        res.json('This email is not registered')
     }
     if(response === 'Email already verified'){
-        res.send('Email already verified')
+        res.json('Email already verified')
     }
     res.send('Ok')
 })

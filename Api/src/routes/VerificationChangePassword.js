@@ -91,9 +91,9 @@ router.post('/', async (req,res) => {
     let response = await queryAllInfoUser(tokensendEmail)
     if(response.Items.length){
         await sendEmailForPassword(email);
-        res.send('Ok')
+        res.json('Ok')
     } else {
-        res.send('Email not registered')
+        res.json('Email not registered')
     }
 })
 
