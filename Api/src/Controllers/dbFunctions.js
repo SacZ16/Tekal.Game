@@ -270,8 +270,7 @@ const updateEmailVerification = async (userId) => {
         ":value": true,
       },
     };
-
-    const registerInfo = connectionDynamo.update(params).promise();
+    const registerInfo = await connectionDynamo.update(params).promise();
     console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
     return registerInfo;
   } catch (error) {
@@ -287,7 +286,10 @@ const updatePassword = async (userId, pass) => {
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(pass, salt);
 
-  try {
+  let response = await queryAllInfoUser(tokensendEmail)
+  if(!response.Items.length) {
+      return (false)
+  } else {
     const infoUser = `INFO#${tokensendEmail}`;
     let params = {
       TableName: TABLE_USER,
@@ -303,14 +305,10 @@ const updatePassword = async (userId, pass) => {
         ":value": password,
       },
     };
-    const registerInfo = connectionDynamo.update(params).promise();
+    const registerInfo = await connectionDynamo.update(params).promise();
     console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+    console.log(registerInfo, '111111111111111111111111')
     return registerInfo;
-  } catch (error) {
-    console.error(
-      "Unable to add item. Error JSON:",
-      JSON.stringify(error, null, 2)
-    );
   }
 };
 
