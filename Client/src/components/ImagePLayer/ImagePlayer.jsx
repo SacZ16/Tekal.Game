@@ -270,8 +270,8 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 <div className={style.contenedordelvideo} style={{ top: '2%' }}>
                     <ProgressBar lives={lives.current} max={imageApi.length} progress={seeImages.current.length} />
                     <Timer ref={tiempo} />
-                    <div className={style.imgPlayer} ref={imageTouch}>
-                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }} />}
+                    <div className={style.imgPlayer} ref={imageTouch} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }} >
+                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop}/>}
                     </div>
                 </div>
             </div>

@@ -161,8 +161,11 @@
 .imgPlayer img{
     width: max-content;
     max-width: 80%;
-    height: 95%;
+    max-height: 100%;
+    height: 100%;
     border-radius: 20px;
+    max-width: max-content;
+    min-width: max-content;
 }
 
 @media (min-width: 1920px) {
