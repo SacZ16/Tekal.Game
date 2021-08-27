@@ -157,7 +157,8 @@ const Home = () => {
     }
 
     const [averageScore, setAverageScore] = useState()
-
+console.log('averg')
+console.log(averageScore)
     useEffect(async () => {
         const res = await axios.post('http://localhost:3001/averageScore', {
             email: emailCokkie,

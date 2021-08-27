@@ -15,7 +15,7 @@ async function loadGameInfo(array) {
         let category = array[i].category
         object.pos = i + 1;
         answers.push(object.answer);
-        let pkAssetsTarget = object.type === "image" ? endpointNoMemento(object.url) : endpoint(object.url);
+        let pkAssetsTarget = object.type === "image" ? endpointNoMemento(object.url) : endpoint1(object.url);
         presentations.push({ id: pkAssetsTarget, category: category });
     }
     let data = {
