@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const {google}= require ('googleapis')
 const {putUserLogin,queryAllInfoUser,updateEmailVerification }= require ('../Controllers/dbFunctions.js')
-const jwt = require ('jsonwebtoken')
+const jwt = require ('jsonwebtoken');
+const { token } = require('morgan');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {
@@ -92,11 +93,11 @@ const sendEmailForPassword = async (email) =>{
 }
 
 const verificationEmail = async (email) => {
-    let infoUser = await queryAllInfoUser(email);
-    console.log(infoUser)
+    var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+    let infoUser = await queryAllInfoUser(tokensendEmail);
     if(infoUser.Items.length){
         if(!infoUser.Items[0].VerificationEmail){
-            await updateEmailVerification(email)
+            await updateEmailVerification(tokensendEmail)
             return ('Ok');
         } else {
             return ('Email already verified')

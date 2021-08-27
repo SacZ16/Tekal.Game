@@ -53,6 +53,10 @@ const FormData = () => {
         if (response.data === 'campos incompletos'){
             alert('Completa los campos')
         }
+        else{
+            cookies.remove('userInfo')
+            window.location.href = ('')
+        }
     }
 
      // Traducciones

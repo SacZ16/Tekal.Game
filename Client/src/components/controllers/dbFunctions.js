@@ -44,6 +44,7 @@ export const SendDataGoogle = async (obj) => {
         method: 'POST',
         data: objPost
     })
+    console.log(status)
     newCookie(await status.data)
     return status.data
 }
