@@ -432,18 +432,6 @@ body{
     color: white;
 }
 
-.swal2-container.swal2-center>.swal2-popup{
-    width: 90%!important;
-    height: 220% !important;
-}
-
-.swal2-container.swal2-center>.swal2-popup {
-    padding: 0px; 
-    width: max-content;
-    margin-top: 0px;
-
-}
-
 .textHomeSession{
     position: absolute;
     color: white;

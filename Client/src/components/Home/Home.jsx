@@ -68,7 +68,7 @@ const Home = () => {
             title: <p style={{ color: 'white', marginBottom: 0, fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
             html:
                 <div style={{ overflow: 'hidden' }}>
-                    <RegisterWithEmail style={{ posicion: 'absolute' }} />
+                    <RegisterWithEmail/>
                     <div style={{ display: 'flex' }}>
                         <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor:'pointer' }} onClick={prueba}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
@@ -83,7 +83,7 @@ const Home = () => {
         const popUpFormDataExtra = () => {
         MySwal.fire({
             html:
-                <div style={{ overflow: 'hidden'}}>
+                <div className='popUpContainerExtraData' style={{ overflow: 'hidden'}}>
                 <FormData/>
                 </div>,
             showConfirmButton: false
