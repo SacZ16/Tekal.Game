@@ -77,6 +77,23 @@ const Home = () => {
         })
     }
 
+    //Formulario de informacion extra para google y facebook
+    if(cookies.get('userInfo')){
+        const popUpFormDataExtra = () => {
+        MySwal.fire({
+            html:
+                <div style={{ overflow: 'hidden'}}>
+                   <FormData/>
+                </div>,
+            showConfirmButton: false
+        })
+    }
+        if(!cookies.get('userInfo').country || !cookies.get('userInfo').age ){
+            popUpFormDataExtra()
+            var display = 'none'
+        }
+    }
+    
     //-----------
 
     const [show, setShow] = useState(false)
@@ -261,8 +278,8 @@ const Home = () => {
                                     <p>{averageScore ? averageScore.toFixed(1) : 0}%</p>
                                 </div>
                             </div>
-                            <div className='buttonsHome'>
-                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
+                            <div className='buttonsHome' style={{display:`${display}` }}>
+                                <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif'}} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>
                         </> : (null)}
                 </section>

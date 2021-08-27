@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap%27');
 
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
 body {
     margin: 0;
     cursor: default;
@@ -426,6 +430,18 @@ body{
     position: absolute;
     top: 8%;
     color: white;
+}
+
+.swal2-container.swal2-center>.swal2-popup{
+    width: 90%!important;
+    height: 220% !important;
+}
+
+.swal2-container.swal2-center>.swal2-popup {
+    padding: 0px; 
+    width: max-content;
+    margin-top: 0px;
+
 }
 
 .textHomeSession{
