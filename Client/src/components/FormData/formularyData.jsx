@@ -15,6 +15,9 @@ const FormData = () => {
 
     const cookies = new Cookie();
     const [err, setErr] = useState('')
+    const [countrytext, setcountrytext] = useState('')
+    const [citytext, setscitytext] = useState('')
+
     const country = getCity()
     const [input, setInput] = useState({
         name: "",
@@ -42,13 +45,14 @@ const FormData = () => {
             email: emailCokkie,
             name: input.name,
             lastname: input.lastname,
-            country: country.country,
+            country: countrytext,
             age: input.age,
-            city: country.city,
+            city: citytext,
             gender: input.gender,
             ethnicity: input.ethnicity,
         }
         console.log(user)
+
         let response = await axios.post(`${process.env.REACT_APP_API_URL}addinfo`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
         if (response.data === 'campos incompletos') {
             setErr('Completa los campos')
@@ -59,7 +63,7 @@ const FormData = () => {
                 window.location.href = ('/close')
             } else {
                 // cookies.remove('userInfo')
-                window.location.href = ('')
+                // window.location.href = ('')
             }
         }
     }
@@ -94,7 +98,7 @@ const FormData = () => {
                     <p className="text_input_extra_data">{<Translate content="nacimiento" component="span" />}</p>
                     <input className="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
                     <p className="text_input_extra_data">{<Translate content="pais" component="span" />}</p>
-                    <input className="swal2-inputmh4" value={country.country ? country.country : 'empty'} name='country' onChange={handleInputChange} />
+                    <input className="swal2-inputmh4" value={country.city ? country.country : countrytext} name='city' onChange={(e) => setcountrytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="genero" component="span" />}</p>
                     <select className="swal2-inputmh4" name='gender' onChange={handleInputChange}>
                         <option value='prefer-not-to-answer'> Prefer not to say</option>
@@ -107,7 +111,7 @@ const FormData = () => {
                     <p className="text_input_extra_data" >{<Translate content="apellido" component="span" />}</p>
                     <input className="swal2-inputmh4" name='lastname' onChange={handleInputChange} />
                     <p className="text_input_extra_data">{<Translate content="ciudad" component="span" />}</p>
-                    <input className="swal2-inputmh4" value={country.city ? country.city : 'empty'} name='city' onChange={handleInputChange} />
+                    <input className="swal2-inputmh4" value={country.city ? country.city : citytext} name='city' onChange={(e) => setscitytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="etnia" component="span" />}</p>
                     <input className="swal2-inputmh4" name='ethnicity' onChange={handleInputChange} />
                 </div>
