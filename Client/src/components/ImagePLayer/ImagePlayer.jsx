@@ -45,7 +45,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     // console.log('Falsos Positivos', falsePositives.current)
     const vigilanceRecognized = useRef([])
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
-    const lives = useRef(7); // Vidas del usuario 
+    const lives = useRef(20); // Vidas del usuario 
     // console.log(lives.current)
     const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
     // console.log(score)
@@ -138,6 +138,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                     timerProgressBar: true,
                     width: 500
                 }).then(() => {
+                    removeLongTerm()
                     checkLongTerm()
                     videosWithAnswers()
                     sessionData()
@@ -156,12 +157,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     }, [seeImages.current])
 
     const prevAsset = () => {
-        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] !== 'target_repeat') {
-            // console.log(seeImages.current[seeImages.current.length - 2])
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] !== 'target_repeat') {
             answers.current.push(0);
             pressSeconds.current.push(0);
+            if (seeImages.current[seeImages.current.length - 1][0][1] !== 'vig_repeat') {
+                lives.current = lives.current - 5
+            }
         }
-        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] === 'target_repeat') {
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] === 'target_repeat') {
             answers.current.push(0);
             pressSeconds.current.push(0);
         }
@@ -179,7 +182,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 mood: mood
             })
         })
-        finalImages.current.unshift(score)
+        finalImages.current.unshift(Number(scoreVisual.toFixed(2)))
         finalImages.current.unshift(email)
     }
 
@@ -250,10 +253,14 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
     const checkLongTerm = () => {
-        if (mode.includes('-')) {
+        if (!localStorage.getItem('playedDateVideo') && !localStorage.getItem('longTermToPlay')) {
             mode === 'image-lt' && localStorage.setItem('image-lt', 'image-lt')
             localStorage.setItem('playedDateImage', Date.now())
         }
+    }
+
+    const removeLongTerm = () => {
+        if (mode.includes('-')) localStorage.removeItem('longTermToPlay')
     }
 
     return (

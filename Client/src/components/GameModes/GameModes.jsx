@@ -51,7 +51,7 @@ const GameModes = ({ averageScore }) => {
         const day = currentDate.getDay();
         localStorage.setItem('mood', e.target.id)
         localStorage.setItem('date', day)
-        if (averageScore === undefined || averageScore == 0) {
+        if (averageScore === undefined) {
             window.location.href = ('/tutorial')
         } else {
             window.location.href = ('/game')
@@ -81,7 +81,7 @@ const GameModes = ({ averageScore }) => {
         const currentDate = new Date();
         const day = currentDate.getDay();
         cookies.remove('play') // deja volver a jugar
-        if (lastStorageDay !== day) {
+        if (lastStorageDay != day) {
             MySwal.fire({
                 title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
                 html:
@@ -93,7 +93,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined || averageScore == 0) {
+            if (averageScore === undefined) {
                 window.location.href = ('/tutorial')
             } else {
                 window.location.href = ('/game')
@@ -102,23 +102,23 @@ const GameModes = ({ averageScore }) => {
     }
 
     const playWithOutLogin = () => {
-        if (averageScore === undefined || averageScore == 0) {
+        if (averageScore === undefined) {
             cookies.remove('play')
             localStorage.setItem('mode', 'video')
             window.location.href = ('/tutorial')
         }
     }
 
-    const renderer = ({ hours, minutes, seconds }) => {
-        return <p style={{ fontSize: '1rem' }} >{hours}:{minutes}:{seconds}</p>;
-    }
-
     const playWithOutLogin2 = () => {
-        if (averageScore === undefined || averageScore == 0) {
+        if (averageScore === undefined) {
             cookies.remove('play')
             localStorage.setItem('mode', 'image')
             window.location.href = ('/tutorial')
         }
+    }
+
+    const renderer = ({ hours, minutes, seconds }) => {
+        return <p style={{ fontSize: '1rem' }} >{hours}:{minutes}:{seconds}</p>;
     }
 
     return (
