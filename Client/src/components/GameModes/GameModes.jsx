@@ -51,7 +51,7 @@ const GameModes = ({ averageScore }) => {
         const day = currentDate.getDay();
         localStorage.setItem('mood', e.target.id)
         localStorage.setItem('date', day)
-        if (averageScore === undefined || averageScore == 0) {
+        if (averageScore === undefined) {
             window.location.href = ('/tutorial')
         } else {
             window.location.href = ('/game')
@@ -81,7 +81,7 @@ const GameModes = ({ averageScore }) => {
         const currentDate = new Date();
         const day = currentDate.getDay();
         cookies.remove('play') // deja volver a jugar
-        if (lastStorageDay !== day) {
+        if (lastStorageDay != day) {
             MySwal.fire({
                 title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
                 html:
@@ -93,7 +93,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined || averageScore == 0) {
+            if (averageScore === undefined) {
                 window.location.href = ('/tutorial')
             } else {
                 window.location.href = ('/game')
@@ -101,10 +101,18 @@ const GameModes = ({ averageScore }) => {
         }
     }
 
-    const playWithOutLogin = (e) => {
-        if (averageScore === undefined || averageScore == 0) {
+    const playWithOutLogin = () => {
+        if (averageScore === undefined) {
             cookies.remove('play')
-            localStorage.setItem('mode', e.target.id)
+            localStorage.setItem('mode', 'video')
+            window.location.href = ('/tutorial')
+        }
+    }
+
+    const playWithOutLogin2 = () => {
+        if (averageScore === undefined) {
+            cookies.remove('play')
+            localStorage.setItem('mode', 'image')
             window.location.href = ('/tutorial')
         }
     }
@@ -160,14 +168,14 @@ const GameModes = ({ averageScore }) => {
                 :
                 <div className='container_game_modes'>
                     <div className='subContainer_game_modes_unlock' >
-                        <button onClick={(e) => playWithOutLogin(e)} id="video">
+                        <button onClick={playWithOutLogin} id="video">
                             <div className='game_mode' id="video">
                                 <MovieCreationIcon style={{ fontSize: '5.5rem' }} id="video" />
                                 <p id="video">{<Translate content="videosCortoPlazo" component="p" id="video" />}</p>
                                 <p className='descrip_game_mode'>{<Translate content="shortTermVideo" component="span" />}</p>
                             </div>
                         </button>
-                        <button onClick={(e) => playWithOutLogin(e)} id='image'>
+                        <button onClick={playWithOutLogin2} id='image'>
                             <div className='game_mode' id='image'>
                                 <ImageIcon style={{ fontSize: '5.5rem' }} id='image' />
                                 <p id='image'>{<Translate content="imagenesCortoPlazo" component="p" id='image' />}</p>

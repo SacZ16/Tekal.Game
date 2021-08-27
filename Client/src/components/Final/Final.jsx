@@ -24,6 +24,7 @@ import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
 import Loading from '../Loading/Loading'
+import GameModes from '../GameModes/GameModes'
 
 function Finalgame({ history }) {
     const MySwal = withReactContent(Swal)
@@ -40,6 +41,7 @@ function Finalgame({ history }) {
     })
     const { scoreVisual, totalRepeats, videosRecognized } = sessionData
     const [globalScore, setGlobalScore] = useState(null)
+    const globalScoreValidation = globalScore === 0 ? globalScore.toFixed() : globalScore
     useEffect(() => {
         if (cookies.get('sessionData')) {
             setSessionData({
@@ -62,13 +64,13 @@ function Finalgame({ history }) {
                 score: scoreVisual,
                 type: mode2
             })
-            setGlobalScore(res.data.betterThan)
+            setGlobalScore(Number(res.data.betterThan.toFixed(2)))
         } else {
             const res = await axios.post('http://localhost:3001/globalScore', {
                 score: scoreVisual,
                 type: mode
             })
-            setGlobalScore(res.data.betterThan)
+            setGlobalScore(Number(res.data.betterThan.toFixed(2)))
         }
     }, [sessionData])
 
@@ -85,30 +87,32 @@ function Finalgame({ history }) {
         resultadoparaenviar.shift()
         resultadoparaenviar.unshift(emailCokkie)
     }
-    const data = {
-        labels: ['1', '2', '3', '4', '5'],
-        datasets: [{
-            label: 'Last 5 sessions',
-            fill: false,
-            borderColor: '#1663A2',
-            borderWidth: 6,
-            data: ['60', '43', '1', '80', scoreVisual]
-        }]
+
+    const [averageScore, setAverageScore] = useState(undefined)
+
+    useEffect(async () => {
+        const res = await axios.post('http://localhost:3001/averageScore', {
+            email: emailCokkie,
+            scoreFront: sessionData.scoreVisual
+        })
+        setAverageScore(res.data.averageScore)
+    }, [sessionData])
+
+    const popUpGameMode = () => {
+        MySwal.fire({
+            html:
+                <div>
+                    <GameModes averageScore={averageScore} />
+                </div>,
+            showConfirmButton: false
+        })
     }
-    const opciones = {
-        maintainAspectRatio: false,
-        responsive: true,
-    }
-    const config = {
-        type: 'line',
-        data: data,
-    };
 
     const again = () => {
         cookies.remove('sessionData')
         cookies.remove('play')
         dispatch(resetReducer())
-        history.push('/game')
+        popUpGameMode()
     }
 
     useEffect(() => {
@@ -116,8 +120,9 @@ function Finalgame({ history }) {
     }, [])
 
     const postDataa = async () => {
-        await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
-        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
+        console.log(resultadoparaenviar)
+        /* await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
+        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar) */
         localStorage.removeItem('results')
     }
 
@@ -153,18 +158,18 @@ function Finalgame({ history }) {
                     <div className='containerDataFinalPage'>
                         <div className='finalPageColumnLeft'>
                             <h1 className='yourscore'>
-                                {<Translate content="tituloLastScreen" component="span" />}{globalScore.toFixed(2)}%
+                                {<Translate content="tituloLastScreen" component="span" />}{globalScoreValidation}%
                                 {<Translate content="tituloLastScreen2" component="span" />}
                                 {mode === 'image' ? < Translate content="resultImage" component="span" /> : < Translate content="resultVideo" component="span" />}
                             </h1>
                             <div className="grafico">
-                                {globalScore.toFixed(2) === 0? <img style={{height:'9em', width:'35em'}} src={graph0} alt='graph'/> : null}
-                                {globalScore.toFixed(2) < 11? <img style={{height:'9em', width:'35em'}} src={graph10} alt='graph'/> : null}
-                                {globalScore.toFixed(2) > 10 && globalScore.toFixed(2) < 21? <img style={{height:'9em', width:'35em'}} src={graph20} alt='graph'/> : null}
-                                {globalScore.toFixed(2) > 20 && globalScore.toFixed(2) < 31? <img style={{height:'9em', width:'35em'}} src={graph30} alt='graph'/> : null}
-                                {globalScore.toFixed(2) > 30 && globalScore.toFixed(2) < 41? <img style={{height:'9em', width:'35em'}} src={graph40} alt='graph'/> : null}
-                                {globalScore.toFixed(2) > 40 && globalScore.toFixed(2) < 51? <img style={{height:'9em', width:'35em'}} src={graph50} alt='graph'/> : null}
-                                {globalScore.toFixed(2) > 50? <img style={{height:'9em', width:'35em'}} src={graph50} alt='graph'/> : null}
+                                {globalScoreValidation === 0 ? <img style={{ height: '9em', width: '35em' }} src={graph0} alt='graph' /> : null}
+                                {globalScoreValidation < 11 ? <img style={{ height: '9em', width: '35em' }} src={graph10} alt='graph' /> : null}
+                                {globalScoreValidation > 10 && globalScoreValidation < 21 ? <img style={{ height: '9em', width: '35em' }} src={graph20} alt='graph' /> : null}
+                                {globalScoreValidation > 20 && globalScoreValidation < 31 ? <img style={{ height: '9em', width: '35em' }} src={graph30} alt='graph' /> : null}
+                                {globalScoreValidation > 30 && globalScoreValidation < 41 ? <img style={{ height: '9em', width: '35em' }} src={graph40} alt='graph' /> : null}
+                                {globalScoreValidation > 40 && globalScoreValidation < 51 ? <img style={{ height: '9em', width: '35em' }} src={graph50} alt='graph' /> : null}
+                                {globalScoreValidation > 50 ? <img style={{ height: '9em', width: '35em' }} src={graph50} alt='graph' /> : null}
                             </div>
                             <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
                             <div className='buttonRegister2'>
