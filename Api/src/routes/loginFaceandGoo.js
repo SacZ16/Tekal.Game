@@ -55,6 +55,7 @@ const jwt = require ('jsonwebtoken')
  router.get('/', async (req, res) => {
     res.json('estas en facebook')
 })
+
 router.post('/', async (req, res) => {
     const { email, name } = req.body
     async function run() {
@@ -70,7 +71,6 @@ router.post('/', async (req, res) => {
             let newuser = await queryAllInfoUser(req.body.email)
             newuser.check = true
             return newuser
-    
         }
         else {
             user.check = false

@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const { queryAllInfoUser} = require('../Controllers/dbFunctions')
 const {sendEmailForPassword} = require('../services/register.service')
+const jwt = require ('jsonwebtoken')
 
 /**
  * @swagger
@@ -86,7 +87,8 @@ const {sendEmailForPassword} = require('../services/register.service')
 
 router.post('/', async (req,res) => {
     let email = req.body.email
-    let response = await queryAllInfoUser(email)
+    var tokensendEmail = jwt.sign({ email: email, iat:25  }, 'prueba');
+    let response = await queryAllInfoUser(tokensendEmail)
     if(response.Items.length){
         await sendEmailForPassword(email);
         res.send('Ok')

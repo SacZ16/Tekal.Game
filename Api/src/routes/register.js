@@ -4,7 +4,7 @@ const router = Router();
 const bcrypt = require('bcrypt');
 const { registerUser, sedEmail } = require('../services/register.service.js')
 const jwt = require ('jsonwebtoken')
-const { newUser, getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
+const {  getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
 
 router.get('/', (req, res) => {
     getallUsers()
@@ -82,14 +82,13 @@ router.get('/', (req, res) => {
  */
 
 router.post('/', async (req, res) => {
-
-    const user = await queryAllInfoUser(req.body.email)
+    let {email} = req.body
+    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+    const user = await queryAllInfoUser(tokensendEmail)
     if (!user.Items.length) {
         const datos = req.body
-        console.log('datos', datos)
         if (!datos.email || !datos.password) throw new Error({ error: 'datos invalidos' })
         var response = await registerUser(datos)
-        // console.log(response)
         await sedEmail(req.body.email)
         await putUserInfoRegisterItems(datos)
         res.status(201).json({ status: true, data: response })

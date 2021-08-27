@@ -283,16 +283,16 @@ const updateEmailVerification = async (userId) => {
 };
 
 const updatePassword = async (userId, pass) => {
-  console.log(userId);
+  var tokensendEmail = jwt.sign({ email: userId, iat:25  }, 'prueba');
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(pass, salt);
 
   try {
-    const infoUser = `INFO#${userId}`;
+    const infoUser = `INFO#${tokensendEmail}`;
     let params = {
       TableName: TABLE_USER,
       Key: {
-        PK: userId,
+        PK: tokensendEmail,
         SK: infoUser,
       },
       UpdateExpression: "set #verification = :value",
