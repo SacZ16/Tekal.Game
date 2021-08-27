@@ -62,5 +62,6 @@ export default {
     esperaParaJugar: 'Wait to play again',
     completaShortTerm: 'Complete a short term first',
     resultImage: 'images',
-    resultVideo: 'videos'
+    resultVideo: 'videos',
+    saltar:'Skip'
 }
