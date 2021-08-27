@@ -15,13 +15,13 @@ const FormData = () => {
 
     const cookies = new Cookie();
     const [err, setErr] = useState('')
+
+    
     const [countrytext, setcountrytext] = useState('')
     const [citytext, setscitytext] = useState('')
 
     const country = getCity()
     const [input, setInput] = useState({
-        name: "",
-        lastname: "",
         country: "",
         age: "",
         city: "",
@@ -43,8 +43,6 @@ const FormData = () => {
     const SendToBackEnd = async () => {
         const user = {
             email: emailCokkie,
-            name: input.name,
-            lastname: input.lastname,
             country: countrytext,
             age: input.age,
             city: citytext,
@@ -93,8 +91,8 @@ const FormData = () => {
             {err && <h5 style={{ color: 'red' }}>{err}</h5>}
             <div className="row" onChange={handleInputChange}>
                 <div className="column" >
-                    <p className="text_input_extra_data">{<Translate content="nombre" component="span" />}*</p>
-                    <input className="swal2-inputmh4" name='name' onChange={handleInputChange} />
+                    {/* <p className="text_input_extra_data">{<Translate content="nombre" component="span" />}*</p>
+                    <input className="swal2-inputmh4" name='name' onChange={handleInputChange} /> */}
                     <p className="text_input_extra_data">{<Translate content="nacimiento" component="span" />}</p>
                     <input className="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
                     <p className="text_input_extra_data">{<Translate content="pais" component="span" />}</p>
@@ -108,8 +106,8 @@ const FormData = () => {
                     </select>
                 </div>
                 <div className="column" >
-                    <p className="text_input_extra_data" >{<Translate content="apellido" component="span" />}</p>
-                    <input className="swal2-inputmh4" name='lastname' onChange={handleInputChange} />
+                    {/* <p className="text_input_extra_data" >{<Translate content="apellido" component="span" />}</p>
+                    <input className="swal2-inputmh4" name='lastname' onChange={handleInputChange} /> */}
                     <p className="text_input_extra_data">{<Translate content="ciudad" component="span" />}</p>
                     <input className="swal2-inputmh4" value={country.city ? country.city : citytext} name='city' onChange={(e) => setscitytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="etnia" component="span" />}</p>

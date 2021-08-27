@@ -57,7 +57,7 @@ const jwt = require ('jsonwebtoken')
 })
 
 router.post('/', async (req, res) => {
-    var { email, name } = req.body
+    var { email, name, lastname } = req.body
     async function run() {
         var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
         console.log(email, 'PRIMERA')
@@ -68,7 +68,8 @@ router.post('/', async (req, res) => {
                 "PK": tokensendEmail,
                 "SK": `INFO#${tokensendEmail}`,
                 "email": tokensendEmail,
-                "name": name
+                "name": name,
+                "lastname": lastname
             })
             let newuser = await queryAllInfoUser(tokensendEmail)
             newuser.check = true

@@ -90,7 +90,7 @@ const putUserLogin = async (user) => {
 
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
-const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, gender, ethnicity, city }) => {
+const putUserInfoRegisterItems = async ({ email, age, country, gender, ethnicity, city }) => {
   var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
   try {
     var infoUser = `INFO#${tokensendEmail}`;
@@ -101,13 +101,8 @@ const putUserInfoRegisterItems = async ({ email, name, lastname, age, country, g
         "PK": tokensendEmail,
         "SK": infoUser,
       },
-      UpdateExpression: "set #name = :name, lastname = :lastname, age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",
-      ExpressionAttributeNames: {
-        "#name": "name"
-      },
+      UpdateExpression: "set age = :age, country= :country, gender = :gender, ethnicity = :ethnicity, city = :city ",
       ExpressionAttributeValues: {
-        ":name": name,
-        ":lastname": lastname,
         ":age": age,
         ":country": country,
         ":ethnicity": ethnicity,

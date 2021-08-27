@@ -38,7 +38,7 @@ const Home = () => {
 
     let emailCokkie;
     let sessionUser = "";
-
+    console.log(cookies.get('userInfo'))
     if (cookies.get('userInfo')) {
         if (!cookies.get('userInfo').Items) {
             emailCokkie = cookies.get('userInfo')[0].email
