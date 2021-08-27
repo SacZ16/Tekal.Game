@@ -18,6 +18,7 @@ const averageScore = require("./routes/averageScore")
 const assets = require('./routes/loadingAssets');
 const longTerm = require("./routes/longTermVideo");
 const globalScore = require("./routes/scoreGlobal");
+const userRegister = require("./routes/userRegister");
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -82,6 +83,7 @@ server.use('/loadingImages', assetsImages)
 server.use('/averageScore', averageScore)
 server.use('/longTerm', longTerm);
 server.use('/globalScore', globalScore);
+server.use('/age', userRegister);
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 

@@ -20,7 +20,10 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
     var a = cookiies.get('prueba')
 
     const checker = async (email, password) => {
-        if (!email || !password) setErr('Complete all fields')
+        if (!email || !password) {
+            setErr('Complete all fields')
+            return
+        }
         const checker2 = await props(email, password)
         checker2 && setErr(checker2)
         if (!checker2) {
@@ -62,8 +65,8 @@ const RegisterCommonForm = ({ props, coloresprop }) => {
                         <button className='continue' onClick={() => {checker(email, password)}}> {<Translate content="continuar" component="span" />} </button>
                         <p className='or'><hr className='hr' width='40%' color='lightgrey'></hr>{<Translate content="o" component="span" />}<hr class='hr' width='40%' color='lightgrey'></hr></p>
                         <div style={{ position: 'relative', width: '100%' }}>
-                            <GoogleButton />
-                            <FacebookButton />
+                            <p style={{ margin: '5px' }}><GoogleButton /></p>
+                            <p style={{ margin: '5px' }}><FacebookButton /></p>
                         </div>
                     </div>
                 </div>

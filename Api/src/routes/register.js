@@ -3,8 +3,8 @@ const axios = require('axios').default;
 const router = Router();
 const bcrypt = require('bcrypt');
 const { registerUser, sedEmail } = require('../services/register.service.js')
-const jwt = require ('jsonwebtoken')
-const {  getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
+const jwt = require('jsonwebtoken')
+const { getallUsers, queryAllInfoUser, putUserInfoRegisterItems } = require('../Controllers/dbFunctions.js')
 
 router.get('/', (req, res) => {
     getallUsers()
@@ -82,8 +82,8 @@ router.get('/', (req, res) => {
  */
 
 router.post('/', async (req, res) => {
-    let {email} = req.body
-    var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+    let { email } = req.body
+    var tokensendEmail = jwt.sign({ email: email, iat: 25 }, 'prueba');
     const user = await queryAllInfoUser(tokensendEmail)
     if (!user.Items.length) {
         const datos = req.body
@@ -91,7 +91,7 @@ router.post('/', async (req, res) => {
         var response = await registerUser(datos)
         await sedEmail(req.body.email)
         await putUserInfoRegisterItems(datos)
-        res.status(201).json({ status: true, data: response })
+        return res.status(201).json({ status: true, data: response })
     }
     else { res.json({ status: false }) }
 })

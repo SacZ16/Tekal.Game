@@ -2,11 +2,15 @@ import axios from 'axios';
 import Cookie from 'universal-cookie'
 
 export const newCookie = (info) => {
+    console.log(info)
     const cookies = new Cookie();
     cookies.set('userInfo', info, {
         maxAge: 6000,
         path: './'
     });
+    if (localStorage.getItem('results')) {
+        window.location.href = './close'
+    }
     if (localStorage.getItem('pruebaa')) {
         window.location.href = './preclose'
     }

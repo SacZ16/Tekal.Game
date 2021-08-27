@@ -17,6 +17,7 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import en from "../../language/eng.js";
 import es from "../../language/esp.js"
+import Loading from '../Loading/Loading'
 
 function Finalgame({ history }) {
     const MySwal = withReactContent(Swal)
@@ -32,7 +33,7 @@ function Finalgame({ history }) {
         totalRepeats: 0
     })
     const { scoreVisual, totalRepeats, videosRecognized } = sessionData
-    const [globalScore, setGlobalScore] = useState()
+    const [globalScore, setGlobalScore] = useState(null)
     useEffect(() => {
         if (cookies.get('sessionData')) {
             setSessionData({
@@ -63,7 +64,7 @@ function Finalgame({ history }) {
             })
             setGlobalScore(res.data.betterThan)
         }
-    }, [])
+    }, [sessionData])
 
     var emailCokkie;
     //Sacando el email
@@ -109,7 +110,6 @@ function Finalgame({ history }) {
     }, [])
 
     const postDataa = async () => {
-        console.log(resultadoparaenviar)
         await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
         await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
         localStorage.removeItem('results')
@@ -138,41 +138,43 @@ function Finalgame({ history }) {
     }
 
     return (
-        <div>
-            <div className='bgLandingfinal'>
+        <div className='container_final'>
+            {globalScore === null ? <Loading /> :
+                <div className='bgLandingfinal'>
 
-                <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
+                    <img className='logoTekal' src={logoTekal} alt="Logo de Tekal" id='logoTekal' />
 
-                <div className='containerDataFinalPage'>
-                    <div className='finalPageColumnLeft'>
-                        <h1 className='yourscore'>
-                            {<Translate content="tituloLastScreen" component="span" />}{globalScore}%
-                            {<Translate content="tituloLastScreen2" component="span" />}
-                            {mode === 'image' ? < Translate content="resultImage" component="span" /> : < Translate content="resultVideo" component="span" />}
-                        </h1>
-                        <div className="grafico">
-                            <Line data={data} options={opciones} config={config} />
+                    <div className='containerDataFinalPage'>
+                        <div className='finalPageColumnLeft'>
+                            <h1 className='yourscore'>
+                                {<Translate content="tituloLastScreen" component="span" />}{globalScore.toFixed(2)}%
+                                {<Translate content="tituloLastScreen2" component="span" />}
+                                {mode === 'image' ? < Translate content="resultImage" component="span" /> : < Translate content="resultVideo" component="span" />}
+                            </h1>
+                            <div className="grafico">
+                                <Line data={data} options={opciones} config={config} />
+                            </div>
+                            <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
+                            <div className='buttonRegister2'>
+                                <Link to='/'>
+                                    <button className='buttonRegisterFinal' >{<Translate content="home" component="span" />}</button>
+                                </Link>
+                                <button className='buttonRegisterFinal' onClick={again}>{<Translate content="intentarNuevamente" component="span" />}</button>
+                            </div>
                         </div>
-                        <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
-                        <div className='buttonRegister2'>
-                            <Link to='/'>
-                                <button className='buttonRegisterFinal' >{<Translate content="home" component="span" />}</button>
-                            </Link>
-                            <button className='buttonRegisterFinal' onClick={again}>{<Translate content="intentarNuevamente" component="span" />}</button>
+
+                        <div className='finalPageColumnRight'>
+                            <div className='containerResultFinalPage'>
+                                <h1>{<Translate content="tituloResultadoLastScreen" component="span" />}</h1>
+                                <h2 className="porcentaje">{scoreVisual === 0 ? scoreVisual.toFixed() : scoreVisual.toFixed(2)}%</h2>
+                                <p>{<Translate content="textoResultadoLastScreen" component="span" />}{videosRecognized}{<Translate content="textoResultadoLastScreen2" component="span" />}{totalRepeats}{<Translate content="textoResultadoLastScreen3" component="span" />}</p>
+                            </div>
+                            <button onClick={share} className='share'>{<Translate content="compartir" component="span" />}</button>
                         </div>
+
                     </div>
-
-                    <div className='finalPageColumnRight'>
-                        <div className='containerResultFinalPage'>
-                            <h1>{<Translate content="tituloResultadoLastScreen" component="span" />}</h1>
-                            <h2 className="porcentaje">{scoreVisual === 0 ? scoreVisual.toFixed() : scoreVisual.toFixed(2)}%</h2>
-                            <p>{<Translate content="textoResultadoLastScreen" component="span" />}{videosRecognized}{<Translate content="textoResultadoLastScreen2" component="span" />}{totalRepeats}{<Translate content="textoResultadoLastScreen3" component="span" />}</p>
-                        </div>
-                        <button onClick={share} className='share'>{<Translate content="compartir" component="span" />}</button>
-                    </div>
-
                 </div>
-            </div>
+            }
         </div>
     )
 }

@@ -105,3 +105,38 @@
     background-color: transparent;
     border-style: none;
 }
+
+/*  */
+.swal2-container.swal2-center>.swal2-popup{
+    background-color:#212429;
+    border-radius: 15px;
+    padding: 30px;
+    width: 50%;
+    margin-top: -55px;
+    z-index: 110000;
+}
+
+.mood_title {
+    color: white 
+}
+
+.mood_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mood_container span{
+    font-size: 80px;
+    filter: grayscale(100);
+}
+
+#fine:hover {
+    filter: grayscale(0);
+}
+#normal:hover {
+    filter: grayscale(0);
+}
+#bad:hover {
+    filter: grayscale(0);
+}
+/*  */
