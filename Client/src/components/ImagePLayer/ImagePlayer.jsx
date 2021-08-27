@@ -80,7 +80,6 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
         time2.current = performance.now()
         answers.current.push(1);
         pressSeconds.current.push(Number(((time2.current - time1.current) / 1000).toFixed(4)))
-        // pressSeconds.current.push(parseFloat(`${tiempo.current.state.s}.${tiempo.current.state.ms}`))
         if (infoImages.current[1].includes('_')) {
             if (infoImages.current[1] === 'target_repeat') {
                 targetFound.current.points++;
