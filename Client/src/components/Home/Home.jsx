@@ -37,6 +37,7 @@ const Home = () => {
 
 
     if (cookies.get('userInfo')) {
+        console.log(cookies.get('userInfo'))
         if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
         else { emailCokkie = cookies.get('userInfo').Items[0].email }
     }
@@ -83,12 +84,13 @@ const Home = () => {
         MySwal.fire({
             html:
                 <div style={{ overflow: 'hidden'}}>
-                   <FormData/>
+                <FormData/>
                 </div>,
             showConfirmButton: false
         })
     }
-        if(!cookies.get('userInfo').country || !cookies.get('userInfo').age ){
+        if(cookies.get('userInfo').Items)
+        if(!cookies.get('userInfo').Items[0].country || !cookies.get('userInfo').Items[0].age ){
             popUpFormDataExtra()
             var display = 'none'
         }
