@@ -230,7 +230,7 @@ console.log(averageScore)
                 <div className="pantallamovil">
                     <div className="contenedortextomovil">
                         <p className='subtitlemovil'>{<Translate content="titleLandingSecondPage" component="span" />}</p>
-                        <div className='startGameLandingMobile'><Link to='/game' style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
+                        <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
                     </div>
                 </div> : (null)
             }

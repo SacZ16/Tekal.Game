@@ -964,6 +964,9 @@ section::before{
 }
 
 @media only screen and (max-width: 649px) and (min-width: 0px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none!important;
     }
@@ -1078,6 +1081,9 @@ section::before{
 }
 
 @media only screen and (max-width: 360px) and (min-width: 0px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .scores_mobile{
         margin-left: 12%!important;
     }
@@ -1114,6 +1120,9 @@ section::before{
 }
 
 @media only screen and (max-width: 731px) and (max-height: 411px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none!important;
     }
@@ -1206,6 +1215,9 @@ section::before{
 }
 
 @media only screen and (max-width: 640px) and (max-height: 360px) and (min-width: 0px) and (min-height: 0px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .textHomeSession{
         position: absolute !important;
         left: 5% !important;
@@ -1223,6 +1235,9 @@ section::before{
 }
 
 @media only screen and (max-width: 736px) and (max-height: 414px) and (min-width: 641px) and (min-height: 361px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none!important;
     }
@@ -1329,6 +1344,9 @@ section::before{
 }
 
 @media only screen and (max-width: 854px) and (max-height: 530px) and (min-width: 737px) and (min-height: 415px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none!important;
     }
@@ -1435,6 +1453,9 @@ section::before{
 }
 
 @media only screen and (max-width: 812px) and (max-height: 375px) and (min-width: 641px) and (min-height: 361px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none!important;
     }
@@ -1543,6 +1564,9 @@ section::before{
 }
 
 @media only screen and (max-width: 900px) and (max-height: 500px) and (min-width: 0px) and (min-height: 0px) {
+    .subContainer_game_modes_unlock{
+        overflow-x: scroll !important;
+    }
     .homeDiv{
         display: none;
     }

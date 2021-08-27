@@ -29,3 +29,75 @@
     amarillo:#FBBC05;
     verde:#34A853
 } */
+
+@media(max-width: 768px) and (min-width:750px){
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 649px) and (min-width: 0px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 360px) and (min-width: 0px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 731px) and (max-height: 411px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 640px) and (max-height: 360px) and (min-width: 0px) and (min-height: 0px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 736px) and (max-height: 414px) and (min-width: 641px) and (min-height: 361px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 854px) and (max-height: 530px) and (min-width: 737px) and (min-height: 415px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 812px) and (max-height: 375px) and (min-width: 641px) and (min-height: 361px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
+
+@media only screen and (max-width: 900px) and (max-height: 500px) and (min-width: 0px) and (min-height: 0px) {
+    .googleLogin{
+        width:100%;
+        font-size: 14px;
+        height: 4em;
+    }
+}
