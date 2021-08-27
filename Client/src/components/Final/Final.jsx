@@ -10,6 +10,12 @@ import Cookie from 'universal-cookie'
 import logoTekal from '../Styles/tekalLogo.png';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import graph0 from '../Styles/graph0.png'
+import graph10 from '../Styles/graph10.png'
+import graph20 from '../Styles/graph20.png'
+import graph30 from '../Styles/graph30.png'
+import graph40 from '../Styles/graph40.png'
+import graph50 from '../Styles/graph50.png'
 // Componentes
 import Share from '../Share/Share'
 // Traducciones
@@ -152,7 +158,13 @@ function Finalgame({ history }) {
                                 {mode === 'image' ? < Translate content="resultImage" component="span" /> : < Translate content="resultVideo" component="span" />}
                             </h1>
                             <div className="grafico">
-                                <Line data={data} options={opciones} config={config} />
+                                {globalScore.toFixed(2) === 0? <img style={{height:'9em', width:'35em'}} src={graph0} alt='graph'/> : null}
+                                {globalScore.toFixed(2) < 11? <img style={{height:'9em', width:'35em'}} src={graph10} alt='graph'/> : null}
+                                {globalScore.toFixed(2) > 10 && globalScore.toFixed(2) < 21? <img style={{height:'9em', width:'35em'}} src={graph20} alt='graph'/> : null}
+                                {globalScore.toFixed(2) > 20 && globalScore.toFixed(2) < 31? <img style={{height:'9em', width:'35em'}} src={graph30} alt='graph'/> : null}
+                                {globalScore.toFixed(2) > 30 && globalScore.toFixed(2) < 41? <img style={{height:'9em', width:'35em'}} src={graph40} alt='graph'/> : null}
+                                {globalScore.toFixed(2) > 40 && globalScore.toFixed(2) < 51? <img style={{height:'9em', width:'35em'}} src={graph50} alt='graph'/> : null}
+                                {globalScore.toFixed(2) > 50? <img style={{height:'9em', width:'35em'}} src={graph50} alt='graph'/> : null}
                             </div>
                             <p className='textLastScreen'>{<Translate content="textoLastScreen" component="span" />}</p>
                             <div className='buttonRegister2'>
