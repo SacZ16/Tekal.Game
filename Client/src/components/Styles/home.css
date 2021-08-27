@@ -35,6 +35,10 @@ img{
     left: 11%;
 }
 
+.swal2-title{
+    color: white;
+}
+
 .tutorialHome {
     background-color: white;
     border-radius: 5px;

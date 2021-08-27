@@ -123,20 +123,12 @@ const RegisterWithEmail = ({ setRes }) => {
     var a = cookiies.get('prueba')
 
     const LoadingForm = () => {
-<<<<<<< HEAD
-        return(
-        <img alt='Loading...' style={{ height: '80px', width: '80px' }} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' />
-        )
-    }
-
-=======
         return (
             <img alt='Loading...' style={{ height: '80px', width: '80px' }} src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' />
         )
     }
 
 
->>>>>>> 91354e867c713ec518268b28d7238f337aa68adf
     const [language, setLanguage] = useState(localStorage.getItem('idioma'));
 
     const lang = language;
@@ -147,13 +139,8 @@ const RegisterWithEmail = ({ setRes }) => {
 
     return (
         <>
-<<<<<<< HEAD
-        {!loading? null : <div style={{position:'absolute', width:'100%', left:'43%', top:'40%'}}><LoadingForm/></div>}
-            {err && <h5 style={{ color: 'red' }}>{err}</h5>}
-=======
             {!loading ? null : <div style={{ position: 'absolute', width: '100%', left: '43%', top: '40%' }}><LoadingForm /></div>}
             {err && <h5 style={{ color: 'yellow', position: 'absolute', zIndex: '1000', top: '9em', left: '42%' }}>{err}</h5>}
->>>>>>> 91354e867c713ec518268b28d7238f337aa68adf
             <div class="row" onChange={handleInputChange}>
                 <div class="column" >
                     <p class="dddd">{<Translate content="nombre" component="span" />}*</p>

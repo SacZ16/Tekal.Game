@@ -136,9 +136,9 @@ const GameModes = ({ averageScore }) => {
                             <div className='game_mode' id='video-lt'>
                                 <MovieFilterIcon style={{ fontSize: '5.5rem' }} id='video-lt' />
                                 {modeVideoLT === 'video-lt' && resetLongTermVideo ?
-                                    <p className='descrip_game_mode'>{<Translate content="esperaParaJugar" id='video-lt' />}<Countdown date={resetLongTermVideo + 86400000} onComplete={resetVid} renderer={renderer} /></p> :
-                                    longTermVideoActive ? <><p id='video-lt' className='descrip_game_mode'>{<Translate content="videosLargoPlazo" component="span" id='video-lt' />}</p>
-                                        <p>{<Translate content="longTermVideo" component="span" />}</p></> :
+                                    <p>{<Translate content="esperaParaJugar" id='video-lt' />}<Countdown date={resetLongTermVideo + 86400000} onComplete={resetVid} renderer={renderer} /></p> :
+                                    longTermVideoActive ? <><p id='video-lt' >{<Translate content="videosLargoPlazo" component="span" id='video-lt' />}</p>
+                                        <p className='descrip_game_mode'>{<Translate content="longTermVideo" component="span" />}</p></> :
                                         <p>{<Translate content="completaShortTermVid" id='video-lt' />}</p>
                                 }
                             </div>
@@ -147,9 +147,9 @@ const GameModes = ({ averageScore }) => {
                             <div className='game_mode' id='image-lt'>
                                 <BurstModeIcon style={{ fontSize: '5.5rem' }} id='image-lt' />
                                 {modeImageLT === 'image-lt' && resetLongTermImage ?
-                                    <p className='descrip_game_mode'>{<Translate content="esperaParaJugar" id='image-lt' />}<Countdown date={resetLongTermImage + 86400000} onComplete={resetImg} renderer={renderer} /></p> :
-                                    longTermImageActive ? <><p id='image-lt' className='descrip_game_mode'>{<Translate content="imagenesLargoPlazo" component="span" id='image-lt' />}</p>
-                                        <p>{<Translate content="longTermImages" component="span" />}</p></> :
+                                    <p>{<Translate content="esperaParaJugar" id='image-lt' />}<Countdown date={resetLongTermImage + 86400000} onComplete={resetImg} renderer={renderer} /></p> :
+                                    longTermImageActive ? <><p id='image-lt'>{<Translate content="imagenesLargoPlazo" component="span" id='image-lt' />}</p>
+                                        <p className='descrip_game_mode'>{<Translate content="longTermImages" component="span" />}</p></> :
                                         <p>{<Translate content="completaShortTermImg" id='image-lt' />}</p>
 
                                 }
