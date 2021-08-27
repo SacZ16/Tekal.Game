@@ -63,5 +63,9 @@ export default {
     completaShortTerm: 'Complete a short term first',
     resultImage: 'images',
     resultVideo: 'videos',
-    saltar:'Skip'
+    saltar:'Skip',
+    shortTermVideo:'Try to detect repeated videos in the level itself. Easiest game mode!',
+    shortTermImage:'Try to detect repeated images in the level itself. A bit more challenging than videos!',
+    longTermVideo:'Try to detect videos that were shown to you in a previous game played 24+ hours ago. Very challenging!',
+    longTermImages:'Try to detect videos that were shown to you in a previous game played 24+ hours ago. Hardest of modes!',
 }

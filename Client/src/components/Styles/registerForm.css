@@ -43,10 +43,9 @@
   width: 150px;
   height: 30px;
   display: flex;
-  margin-top: 40px;  
+  margin-top: 40px;
   margin-bottom: 15px;
 }
-
 .buttonRegister {
 border-style: none; 
 font-size: 18px; 
@@ -122,8 +121,7 @@ margin-bottom: 5px;
   left: -122px;
   margin-left: -80px;
 }
-
-/* Popup arrow */
+/* Popup arrow /
 .popup .popuptext::after {
   content: "";
   position: absolute;
@@ -135,7 +133,7 @@ margin-bottom: 5px;
   border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class - hide and show the popup */
+/ Toggle this class - hide and show the popup /
 .popup .show {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
@@ -157,7 +155,7 @@ margin-bottom: 5px;
   color: rgb(21, 105, 25);
 }
 
-/* Add animation (fade in the popup) */
+/ Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
   from {opacity: 1;} 
   to {opacity: 1;}

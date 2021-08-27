@@ -14,6 +14,7 @@ import withReactContent from 'sweetalert2-react-content'
 import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import FormData from '../FormData/formularyData';
+import imgMobile from '../Styles/mobileMemoryGame.png'
 
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -228,6 +229,7 @@ console.log(averageScore)
             {/* No logeado mobile */}
             {login ?
                 <div className="pantallamovil">
+                <img className='logo_mobile_cerebro' src={imgMobile} alt='img_mobile' />
                     <div className="contenedortextomovil">
                         <p className='subtitlemovil'>{<Translate content="titleLandingSecondPage" component="span" />}</p>
                         <div className='startGameLandingMobile'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '40px', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', position: 'relative', top: '15%', left: '1.9%' }} id='btnStartHome'><PlayArrowIcon style={{ fontSize: '50px' }} /></Link></div>
@@ -244,7 +246,7 @@ console.log(averageScore)
                             {showMobileLogOut ?
                                 <button className='logOutMobile' onClick={() => {
                                     cookies.remove('userInfo')
-                                    window.location.href = ('')
+                                    window.location.href = ('/')
                                 }}>{<Translate content="desloguear" component="span" />}</button> : null
                             }
                         </div>

@@ -7,6 +7,15 @@
     justify-content: space-between;
 }
 
+.descrip_game_mode{
+    color: white;
+    font-size: 13px!important;
+    width: 90%;
+    position:relative;
+    top: 1%;
+    margin-left: 5%;
+}
+
 .subContainer_game_modes{
     width: 100%;
     height: 15rem;
@@ -35,15 +44,15 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     font-weight: bold;
-    width: max-content;
+    width: 80%;
     cursor: pointer;
     height: 80%;
 }
 
 .game_mode p {
     font-family: 'Montserrat', sans-serif;
-    padding-bottom: 1em;
-    font-size: 20px;
+    font-size: 18px;
+    margin-top: -.1em;
 }
 
 .game_mode:hover{
@@ -55,6 +64,15 @@
 
 .game_mode_gray{
     filter: grayscale(100);
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    width: 50%;
+    cursor: pointer;
+    height: 80%;
 }
 
 .unlock{
