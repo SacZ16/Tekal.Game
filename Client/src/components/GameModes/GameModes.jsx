@@ -50,7 +50,7 @@ const GameModes = ({ averageScore }) => {
         const day = currentDate.getDay();
         localStorage.setItem('mood', e.target.id)
         localStorage.setItem('date', day)
-        if (averageScore === undefined) {
+        if (averageScore === undefined||averageScore == 0) {
             window.location.href = ('/tutorial')
         } else {
             window.location.href = ('/game')
@@ -92,7 +92,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined) {
+            if (averageScore === undefined|| averageScore== 0) {
                 window.location.href = ('/tutorial')
             } else {
                 window.location.href = ('/game')
@@ -101,7 +101,7 @@ const GameModes = ({ averageScore }) => {
     }
 
     const playWithOutLogin = (e) => {
-        if (averageScore === undefined) {
+        if (averageScore === undefined|| averageScore== 0) {
             cookies.remove('play')
             localStorage.setItem('mode', e.target.id)
             window.location.href = ('/tutorial')

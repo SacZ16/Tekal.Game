@@ -643,7 +643,114 @@ const scanAllGamesLowerThan = async (value, type) => {
   }
 }
 
-//getGameUser("sofia@gmail.com")
+const scoresNext = async (score,sk,pk,type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        }
+      },
+      Limit: 2,
+      ScanIndexForward: false,
+      ExclusiveStartKey: {
+        score: score,
+        SK: sk,
+        PK: pk,
+        type
+
+      },
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+const scores = async (type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        }
+      },
+      ScanIndexForward: false,
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    //console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+const lowerScore = async (type,score) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        },
+        score: {
+          ComparisonOperator: "LT",
+          AttributeValueList: [score]
+        }
+      },
+      ScanIndexForward: false,
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+const lowerScoreNext = async (score,scoreLEK,sk,pk,type) => {
+  try {
+    let params = {
+      TableName: TABLE_USER,
+      IndexName: "type-score-index",
+      KeyConditions: {
+        type: {
+          ComparisonOperator: "EQ",
+          AttributeValueList: [type],
+        },
+        score: {
+          ComparisonOperator: "LT",
+          AttributeValueList: [score]
+        }
+      },
+      ExclusiveStartKey: {
+        score: scoreLEK,
+        SK: sk,
+        PK: pk,
+        type
+
+      },
+      ScanIndexForward: false,
+    };
+
+    const orderByViews = await connectionDynamo.query(params).promise();
+    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    return orderByViews;
+  } catch (error) {
+    console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
+  }
+};
+
 module.exports = {
   getallUsers,
   getUser,
@@ -670,5 +777,9 @@ module.exports = {
   getGameUser,
   gamesPlayed,
   scanAllGamesLowerThan,
-  scanAllGamesType
+  scanAllGamesType,
+  scoresNext,
+  scores,
+  lowerScore,
+  lowerScoreNext,
 };
