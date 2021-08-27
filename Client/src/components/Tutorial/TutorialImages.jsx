@@ -21,13 +21,13 @@ const colors = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8,]
 
 const imagenes = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8,];
 
-const textoCastellanoPrimera = ['Cuando arranque el juego, verás una serie de videos de 3 segundos', 'Tu objetivo es identificar los videos que  se repiten durante la partida', 'Por eso, cuando pienses que un video sale de forma repetida, presiona la tecla ESPACIO', 'Si estás en lo cierto y ese video ya había salido...Bingo! Acertaste', 'Por el contrario, marcaste un video que sale por primera vez... Te equivocaste :(', 'Es importante que prestes atención durante el juego, ya que apareceran algunas repeticiones fáciles de detectar: no olvides presionar la barra espaciadora en esos casos, o perderas una vida!', 'No te equivoques mucho! Solo tienes 7 vidas. Una vez que se acaben, perdiste!', '¿Estas instrucciones quedaron en tu memoria?¡Bien! ¡Ahora, a jugar!']
+const textoCastellanoPrimera = ['Cuando comience el juego, verás una serie de imágenes', 'Tu objetivo es identificar las imágenes que se repiten durante la partida', 'Cuando pienses que una imagen sale de forma repetida, presiona la tecla ESPACIO', 'Si estás en lo cierto y esa imagen ya había salido... ¡Bingo! Acertaste', 'Por el contrario, marcaste una imagen que sale por primera vez… Te equivocaste :)', 'Es importante que prestes atención durante el juego, ya que apareceran algunas repeticiones fáciles de detectar. ¡No olvides presionar la barra espaciadora en esos casos, o perderás una vida!', '¡No te equivoques mucho! Solo tienes 7 vidas. Una vez que se acaben, ¡perdiste!', '¿Estas instrucciones quedaron en tu memoria? ¡Bien! ¡Ahora, a jugar!']
 
-const textEnglishFirstLine = ['When the game starts, you will see a sequence of short videos', 'Your objective is to identify the repeated videos during the game', 'As soon as you see a repeated video, press SPACEBAR!', 'If you’re correct and the video has appeared before, Bingo! You’re closer to a perfect score!', 'On the other hand, if you marked a video that appeared for the first time... Oops! You made a mistake :)', 'It’s important to pay attention during the whole game, as some easy repeats will appear from time to time: make sure to press SPACEBAR when you spot those, or you will lose a life!', 'Try not to make too many mistakes: you only have N lives! Once they’re gone, you lose the game!', 'Are these instructions well stored in your memory? Great! Lets play!']
+const textEnglishFirstLine = ['When the game starts, you will see a sequence of images', 'Your objective is to identify the repeated images during the game', 'As soon as you see a repeated image, press SPACEBAR!', 'If you’re correct and the video has appeared before, Bingo! You’re closer to a perfect score!', 'On the other hand, if you marked a video that appeared for the first time... Oops! You made a mistake :)', 'It’s important to pay attention during the whole game, as some easy repeats will appear from time to time: make sure to press SPACEBAR when you spot those, or you will lose a life!', 'Try not to make too many mistakes: you only have 7 lives! Once they’re gone, you lose the game!', 'Are these instructions well stored in your memory? Great! Lets play!']
 
 const delay = 8500;
 
-function Slideshow() {
+function SlideshowImages() {
   const cookies = new Cookie();
 
   const [index, setIndex] = useState(0);
@@ -145,4 +145,4 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
   );
 }
 
-export default Slideshow;
+export default SlideshowImages;
