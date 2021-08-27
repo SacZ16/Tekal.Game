@@ -86,7 +86,8 @@ const Home = () => {
                 <div className='popUpContainerExtraData' style={{ overflow: 'hidden'}}>
                 <FormData/>
                 </div>,
-            showConfirmButton: false
+            showConfirmButton: false,
+            allowOutsideClick: false
         })
     }
         if(cookies.get('userInfo').Items)
