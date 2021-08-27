@@ -59,7 +59,7 @@ const sedEmail = async (email) => {
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
+        from: 'Tekal Game <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/verificationemail?${tokensendEmail}`, // plain text body
@@ -71,8 +71,6 @@ const sendEmailForPassword = async (email) => {
     await oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
     const algo = await oAuth2Client.getAccessToken()
-    console.log(algo.token)
-
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -86,7 +84,7 @@ const sendEmailForPassword = async (email) => {
     });
 
     await transporter.sendMail({
-        from: 'Pagina Web NodeMailer <memorygame@tekal.ai>', // sender address
+        from: 'Tekal Game <memorygame@tekal.ai>', // sender address
         to: email, // list of receivers
         subject: "Hello :heavy_check_mark:", // Subject line
         text: `http://localhost:3000/passwordchange?${tokensendEmail}`, // plain text body
