@@ -80,9 +80,9 @@ const Home = () => {
         MySwal.fire({
             title: <p style={{ color: 'white', fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
             html:
-                <div style={{ overflow: 'hidden', paddingTop: '2em' }}>
+                <div className='registerFormContainer_' style={{ overflow: 'hidden'}}>
                     <RegisterWithEmail />
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', justifyContent:'center' }}>
                         <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor: 'pointer' }} onClick={loginButton}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
                 </div>,

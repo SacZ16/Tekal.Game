@@ -148,6 +148,13 @@ const RegisterWithEmail = ({ setRes }) => {
     var male = ''
     var female = ''
     var nonBinary = ''
+    var white = ''
+    var africanAmerican = ''
+    var nativeAmerican = ''
+    var pacificIslander = ''
+    var asian = ''
+    var nativeHawaiian = ''
+    var latino = ''
 
     if(localStorage.getItem('idioma') === 'en'){
         var idioma = true
@@ -161,6 +168,14 @@ const RegisterWithEmail = ({ setRes }) => {
         male = 'Male'
         female = 'Female'
         nonBinary = 'Non binary'
+        white = 'White'
+        africanAmerican = 'African American'
+        nativeAmerican = 'Native American/Alaskan Native'
+        pacificIslander = 'Pacific Islander'
+        asian = 'Asian'
+        nativeHawaiian = 'Native Hawaiian'
+        latino = 'Latino or Hispanic'
+
     }
 
     if(!idioma) {
@@ -168,6 +183,13 @@ const RegisterWithEmail = ({ setRes }) => {
         male = 'Masculino'
         female = 'Femenino'
         nonBinary = 'No binario'
+        white = 'Blanco'
+        africanAmerican = 'Afro Americano'
+        nativeAmerican = 'Americano nativo / Alaskeño Nativo'
+        pacificIslander = 'Nativo Islas del Pacífico '
+        asian = 'Asiático'
+        nativeHawaiian = 'Hawaiiano nativo'
+        latino = 'Latino o Hispano'
     }
 
     return (
@@ -203,7 +225,16 @@ const RegisterWithEmail = ({ setRes }) => {
                     <p className="dddd">{<Translate content="confirmaContrasena" component="span" />}*</p>
                     <input id='confpass' class="swal2-inputmh4" name='confirmPass' type='password' onChange={handleInputChange} />
                     <p class="dddd">{<Translate content="etnia" component="span" />}</p>
-                    <input class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange} />
+                    <select class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange}>
+                        <option value='' hidden selected>{''}</option>
+                        <option value='white'>{white}</option>
+                        <option value='african-american'>{africanAmerican}</option>
+                        <option value='native-american'>{nativeAmerican}</option>
+                        <option value='pacific-islander'>{pacificIslander}</option>
+                        <option value='asian'>{asian}</option>
+                        <option value='native-hawaiian'>{nativeHawaiian}</option>
+                        <option value='hipanic-latino'>{latino}</option>
+                    </select>
                 </div>
             </div>
             <button className='buttonRegister' onClick={SendToBackEnd}> {<Translate content="botonRegistro" component="span" />} </button>

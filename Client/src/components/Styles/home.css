@@ -98,7 +98,8 @@ overflow: hidden;
     text-align: left;
 }
 .dddd{
-    margin:0;
+    margin-bottom:.2em;
+    font-size:15px
 }
 .swal2-html-container{
     text-align: left;
@@ -114,6 +115,11 @@ overflow: hidden;
     width:45%;
     padding: 10px;
     color: #FFFF;
+     }
+
+     .registerFormContainer_{
+        text-align: -webkit-center;
+
      }
 
     .Header-lang{
@@ -150,7 +156,8 @@ overflow: hidden;
     border-radius: .1875em;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 6%), 0 0 0 3px transparent;
     color: white;
-    font-size: 1.125em;
+    font-size: 1em;
+    margin-top:.2em
 }
 
 .swal2-container.swal2-center>.swal2-popup{
