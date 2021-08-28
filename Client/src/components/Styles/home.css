@@ -204,6 +204,10 @@ overflow: hidden;
     color: #800FC7
 }
 
+.graficoHome{
+    margin-top: -2em;
+}
+
 .signUpText{
     padding-top: 15px;
     font-family: 'Montserrat', sans-serif;
@@ -494,6 +498,8 @@ body{
 .column_scores{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 .column_scores h4{

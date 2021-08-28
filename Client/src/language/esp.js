@@ -1,14 +1,19 @@
 export default {
+    //Landing
     tituloLandingPage: '¿Qué tan buena es tu ',
     memoria: 'memoria',
     subtituloLandingPage: '¡Juega a este juego y mide tu memoria visual!',
     botonRegistro: 'Registrate',
     botonLogin: 'Iniciá sesión',
-    noTienesUnaCuenta: '¿No tenés una cuenta?',
-    yaTienesUnaCuenta: '¿Ya tienes una cuenta?',
     titleLandingSecondPage: '¡Bienvenido!',
     subTitleLandingSecondPage: 'Este juego esta hecho para medir tu memoria visual. Te mostraremos imágenes o videos uno tras otro, y tu trabajo es detectar los elementos repetidos. La premisa es simple... ¡pero el juego es desafiante! ¿Estás listo? 	',
     botonPlayLanding: 'Empieza a jugar',
+
+    //Form
+    noTienesUnaCuenta: '¿No tenés una cuenta?',
+    yaTienesUnaCuenta: '¿Ya tienes una cuenta?',
+
+    //Home
     bienvenidaHome: 'Hola',
     estadoSesion: 'En linea',
     ultimoResultado: 'Último resultado',
@@ -16,6 +21,8 @@ export default {
     botonJugar: 'Jugar',
     estadoDeAnimo: '¿Cómo te sientes hoy?',
     desloguear: 'Cerrar sesión',
+
+    //Final page
     intentarNuevamente: 'Jugar de nuevo',
     tituloLastScreen: 'Eres mejor que el ',
     tituloLastScreen2: ' de las personas que jugaron al juego de ',
@@ -25,8 +32,12 @@ export default {
     textoResultadoLastScreen2: ' de los ',
     textoResultadoLastScreen3: ' elementos repetidos del juego.',
     compartir: 'Compartir',
+
+    //Pop ups
     tituloNoLogado: '¡Completaste la partida!',
     textoNoLogeado: 'Para calcular tus resultados necesitamos que te registres. Son solo unos segundos!',
+    
+    //Game modes
     videos: 'Videos',
     imagenes: 'Imágenes',
     seleccionar: 'Seleccionar',
@@ -35,6 +46,13 @@ export default {
     videosLargoPlazo: 'Videos largo plazo',
     imagenesLargoPlazo: 'Imágenes largo plazo',
     logeateParaDesbloquear: 'Iniciá sesión para desbloquear',
+    shortTermVideo: 'Intenta detectar videos repetidos en un mismo nivel. ¡El modo de juego más fácil!',
+    shortTermImage: 'Intenta detectar imágenes repetidas en un mismo nivel. ¡Un poco más difícil!',
+    longTermVideo: 'Intenta detectar videos que te fueron mostrados en un juego previo, hace 24 horas o más. ¡Muy difícil!',
+    longTermImages: 'Intenta detectar imágenes que te fueron mostradas en un juego previo, hace 24 horas o más. ¡El modo más difícil de todos!',
+    
+
+    //Form register
     nombre: 'Nombre',
     apellido: 'Apellido',
     mail: 'Correo electrónico',
@@ -49,10 +67,13 @@ export default {
     continuaFacebook: 'Continúa con Facebook',
     olvidasteContrasena: '¿Olvidaste tu constraseña?',
     o: 'O',
+
+    //Gender
     noDecir: 'Prefiero no decir',
     hombre: 'Masculino',
     mujer: 'Femenino',
     noBinario: 'No binario',
+
     continuar: 'Continuar',
     juegoTerminado: 'El juego ha terminado!',
     perdisteTodasLasVidas: 'Perdiste todas tus vidas, buena suerte la próxima vez!',
@@ -64,10 +85,8 @@ export default {
     resultImage: 'imagenes',
     resultVideo: 'videos',
     saltar: 'Saltar',
-    shortTermVideo: 'Intenta detectar videos repetidos en un mismo nivel. ¡El modo de juego más fácil!',
-    shortTermImage: 'Intenta detectar imágenes repetidas en un mismo nivel. ¡Un poco más difícil!',
-    longTermVideo: 'Intenta detectar videos que te fueron mostrados en un juego previo, hace 24 horas o más. ¡Muy difícil!',
-    longTermImages: 'Intenta detectar imágenes que te fueron mostradas en un juego previo, hace 24 horas o más. ¡El modo más difícil de todos!',
+    
+    //Tutorial
     tutorialVideo: 'Tutorial Video',
     tutorialImages: 'Tutorial Imágenes',
     tutorialVideoLong: 'Tutorial video largo plazo',

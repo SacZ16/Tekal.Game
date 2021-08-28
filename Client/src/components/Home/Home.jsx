@@ -16,7 +16,12 @@ import { SendDataToBACK } from '../controllers/dbFunctions'
 import FormData from '../FormData/formularyData';
 import imgMobile from '../Styles/mobileMemoryGame.png'
 import TutorialModes from '../TutorialModes/TutorialModes'
-import Graph from '../Graph/Graph'
+import graph0 from '../Styles/graph0.png'
+import graph10 from '../Styles/graph10.png'
+import graph20 from '../Styles/graph20.png'
+import graph30 from '../Styles/graph30.png'
+import graph40 from '../Styles/graph40.png'
+import graph50 from '../Styles/graph50.png'
 
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -290,16 +295,36 @@ const Home = () => {
                         <>
                             <img className='cerebritoHomeResults' src={cerebritoHomeResults} alt="imagen_mascota" />
                             <p className='textHomeSession'>{<Translate content="bienvenidaHome" component="span" />}&nbsp; <span className='memory_style'>{sessionUser}</span></p>
+
                             <div className='scores'>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="ultimoResultado" component="span" />}</h4>
                                     <p>{sessionData === 0 || !sessionData ? 0 : sessionData}%</p>
+                                    <div className="graficoHome">
+                                        {sessionData === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
+                                        {sessionData < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
+                                        {sessionData > 10 && sessionData < 21 ? <img style={{ height: '3em', width: '10em' }} src={graph20} alt='graph' /> : null}
+                                        {sessionData > 20 && sessionData < 31 ? <img style={{ height: '3em', width: '10em' }} src={graph30} alt='graph' /> : null}
+                                        {sessionData > 30 && sessionData < 41 ? <img style={{ height: '3em', width: '10em' }} src={graph40} alt='graph' /> : null}
+                                        {sessionData > 40 && sessionData < 51 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
+                                        {sessionData > 50 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
+                                    </div>
                                 </div>
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                     <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
+                                    {/* <div className="graficoHome2">
+                                        {averageScore === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
+                                        {averageScore < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
+                                        {averageScore > 10 && averageScore < 21 ? <img style={{ height: '3em', width: '10em' }} src={graph20} alt='graph' /> : null}
+                                        {averageScore > 20 && averageScore < 31 ? <img style={{ height: '3em', width: '10em' }} src={graph30} alt='graph' /> : null}
+                                        {averageScore > 30 && averageScore < 41 ? <img style={{ height: '3em', width: '10em' }} src={graph40} alt='graph' /> : null}
+                                        {averageScore > 40 && averageScore < 51 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
+                                        {averageScore > 50 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
+                                    </div> */}
                                 </div>
                             </div>
+                            
                             <div className='buttonsHome' style={{ display: `${display && display.current}` }}>
                                 <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>
