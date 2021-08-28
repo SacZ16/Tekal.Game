@@ -1,11 +1,13 @@
 .containerShare {
     display: flex;
     flex-direction: column;
+    width: 10em
 }
 
 .containerBtnShare {
     display: flex;
-    justify-content: space-around;
+    flex-direction:row;
+    justify-content: space-between;
 }
 
 .containerBtnShare > p {
@@ -20,4 +22,12 @@
     border-style: none;
     border-radius: 10px;
     cursor: pointer;
+    margin-top:2em
+}
+.containerShare img{
+    align-self:center;
+    text-align:center;
+    width:8em;
+    height:2.5em;
+    margin-bottom:1em
 }

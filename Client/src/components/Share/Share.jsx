@@ -4,24 +4,25 @@ import '../Styles/share.css'
 import {
     FacebookShareButton,
     TwitterShareButton,
+    LinkedinShareButton,
     FacebookIcon,
     TwitterIcon,
+    LinkedinIcon
 } from 'react-share';
 
 function Share({ url }) {
-    const [color, setColor] = useState(false)
-    const [color1, setColor1] = useState(false)
-    const [color2, setColor2] = useState(false)
-    const [color3, setColor3] = useState(false)
-    // console.log(url)
+
     return (
         <div className='containerBtnShare' >
-            <FacebookShareButton url={'https://tekal-memory-game-front.herokuapp.com/close'} hashtag='#memoryGame' >
-                <FacebookIcon round size={32} iconFillColor={color ? '#C94EBF' : 'white'} onMouseOver={() => setColor(true)} onMouseLeave={(() => setColor(false))} />
+            <FacebookShareButton url={'https://tekal-memory-game-front.herokuapp.com/close'} title={'Tekal Memory Game'} hashtag='#memoryGame' >
+                <FacebookIcon round size={50}/>
             </FacebookShareButton>
-            <TwitterShareButton url={'https://www.google.com/'} title={'Tekal Memory Game'} hashtag='#memoryGame'>
-                <TwitterIcon round size={32} iconFillColor={color1 ? '#C94EBF' : 'white'} onMouseOver={() => setColor1(true)} onMouseLeave={(() => setColor1(false))} />
+            <TwitterShareButton url={'https://tekal-memory-game-front.herokuapp.com/close'} hashtag='#memoryGame'>
+                <TwitterIcon round size={50} />
             </TwitterShareButton>
+            <LinkedinShareButton url={'https://tekal-memory-game-front.herokuapp.com/close'} hashtag='#memoryGame' title='Tekal memory game'>
+                <LinkedinIcon round size={50} />
+            </LinkedinShareButton>
         </div>
     )
 }

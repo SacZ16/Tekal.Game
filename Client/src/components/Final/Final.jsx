@@ -136,14 +136,13 @@ function Finalgame({ history }) {
 
     const share = () => {
         MySwal.fire({
-            imageUrl: `https://www.pngall.com/wp-content/uploads/2/Share-PNG-Free-Download.png`,
             html:
                 <div className='containerShare'>
+                    <img src='https://www.pngall.com/wp-content/uploads/2/Share-PNG-Free-Download.png' alt='shareImg'/>
                     <Share url={window.location.href} />
                     <button className='btnClose' onClick={() => MySwal.clickCancel()} >Close</button>
                 </div>,
             showConfirmButton: false,
-            toast: true
         })
     }
 
