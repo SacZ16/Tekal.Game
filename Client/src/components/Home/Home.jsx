@@ -15,6 +15,8 @@ import cerebritoDerecha from '../Styles/cerebrito_derecha.png'
 import { SendDataToBACK } from '../controllers/dbFunctions'
 import FormData from '../FormData/formularyData';
 import imgMobile from '../Styles/mobileMemoryGame.png'
+import TutorialModes from '../TutorialModes/TutorialModes'
+import Graph from '../Graph/Graph'
 
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -120,9 +122,9 @@ const Home = () => {
     //-----------
 
     const [show, setShow] = useState(false)
-    const [sessionOn, setSessionOn] = useState(false) //setear para que funcione bien
-    const [login, setLogin] = useState(true) //setear para que funcione bien
-    const [startGame, setStartGame] = useState(false) //setear para que funcione bien
+    const [sessionOn, setSessionOn] = useState(false) 
+    const [login, setLogin] = useState(true) 
+    const [startGame, setStartGame] = useState(false) 
     const [checker, setchecker] = useState(false)
     const [showMobileLogOut, setShowMobileLogOut] = useState(false)
 
@@ -132,8 +134,15 @@ const Home = () => {
         setSessionOn(true)
         setchecker(true)
     }
-    function tutorialbutton() {
-        window.location.href = ('/tutorial')
+
+    function tutorialbutton(e) {
+        MySwal.fire({
+            html:
+                <div style={{ overflow: 'hidden' }}>
+                    <TutorialModes/>
+                </div>,
+            showConfirmButton: false,
+        })
         localStorage.removeItem('mode')
     }
 
@@ -157,7 +166,6 @@ const Home = () => {
                                 <button className='btnLogOut' onClick={() => {
                                     cookies.remove('userInfo')
                                     cookies.remove('alexis')
-
                                     window.location.href = ('')
                                 }}>{<Translate content="desloguear" component="span" />}</button>
                             </div> : (null)

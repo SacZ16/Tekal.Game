@@ -10,11 +10,11 @@ import slide6 from '../Styles/slideSeisEsp.png'
 import slide7 from '../Styles/slideSieteEsp.png'
 import slide8 from '../Styles/slideOchoEsp.png'
 import Cookie from 'universal-cookie'
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from '@material-ui/icons/Home'
 // Traducciones
-import Translate from "react-translate-component";
-import counterpart from "counterpart";
-import en from "../../language/eng.js";
+import Translate from "react-translate-component"
+import counterpart from "counterpart"
+import en from "../../language/eng.js"
 import es from "../../language/esp.js"
 
 const colors = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8,];
@@ -32,8 +32,8 @@ function SlideshowImages() {
 
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
-
-  const [idioma, setIdioma] = useState('Castellano')
+  //raducci[on de textos en tutorial]
+  const [idioma, setIdioma] = useState(localStorage.getItem('idioma'))
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -64,7 +64,7 @@ function SlideshowImages() {
     }
   }
 
-   // Traducciones
+   // Traducciones generales de la pagina
    if (!localStorage.getItem('idioma')) {
     localStorage.setItem('idioma', 'es')
 }
@@ -81,19 +81,25 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
   return (
     <div className='slideContainer'>
       <a href='/' className='homeIcon' ><HomeIcon style={{color:'white', height:'40px',width:'40px'}}/></a>
-      <a href='/game'></a>
-      <Link onClick={playWithOutLogin}><button style={{ backgroundColor:'transparent' ,fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "none", position: 'absolute',bottom:'5%', right:'5%' }}>{mode ? <Translate content="saltar" component="span" />:null}</button></Link>
+      <Link onClick={playWithOutLogin}><button onClick={()=> localStorage.setItem('mode','image')} style={{ backgroundColor:'transparent' ,fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "none", position: 'absolute',bottom:'5%', right:'5%' }}>{mode ? <Translate content="saltar" component="span" />:null}</button></Link>
       <div className="slideshow">
         <div className='tutorial_container'>
-          <p className='tekalLogo_tutorial'>TEKAL</p>
-          <div className="container_lang_change">
-            <button onClick={() => setIdioma('Castellano')}>Es</button>
-            <button onClick={() => setIdioma('English')}>En</button>
-          </div>
+        {localStorage.getItem('idioma') === 'es' ? 
+          <select className="Header-lang" onChange={(e) => setIdioma(e.target.value)}>
+            <option value='es' onClick={() => setIdioma('es')}>Es</option>
+            <option value='en' onClick={() => setIdioma('en')}>En</option>
+          </select>
+          :
+          <select className="Header-lang" onChange={(e) => setIdioma(e.target.value)}>
+            <option value='en' onClick={() => setIdioma('en')}>En</option>
+            <option value='es' onClick={() => setIdioma('es')}>Es</option>
+          </select>
+          }
+          
           <div className='tutorial_buttons'>
             <button className='left_btn_tutorial' style={index > 0 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index > 0 ? () => { setIndex(index - 1) } : null}>&#x276e;</button>
             {index < 7 ? <button className='right_btn_tutorial' style={index < 7 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index < 7 ? () => { setIndex(index + 1) } : null}>&#x276f;</button>
-              : <Link onClick={playWithOutLogin}><button style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'transparent', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>{!mode ?  null : 'Start'}</button></Link>}
+              : <Link onClick={playWithOutLogin}><button onClick={()=> localStorage.setItem('mode','image')} style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'transparent', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>{!mode ?  null : 'Start'}</button></Link>}
           </div>
           <div
             className="slideshowSlider"
@@ -112,15 +118,15 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
                   textAlign: 'center',
                 }}
               >
-                {idioma === 'Castellano' ?
+                {idioma === 'es' ?
 
                   <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textoCastellanoPrimera[index]}</p>
-                    {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[in,ex]}</p> */}
+                    <p className='text_tutorial' style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', paddingRight:'20px', paddingLeft:'20px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' }}>{textoCastellanoPrimera[index]}</p>
+                  {/* <p style={index===5?{fontSize:'15px'}:{fontSize:'26px'}}>{textoCastellanoSegundaLinea[in,ex]}</p> */}
                   </div>
                   :
                   <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px' }}>{textEnglishFirstLine[index]}</p>
+                    <p style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' }}>{textEnglishFirstLine[index]}</p>
                   </div>
                 }
               </div>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import '../Styles/final.css'
 import '../Styles/share.css'
-import { Line } from 'react-chartjs-2'
 import { useDispatch } from 'react-redux'
 import { resetReducer } from '../../redux/action'
 import axios from 'axios';

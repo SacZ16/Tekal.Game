@@ -1,0 +1,23 @@
+.buttonsChooseTutorial button{
+    background-color:transparent;
+    color: white;
+    border-style:solid;
+    border-color:white;
+    border-width:1px;
+    font-size:20px;
+    padding:10px 10px 10px 10px;
+    margin-bottom:10px;
+    border-radius:5px;
+    cursor:pointer
+}
+
+.optionTutorial:hover{
+    background-color:#c94ebf;
+    border-style:none;
+}
+
+.buttonsChooseTutorial {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}

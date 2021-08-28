@@ -68,4 +68,8 @@ export default {
     shortTermImage: 'Intenta detectar imágenes repetidas en un mismo nivel. ¡Un poco más difícil!',
     longTermVideo: 'Intenta detectar videos que te fueron mostrados en un juego previo, hace 24 horas o más. ¡Muy difícil!',
     longTermImages: 'Intenta detectar imágenes que te fueron mostradas en un juego previo, hace 24 horas o más. ¡El modo más difícil de todos!',
+    tutorialVideo: 'Tutorial Video',
+    tutorialImages: 'Tutorial Imágenes',
+    tutorialVideoLong: 'Tutorial video largo plazo',
+    tutorialImagesLong:'Tutorial imágenes largo plazo',
 }

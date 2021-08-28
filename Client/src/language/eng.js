@@ -69,4 +69,8 @@ export default {
     shortTermImage: 'Try to detect repeated images in the level itself. A bit more challenging than videos!',
     longTermVideo: 'Try to detect videos that were shown to you in a previous game played 24+ hours ago. Very challenging!',
     longTermImages: 'Try to detect videos that were shown to you in a previous game played 24+ hours ago. Hardest of modes!',
+    tutorialVideo: 'Tutorial Video',
+    tutorialImages: 'Tutorial Images',
+    tutorialVideoLong: 'Tutorial video long term',
+    tutorialImagesLong:'Tutorial images long term',
 }

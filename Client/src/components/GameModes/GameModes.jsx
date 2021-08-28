@@ -65,15 +65,15 @@ const GameModes = ({ averageScore }) => {
     }
     const moodFunctionVideoLT = () => {
         localStorage.setItem('mode', 'video-lt')
-        mood()
+        moodVideosLT()
     }
     const moodFunctionImage = () => {
         localStorage.setItem('mode', 'image')
-        mood()
+        moodImages()
     }
     const moodFunctionImageLT = () => {
         localStorage.setItem('mode', 'image-lt')
-        mood()
+        moodImagesLT()
     }
 
     const mood = () => {
@@ -101,6 +101,82 @@ const GameModes = ({ averageScore }) => {
         }
     }
 
+    const moodImages = () => {
+        const lastStorageDay = localStorage.getItem('date')
+        const currentDate = new Date();
+        const day = currentDate.getDay();
+        cookies.remove('play') // deja volver a jugar
+        if (lastStorageDay != day) {
+            MySwal.fire({
+                title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
+                html:
+                    <div className='mood_container' style={{ borderStyle: 'none' }}>
+                        <span id='bad' onClick={mood2}>☹️</span>
+                        <span id='normal' onClick={mood2}>😐</span>
+                        <span id='fine' onClick={mood2}>😁</span>
+                    </div>,
+                showConfirmButton: false
+            })
+        } else {
+            if (averageScore === undefined) {
+                window.location.href = ('/tutorialImages')
+            } else {
+                window.location.href = ('/game')
+            }
+        }
+    }
+
+    const moodVideosLT = () => {
+        const lastStorageDay = localStorage.getItem('date')
+        const currentDate = new Date();
+        const day = currentDate.getDay();
+        cookies.remove('play') // deja volver a jugar
+        if (lastStorageDay != day) {
+            MySwal.fire({
+                title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
+                html:
+                    <div className='mood_container' style={{ borderStyle: 'none' }}>
+                        <span id='bad' onClick={mood2}>☹️</span>
+                        <span id='normal' onClick={mood2}>😐</span>
+                        <span id='fine' onClick={mood2}>😁</span>
+                    </div>,
+                showConfirmButton: false
+            })
+        } else {
+            if (averageScore === undefined) {
+                window.location.href = ('/tutorialLTVideo')
+            } else {
+                window.location.href = ('/game')
+            }
+        }
+    }
+
+    const moodImagesLT = () => {
+        const lastStorageDay = localStorage.getItem('date')
+        const currentDate = new Date();
+        const day = currentDate.getDay();
+        cookies.remove('play') // deja volver a jugar
+        if (lastStorageDay != day) {
+            MySwal.fire({
+                title: <h3>{<Translate content="estadoDeAnimo" component="h3" />}</h3>,
+                html:
+                    <div className='mood_container' style={{ borderStyle: 'none' }}>
+                        <span id='bad' onClick={mood2}>☹️</span>
+                        <span id='normal' onClick={mood2}>😐</span>
+                        <span id='fine' onClick={mood2}>😁</span>
+                    </div>,
+                showConfirmButton: false
+            })
+        } else {
+            if (averageScore === undefined) {
+                window.location.href = ('/tutorialLTImages')
+            } else {
+                window.location.href = ('/game')
+            }
+        }
+    }
+
+
     const playWithOutLogin = () => {
         if (averageScore === undefined) {
             cookies.remove('play')
@@ -113,7 +189,7 @@ const GameModes = ({ averageScore }) => {
         if (averageScore === undefined) {
             cookies.remove('play')
             localStorage.setItem('mode', 'image')
-            window.location.href = ('/tutorial')
+            window.location.href = ('/tutorialImages')
         }
     }
 

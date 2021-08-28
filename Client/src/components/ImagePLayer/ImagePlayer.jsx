@@ -159,9 +159,10 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
         if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] !== 'target_repeat') {
             answers.current.push(0);
             pressSeconds.current.push(0);
-            if (seeImages.current[seeImages.current.length - 1][0][1] !== 'vig_repeat') {
+            /* Revisar esta funcion para que baje 5 vidas por un vigilance */
+           /*  if (seeImages.current[seeImages.current.length - 1][0][1] !== 'vig_repeat') {
                 lives.current = lives.current - 5
-            }
+            } */
         }
         if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] === 'target_repeat') {
             answers.current.push(0);
@@ -199,7 +200,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     }
 
     const handlerChange = () => {
-        if (lives.current === 0) {
+        if (lives.current < 1) {
             MySwal.fire({
                 toast: true,
                 html:

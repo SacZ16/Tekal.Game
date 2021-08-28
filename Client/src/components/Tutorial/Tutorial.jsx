@@ -33,7 +33,7 @@ function Slideshow() {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
 
-  const [idioma, setIdioma] = useState('Castellano')
+  const [idioma, setIdioma] = useState(localStorage.getItem('idioma'))
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -81,18 +81,25 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
   return (
     <div className='slideContainer'>
       <a href='/' className='homeIcon' ><HomeIcon style={{color:'white', height:'40px',width:'40px'}}/></a>
-      <a href='/game'></a>
-      <Link onClick={playWithOutLogin}><button style={{ backgroundColor:'transparent' ,fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "none", position: 'absolute',bottom:'5%', right:'5%' }}>{mode ? <Translate content="saltar" component="span" />:null}</button></Link>
+      <Link onClick={playWithOutLogin}><button onClick={()=>localStorage.setItem('mode','video')} style={{ backgroundColor:'transparent' ,fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "none", position: 'absolute',bottom:'5%', right:'5%' }}>{mode ? <Translate content="saltar" component="span" />:null}</button></Link>
       <div className="slideshow">
         <div className='tutorial_container'>
-          <div className="container_lang_change">
-            <button style={{display:'none'}} onClick={() => setIdioma('Castellano')}>Es</button>
-            <button style={{display:'none'}} onClick={() => setIdioma('English')}>En</button>
-          </div>
+        {localStorage.getItem('idioma') === 'es' ? 
+          <select className="Header-lang" onChange={(e) => setIdioma(e.target.value)}>
+            <option value='es' onClick={() => setIdioma('es')}>Es</option>
+            <option value='en' onClick={() => setIdioma('en')}>En</option>
+          </select>
+          :
+          <select className="Header-lang" onChange={(e) => setIdioma(e.target.value)}>
+            <option value='en' onClick={() => setIdioma('en')}>En</option>
+            <option value='es' onClick={() => setIdioma('es')}>Es</option>
+          </select>
+          }
+          
           <div className='tutorial_buttons'>
             <button className='left_btn_tutorial' style={index > 0 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index > 0 ? () => { setIndex(index - 1) } : null}>&#x276e;</button>
             {index < 7 ? <button className='right_btn_tutorial' style={index < 7 ? { color: 'white', cursor: 'pointer' } : { color: 'gray', cursor: 'default' }} onClick={index < 7 ? () => { setIndex(index + 1) } : null}>&#x276f;</button>
-              : <Link onClick={playWithOutLogin}><button style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'transparent', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>{!mode ?  null : 'Start'}</button></Link>}
+              : <Link onClick={playWithOutLogin}><button onClick={()=>localStorage.setItem('mode','video')} style={{ fontSize: '25px', textTransform: 'uppercase', cursor: 'pointer', color: 'white', fontWeight: 'bold', borderStyle: "solid", borderColor: 'transparent', borderRadius: '5px', borderWidth: '2px', position: 'absolute' }}>{!mode ?  null : 'Start'}</button></Link>}
           </div>
           <div
             className="slideshowSlider"
@@ -111,7 +118,7 @@ counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
                   textAlign: 'center',
                 }}
               >
-                {idioma === 'Castellano' ?
+                {idioma === 'es' ?
 
                   <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <p className='text_tutorial' style={index === 5 ? { fontSize: '20px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', paddingRight:'20px', paddingLeft:'20px' } : { fontSize: '26px', whiteSpace: 'normal', width: '65%', background: '#E7E7E7', color: 'black', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px',paddingRight:'20px', paddingLeft:'20px' }}>{textoCastellanoPrimera[index]}</p>

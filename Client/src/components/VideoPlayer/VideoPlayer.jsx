@@ -139,9 +139,10 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 1][0][1] !== 'target_repeat') {
         answers.current.push(0);
         pressSeconds.current.push(0);
-        if (seeVideos.current[seeVideos.current.length - 1][0][1] === 'vig_repeat') {
+        /* Revisar esta funcion para que baje 5 vidas por un vigilance */
+        /* if (seeVideos.current[seeVideos.current.length - 1][0][1] === 'vig_repeat') {
           lives.current = lives.current - 5
-        }
+        } */
       }
       if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 1][0][1] === 'target_repeat') {
         targetNotPress.current.notPress++;
@@ -168,7 +169,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   /*Cambio de Vidas y Videos Nuevos */
   useEffect(() => {
-    if (lives.current === 0) {
+    if (lives.current < 1) {
       play.current = false
       MySwal.fire({
         toast: true,
