@@ -113,3 +113,41 @@
     cursor: pointer;
     margin-left: 11%;
 }
+
+@media(min-width: 1920px){
+    .yourscore{
+        font-size:2.5em ; 
+    }
+
+    .grafico{
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+
+    .textLastScreen{
+        font-size: 2em;
+    }
+
+    .buttonRegisterFinal{
+        margin-top: 1em;
+    }
+}
+
+@media(min-width: 1440px) and (max-width:1900px){
+    .yourscore{
+        font-size:2em ; 
+    }
+
+    .grafico{
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+
+    .textLastScreen{
+        font-size: 1.5em;
+    }
+
+    .buttonRegisterFinal{
+        margin-top: 1em;
+    }
+}
