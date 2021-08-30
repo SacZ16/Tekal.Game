@@ -36,7 +36,6 @@ const GameModes = ({ averageScore }) => {
     }
     //----------------------------------------
     const [login, setLogin] = useState(false)
-    console.log(Date.now())
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
 
@@ -93,7 +92,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined) {
+            if (averageScore === null) {
                 window.location.href = ('/tutorial')
             } else {
                 window.location.href = ('/game')
@@ -118,7 +117,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined) {
+            if (averageScore === null) {
                 window.location.href = ('/tutorialImages')
             } else {
                 window.location.href = ('/game')
@@ -143,7 +142,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined) {
+            if (averageScore === null) {
                 window.location.href = ('/tutorialLTVideo')
             } else {
                 window.location.href = ('/game')
@@ -168,7 +167,7 @@ const GameModes = ({ averageScore }) => {
                 showConfirmButton: false
             })
         } else {
-            if (averageScore === undefined) {
+            if (averageScore === null) {
                 window.location.href = ('/tutorialLTImages')
             } else {
                 window.location.href = ('/game')
@@ -176,21 +175,16 @@ const GameModes = ({ averageScore }) => {
         }
     }
 
-
     const playWithOutLogin = () => {
-        if (averageScore === undefined) {
-            cookies.remove('play')
-            localStorage.setItem('mode', 'video')
-            window.location.href = ('/tutorial')
-        }
+        cookies.remove('play')
+        localStorage.setItem('mode', 'video')
+        window.location.href = ('/tutorial')
     }
 
     const playWithOutLogin2 = () => {
-        if (averageScore === undefined) {
-            cookies.remove('play')
-            localStorage.setItem('mode', 'image')
-            window.location.href = ('/tutorialImages')
-        }
+        cookies.remove('play')
+        localStorage.setItem('mode', 'image')
+        window.location.href = ('/tutorialImages')
     }
 
     const renderer = ({ hours, minutes, seconds }) => {

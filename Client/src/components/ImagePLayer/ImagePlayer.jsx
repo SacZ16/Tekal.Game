@@ -46,6 +46,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     const vigilanceRecognized = useRef([])
     // console.log('Vigilancia Encontrados', vigilanceRecognized.current)
     const lives = useRef(20); // Vidas del usuario 
+    const [liv, setLiv] = useState(true)
     // console.log(lives.current)
     const score = parseInt(((targetFound.current.points / target) * 100).toFixed(2)); // puntaje ne base a los target_repeat reconocidos osbre el total de targets
     // console.log(score)
@@ -156,15 +157,15 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     }, [seeImages.current])
 
     const prevAsset = () => {
-        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] !== 'target_repeat') {
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] !== 'target_repeat') {
             answers.current.push(0);
             pressSeconds.current.push(0);
-            /* Revisar esta funcion para que baje 5 vidas por un vigilance */
-           /*  if (seeImages.current[seeImages.current.length - 1][0][1] !== 'vig_repeat') {
+            if (seeImages.current[seeImages.current.length - 2][0][1] === 'vig_repeat') {
                 lives.current = lives.current - 5
-            } */
+                setLiv(!liv)
+            }
         }
-        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 1][0][1] === 'target_repeat') {
+        if (seeImages.current.length > 1 && seeImages.current[seeImages.current.length - 2][0][1] === 'target_repeat') {
             answers.current.push(0);
             pressSeconds.current.push(0);
         }
@@ -199,7 +200,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
         localStorage.setItem('results', JSON.stringify(finalImages.current))
     }
 
-    const handlerChange = () => {
+    useEffect(() => {
         if (lives.current < 1) {
             MySwal.fire({
                 toast: true,
@@ -220,6 +221,11 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                 sessionData()
                 checkLogin()
             })
+        }
+    }, [lives.current])
+
+    const handlerChange = () => {
+        if (lives.current < 1) {
             return null
         }
         recImages()
@@ -272,7 +278,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
                     <ProgressBar lives={lives.current} max={imageApi.length} progress={seeImages.current.length} />
                     <Timer ref={tiempo} />
                     <div className={style.imgPlayer} ref={imageTouch} style={{ boxShadow: `0px 0px 65px ${color}`, borderColor: `${color}`, borderStyle: 'solid', borderWidth: '2px' }} >
-                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop}/>}
+                        {recVideo[0] && <img alt='imgGame' src={recVideo[0].urlBlop} />}
                     </div>
                 </div>
             </div>
