@@ -97,8 +97,9 @@ const RegisterWithEmail = ({ setRes }) => {
             gender: input.gender,
             ethnicity: input.ethnicity,
         }
-        console.log(user)
+        console.log(user, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
+        console.log(response, 'BBBBBBBBBBBBBBBBBBBBBBBBB')
         if (localStorage.getItem('pruebaa')) {
             if (response.data.status) {
                 setLoading(!loading)
