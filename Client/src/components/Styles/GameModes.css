@@ -16,6 +16,45 @@
     margin-left: 5%;
 }
 
+.descrip_game_mode_long_term{
+    display: flex;
+    color: white;
+    font-size: 13px!important;
+    width: 90%;
+    position:relative;
+    top: 1%;
+    margin-left: 5%;
+}
+
+.disabled{
+    text-decoration: none;
+    color: white;
+    padding: 1em 2em 1em 2em;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    max-width: 15em;
+    cursor: pointer;
+    height: max-content;
+}
+.disabled p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    margin-top: -.1em;
+}
+
+.disabled:hover{
+    background-color: #a0a0a0;
+    border-radius: 15px;
+    transition: all .4s ease-out;
+    transform: scale(0.9);
+    filter: grayscale(9);
+    cursor: default;
+    
+}
+
+
 .subContainer_game_modes{
     width: 100%;
     height: max-content;

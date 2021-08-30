@@ -292,7 +292,7 @@ const Home = () => {
                                     <p>{sessionData === 0 || !sessionData ? 0 : sessionData}%</p>
                                     <div className="graficoHome">
                                         {sessionData === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
-                                        {sessionData < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
+                                        {sessionData > 0 && sessionData < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
                                         {sessionData > 10 && sessionData < 21 ? <img style={{ height: '3em', width: '10em' }} src={graph20} alt='graph' /> : null}
                                         {sessionData > 20 && sessionData < 31 ? <img style={{ height: '3em', width: '10em' }} src={graph30} alt='graph' /> : null}
                                         {sessionData > 30 && sessionData < 41 ? <img style={{ height: '3em', width: '10em' }} src={graph40} alt='graph' /> : null}
@@ -303,16 +303,15 @@ const Home = () => {
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                     <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
-                                    
-                                    {/* <div className="graficoHome2">
+                                    <div className="graficoHome">
                                         {averageScore === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
-                                        {averageScore < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
+                                        {averageScore > 0 && averageScore < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
                                         {averageScore > 10 && averageScore < 21 ? <img style={{ height: '3em', width: '10em' }} src={graph20} alt='graph' /> : null}
                                         {averageScore > 20 && averageScore < 31 ? <img style={{ height: '3em', width: '10em' }} src={graph30} alt='graph' /> : null}
                                         {averageScore > 30 && averageScore < 41 ? <img style={{ height: '3em', width: '10em' }} src={graph40} alt='graph' /> : null}
                                         {averageScore > 40 && averageScore < 51 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
                                         {averageScore > 50 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
 
