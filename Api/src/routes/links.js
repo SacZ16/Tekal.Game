@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     if (mode === 'image') {
         const assets = await getAssetsImages(itemsFromDb);//transforma en link
         let template = templateFiller(templateChoosen, assets);
-        console.log(assets)
+        // console.log(assets)
         res.send(template);
     } else {
         const assets = await getAssets(itemsFromDb);//transforma en link

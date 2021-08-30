@@ -33,7 +33,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
 
   const infoVideo = useRef(); // Informacion del Video
   infoVideo.current = recVideo;
-  console.log(seeVideos.current)
+
   const targetFound = useRef({ points: 0, videosTarget: [] }); // Aciertos del usuario en los videos target.
 
   const targetNotPress = useRef({ notPress: 0, videosTargetNotPress: [] }); // Videos target en los que no presiono.
@@ -53,6 +53,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   const finalVideos = useRef([]); // Videos vistos con respuetsas
 
   const lives = useRef(20); // Vidas del usuario 
+  const [liv, setLiv] = useState(true)
 
   const press = useRef(false); // Variable para detectar la barra espaciadora
 
@@ -69,11 +70,6 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   const longTerm = useRef() // habilita a jugar el longTerm
 
   const scoreVisual = ((targetFound.current.points + vigilanceRecognized.current.length) / (target + vig)) * 100
-
-  console.log(answers.current)
-  console.log(pressSeconds.current)
-  console.log(seeVideos.current)
-  console.log(finalVideos.current)
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 32 && !press.current) {
@@ -132,21 +128,22 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   };
 
 
-
+  console.log(liv)
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
     if (!press.current) {
-      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 1][0][1] !== 'target_repeat') {
+      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] !== 'target_repeat') {
         answers.current.push(0);
         pressSeconds.current.push(0);
         /* Revisar esta funcion para que baje 5 vidas por un vigilance */
-        /* if (seeVideos.current[seeVideos.current.length - 1][0][1] === 'vig_repeat') {
+        if (seeVideos.current[seeVideos.current.length - 2][0][1] === 'vig_repeat' && !press.current) {
           lives.current = lives.current - 5
-        } */
+          setLiv(!liv)
+        }
       }
-      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 1][0][1] === 'target_repeat') {
+      if (seeVideos.current.length > 1 && seeVideos.current[seeVideos.current.length - 2][0][1] === 'target_repeat') {
         targetNotPress.current.notPress++;
-        targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 1][0]);
+        targetNotPress.current.videosTargetNotPress.push(seeVideos.current[seeVideos.current.length - 2][0]);
         answers.current.push(0);
         pressSeconds.current.push(0);
       }
