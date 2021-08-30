@@ -18,6 +18,27 @@
     cursor: pointer;
 }
 
+.verification_container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: radial-gradient(75.05% 75.05% at 50% -1.66%, rgba(201, 78, 191, 0.2) 0%, rgba(201, 78, 191, 0) 100%), #212429;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+}
+
+.verification_container h1 {
+    color: white;
+    font-size: 4em;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+}
+
+
 /* colorFacebook {
     color:#3B599A
 } */

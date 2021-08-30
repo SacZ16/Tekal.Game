@@ -91,4 +91,9 @@ export default {
     tutorialImages: 'Tutorial Imágenes',
     tutorialVideoLong: 'Tutorial video largo plazo',
     tutorialImagesLong:'Tutorial imágenes largo plazo',
+
+    //Verificacion
+    verificado:'Verificado',
+    emailNoRegistrado:'Email no registrado',
+    emailVerificado:'Email verificado',
 }

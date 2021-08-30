@@ -52,7 +52,7 @@ function Finalgame({ history }) {
             })
             localStorage.setItem('lastScore', Number(cookies.get('sessionData').scoreVisual.toFixed(2)))
         } else {
-            history.push('/')
+            history.push('/close')
         }
     }, [])
 

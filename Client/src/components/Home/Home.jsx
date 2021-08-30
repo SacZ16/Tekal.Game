@@ -313,6 +313,7 @@ const Home = () => {
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                     <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
+                                    
                                     {/* <div className="graficoHome2">
                                         {averageScore === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
                                         {averageScore < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}

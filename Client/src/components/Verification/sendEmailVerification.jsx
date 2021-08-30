@@ -33,35 +33,45 @@ const Verification = () => {
         if (!response) {
             let res = postEmailVerification(obj)
             return (
+                <div className='verification_container'>
                 <h1>
                     {<Translate content="verificando" component="span" />}
                 </h1>
+                </div>
             );
         }
         console.log(response)
         if (response.data === 'Ok') {
             return (
+                <div className='verification_container'>
                 <h1>
-                    {<Translate content="verifcado" component="span" />}
+                    {<Translate content="verificado" component="span" />}
                 </h1>
+                </div>
             );
         } else if (response.data === 'This email is not registered') {
             return (
+                <div className='verification_container'>
                 <h1>
                     {<Translate content="emailNoRegistrado" component="span" />}
                 </h1>
+                </div>
             );
         } else if (response.data === 'Email already verified') {
             return (
+                <div className='verification_container'>
                 <h1>
                     {<Translate content="emailVerificado" component="span" />}
                 </h1>
+                </div>
             );
         } else {
             return (
+                <div className='verification_container'>
                 <h1>
                     Ups!
                 </h1>
+                </div>
             );
         }
 
