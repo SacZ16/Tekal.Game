@@ -22,9 +22,7 @@ const FormData = () => {
 
     const country = getCity()
     const [input, setInput] = useState({
-        country: "",
         age: "",
-        city: "",
         gender: "",
         ethnicity: "",
     })
@@ -32,12 +30,17 @@ const FormData = () => {
     if (!cookies.get('userInfo').Items) { emailCokkie = cookies.get('userInfo')[0].email }
     else { emailCokkie = cookies.get('userInfo').Items[0].email }
 
-
     const handleInputChange = function (e) {
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
+    }
+    if(country.country && !countrytext.length) {
+        setcountrytext(country.country)
+    }
+    if(country.city && !citytext.length) {
+        setscitytext(country.city)
     }
 
     const SendToBackEnd = async () => {
@@ -49,7 +52,6 @@ const FormData = () => {
             gender: input.gender,
             ethnicity: input.ethnicity,
         }
-        console.log(user)
         if (!input.gender.length) {
             setErr('Completa los campos')
         }
@@ -58,12 +60,11 @@ const FormData = () => {
             setErr('Completa los campos')
         }
         else {
-
             if (localStorage.getItem('results')) {
                 window.location.href = ('/close')
             } else {
                 // cookies.remove('userInfo')
-                // window.location.href = ('')
+                window.location.href = ('')
             }
         }
     }
@@ -98,7 +99,7 @@ const FormData = () => {
                     <p className="text_input_extra_data">{<Translate content="nacimiento" component="span" />}</p>
                     <input className="swal2-inputmh4" type='date' name='age' onChange={handleInputChange} />
                     <p className="text_input_extra_data">{<Translate content="pais" component="span" />}</p>
-                    <input className="swal2-inputmh4" value={country.city ? country.country : countrytext} name='city' onChange={(e) => setcountrytext(e.target.value)} />
+                    <input className="swal2-inputmh4" value={country.country ? country.country : countrytext} name='city' onChange={(e) => setcountrytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="genero" component="span" />}</p>
                     <select className="swal2-inputmh4" name='gender' onChange={handleInputChange}>
                         <option value='' hidden selected>{''}</option>

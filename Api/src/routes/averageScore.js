@@ -25,12 +25,13 @@ const jwt = require ('jsonwebtoken');
 router.post('/', async (req,res) => {
     try{
         let {email} =req.body;
+        let { scorefront } = req.body
         var tokensendEmail =email;
         const games =await getGameUser(tokensendEmail);
         const score =games.Items.map(o => parseInt(o.score));   
         // USUARIO NO JUGO               NO EXISTE
         if(!score.length){
-            let averageScore = 0
+            let averageScore = scorefront;
             return res.status(200).json({ averageScore:averageScore });
         }
         const averageScore = score.reduce((a,b)=> a+b) / score.length;
