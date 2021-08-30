@@ -87,6 +87,53 @@ const FormData = () => {
     counterpart.registerTranslations('es', es);
     counterpart.setLocale(lang); /* counterpart.setLocale(lang+''); */
 
+    var preferNotToSay = ''
+    var male = ''
+    var female = ''
+    var nonBinary = ''
+    var white = ''
+    var africanAmerican = ''
+    var nativeAmerican = ''
+    var pacificIslander = ''
+    var asian = ''
+    var nativeHawaiian = ''
+    var latino = ''
+
+    if(localStorage.getItem('idioma') === 'en'){
+        var idioma = true
+    }
+    if(localStorage.getItem('idioma') === 'es'){
+        idioma = false
+    }
+    
+    if(idioma) {
+        preferNotToSay = 'Prefer not to say'
+        male = 'Male'
+        female = 'Female'
+        nonBinary = 'Non binary'
+        white = 'White'
+        africanAmerican = 'African American'
+        nativeAmerican = 'Native American/Alaskan Native'
+        pacificIslander = 'Pacific Islander'
+        asian = 'Asian'
+        nativeHawaiian = 'Native Hawaiian'
+        latino = 'Latino or Hispanic'
+
+    }
+
+    if(!idioma) {
+        preferNotToSay = 'Prefiero no decir'
+        male = 'Masculino'
+        female = 'Femenino'
+        nonBinary = 'No binario'
+        white = 'Blanco'
+        africanAmerican = 'Afro Americano'
+        nativeAmerican = 'Americano nativo / Alaskeño Nativo'
+        pacificIslander = 'Nativo Islas del Pacífico '
+        asian = 'Asiático'
+        nativeHawaiian = 'Hawaiiano nativo'
+        latino = 'Latino o Hispano'
+    }
 
 
     return (
@@ -103,10 +150,10 @@ const FormData = () => {
                     <p className="text_input_extra_data">{<Translate content="genero" component="span" />}</p>
                     <select className="swal2-inputmh4" name='gender' onChange={handleInputChange}>
                         <option value='' hidden selected>{''}</option>
-                        <option value='prefer-not-to-answer'> Prefer not to say</option>
-                        <option value='male'>Male</option>
-                        <option value='female'>Female</option>
-                        <option value='non-binary'>Non binary</option>
+                        <option value='prefer-not-to-answer'>{preferNotToSay}</option>
+                        <option value='male'>{male}</option>
+                        <option value='female'>{female}</option>
+                        <option value='non-binary'>{nonBinary}</option>
                     </select>
                 </div>
                 <div className="column" >
@@ -115,7 +162,16 @@ const FormData = () => {
                     <p className="text_input_extra_data">{<Translate content="ciudad" component="span" />}</p>
                     <input className="swal2-inputmh4" value={country.city ? country.city : citytext} name='city' onChange={(e) => setscitytext(e.target.value)} />
                     <p className="text_input_extra_data">{<Translate content="etnia" component="span" />}</p>
-                    <input className="swal2-inputmh4" name='ethnicity' onChange={handleInputChange} />
+                    <select class="swal2-inputmh4" name='ethnicity' onChange={handleInputChange}>
+                        <option value='' hidden selected>{''}</option>
+                        <option value='white'>{white}</option>
+                        <option value='african-american'>{africanAmerican}</option>
+                        <option value='native-american'>{nativeAmerican}</option>
+                        <option value='pacific-islander'>{pacificIslander}</option>
+                        <option value='asian'>{asian}</option>
+                        <option value='native-hawaiian'>{nativeHawaiian}</option>
+                        <option value='hipanic-latino'>{latino}</option>
+                    </select>
                 </div>
             </div>
             <button className='buttonRegisterExtraData' onClick={SendToBackEnd}>{<Translate content="botonRegistro" component="span" />} </button>
