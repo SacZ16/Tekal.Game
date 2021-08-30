@@ -12,7 +12,7 @@ function ProgressBar({ lives, max, progress }) {
             <div className={style.vidasgame} style=
                 {{
                     color: 'white', display: 'flex', flexDirection: 'row', fontFamily: 'Montserrat, sans-serif', fontSize: '20px', fontWeight: 'bold'
-                }}><FavoriteIcon style={{ fontSize: '20px' }} /> x {lives}
+                }}><FavoriteIcon style={{ fontSize: '20px' }} /> x {lives > 0 ? lives : 0}
             </div>
 
             <progress

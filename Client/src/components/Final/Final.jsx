@@ -34,13 +34,15 @@ function Finalgame({ history }) {
 
     const [sessionData, setSessionData] = useState({
         score: 0,
-        scoreVisual: 0,
+        scoreVisual: null,
         videosRecognized: 0,
         totalRepeats: 0
     })
     const { scoreVisual, totalRepeats, videosRecognized } = sessionData
+    const [averageScore, setAverageScore] = useState(null)
     const [globalScore, setGlobalScore] = useState(null)
     const globalScoreValidation = globalScore === 0 ? globalScore.toFixed() : globalScore
+
     useEffect(() => {
         if (cookies.get('sessionData')) {
             setSessionData({
@@ -57,19 +59,35 @@ function Finalgame({ history }) {
     }, [])
 
     useEffect(async () => {
-        if (mode.includes('-')) {
-            const mode2 = mode.slice(0, -3)
-            const res = await axios.post('http://localhost:3001/globalScore', {
-                score: scoreVisual,
-                type: mode2
-            })
-            setGlobalScore(Number(res.data.betterThan.toFixed(2)))
-        } else {
-            const res = await axios.post('http://localhost:3001/globalScore', {
-                score: scoreVisual,
-                type: mode
-            })
-            setGlobalScore(Number(res.data.betterThan.toFixed(2)))
+        if (scoreVisual !== null) {
+            if (mode.includes('-')) {
+                const mode2 = mode.slice(0, -3)
+                const resGlobal = await axios.post('http://localhost:3001/globalScore', {
+                    score: scoreVisual,
+                    type: mode2
+                })
+                const resAverage = await axios.post('http://localhost:3001/averageScore', {
+                    email: emailCokkie,
+                    scoreFront: scoreVisual,
+                    type: mode2
+                })
+                setGlobalScore(Number(resGlobal.data.betterThan.toFixed(2)))
+                setAverageScore(resAverage.data.averageScore)
+                localStorage.setItem('averageScore', resAverage.data.averageScore)
+            } else {
+                const resGlobal = await axios.post('http://localhost:3001/globalScore', {
+                    score: scoreVisual,
+                    type: mode
+                })
+                const resAverage = await axios.post('http://localhost:3001/averageScore', {
+                    email: emailCokkie,
+                    scoreFront: scoreVisual,
+                    type: mode
+                })
+                setGlobalScore(Number(resGlobal.data.betterThan.toFixed(2)))
+                setAverageScore(resAverage.data.averageScore)
+                localStorage.setItem('averageScore', resAverage.data.averageScore)
+            }
         }
     }, [sessionData])
 
@@ -86,16 +104,6 @@ function Finalgame({ history }) {
         resultadoparaenviar.shift()
         resultadoparaenviar.unshift(emailCokkie)
     }
-
-    const [averageScore, setAverageScore] = useState(undefined)
-
-    useEffect(async () => {
-        const res = await axios.post('http://localhost:3001/averageScore', {
-            email: emailCokkie,
-            scoreFront: sessionData.scoreVisual
-        })
-        setAverageScore(res.data.averageScore)
-    }, [sessionData])
 
     const popUpGameMode = () => {
         MySwal.fire({
@@ -138,7 +146,7 @@ function Finalgame({ history }) {
         MySwal.fire({
             html:
                 <div className='containerShare'>
-                    <img src='https://www.pngall.com/wp-content/uploads/2/Share-PNG-Free-Download.png' alt='shareImg'/>
+                    <img src='https://www.pngall.com/wp-content/uploads/2/Share-PNG-Free-Download.png' alt='shareImg' />
                     <Share url={window.location.href} />
                     <button className='btnClose' onClick={() => MySwal.clickCancel()} >Close</button>
                 </div>,

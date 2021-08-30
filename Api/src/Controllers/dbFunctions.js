@@ -3,7 +3,7 @@ const AWS = require("aws-sdk");
 const { connectionDynamo, dynamodb } = require("../db.js");
 const bcrypt = require("bcrypt");
 const ULID = require("ulid");
-const jwt = require ('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 const TABLE_USER = "HENRY-dev-USER";
 const TABLE_ASSETS = "HENRY-dev-ASSET";
@@ -91,7 +91,7 @@ const putUserLogin = async (user) => {
 //Funcion que guarda los datos del registro
 //name lastname age //Formulario datos
 const putUserInfoRegisterItems = async ({ email, age, country, gender, ethnicity, city }) => {
-  var tokensendEmail = jwt.sign({ email: email, iat:25 }, 'prueba');
+  var tokensendEmail = jwt.sign({ email: email, iat: 25 }, 'prueba');
   try {
     var infoUser = `INFO#${tokensendEmail}`;
 
@@ -112,7 +112,7 @@ const putUserInfoRegisterItems = async ({ email, age, country, gender, ethnicity
     };
 
     const registerInfo = connectionDynamo.update(params).promise();
-    console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+    // console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
     return registerInfo;
   }
   catch (error) {
@@ -237,7 +237,7 @@ const putUserGameItems = async (data) => {
     };
     // console.log(params);
     const gameAdded = await connectionDynamo.put(params).promise();
-    console.log("Added Session:", JSON.stringify(gameAdded, null, 2));
+    //console.log("Added Session:", JSON.stringify(gameAdded, null, 2));
     return gameAdded;
   } catch (error) {
     console.error(
@@ -266,7 +266,7 @@ const updateEmailVerification = async (userId) => {
       },
     };
     const registerInfo = await connectionDynamo.update(params).promise();
-    console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+    //console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
     return registerInfo;
   } catch (error) {
     console.error(
@@ -277,13 +277,13 @@ const updateEmailVerification = async (userId) => {
 };
 
 const updatePassword = async (userId, pass) => {
-  var tokensendEmail = jwt.sign({ email: userId, iat:25  }, 'prueba');
+  var tokensendEmail = jwt.sign({ email: userId, iat: 25 }, 'prueba');
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(pass, salt);
 
   let response = await queryAllInfoUser(tokensendEmail)
-  if(!response.Items.length) {
-      return (false)
+  if (!response.Items.length) {
+    return (false)
   } else {
     const infoUser = `INFO#${tokensendEmail}`;
     let params = {
@@ -301,7 +301,7 @@ const updatePassword = async (userId, pass) => {
       },
     };
     const registerInfo = await connectionDynamo.update(params).promise();
-    console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
+    //console.log("Added user item:", JSON.stringify(registerInfo, null, 2));
     console.log(registerInfo, '111111111111111111111111')
     return registerInfo;
   }
@@ -364,7 +364,7 @@ const updateView = async (url) => {
       },
     };
     const updateViews = connectionDynamo.update(params).promise();
-    console.log("Added user item:", JSON.stringify(updateViews, null, 2));
+    //console.log("Added user item:", JSON.stringify(updateViews, null, 2));
     return updateViews;
   } catch (error) {
     console.error(
@@ -536,7 +536,7 @@ const updateAnnotationsCorrect = async (url) => {
       }
     };
     const updateViews = connectionDynamo.update(params).promise();
-    console.log("Added user item:", JSON.stringify(updateViews, null, 2));
+    //console.log("Added user item:", JSON.stringify(updateViews, null, 2));
     return updateViews;
   } catch (error) {
     console.error("Unable to add item. Error JSON:", JSON.stringify(error, null, 2));
@@ -559,7 +559,7 @@ const getGameUser = async (email) => {
     };
 
     const queryUserInfo = await connectionDynamo.query(params).promise();
-    console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
+    //console.log("Query description JSON:", JSON.stringify(queryUserInfo, null, 2));
     return queryUserInfo;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
@@ -611,7 +611,7 @@ const scanAllGamesType = async (type) => {
       }
     })
     const cantGamesType = gamesType.length;
-    console.log(cantGamesType);
+    //console.log(cantGamesType);
     return gamesType;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
@@ -629,14 +629,14 @@ const scanAllGamesLowerThan = async (value, type) => {
       }
     })
     const cantGamesLower = gamesLower.length;
-    console.log(cantGamesLower);
+    // console.log(cantGamesLower);
     return cantGamesLower;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
   }
 }
 
-const scoresNext = async (score,sk,pk,type) => {
+const scoresNext = async (score, sk, pk, type) => {
   try {
     let params = {
       TableName: TABLE_USER,
@@ -686,7 +686,7 @@ const scores = async (type) => {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
   }
 };
-const lowerScore = async (type,score) => {
+const lowerScore = async (type, score) => {
   try {
     let params = {
       TableName: TABLE_USER,
@@ -705,13 +705,13 @@ const lowerScore = async (type,score) => {
     };
 
     const orderByViews = await connectionDynamo.query(params).promise();
-    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
     return orderByViews;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));
   }
 };
-const lowerScoreNext = async (score,scoreLEK,sk,pk,type) => {
+const lowerScoreNext = async (score, scoreLEK, sk, pk, type) => {
   try {
     let params = {
       TableName: TABLE_USER,
@@ -737,7 +737,7 @@ const lowerScoreNext = async (score,scoreLEK,sk,pk,type) => {
     };
 
     const orderByViews = await connectionDynamo.query(params).promise();
-    console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
+    // console.log("Scan description JSON:", JSON.stringify(orderByViews, null, 2));
     return orderByViews;
   } catch (error) {
     console.log("Unable to query. Error:", JSON.stringify(error, null, 2));

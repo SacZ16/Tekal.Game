@@ -40,8 +40,8 @@ const Home = () => {
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
     const sessionData = localStorage.getItem('lastScore')
+    const averageScore = cookies.get('userInfo') ? Number(localStorage.getItem('averageScore')) : null
     const [hideA, setHideA] = useState(false)
-
 
     let emailCokkie;
     let sessionUser = "";
@@ -85,9 +85,9 @@ const Home = () => {
         MySwal.fire({
             title: <p style={{ color: 'white', fontFamily: 'Montserrat, sans-serif' }}>{<Translate content="botonRegistro" component="span" />}</p>,
             html:
-                <div className='registerFormContainer_' style={{ overflow: 'hidden'}}>
+                <div className='registerFormContainer_' style={{ overflow: 'hidden' }}>
                     <RegisterWithEmail />
-                    <div style={{ display: 'flex', justifyContent:'center' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <a className='signUpText'>{<Translate content="yaTienesUnaCuenta" component="span" />}&nbsp;</a><a style={{ background: 'none', marginTop: '15px', color: 'white', fontFamily: 'Montserrat, sans-serif', fontSize: '14px', cursor: 'pointer' }} onClick={loginButton}>{<Translate content="botonLogin" component="span" />}</a>
                     </div>
                 </div>,
@@ -127,9 +127,9 @@ const Home = () => {
     //-----------
 
     const [show, setShow] = useState(false)
-    const [sessionOn, setSessionOn] = useState(false) 
-    const [login, setLogin] = useState(true) 
-    const [startGame, setStartGame] = useState(false) 
+    const [sessionOn, setSessionOn] = useState(false)
+    const [login, setLogin] = useState(true)
+    const [startGame, setStartGame] = useState(false)
     const [checker, setchecker] = useState(false)
     const [showMobileLogOut, setShowMobileLogOut] = useState(false)
 
@@ -140,11 +140,11 @@ const Home = () => {
         setchecker(true)
     }
 
-    function tutorialbutton(e) {
+    function tutorialbutton() {
         MySwal.fire({
             html:
                 <div style={{ overflow: 'hidden' }}>
-                    <TutorialModes/>
+                    <TutorialModes />
                 </div>,
             showConfirmButton: false,
         })
@@ -198,16 +198,6 @@ const Home = () => {
         });
 
     }
-
-    const [averageScore, setAverageScore] = useState()
-
-    useEffect(async () => {
-        const res = await axios.post('http://localhost:3001/averageScore', {
-            email: emailCokkie,
-            scoreFront: sessionData
-        })
-        setAverageScore(res.data.averageScore)
-    }, [])
 
     const popUpGameMode = () => {
         MySwal.fire({
@@ -325,7 +315,7 @@ const Home = () => {
                                     </div> */}
                                 </div>
                             </div>
-                            
+
                             <div className='buttonsHome' style={{ display: `${display && display.current}` }}>
                                 <div className='startGame'><Link onClick={popUpGameMode} style={{ color: 'white', fontSize: '15px', textDecoration: 'none', width: '100%', height: '100%', paddingTop: '30px', fontFamily: 'Montserrat, sans-serif' }} id='btnStartHome'>{<Translate content="botonJugar" component="span" />}</Link></div>
                             </div>

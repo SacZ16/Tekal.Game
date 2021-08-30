@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
             return res.send('datos invalidos')
         }
         let games = await loadGameInfo(info);
-        console.log(games)
+        // console.log(games)
         res.send(games);
     }
     catch (error) {
