@@ -7,9 +7,9 @@ import BurstModeIcon from '@material-ui/icons/BurstMode'; //long
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Cookie from 'universal-cookie'
+import Countdown from 'react-countdown';
 // Traducciones
 import Translate from "react-translate-component";
-import Countdown from 'react-countdown';
 
 const GameModes = ({ averageScore }) => {
 

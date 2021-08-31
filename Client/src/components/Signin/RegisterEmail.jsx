@@ -61,8 +61,7 @@ const RegisterWithEmail = ({ setRes }) => {
 
     const SendToBackEnd = async (e) => {
         e.preventDefault()
-        console.log(input)
-        setLoading(!loading)
+        // setLoading(true)
         const emailReject = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
         if (!emailReject.test(input.email) && input.email.length > 0) {
             setErr('Verify all fields')
@@ -97,28 +96,30 @@ const RegisterWithEmail = ({ setRes }) => {
             gender: input.gender,
             ethnicity: input.ethnicity,
         }
-        console.log(user, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAA')
         const response = await axios.post(`${process.env.REACT_APP_API_URL}register`, user) ///Eliseo PONE LA RUTA DE BACK ACA XD
-        console.log(response, 'BBBBBBBBBBBBBBBBBBBBBBBBB')
+
         if (localStorage.getItem('pruebaa')) {
             if (response.data.status) {
-                setLoading(!loading)
+                setLoading(false)
                 alert()
                 window.location.href = './preclose'
             }
-            else { setErr('The email was already used') }
-
+            else {
+                setErr('The email was already used')
+            }
         }
+
         if (!localStorage.getItem('pruebaa')) {
             if (response.data.status) {
-                setLoading(!loading)
+                setLoading(false)
                 alert()
                 user.password = ''
                 newCookie([user])
                 window.location.href = './'
             }
-            else { setErr('The email was already used') }
-
+            else {
+                setErr('The email was already used')
+            }
         }
     }
 
@@ -157,14 +158,14 @@ const RegisterWithEmail = ({ setRes }) => {
     var nativeHawaiian = ''
     var latino = ''
 
-    if(localStorage.getItem('idioma') === 'en'){
+    if (localStorage.getItem('idioma') === 'en') {
         var idioma = true
     }
-    if(localStorage.getItem('idioma') === 'es'){
+    if (localStorage.getItem('idioma') === 'es') {
         idioma = false
     }
-    
-    if(idioma) {
+
+    if (idioma) {
         preferNotToSay = 'Prefer not to say'
         male = 'Male'
         female = 'Female'
@@ -179,7 +180,7 @@ const RegisterWithEmail = ({ setRes }) => {
 
     }
 
-    if(!idioma) {
+    if (!idioma) {
         preferNotToSay = 'Prefiero no decir'
         male = 'Masculino'
         female = 'Femenino'

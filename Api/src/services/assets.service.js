@@ -1,15 +1,20 @@
 const { updateView, updateAnnotationsCorrect, putAssets, queryAllInfoUser } = require("../Controllers/dbFunctions");
 const { endpointNoMemento, endpoint1 } = require("./endpoint.service");
-const jwt = require ('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
-async function loadEndpoints(array){
-    var tokensendEmail= array[0];
+async function loadEndpoints(array) {
+    let tokensendEmail;
+    if (array[0].includes('@')) {
+        tokensendEmail = jwt.sign({ email: array[0], iat: 25 }, 'prueba');
+    } else {
+        tokensendEmail = array[0]
+    }
     let urls = [];
     const userInfo = await queryAllInfoUser(tokensendEmail);
     let age = ''
     let country = ''
-    var arrayAlgo=[];
-    if(userInfo.Items[0].age && userInfo.Items[0].country){
+    var arrayAlgo = [];
+    if (userInfo.Items[0].age && userInfo.Items[0].country) {
         age = userInfo.Items[0].age;
         country = userInfo.Items[0].country;
     }
@@ -20,12 +25,12 @@ async function loadEndpoints(array){
         object.mood = mood;
         object.country = country;
         object.pos = i - 2;
-        let pkAssetsTarget = object.type === "image"? endpointNoMemento(object.url) : endpoint1(object.url);
+        let pkAssetsTarget = object.type === "image" ? endpointNoMemento(object.url) : endpoint1(object.url);
         object.url = pkAssetsTarget;
-        if (array[i].category === "target"){
+        if (array[i].category === "target") {
             updateView(pkAssetsTarget);
         }
-        if (array[i].category === "target_repeat" && array[i].answer == 1){
+        if (array[i].category === "target_repeat" && array[i].answer == 1) {
             updateAnnotationsCorrect(pkAssetsTarget);
         }
         if (urls.includes(pkAssetsTarget)) {

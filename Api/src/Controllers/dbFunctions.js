@@ -122,6 +122,7 @@ const putUserInfoRegisterItems = async ({ email, age, country, gender, ethnicity
 
 //trae toda la tabla info del usuario
 const queryAllInfoUser = async (userId) => {
+  console.log('asasasas', userId)
   try {
     let params = {
       TableName: TABLE_USER,

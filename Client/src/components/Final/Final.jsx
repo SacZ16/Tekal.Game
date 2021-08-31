@@ -54,7 +54,7 @@ function Finalgame({ history }) {
             })
             localStorage.setItem('lastScore', Number(cookies.get('sessionData').scoreVisual.toFixed(2)))
         } else {
-            history.push('/close')
+            history.push('/')
         }
     }, [])
 
@@ -128,9 +128,11 @@ function Finalgame({ history }) {
 
     const postDataa = async () => {
         console.log(resultadoparaenviar)
-        /* await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
-        await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar) */
-        localStorage.removeItem('results')
+        if (resultadoparaenviar) {
+            await axios.post('http://localhost:3001/videoInfo', resultadoparaenviar)
+            await axios.post('http://localhost:3001/gameInfo', resultadoparaenviar)
+            localStorage.removeItem('results')
+        }
     }
 
     /* Cambio de idioma */

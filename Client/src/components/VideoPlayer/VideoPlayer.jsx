@@ -127,8 +127,6 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
     }
   };
 
-
-  console.log(liv)
   // Deja apretar la barra nuevamente y recoje datos de cuando no se presiona la barra
   useEffect(() => {
     if (!press.current) {
@@ -225,7 +223,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
   const checkLongTerm = () => {
     if (!localStorage.getItem('playedDateVideo') && !localStorage.getItem('longTermToPlay')) {
       mode === 'video-lt' && localStorage.setItem('video-lt', 'video-lt')
-      localStorage.setItem('playedDateVideo', Date.now())
+      mode === 'video-lt' && localStorage.setItem('playedDateVideo', Date.now())
     }
   }
 

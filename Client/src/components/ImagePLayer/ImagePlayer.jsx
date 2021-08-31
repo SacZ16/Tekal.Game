@@ -261,7 +261,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
     const checkLongTerm = () => {
         if (!localStorage.getItem('playedDateVideo') && !localStorage.getItem('longTermToPlay')) {
             mode === 'image-lt' && localStorage.setItem('image-lt', 'image-lt')
-            localStorage.setItem('playedDateImage', Date.now())
+            mode === 'image-lt' && localStorage.setItem('playedDateImage', Date.now())
         }
     }
 
