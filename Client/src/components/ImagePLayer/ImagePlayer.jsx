@@ -92,7 +92,9 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
             setColor('green')
             press.current = true;
             clearTimeout(timerChange.current)
-            handlerChange()
+            setTimeout(() => {
+                handlerChange()
+            }, 300)
         }
         else {
             setColor('red')
@@ -102,7 +104,7 @@ const ImagePlayer = ({ recImages, checkLogin, email, target, vig, imageApi, mood
         }
         setTimeout(() => {
             setColor('rgba(255, 255, 255, 0)');
-        }, 500);
+        }, 300);
     }
 
     useEffect(() => {

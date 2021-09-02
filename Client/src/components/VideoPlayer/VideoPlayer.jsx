@@ -85,7 +85,9 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
         }
         setColor('green')
         press.current = true;
-        recVideos()
+        setTimeout(() => {
+          recVideos()
+        }, 300)
       }
       else {
         setColor('red')
@@ -95,7 +97,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       }
       setTimeout(() => {
         setColor('rgba(255, 255, 255, 0)');
-      }, 500);
+      }, 300);
     }
   };
 
@@ -113,7 +115,9 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
         }
         setColor('green')
         press.current = true;
-        recVideos()
+        setTimeout(() => {
+          recVideos()
+        }, 300)
       }
       else {
         setColor('red')
@@ -123,7 +127,7 @@ const VideoPlayer = ({ videoApi, target, vig, recVideos, checkLogin, email, mood
       }
       setTimeout(() => {
         setColor('rgba(255, 255, 255, 0)');
-      }, 500);
+      }, 300);
     }
   };
 

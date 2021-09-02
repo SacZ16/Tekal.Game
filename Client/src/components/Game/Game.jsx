@@ -24,11 +24,11 @@ export const Game = ({ history }) => {
   const cookies = new Cookie()
 
   const [assetsApi, setAssetsApi] = useState() // videos/imagenes provenientes de la base de datos
-  // console.log(assetsApi)
+  console.log(assetsApi)
   const [assetsBlop1, setAssetsBlop1] = useState() // array con las 10 primeras URLs en formato Blop
-  // console.log('blop 1', assetsBlop1)
+  console.log('blop 1', assetsBlop1)
   const [assetsBlop2, setAssetsBlop2] = useState() // array con el resto de URLs en formato Blop
-  // console.log('blop 2', assetsBlop2)
+  console.log('blop 2', assetsBlop2)
   const assetsToSeeBlop = useRef() // array final para ser mostrado al usuario
   // console.log('toSee', assetsToSeeBlop.current)
 

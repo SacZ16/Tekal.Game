@@ -39,13 +39,13 @@ import es from "../../language/esp.js"
 const Home = () => {
     const MySwal = withReactContent(Swal)
     const cookies = new Cookie();
-    const sessionData = localStorage.getItem('lastScore')
+    const sessionData = Number(localStorage.getItem('lastScore'))
     const averageScore = cookies.get('userInfo') ? Number(localStorage.getItem('averageScore')) : null
     const [hideA, setHideA] = useState(false)
 
     let emailCokkie;
     let sessionUser = "";
-    console.log(cookies.get('userInfo'))
+    // console.log(cookies.get('userInfo'))
     if (cookies.get('userInfo')) {
         if (!cookies.get('userInfo').Items) {
             emailCokkie = cookies.get('userInfo')[0].email
@@ -111,18 +111,14 @@ const Home = () => {
 
     //Formulario de informacion extra para google y facebook
     useEffect(async () => {
-        console.log(emailCokkie)
         const res = await axios.post('http://localhost:3001/age', {
             email: emailCokkie
         })
-        console.log(res.data)
         if (res.data.length === 0) {
             popUpFormDataExtra()
             display.current = 'none'
         }
     }, [])
-
-
 
     //-----------
 
@@ -229,7 +225,7 @@ const Home = () => {
 
 
 
-
+    console.log(sessionData)
     return (
         <>
             <select className="Header-lang" value={lang} onChange={handleChange}>
@@ -303,15 +299,6 @@ const Home = () => {
                                 <div className='column_scores'>
                                     <h4>{<Translate content="promedioResultados" component="span" />}</h4>
                                     <p>{averageScore ? averageScore.toFixed(2) : 0}%</p>
-                                    <div className="graficoHome">
-                                        {averageScore === 0 ? <img style={{ height: '3em', width: '10em' }} src={graph0} alt='graph' /> : null}
-                                        {averageScore > 0 && averageScore < 11 ? <img style={{ height: '3em', width: '10em' }} src={graph10} alt='graph' /> : null}
-                                        {averageScore > 10 && averageScore < 21 ? <img style={{ height: '3em', width: '10em' }} src={graph20} alt='graph' /> : null}
-                                        {averageScore > 20 && averageScore < 31 ? <img style={{ height: '3em', width: '10em' }} src={graph30} alt='graph' /> : null}
-                                        {averageScore > 30 && averageScore < 41 ? <img style={{ height: '3em', width: '10em' }} src={graph40} alt='graph' /> : null}
-                                        {averageScore > 40 && averageScore < 51 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
-                                        {averageScore > 50 ? <img style={{ height: '3em', width: '10em' }} src={graph50} alt='graph' /> : null}
-                                    </div>
                                 </div>
                             </div>
 
